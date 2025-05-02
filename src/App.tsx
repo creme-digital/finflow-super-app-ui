@@ -12,6 +12,7 @@ import Expenses from "./pages/Expenses";
 import Accounting from "./pages/Accounting";
 import Payroll from "./pages/Payroll";
 import Tax from "./pages/Tax";
+import Payments from "./pages/Payments";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/accounting" element={<Accounting />} />
           <Route path="/payroll" element={<Payroll />} />
           <Route path="/tax" element={<Tax />} />
+          <Route path="/payments" element={<Payments />} />
           {/* Routes for other pages will be added here */}
           <Route path="*" element={<NotFound />} />
         </Routes>
