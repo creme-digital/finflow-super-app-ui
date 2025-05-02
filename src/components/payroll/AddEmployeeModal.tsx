@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -31,6 +30,7 @@ const stepIcons = [
   { icon: CheckCheck, label: 'Review' },
 ];
 
+// Updated schema to match the state types we're using
 const employeeSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
   lastName: z.string().min(1, { message: 'Last name is required' }),
@@ -50,9 +50,33 @@ const taxSchema = z.object({
   benefits: z.array(z.string()).optional(),
 });
 
+// Define the correct types for our state
+type PersonalInfo = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+}
+
+type CompensationInfo = {
+  salaryType: string;
+  amount: string;
+  frequency: string;
+}
+
+type TaxInfo = {
+  taxStatus: string;
+  withholding: string;
+  benefits: string[];
+}
+
 export const AddEmployeeModal = ({ open, onOpenChange }: AddEmployeeModalProps) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [employeeData, setEmployeeData] = useState({
+  const [employeeData, setEmployeeData] = useState<{
+    personal: PersonalInfo;
+    compensation: CompensationInfo;
+    tax: TaxInfo;
+  }>({
     personal: {
       firstName: '',
       lastName: '',
@@ -70,6 +94,8 @@ export const AddEmployeeModal = ({ open, onOpenChange }: AddEmployeeModalProps) 
       benefits: [],
     },
   });
+
+  // ... keep existing code for form definitions and handlers
 
   const personalForm = useForm<z.infer<typeof employeeSchema>>({
     resolver: zodResolver(employeeSchema),
@@ -99,17 +125,23 @@ export const AddEmployeeModal = ({ open, onOpenChange }: AddEmployeeModalProps) 
   };
 
   const onPersonalSubmit = (data: z.infer<typeof employeeSchema>) => {
-    setEmployeeData({ ...employeeData, personal: data });
+    setEmployeeData({ ...employeeData, personal: data as PersonalInfo });
     handleNext();
   };
 
   const onCompensationSubmit = (data: z.infer<typeof compensationSchema>) => {
-    setEmployeeData({ ...employeeData, compensation: data });
+    setEmployeeData({ ...employeeData, compensation: data as CompensationInfo });
     handleNext();
   };
 
   const onTaxSubmit = (data: z.infer<typeof taxSchema>) => {
-    setEmployeeData({ ...employeeData, tax: data });
+    // Ensure benefits is always an array even if it's undefined
+    const taxData: TaxInfo = {
+      ...data,
+      benefits: data.benefits || [],
+    } as TaxInfo;
+    
+    setEmployeeData({ ...employeeData, tax: taxData });
     handleNext();
   };
 
@@ -123,6 +155,8 @@ export const AddEmployeeModal = ({ open, onOpenChange }: AddEmployeeModalProps) 
     compensationForm.reset();
     taxForm.reset();
   };
+
+  // ... keep existing code for rendering UI components
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
