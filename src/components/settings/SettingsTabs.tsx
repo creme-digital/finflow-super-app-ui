@@ -4,15 +4,18 @@ import { ProfileSettings } from "@/components/settings/ProfileSettings";
 import { SecuritySettings } from "@/components/settings/SecuritySettings";
 import { NotificationSettings } from "@/components/settings/NotificationSettings";
 import { BillingSettings } from "@/components/settings/BillingSettings";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function SettingsTabs() {
+  const isMobile = useIsMobile();
+
   return (
     <Tabs defaultValue="profile" className="w-full">
-      <TabsList className="grid w-full md:w-auto grid-cols-2 md:grid-cols-4 gap-2 md:gap-0">
-        <TabsTrigger value="profile">Profile</TabsTrigger>
-        <TabsTrigger value="security">Security</TabsTrigger>
-        <TabsTrigger value="notifications">Notifications</TabsTrigger>
-        <TabsTrigger value="billing">Billing</TabsTrigger>
+      <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-1 md:gap-0">
+        <TabsTrigger value="profile" className="text-sm md:text-base">Profile</TabsTrigger>
+        <TabsTrigger value="security" className="text-sm md:text-base">Security</TabsTrigger>
+        <TabsTrigger value="notifications" className="text-sm md:text-base">Notifications</TabsTrigger>
+        <TabsTrigger value="billing" className="text-sm md:text-base">Billing</TabsTrigger>
       </TabsList>
       
       <div className="mt-6">

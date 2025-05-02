@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SidebarNav } from './SidebarNav';
 import { Navbar } from './Navbar';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,6 +10,14 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const [sidebarExpanded, setSidebarExpanded] = useState(true);
+  const isMobile = useIsMobile();
+  
+  // Auto-collapse sidebar on mobile
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarExpanded(false);
+    }
+  }, [isMobile]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -17,9 +26,12 @@ export function Layout({ children }: LayoutProps) {
         expanded={sidebarExpanded}
         setExpanded={setSidebarExpanded}
       />
-      <Navbar sidebarExpanded={sidebarExpanded} />
-      <main className={`pt-16 transition-all duration-300 ${sidebarExpanded ? 'ml-64' : 'ml-16'}`}>
-        <div className="container py-6 mx-auto">
+      <Navbar 
+        sidebarExpanded={sidebarExpanded} 
+        onToggleSidebar={() => setSidebarExpanded(prev => !prev)}
+      />
+      <main className={`pt-16 transition-all duration-300 ${sidebarExpanded && !isMobile ? 'ml-64' : 'ml-0 md:ml-16'}`}>
+        <div className="container py-6 mx-auto px-4 md:px-6">
           {children}
         </div>
       </main>
