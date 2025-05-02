@@ -16,6 +16,7 @@ import Payments from "./pages/Payments";
 import Crypto from "./pages/Crypto";
 import Rewards from "./pages/Rewards";
 import Integrations from "./pages/Integrations";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/crypto" element={<Crypto />} />
           <Route path="/rewards" element={<Rewards />} />
           <Route path="/integrations" element={<Integrations />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
