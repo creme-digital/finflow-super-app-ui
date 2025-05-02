@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -19,7 +18,7 @@ import {
   ChevronDown,
   ChevronUp,
   CalendarCheck,
-  Dollar,
+  DollarSign,
 } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -46,7 +45,7 @@ const navCategories: NavCategory[] = [
       { title: 'Accounts', href: '/accounts', icon: Wallet },
       { title: 'Cards', href: '/cards', icon: CreditCard },
       { title: 'Transfers', href: '/transfers', icon: ArrowRightLeft },
-      { title: 'Payments', href: '/payments', icon: Dollar },
+      { title: 'Payments', href: '/payments', icon: DollarSign },
       { title: 'Expenses', href: '/expenses', icon: ReceiptText },
       { title: 'Accounting', href: '/accounting', icon: FileText },
       { title: 'Payroll', href: '/payroll', icon: FileText },
