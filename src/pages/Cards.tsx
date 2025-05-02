@@ -75,7 +75,7 @@ const sampleCards = [
 ];
 
 export default function Cards() {
-  const [viewMode, setViewMode] = useState('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
@@ -95,7 +95,7 @@ export default function Cards() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Cards</h1>
         <div className="flex items-center gap-4">
-          <ToggleGroup type="single" value={viewMode} onValueChange={(value) => value && setViewMode(value)} className="border rounded-md">
+          <ToggleGroup type="single" value={viewMode} onValueChange={(value) => value && setViewMode(value as 'grid' | 'list')} className="border rounded-md">
             <ToggleGroupItem value="grid" aria-label="Grid view">
               <Grid2x2 className="h-5 w-5" />
             </ToggleGroupItem>
