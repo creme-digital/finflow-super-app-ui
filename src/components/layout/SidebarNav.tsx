@@ -18,6 +18,7 @@ import {
   ChevronRight,
   ChevronDown,
   ChevronUp,
+  CalendarCheck,
 } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -47,7 +48,7 @@ const navCategories: NavCategory[] = [
       { title: 'Expenses', href: '/expenses', icon: ReceiptText },
       { title: 'Accounting', href: '/accounting', icon: FileText },
       { title: 'Payroll', href: '/payroll', icon: FileText },
-      { title: 'Taxes', href: '/taxes', icon: FileText },
+      { title: 'Tax', href: '/tax', icon: CalendarCheck },
       { title: 'Payments', href: '/payments', icon: CreditCard },
       { title: 'Crypto', href: '/crypto', icon: Bitcoin },
       { title: 'Rewards', href: '/rewards', icon: Award },
