@@ -4,20 +4,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
-  Chart,
   ChartContainer, 
   ChartTooltip,
-  ChartTooltipContent,
-  ChartSeries, 
-  ChartLine, 
-  ChartLineSeries,
-  ChartBar, 
-  ChartBarSeries,
-  ChartAxis
+  ChartTooltipContent
 } from '@/components/ui/chart';
 import { BarChart2, FileText, Download, ChartPieIcon } from 'lucide-react';
 import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 
 const monthlyData = [
   { month: 'Jan', income: 4500, expenses: 3200 },
@@ -41,6 +35,9 @@ const categoryData = [
   { name: 'Marketing', value: 2800 },
   { name: 'Other', value: 1200 },
 ];
+
+// Color constants for charts
+const COLORS = ['#8b5cf6', '#f97316', '#10b981', '#3b82f6', '#ef4444'];
 
 export function ReportsTab() {
   const handleDownload = (reportType: string) => {
@@ -90,23 +87,19 @@ export function ReportsTab() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Chart className="h-[300px]">
-            <ChartContainer>
-              <ChartTooltip>
-                <ChartTooltipContent className="bg-background border border-border" />
-              </ChartTooltip>
-              <ChartBarSeries
-                data={monthlyData}
-                xAxis="month"
-                category="Income & Expenses"
-                stack
-              >
-                <ChartBar name="income" valueKey="income" color="#8b5cf6" />
-                <ChartBar name="expenses" valueKey="expenses" color="#f97316" />
-              </ChartBarSeries>
-              <ChartAxis />
-            </ChartContainer>
-          </Chart>
+          <div className="h-[300px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={monthlyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="income" name="Income" fill="#8b5cf6" />
+                <Bar dataKey="expenses" name="Expenses" fill="#f97316" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </CardContent>
         <CardFooter>
           <Button variant="outline" onClick={() => handleDownload("Income vs Expenses")}>
@@ -127,21 +120,17 @@ export function ReportsTab() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Chart className="h-[250px]">
-              <ChartContainer>
-                <ChartTooltip>
-                  <ChartTooltipContent />
-                </ChartTooltip>
-                <ChartBarSeries
-                  data={quarterlyData}
-                  xAxis="name"
-                  category="Revenue"
-                >
-                  <ChartBar valueKey="value" color="#8b5cf6" />
-                </ChartBarSeries>
-                <ChartAxis />
-              </ChartContainer>
-            </Chart>
+            <div className="h-[250px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={quarterlyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="value" name="Revenue" fill="#8b5cf6" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
           <CardFooter>
             <Button variant="ghost" size="sm" onClick={() => handleDownload("Quarterly Revenue")}>
@@ -161,21 +150,28 @@ export function ReportsTab() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Chart className="h-[250px]">
-              <ChartContainer>
-                <ChartTooltip>
-                  <ChartTooltipContent />
-                </ChartTooltip>
-                <ChartBarSeries
-                  data={categoryData}
-                  xAxis="name"
-                  category="Expenses"
-                >
-                  <ChartBar valueKey="value" color="#f97316" />
-                </ChartBarSeries>
-                <ChartAxis />
-              </ChartContainer>
-            </Chart>
+            <div className="h-[250px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                  <Pie
+                    data={categoryData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {categoryData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value) => `$${value}`} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
           <CardFooter>
             <Button variant="ghost" size="sm" onClick={() => handleDownload("Expense Categories")}>
