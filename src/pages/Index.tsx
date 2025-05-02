@@ -6,6 +6,8 @@ import { TransactionsList } from '@/components/dashboard/TransactionsList';
 import { QuickActions } from '@/components/dashboard/QuickActions';
 import { SpendingSummary } from '@/components/dashboard/SpendingSummary';
 import { AccountsOverview } from '@/components/dashboard/AccountsOverview';
+import { CardUsage } from '@/components/dashboard/CardUsage';
+import { ChartColumnIncreasing, WalletCards, TrendingUp, TrendingDown } from 'lucide-react';
 
 const DashboardPage = () => {
   return (
@@ -22,25 +24,48 @@ const DashboardPage = () => {
             balance="$104,400.00" 
             change="5.2% from last month" 
             positive={true} 
-          />
+            className="relative overflow-hidden"
+          >
+            <div className="absolute bottom-0 right-0 opacity-10">
+              <WalletCards className="h-16 w-16 text-fintech-purple" />
+            </div>
+          </BalanceCard>
+          
           <BalanceCard 
             title="Monthly Income" 
             balance="$32,400.00" 
             change="2.3% from last month" 
-            positive={true} 
-          />
+            positive={true}
+            className="relative overflow-hidden"
+          >
+            <div className="absolute bottom-0 right-0 opacity-10">
+              <TrendingUp className="h-16 w-16 text-fintech-success" />
+            </div>
+          </BalanceCard>
+          
           <BalanceCard 
             title="Monthly Expenses" 
             balance="$12,800.00" 
             change="4.1% from last month" 
-            positive={false} 
-          />
+            positive={false}
+            className="relative overflow-hidden"
+          >
+            <div className="absolute bottom-0 right-0 opacity-10">
+              <TrendingDown className="h-16 w-16 text-fintech-error" />
+            </div>
+          </BalanceCard>
+          
           <BalanceCard 
             title="Cash Flow" 
             balance="$19,600.00" 
             change="1.7% from last month" 
-            positive={true} 
-          />
+            positive={true}
+            className="relative overflow-hidden"
+          >
+            <div className="absolute bottom-0 right-0 opacity-10">
+              <ChartColumnIncreasing className="h-16 w-16 text-fintech-purple" />
+            </div>
+          </BalanceCard>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -56,7 +81,10 @@ const DashboardPage = () => {
           <div className="lg:col-span-1">
             <AccountsOverview />
           </div>
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
+            <CardUsage />
+          </div>
+          <div className="lg:col-span-1">
             <TransactionsList />
           </div>
         </div>

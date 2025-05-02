@@ -9,6 +9,7 @@ interface BalanceCardProps {
   change?: string;
   positive?: boolean;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export function BalanceCard({
@@ -17,6 +18,7 @@ export function BalanceCard({
   change,
   positive = true,
   className,
+  children,
 }: BalanceCardProps) {
   return (
     <Card className={cn('card-shadow card-gradient overflow-hidden', className)}>
@@ -37,6 +39,7 @@ export function BalanceCard({
             </div>
           )}
         </div>
+        {children}
       </CardContent>
     </Card>
   );
