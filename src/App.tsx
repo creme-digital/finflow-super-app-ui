@@ -14,6 +14,7 @@ import Payroll from "./pages/Payroll";
 import Tax from "./pages/Tax";
 import Payments from "./pages/Payments";
 import Crypto from "./pages/Crypto";
+import Rewards from "./pages/Rewards";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,7 +36,7 @@ const App = () => (
           <Route path="/tax" element={<Tax />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/crypto" element={<Crypto />} />
-          {/* Routes for other pages will be added here */}
+          <Route path="/rewards" element={<Rewards />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
