@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -24,7 +23,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu';
-import { Calendar, ChevronDown, FileChart, FilePdf } from 'lucide-react';
+import { Calendar, ChevronDown, BarChart2, FileText } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 
 // Sample chart data
@@ -197,11 +196,11 @@ export function ReportsTab() {
                   <TableCell>{report.type}</TableCell>
                   <TableCell className="text-right space-x-2">
                     <Button variant="outline" size="sm">
-                      <FileChart className="h-4 w-4 mr-2" />
+                      <BarChart2 className="h-4 w-4 mr-2" />
                       Generate
                     </Button>
                     <Button variant="ghost" size="sm">
-                      <FilePdf className="h-4 w-4" />
+                      <FileText className="h-4 w-4" />
                     </Button>
                   </TableCell>
                 </TableRow>
