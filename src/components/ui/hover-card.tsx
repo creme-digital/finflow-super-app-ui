@@ -1,7 +1,7 @@
 
 import * as React from "react"
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card"
-
+import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 const HoverCard = HoverCardPrimitive.Root
@@ -22,7 +22,16 @@ const HoverCardContent = React.forwardRef<
         className
       )}
       {...props}
-    />
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.2 }}
+      >
+        {props.children}
+      </motion.div>
+    </HoverCardPrimitive.Content>
   </HoverCardPrimitive.Portal>
 ))
 HoverCardContent.displayName = HoverCardPrimitive.Content.displayName

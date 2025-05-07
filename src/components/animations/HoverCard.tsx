@@ -15,6 +15,7 @@ export const HoverCard = ({ children, ...props }: HoverCardProps) => {
         transition: { duration: 0.2 }
       }}
       whileTap={{ scale: 0.98 }}
+      className="w-full"
     >
       <Card {...props}>
         {children}

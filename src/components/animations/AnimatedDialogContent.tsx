@@ -1,6 +1,6 @@
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -24,17 +24,17 @@ export const AnimatedDialogContent = React.forwardRef<
         className
       )}
       {...props}
-      asChild
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
         transition={{
           type: "spring",
           stiffness: 300,
           damping: 30
         }}
+        className="w-full"
       >
         {children}
       </motion.div>
