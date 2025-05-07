@@ -30,6 +30,9 @@ export function Navbar({ sidebarExpanded, onToggleSidebar }: NavbarProps) {
               <span className="sr-only">Toggle Menu</span>
             </Button>
           )}
+          <div className="flex items-center">
+            <span className="text-lg font-medium mr-4">meely</span>
+          </div>
           <div className="relative w-full max-w-md hidden md:block">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input 
