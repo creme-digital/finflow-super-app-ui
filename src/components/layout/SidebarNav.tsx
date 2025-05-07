@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -118,7 +119,7 @@ export function SidebarNav({
       <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
         <div className={cn('flex items-center gap-2', !expanded && !isMobile && 'hidden')}>
           
-          <span className="text-white font-thin text-3xl">meely</span>
+          <span className="text-white font-extralight tracking-wide text-3xl">meely</span>
         </div>
         {!expanded && !isMobile && <div className="w-8 h-8 mx-auto rounded-md bg-fintech-purple flex items-center justify-center text-white font-bold">
             F
