@@ -117,10 +117,8 @@ export function SidebarNav({
   const SidebarContent = () => <>
       <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
         <div className={cn('flex items-center gap-2', !expanded && !isMobile && 'hidden')}>
-          <div className="w-8 h-8 rounded-md bg-fintech-purple flex items-center justify-center text-white font-bold">
-            F
-          </div>
-          <span className="text-lg font-semibold text-white">meely</span>
+          
+          <span className="text-white font-thin text-3xl">meely</span>
         </div>
         {!expanded && !isMobile && <div className="w-8 h-8 mx-auto rounded-md bg-fintech-purple flex items-center justify-center text-white font-bold">
             F
