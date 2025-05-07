@@ -1,7 +1,7 @@
 
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
-
+import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 const Drawer = ({
@@ -47,8 +47,16 @@ const DrawerContent = React.forwardRef<
       )}
       {...props}
     >
-      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
-      {children}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        transition={{ duration: 0.3 }}
+        className="w-full"
+      >
+        <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+        {children}
+      </motion.div>
     </DrawerPrimitive.Content>
   </DrawerPortal>
 ))
