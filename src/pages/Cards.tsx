@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { CardDetails } from '@/components/cards/CardDetails';
@@ -27,22 +26,6 @@ const sampleCards = [
   },
   {
     id: '2',
-    name: 'Business Credit Card',
-    type: 'Physical',
-    category: 'Business',
-    cardNumber: '•••• •••• •••• 7829',
-    fullCardNumber: '5412 3333 4444 7829',
-    expiryDate: '06/27',
-    cvv: '456',
-    cardholderName: 'John Smith',
-    balance: '$5,872.30',
-    available: '$9,127.70',
-    creditLimit: '$15,000.00',
-    isLocked: false,
-    cardColor: 'bg-gradient-to-r from-fintech-blue to-sky-400'
-  },
-  {
-    id: '3',
     name: 'Virtual Shopping Card',
     type: 'Virtual',
     category: 'Personal',
@@ -57,7 +40,7 @@ const sampleCards = [
     cardColor: 'bg-gradient-to-r from-fintech-success to-green-400'
   },
   {
-    id: '4',
+    id: '3',
     name: 'Business Expense Card',
     type: 'Virtual',
     category: 'Business',
@@ -78,11 +61,20 @@ export default function Cards() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
+  const [cards, setCards] = useState(sampleCards);
+
+  const handleCardLockChange = (cardId: string, isLocked: boolean) => {
+    setCards(prevCards => 
+      prevCards.map(card => 
+        card.id === cardId ? { ...card, isLocked } : card
+      )
+    );
+  };
 
   // Filter cards based on active tab
   const filteredCards = activeTab === 'all' 
-    ? sampleCards 
-    : sampleCards.filter(card => {
+    ? cards 
+    : cards.filter(card => {
         if (activeTab === 'physical') return card.type === 'Physical';
         if (activeTab === 'virtual') return card.type === 'Virtual';
         if (activeTab === 'personal') return card.category === 'Personal';
@@ -93,7 +85,10 @@ export default function Cards() {
   return (
     <Layout>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Cards</h1>
+        <div>
+          <h1 className="text-3xl font-semibold tracking-tight">Cards</h1>
+          <p className="text-muted-foreground mt-1">View & Manage your cards.</p>
+        </div>
         <div className="flex items-center gap-4">
           <ToggleGroup type="single" value={viewMode} onValueChange={(value) => value && setViewMode(value as 'grid' | 'list')} className="border rounded-md">
             <ToggleGroupItem value="grid" aria-label="Grid view">
@@ -127,6 +122,7 @@ export default function Cards() {
             viewMode={viewMode}
             isSelected={selectedCard === card.id}
             onSelect={() => setSelectedCard(card.id === selectedCard ? null : card.id)}
+            onLockChange={(isLocked) => handleCardLockChange(card.id, isLocked)}
           />
         ))}
       </div>

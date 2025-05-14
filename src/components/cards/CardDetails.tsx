@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Card, 
@@ -7,7 +6,7 @@ import {
   CardHeader
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CreditCard, ChevronDown, ChevronUp } from 'lucide-react';
+import { CreditCard, ChevronDown, ChevronUp, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CardControls } from './CardControls';
 import { TransactionList } from './TransactionList';
@@ -33,9 +32,10 @@ interface CardDetailsProps {
   viewMode: 'grid' | 'list';
   isSelected: boolean;
   onSelect: () => void;
+  onLockChange: (isLocked: boolean) => void;
 }
 
-export function CardDetails({ card, viewMode, isSelected, onSelect }: CardDetailsProps) {
+export function CardDetails({ card, viewMode, isSelected, onSelect, onLockChange }: CardDetailsProps) {
   const [showCardInfo, setShowCardInfo] = useState(false);
   const [transactionsOpen, setTransactionsOpen] = useState(false);
   
@@ -49,35 +49,44 @@ export function CardDetails({ card, viewMode, isSelected, onSelect }: CardDetail
         viewMode === 'list' ? 'w-full md:w-1/3' : 'w-full'
       )}>
         <CardHeader className={cn(
-          "p-6",
+          "p-6 relative",
           card.cardColor,
-          card.isLocked && "opacity-80"
+          card.isLocked && "backdrop-blur-sm"
         )}>
-          <div className="flex justify-between">
-            <div>
-              <p className="text-white font-medium text-lg">{card.name}</p>
-              <p className="text-white/80 text-sm">{card.type} • {card.category}</p>
+          {card.isLocked && (
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center">
+              <Lock className="h-8 w-8 text-white" />
             </div>
-            <CreditCard className="h-6 w-6 text-white" />
-          </div>
-          
-          <div className="mt-6 mb-2">
-            <p className="text-white text-lg font-mono">
-              {showCardInfo ? card.fullCardNumber : card.cardNumber}
-            </p>
-            <div className="flex justify-between mt-4 text-white">
-              <div>
-                <p className="text-xs text-white/70">VALID THRU</p>
-                <p className="font-mono">{card.expiryDate}</p>
+          )}
+          <div className="flex flex-col h-full w-full">
+            <div className="flex justify-between mb-auto">
+              <div className="flex flex-row items-center justify-between w-full">
+                <p className="text-white font-medium text-lg">{card.name}</p>
+                <p className="text-white/80 text-sm">{card.type} • {card.category}</p>
               </div>
-              <div>
-                <p className="text-xs text-white/70">CVV</p>
-                <p className="font-mono">{showCardInfo ? card.cvv : '***'}</p>
+             
+            </div>
+            <div className="h-[1px] bg-white/20 my-4" />
+            <div className="mt-auto">
+              <p className="text-white text-lg font-mono">
+                {showCardInfo ? card.fullCardNumber : card.cardNumber}
+              </p>
+              <div className="flex gap-12 mt-4 text-white">
+                <div>
+                  <p className="text-xs text-white/70">VALID THRU</p>
+                  <p className="font-mono">{card.expiryDate}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-white/70">CVV</p>
+                  <p className="font-mono">{showCardInfo ? card.cvv : '***'}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-white/70">CARDHOLDER</p>
+                  <p className="font-mono">{card.cardholderName}</p>
+                </div>
               </div>
             </div>
           </div>
-          
-          <p className="text-white text-sm mt-4">{card.cardholderName}</p>
         </CardHeader>
         
         <CardContent className="p-4">
@@ -103,10 +112,10 @@ export function CardDetails({ card, viewMode, isSelected, onSelect }: CardDetail
             isLocked={card.isLocked} 
             showCardDetails={showCardInfo}
             onToggleCardDetails={() => setShowCardInfo(!showCardInfo)}
+            onLockChange={onLockChange}
           />
         </CardContent>
       </div>
-      
       <div className={cn(
         viewMode === 'list' ? 'w-full md:w-2/3 border-t md:border-t-0 md:border-l' : 'w-full border-t'
       )}>
