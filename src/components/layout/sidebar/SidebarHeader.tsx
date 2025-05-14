@@ -18,9 +18,9 @@ export const SidebarHeader = ({
   setMobileOpen
 }: SidebarHeaderProps) => {
   return (
-    <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+    <div className="flex items-center justify-between p-3 border-b border-sidebar-border">
       <div className={cn('flex items-center gap-2', !expanded && !isMobile && 'hidden')}>
-        <span className="text-white font-extralight tracking-wide text-3xl">meely</span>
+        <span className="text-black font-extralight tracking-wide text-3xl">meely</span>
       </div>
       
       {!expanded && !isMobile && (

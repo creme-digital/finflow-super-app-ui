@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CalendarCheck } from 'lucide-react';
+import { CalendarCheck, DollarSign } from 'lucide-react';
 
 export function PayoutSchedule() {
   // Sample data for upcoming payouts
@@ -17,7 +17,7 @@ export function PayoutSchedule() {
     <Card className="col-span-1">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <CalendarCheck className="h-5 w-5" /> Payout Schedule
+          Payout Schedule
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -25,11 +25,11 @@ export function PayoutSchedule() {
           {payouts.map((payout) => (
             <div key={payout.id} className="flex items-center justify-between border-b pb-2 last:border-0">
               <div>
-                <p className="text-sm font-medium">{payout.recipient}</p>
+                <p className="text-base font-medium">{payout.recipient}</p>
                 <p className="text-xs text-muted-foreground">{payout.date}</p>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">${payout.amount.toFixed(2)}</span>
+                <span className="text-base font-medium">${payout.amount.toFixed(2)}</span>
                 <Badge variant={payout.status === 'scheduled' ? 'default' : 'outline'}>
                   {payout.status === 'scheduled' ? 'Scheduled' : 'Pending'}
                 </Badge>

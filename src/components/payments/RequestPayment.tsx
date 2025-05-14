@@ -42,7 +42,7 @@ export function RequestPayment() {
   };
 
   return (
-    <Card className="max-w-xl mx-auto">
+    <Card className="w-full">
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -114,7 +114,7 @@ export function RequestPayment() {
             />
           </div>
           
-          <Button type="submit" className="w-full">Send Request</Button>
+          <div className="flex justify-end"><Button type="submit" className="w-auto">Send Request</Button></div>
         </form>
       </CardContent>
     </Card>

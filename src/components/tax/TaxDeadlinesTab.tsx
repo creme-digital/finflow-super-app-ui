@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { CalendarCheck, CalendarX, ArrowRightLeft } from 'lucide-react';
+import { CalendarCheck, CalendarX, ArrowRightLeft, Banknote, Landmark, History } from 'lucide-react';
 import { format } from 'date-fns';
 
 // Sample tax deadlines data
@@ -131,12 +130,11 @@ export const TaxDeadlinesTab = () => {
             <div className="space-y-4">
               {taxDeadlinesData.map((deadline) => (
                 <div key={deadline.id} className="flex items-center p-3 rounded-md border">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${
-                    deadline.status === 'paid' ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'
+                  <div className={`flex flex-col items-center justify-center mr-4 w-14 h-14 rounded-xl border font-semibold select-none ${
+                    deadline.status === 'paid' ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-amber-50 border-amber-200 text-amber-600'
                   }`}>
-                    {format(deadline.dueDate, 'MMM')}
-                    <br />
-                    {format(deadline.dueDate, 'd')}
+                    <span className="text-xs uppercase tracking-wide font-bold">{format(deadline.dueDate, 'MMM')}</span>
+                    <span className="text-xl leading-none">{format(deadline.dueDate, 'd')}</span>
                   </div>
                   <div>
                     <div className="font-medium">{deadline.description}</div>
@@ -158,21 +156,41 @@ export const TaxDeadlinesTab = () => {
           <CardContent className="pt-6">
             <h3 className="text-lg font-medium mb-4">Payment Options</h3>
             <div className="space-y-4">
-              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer">
-                <h4 className="font-medium">Direct Payment (IRS)</h4>
-                <p className="text-sm text-muted-foreground">Pay directly to the IRS via bank account or credit card</p>
+              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
+                  <Banknote className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-medium">Direct Payment (IRS)</h4>
+                  <p className="text-sm text-muted-foreground">Pay directly to the IRS via bank account or credit card</p>
+                </div>
               </div>
-              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer">
-                <h4 className="font-medium">State Tax Authority</h4>
-                <p className="text-sm text-muted-foreground">Pay state estimated taxes through state tax portal</p>
+              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
+                  <Landmark className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-medium">State Tax Authority</h4>
+                  <p className="text-sm text-muted-foreground">Pay state estimated taxes through state tax portal</p>
+                </div>
               </div>
-              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer">
-                <h4 className="font-medium">Schedule Automatic Payments</h4>
-                <p className="text-sm text-muted-foreground">Set up automatic payments for all your tax deadlines</p>
+              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
+                  <CalendarCheck className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-medium">Schedule Automatic Payments</h4>
+                  <p className="text-sm text-muted-foreground">Set up automatic payments for all your tax deadlines</p>
+                </div>
               </div>
-              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer">
-                <h4 className="font-medium">Payment History</h4>
-                <p className="text-sm text-muted-foreground">View all your previous tax payments</p>
+              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
+                  <History className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-medium">Payment History</h4>
+                  <p className="text-sm text-muted-foreground">View all your previous tax payments</p>
+                </div>
               </div>
             </div>
           </CardContent>

@@ -14,47 +14,35 @@ export const PayrollDashboard = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div className="flex gap-4">
-          <Button onClick={() => setIsModalOpen(true)}>
-            <UserPlus className="mr-2 h-4 w-4" />
-            Add Employee
-          </Button>
-        </div>
-        <Button>
-          <BadgeDollarSign className="mr-2 h-4 w-4" />
-          Run Payroll
-        </Button>
-      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-3 card-gradient rounded-t-lg">
             <CardTitle>Employees</CardTitle>
             <CardDescription>Active employees on payroll</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">12</div>
+            <div className="text-3xl pb-2 font-semibold">12</div>
             <p className="text-xs text-muted-foreground">+2 this month</p>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-3 flex card-gradient rounded-t-lg">
             <CardTitle>Next Pay Date</CardTitle>
             <CardDescription>Upcoming payroll schedule</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">May 15, 2025</div>
+            <div className="text-3xl pb-2 font-semibold">May 15, 2025</div>
             <p className="text-xs text-muted-foreground">13 days remaining</p>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-3 card-gradient rounded-t-lg  ">
             <CardTitle>Monthly Payroll</CardTitle>
             <CardDescription>Current month estimate</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">$38,450</div>
+            <div className="text-3xl pb-2 font-semibold">$38,450</div>
             <p className="text-xs text-muted-foreground">+5.2% from last month</p>
           </CardContent>
         </Card>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -28,7 +27,7 @@ export function SidebarNav({
   if (isMobile) {
     return (
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" className="p-0 w-[280px] border-r bg-sidebar">
+        <SheetContent side="left" className="p-0 w-[280px] border-r border-sidebar-border bg-sidebar">
           <div className="flex flex-col h-full">
             <SidebarContent
               expanded={expanded}
@@ -47,7 +46,7 @@ export function SidebarNav({
   // Desktop view
   return (
     <div className={cn(
-      'bg-sidebar fixed top-0 left-0 bottom-0 z-30 flex flex-col transition-all duration-300',
+      'bg-sidebar fixed top-0 left-0 bottom-0 z-30 flex flex-col transition-all duration-300 border-r border-sidebar-border',
       expanded ? 'w-64' : 'w-16',
       className
     )}>

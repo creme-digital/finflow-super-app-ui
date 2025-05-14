@@ -15,32 +15,32 @@ export const TaxDashboard = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-3 card-gradient rounded-t-lg">
             <CardTitle>Estimated Taxes</CardTitle>
             <CardDescription>Current year estimate</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">$12,450</div>
+            <div className="text-3xl pb-2 font-semibold">$12,450</div>
             <p className="text-xs text-muted-foreground">Based on YTD income</p>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-3 card-gradient rounded-t-lg">
             <CardTitle>Next Deadline</CardTitle>
             <CardDescription>Estimated tax payment</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">Jun 15, 2025</div>
+            <div className="text-3xl pb-2 font-semibold">Jun 15, 2025</div>
             <p className="text-xs text-muted-foreground">Q2 estimated payment</p>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-3 card-gradient rounded-t-lg">
             <CardTitle>YTD Payments</CardTitle>
             <CardDescription>Tax payments made</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">$3,125</div>
+            <div className="text-3xl pb-2 font-semibold">$3,125</div>
             <p className="text-xs text-muted-foreground">25% of annual estimate</p>
           </CardContent>
         </Card>

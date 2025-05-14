@@ -24,7 +24,7 @@ export function CryptoReceive() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="w-full">
       <Card>
         <CardHeader>
           <CardTitle>Receive Cryptocurrency</CardTitle>

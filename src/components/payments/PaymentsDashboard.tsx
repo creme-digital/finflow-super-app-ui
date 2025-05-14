@@ -22,11 +22,11 @@ export function PaymentsDashboard() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+          <CardHeader className="flex flex-row items-center pb-2 card-gradient rounded-t-lg">
+            <CardTitle className="text-sm font-medium pb-1">
+              <ArrowUp className="h-4 w-4 text-muted-foreground" />
               Total Sent
             </CardTitle>
-            <ArrowUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{metrics.totalSent}</div>
@@ -37,11 +37,11 @@ export function PaymentsDashboard() {
         </Card>
         
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+          <CardHeader className="flex flex-row items-center pb-2 card-gradient rounded-t-lg">
+            <CardTitle className="text-sm font-medium pb-1">
+            <ArrowDown className="h-4 w-4 text-muted-foreground" />
               Total Received
             </CardTitle>
-            <ArrowDown className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{metrics.totalReceived}</div>
@@ -52,11 +52,11 @@ export function PaymentsDashboard() {
         </Card>
         
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+          <CardHeader className="flex flex-row items-center pb-2 card-gradient rounded-t-lg">
+            <CardTitle className="text-sm font-medium pb-1">
+            <Wallet className="h-4 w-4 text-muted-foreground" />
               Volume Processed
             </CardTitle>
-            <Wallet className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{metrics.volumeProcessed}</div>
@@ -67,11 +67,12 @@ export function PaymentsDashboard() {
         </Card>
         
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+          <CardHeader className="flex flex-row items-center pb-2 card-gradient rounded-t-lg">
+            <CardTitle className="text-sm font-medium pb-1">
+            <CreditCard className="h-4 w-4 text-muted-foreground" />
               Pending Payments
             </CardTitle>
-            <CreditCard className="h-4 w-4 text-muted-foreground" />
+      
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{metrics.pendingPayments}</div>

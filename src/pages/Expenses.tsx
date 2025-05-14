@@ -91,7 +91,7 @@ export default function Expenses() {
       <div className="flex flex-col gap-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Expenses</h1>
+            <h1 className="text-3xl font-semibold tracking-tight">Expenses</h1>
             <p className="text-muted-foreground mt-1">Track and manage your expenses.</p>
           </div>
           <Button onClick={() => setIsAddExpenseOpen(true)}>

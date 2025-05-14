@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,6 +11,8 @@ import { BarChart2, FileText, Download, ChartPieIcon } from 'lucide-react';
 import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
+import { twMerge } from 'tailwind-merge';
+import type { TooltipProps } from 'recharts';
 
 const monthlyData = [
   { month: 'Jan', income: 4500, expenses: 3200 },
@@ -36,8 +37,27 @@ const categoryData = [
   { name: 'Other', value: 1200 },
 ];
 
-// Color constants for charts
-const COLORS = ['#8b5cf6', '#f97316', '#10b981', '#3b82f6', '#ef4444'];
+// Modern color palette
+const MODERN_COLORS = ['#6366f1', '#06b6d4', '#f59e42', '#10b981', '#f43f5e'];
+
+// Custom Tooltip for Bar and Pie charts
+function CustomTooltip({ active, payload, label }: TooltipProps<any, any>) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white rounded-xl shadow-lg px-4 py-2 border border-gray-100">
+        <p className="font-semibold text-sm mb-1">{label}</p>
+        {payload.map((entry, idx) => (
+          <div key={idx} className="flex items-center gap-2 text-sm">
+            <span className="inline-block w-3 h-3 rounded-full" style={{ background: entry.color }}></span>
+            <span>{entry.name}:</span>
+            <span className="font-medium">{typeof entry.value === 'number' ? `$${entry.value.toLocaleString()}` : entry.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return null;
+}
 
 export function ReportsTab() {
   const handleDownload = (reportType: string) => {
@@ -80,77 +100,83 @@ export function ReportsTab() {
 
       {/* Income vs Expenses Chart */}
       <Card>
-        <CardHeader>
-          <CardTitle>Income vs Expenses</CardTitle>
-          <CardDescription>
-            Comparison of monthly income and expenses
-          </CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between gap-4">
+          <div>
+            <CardTitle>Income vs Expenses</CardTitle>
+            <CardDescription>
+              Comparison of monthly income and expenses
+            </CardDescription>
+          </div>
+          <Button variant="outline" onClick={() => handleDownload("Income vs Expenses")}> 
+            <Download className="mr-2 h-4 w-4" /> Download Report
+          </Button>
         </CardHeader>
         <CardContent>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={monthlyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="income" name="Income" fill="#8b5cf6" />
-                <Bar dataKey="expenses" name="Expenses" fill="#f97316" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="month" tick={{ fontSize: 13, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 13, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={{ fill: '#f1f5f9', opacity: 0.5 }} />
+                <Legend iconType="circle" wrapperStyle={{ fontSize: 13 }} />
+                <Bar dataKey="income" name="Income" fill={MODERN_COLORS[0]} radius={[8, 8, 0, 0]} />
+                <Bar dataKey="expenses" name="Expenses" fill={MODERN_COLORS[2]} radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </CardContent>
-        <CardFooter>
-          <Button variant="outline" onClick={() => handleDownload("Income vs Expenses")}>
-            <Download className="mr-2 h-4 w-4" /> Download Report
-          </Button>
-        </CardFooter>
       </Card>
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Revenue by Quarter */}
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BarChart2 className="h-5 w-5" /> Quarterly Revenue
-            </CardTitle>
-            <CardDescription>
-              Revenue breakdown by quarter
-            </CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between gap-4">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                Quarterly Revenue
+              </CardTitle>
+              <CardDescription>
+                Revenue breakdown by quarter
+              </CardDescription>
+            </div>
+            <Button variant="outline" size="sm" onClick={() => handleDownload("Quarterly Revenue")}> 
+              <Download className="mr-2 h-4 w-4" /> Download PDF
+            </Button>
           </CardHeader>
           <CardContent>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={quarterlyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="value" name="Revenue" fill="#8b5cf6" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis dataKey="name" tick={{ fontSize: 13, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 13, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                  <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={{ fill: '#f1f5f9', opacity: 0.5 }} />
+                  <Legend iconType="circle" wrapperStyle={{ fontSize: 13 }} />
+                  <Bar dataKey="value" name="Revenue" fill={MODERN_COLORS[0]} radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
-          <CardFooter>
-            <Button variant="ghost" size="sm" onClick={() => handleDownload("Quarterly Revenue")}>
-              <FileText className="mr-2 h-4 w-4" /> PDF
-            </Button>
-          </CardFooter>
         </Card>
 
         {/* Expenses by Category */}
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <ChartPieIcon className="h-5 w-5" /> Expense Categories
-            </CardTitle>
-            <CardDescription>
-              Expenses breakdown by category
-            </CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between gap-4">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                Expense Categories
+              </CardTitle>
+              <CardDescription>
+                Expenses breakdown by category
+              </CardDescription>
+            </div>
+            <Button variant="outline" size="sm" onClick={() => handleDownload("Expense Categories")}> 
+              <Download className="mr-2 h-4 w-4" /> Download PDF
+            </Button>
           </CardHeader>
           <CardContent>
-            <div className="h-[250px] w-full">
+            <div className="h-[250px] w-full flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                   <Pie
@@ -162,22 +188,19 @@ export function ReportsTab() {
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="value"
+                    stroke="#fff"
+                    strokeWidth={2}
                   >
                     {categoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell key={`cell-${index}`} fill={MODERN_COLORS[index % MODERN_COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => `$${value}`} />
-                  <Legend />
+                  <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={{ fill: '#f1f5f9', opacity: 0.5 }} />
+                  <Legend iconType="circle" wrapperStyle={{ fontSize: 13 }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
-          <CardFooter>
-            <Button variant="ghost" size="sm" onClick={() => handleDownload("Expense Categories")}>
-              <FileText className="mr-2 h-4 w-4" /> PDF
-            </Button>
-          </CardFooter>
         </Card>
       </div>
 

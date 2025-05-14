@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { BalanceCard } from '@/components/dashboard/BalanceCard';
@@ -14,7 +13,7 @@ const DashboardPage = () => {
     <Layout>
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
           <p className="text-muted-foreground mt-1">Welcome back! Here's an overview of your finances.</p>
         </div>
         
@@ -22,49 +21,45 @@ const DashboardPage = () => {
           <BalanceCard 
             title="Total Balance" 
             balance="$104,400.00" 
-            change="5.2% from last month" 
+            change="5.2%" 
             positive={true} 
             className="relative overflow-hidden"
+            icon={WalletCards}
           >
-            <div className="absolute bottom-0 right-0 opacity-10">
-              <WalletCards className="h-16 w-16 text-fintech-purple" />
-            </div>
+            
           </BalanceCard>
           
           <BalanceCard 
             title="Monthly Income" 
             balance="$32,400.00" 
-            change="2.3% from last month" 
+            change="2.3%" 
             positive={true}
             className="relative overflow-hidden"
+            icon={TrendingUp}
           >
-            <div className="absolute bottom-0 right-0 opacity-10">
-              <TrendingUp className="h-16 w-16 text-fintech-success" />
-            </div>
+            
           </BalanceCard>
           
           <BalanceCard 
             title="Monthly Expenses" 
             balance="$12,800.00" 
-            change="4.1% from last month" 
+            change="4.1%" 
             positive={false}
             className="relative overflow-hidden"
+            icon={TrendingDown}
           >
-            <div className="absolute bottom-0 right-0 opacity-10">
-              <TrendingDown className="h-16 w-16 text-fintech-error" />
-            </div>
+            
           </BalanceCard>
           
           <BalanceCard 
             title="Cash Flow" 
             balance="$19,600.00" 
-            change="1.7% from last month" 
+            change="1.7%" 
             positive={true}
             className="relative overflow-hidden"
+            icon={ChartColumnIncreasing}
           >
-            <div className="absolute bottom-0 right-0 opacity-10">
-              <ChartColumnIncreasing className="h-16 w-16 text-fintech-purple" />
-            </div>
+            
           </BalanceCard>
         </div>
         

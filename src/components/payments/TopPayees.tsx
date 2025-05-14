@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
@@ -13,24 +12,35 @@ export function TopPayees() {
     { id: 5, name: 'ABC Suppliers', amount: 750.00, percentage: 25, avatar: 'A' },
   ];
 
+  // Define a set of Tailwind color classes to cycle through
+  const avatarColors = [
+    'bg-blue-500 text-white',
+    'bg-emerald-500 text-white',
+    'bg-orange-500 text-white',
+    'bg-purple-500 text-white',
+    'bg-pink-500 text-white',
+  ];
+
   return (
     <Card className="col-span-1">
       <CardHeader>
         <CardTitle>Top Payees</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {payees.map((payee) => (
-          <div key={payee.id} className="flex items-center space-x-4">
-            <Avatar className="h-8 w-8 bg-primary text-primary-foreground">
-              <div className="text-xs font-medium">{payee.avatar}</div>
-            </Avatar>
-            <div className="flex-1 space-y-1">
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-medium">{payee.name}</p>
-                <p className="text-sm font-medium">${payee.amount.toFixed(2)}</p>
+        {payees.map((payee, idx) => (
+          <div key={payee.id}>
+            <div className="flex items-center space-x-4 pb-4">
+              <Avatar className={`h-8 w-8 flex items-center justify-center ${avatarColors[idx % avatarColors.length]}`}>
+                <div className="text-xs font-medium">{payee.avatar}</div>
+              </Avatar>
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <p className="text-base font-medium">{payee.name}</p>
+                  <p className="text-base font-medium">${payee.amount.toFixed(2)}</p>
+                </div>
               </div>
-              <Progress value={payee.percentage} className="h-2" />
             </div>
+            {idx < payees.length - 1 && <div className="border-b border-muted-foreground/10" />}
           </div>
         ))}
       </CardContent>

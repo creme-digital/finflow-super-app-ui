@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -362,8 +361,6 @@ export function TransferForm({ transferType, onSubmit, initialData }: TransferFo
             </FormItem>
           )}
         />
-
-        <Button type="submit" className="mt-6">Continue to Review</Button>
       </form>
     </Form>
   );

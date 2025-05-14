@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Lock, LockOpen, Eye, EyeOff, Sliders } from 'lucide-react';
@@ -21,24 +20,25 @@ interface CardControlsProps {
   isLocked: boolean;
   showCardDetails: boolean;
   onToggleCardDetails: () => void;
+  onLockChange: (locked: boolean) => void;
 }
 
 export function CardControls({ 
   cardId, 
   isLocked, 
   showCardDetails,
-  onToggleCardDetails
+  onToggleCardDetails,
+  onLockChange
 }: CardControlsProps) {
-  const [localLocked, setLocalLocked] = useState(isLocked);
   const [spendingLimit, setSpendingLimit] = useState('1000');
   const [openLimitDialog, setOpenLimitDialog] = useState(false);
   const { toast } = useToast();
 
   const handleToggleLock = () => {
-    setLocalLocked(!localLocked);
+    onLockChange(!isLocked);
     toast({
-      title: localLocked ? "Card unlocked" : "Card locked",
-      description: localLocked 
+      title: isLocked ? "Card unlocked" : "Card locked",
+      description: isLocked 
         ? "Your card has been unlocked and is now active." 
         : "Your card has been locked for security.",
       variant: "default",
@@ -61,11 +61,11 @@ export function CardControls({
         size="sm" 
         className={cn(
           "flex-1",
-          localLocked && "text-amber-600 border-amber-600"
+          isLocked && "text-amber-600 border-amber-600"
         )}
         onClick={handleToggleLock}
       >
-        {localLocked ? (
+        {isLocked ? (
           <>
             <Lock className="mr-2 h-4 w-4" />
             Unlock Card

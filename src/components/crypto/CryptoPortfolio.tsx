@@ -1,12 +1,12 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BalanceCard } from '@/components/dashboard/BalanceCard';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Bitcoin, DollarSign, TrendingUp, TrendingDown } from 'lucide-react';
+import type { TooltipProps } from 'recharts';
 
 const portfolioData = [
   { date: 'Jan', btc: 0.85, eth: 1.2 },
@@ -30,6 +30,31 @@ const chartConfig = {
   eth: { theme: { light: '#627EEA', dark: '#627EEA' }, label: 'Ethereum' },
 };
 
+// Modern color palette for lines
+const MODERN_COLORS = {
+  btc: '#F7931A',
+  eth: '#627EEA',
+};
+
+// Custom Tooltip for LineChart
+function CustomTooltip({ active, payload, label }: TooltipProps<any, any>) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white rounded-xl shadow-lg px-4 py-2 border border-gray-100">
+        <p className="font-semibold text-sm mb-1">{label}</p>
+        {payload.map((entry, idx) => (
+          <div key={idx} className="flex items-center gap-2 text-sm">
+            <span className="inline-block w-3 h-3 rounded-full" style={{ background: entry.color }}></span>
+            <span>{entry.name}:</span>
+            <span className="font-medium">{typeof entry.value === 'number' ? entry.value : entry.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return null;
+}
+
 export function CryptoPortfolio() {
   return (
     <div className="space-y-6">
@@ -40,11 +65,9 @@ export function CryptoPortfolio() {
           change="7.3% this week"
           positive={true}
           className="col-span-1"
+          icon={DollarSign}
         >
-          <div className="mt-4 flex items-center text-sm text-muted-foreground">
-            <DollarSign className="w-4 h-4 mr-1" />
-            <span>USD Value</span>
-          </div>
+          
         </BalanceCard>
         
         <BalanceCard
@@ -53,11 +76,9 @@ export function CryptoPortfolio() {
           change="$24,850"
           positive={true}
           className="col-span-1"
+          icon={Bitcoin}
         >
-          <div className="mt-4 flex items-center text-sm text-muted-foreground">
-            <Bitcoin className="w-4 h-4 mr-1" />
-            <span>≈ $59,167 per BTC</span>
-          </div>
+          
         </BalanceCard>
         
         <BalanceCard
@@ -66,11 +87,9 @@ export function CryptoPortfolio() {
           change="3.9%"
           positive={true}
           className="col-span-1"
+          icon={TrendingUp}
         >
-          <div className="mt-4 flex items-center text-sm text-muted-foreground">
-            <TrendingUp className="w-4 h-4 mr-1" />
-            <span>Overall Performance</span>
-          </div>
+          
         </BalanceCard>
       </div>
 
@@ -79,34 +98,35 @@ export function CryptoPortfolio() {
           <CardTitle>Portfolio Performance</CardTitle>
         </CardHeader>
         <CardContent>
-          <ChartContainer 
-            config={chartConfig}
-            className="h-[300px]"
-          >
-            <LineChart data={portfolioData}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Line 
-                type="monotone" 
-                dataKey="btc" 
-                stroke="var(--color-btc)" 
-                strokeWidth={2} 
-                dot={{ r: 4 }} 
-                activeDot={{ r: 6 }}
-              />
-              <Line 
-                type="monotone" 
-                dataKey="eth" 
-                stroke="var(--color-eth)" 
-                strokeWidth={2} 
-                dot={{ r: 4 }} 
-                activeDot={{ r: 6 }}
-              />
-              <Legend />
-            </LineChart>
-          </ChartContainer>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={portfolioData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                <XAxis dataKey="date" tick={{ fontSize: 13, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 13, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={{ stroke: '#6366f1', strokeWidth: 2, opacity: 0.1 }} />
+                <Legend iconType="circle" wrapperStyle={{ fontSize: 13 }} />
+                <Line 
+                  type="monotone" 
+                  dataKey="btc" 
+                  name="Bitcoin"
+                  stroke={MODERN_COLORS.btc}
+                  strokeWidth={3}
+                  dot={{ r: 5, fill: MODERN_COLORS.btc }}
+                  activeDot={{ r: 7, fill: MODERN_COLORS.btc }}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="eth" 
+                  name="Ethereum"
+                  stroke={MODERN_COLORS.eth}
+                  strokeWidth={3}
+                  dot={{ r: 5, fill: MODERN_COLORS.eth }}
+                  activeDot={{ r: 7, fill: MODERN_COLORS.eth }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </CardContent>
       </Card>
 

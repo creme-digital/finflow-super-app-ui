@@ -69,7 +69,7 @@ const AccountsPage = () => {
     <Layout>
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Accounts</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">Accounts</h1>
           <p className="text-muted-foreground mt-1">Manage your personal and business accounts.</p>
         </div>
         
@@ -83,9 +83,7 @@ const AccountsPage = () => {
               {personalAccounts.map((account) => (
                 <AccountCard key={account.id} account={account} />
               ))}
-              <Button variant="outline" className="mt-4">
-                + Add New Personal Account
-              </Button>
+             
             </TabsContent>
             <TabsContent value="business" className="space-y-4">
               {businessAccounts.map((account) => (

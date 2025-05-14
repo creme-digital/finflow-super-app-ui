@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -40,25 +39,23 @@ export function IntegrationCard({ integration }: IntegrationCardProps) {
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-2">
             <div className="h-10 w-10 rounded-md flex items-center justify-center bg-muted">
               <integration.icon className="h-6 w-6" />
             </div>
             <div>
               <CardTitle className="text-lg">{integration.name}</CardTitle>
             </div>
-          </div>
-          <div className="flex items-center">
             {integration.popular && (
-              <Badge variant="secondary" className="mr-2">Popular</Badge>
+              <Badge variant="secondary">Popular</Badge>
             )}
-            <Switch 
-              id={`integration-switch-${integration.id}`} 
-              checked={isEnabled} 
-              onCheckedChange={handleToggle}
-            />
           </div>
+          <Switch 
+            id={`integration-switch-${integration.id}`} 
+            checked={isEnabled} 
+            onCheckedChange={handleToggle}
+          />
         </div>
       </CardHeader>
       <CardContent className="pb-3">

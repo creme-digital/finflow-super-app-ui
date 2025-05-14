@@ -9,7 +9,7 @@ import { Bitcoin, Send } from 'lucide-react';
 
 export function CryptoSend() {
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="w-full">
       <Card>
         <CardHeader>
           <CardTitle>Send Cryptocurrency</CardTitle>

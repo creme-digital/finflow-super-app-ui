@@ -168,23 +168,23 @@ export const AddEmployeeModal = ({ open, onOpenChange }: AddEmployeeModalProps) 
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex justify-between mb-8">
+        <div className="flex justify-between items-center mb-10 pt-6 px-2">
           {stepIcons.map((step, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <div 
+            <div key={index} className="flex flex-col items-center w-1/4">
+              <div
                 className={cn(
-                  "w-10 h-10 rounded-full flex items-center justify-center mb-2",
-                  index === currentStep ? "bg-primary text-white" : 
-                  index < currentStep ? "bg-green-500 text-white" : 
-                  "bg-muted text-muted-foreground"
+                  "w-12 h-12 rounded-full flex items-center justify-center mb-2 border-2 transition-all duration-200",
+                  index === currentStep ? "bg-primary text-white border-primary scale-110" :
+                  index < currentStep ? "bg-green-500 text-white border-green-500" :
+                  "bg-muted text-muted-foreground border-muted-foreground/20"
                 )}
               >
-                <step.icon className="h-5 w-5" />
+                <step.icon className="h-6 w-6" />
               </div>
               <span className={cn(
-                "text-xs",
-                index === currentStep ? "text-primary font-medium" : 
-                index < currentStep ? "text-green-500" :
+                "text-xs text-center mt-1",
+                index === currentStep ? "text-primary font-semibold" :
+                index < currentStep ? "text-green-600 font-medium" :
                 "text-muted-foreground"
               )}>
                 {step.label}

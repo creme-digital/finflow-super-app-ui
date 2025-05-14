@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -9,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { ArrowRightLeft, TrendingUp, TrendingDown } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import type { TooltipProps } from 'recharts';
 
 const priceData = [
   { time: '1:00', price: 58950 },
@@ -37,6 +37,44 @@ const chartConfig = {
   price: { theme: { light: '#9b87f5', dark: '#9b87f5' }, label: 'Price' },
 };
 
+// Modern color for price area
+const MODERN_COLOR = '#6366f1';
+
+// Custom Tooltip for AreaChart
+function CustomTooltip({ active, payload, label }: TooltipProps<any, any>) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white rounded-xl shadow-lg px-4 py-2 border border-gray-100">
+        <p className="font-semibold text-sm mb-1">{label}</p>
+        {payload.map((entry, idx) => (
+          <div key={idx} className="flex items-center gap-2 text-sm">
+            <span className="inline-block w-3 h-3 rounded-full" style={{ background: entry.color }}></span>
+            <span>{entry.name}:</span>
+            <span className="font-medium">{typeof entry.value === 'number' ? `$${entry.value}` : entry.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return null;
+}
+
+// Add sample sparkline data for each asset
+const sparklineData = {
+  Bitcoin: [58950, 59200, 58700, 59900, 59500, 60200, 59000, 60400, 60000, 60500, 60700, 60900],
+  Ethereum: [2450, 2550, 2460, 2580, 2500, 2620, 2510, 2630, 2525, 2640, 2550, 2660],
+  Solana: [87, 92, 85, 94, 88, 96, 89, 91, 87, 93, 90, 97],
+  Cardano: [1.28, 1.35, 1.22, 1.38, 1.32, 1.41, 1.30, 1.39, 1.31, 1.36, 1.32, 1.40],
+  Polkadot: [8.00, 8.25, 7.90, 8.30, 8.10, 8.35, 8.09, 8.28, 8.07, 8.32, 8.05, 8.38],
+};
+const sparklineColors = {
+  Bitcoin: '#F7931A',
+  Ethereum: '#627EEA',
+  Solana: '#00FFA3',
+  Cardano: '#0033AD',
+  Polkadot: '#E6007A',
+};
+
 export function CryptoTrade() {
   const [tradeTab, setTradeTab] = useState('buy');
 
@@ -46,42 +84,48 @@ export function CryptoTrade() {
         <Card className="h-full">
           <CardHeader>
             <CardTitle>BTC/USD Price Chart</CardTitle>
-            <div className="flex items-center gap-3">
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-3 mb-4">
               <div className="text-2xl font-bold">$59,870.25</div>
               <div className="flex items-center text-fintech-success text-sm">
                 <TrendingUp className="w-4 h-4 mr-1" />
                 +2.4%
               </div>
             </div>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer 
-              config={chartConfig}
-              className="h-[300px]"
-            >
-              <AreaChart data={priceData}>
-                <defs>
-                  <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="var(--color-price)" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="var(--color-price)" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="time" />
-                <YAxis 
-                  domain={['dataMin - 200', 'dataMax + 200']}
-                  tickFormatter={(value) => `$${value.toLocaleString()}`}
-                />
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Area 
-                  type="monotone" 
-                  dataKey="price" 
-                  stroke="var(--color-price)" 
-                  fillOpacity={1} 
-                  fill="url(#colorPrice)" 
-                />
-              </AreaChart>
-            </ChartContainer>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={priceData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                  <defs>
+                    <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={MODERN_COLOR} stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor={MODERN_COLOR} stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                  <XAxis dataKey="time" tick={{ fontSize: 13, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                  <YAxis 
+                    domain={['dataMin - 200', 'dataMax + 200']}
+                    tickFormatter={(value) => `$${value.toLocaleString()}`}
+                    tick={{ fontSize: 13, fill: '#64748b' }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={{ fill: '#f1f5f9', opacity: 0.5 }} />
+                  <Area 
+                    type="monotone" 
+                    dataKey="price" 
+                    name="Price"
+                    stroke={MODERN_COLOR}
+                    strokeWidth={3}
+                    fillOpacity={1}
+                    fill="url(#colorPrice)"
+                    dot={{ r: 2, fill: MODERN_COLOR }}
+                    activeDot={{ r: 7, fill: MODERN_COLOR }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
             
             <div className="flex justify-center gap-4 mt-4">
               <Button variant="ghost" size="sm">24h</Button>
@@ -177,17 +221,30 @@ export function CryptoTrade() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               {marketData.map((asset) => (
-                <Card key={asset.asset} className="bg-muted">
+                <Card key={asset.asset} className="bg-white border border-gray-100 shadow-sm">
                   <CardContent className="p-4">
                     <div className="font-medium">{asset.asset}</div>
                     <div className="text-lg font-bold mt-1">{asset.price}</div>
-                    <div className={`flex items-center mt-1 text-sm ${asset.positive ? 'text-fintech-success' : 'text-fintech-error'}`}>
-                      {asset.positive ? (
-                        <TrendingUp className="w-4 h-4 mr-1" />
-                      ) : (
-                        <TrendingDown className="w-4 h-4 mr-1" />
-                      )}
-                      {asset.change}
+                    <div className="mt-2">
+                      <ResponsiveContainer width="100%" height={48}>
+                        <AreaChart data={sparklineData[asset.asset].map((v, i) => ({ x: i, y: v }))} margin={{ top: 6, right: 0, left: 0, bottom: 0 }}>
+                          <defs>
+                            <linearGradient id={`sparkline-${asset.asset}`} x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor={sparklineColors[asset.asset]} stopOpacity={0.7}/>
+                              <stop offset="95%" stopColor={sparklineColors[asset.asset]} stopOpacity={0}/>
+                            </linearGradient>
+                          </defs>
+                          <Area
+                            type="monotone"
+                            dataKey="y"
+                            stroke={sparklineColors[asset.asset]}
+                            strokeWidth={2}
+                            fillOpacity={1}
+                            fill={`url(#sparkline-${asset.asset})`}
+                            dot={false}
+                          />
+                        </AreaChart>
+                      </ResponsiveContainer>
                     </div>
                   </CardContent>
                 </Card>

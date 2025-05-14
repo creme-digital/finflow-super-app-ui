@@ -9,7 +9,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
+      "rounded-[10px] border border-white bg-white shadow-[0px_2px_6px_-2px_rgba(0,0,0,0.06),0px_0px_0px_1px_rgba(162,178,198,0.25)]",
       className
     )}
     {...props}
@@ -20,14 +20,23 @@ Card.displayName = "Card"
 const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    className={cn(
+      "flex items-center gap-2 px-4 pt-4 pb-3 min-h-[40px] border-b border-[#E5E7EB]",
+      className
+    )}
     {...props}
-  />
+  >
+    {children}
+  </div>
 ))
 CardHeader.displayName = "CardHeader"
+
+const CardDivider = () => (
+  <div className="w-full h-px bg-[#E5E7EB]" />
+)
 
 const CardTitle = React.forwardRef<
   HTMLParagraphElement,
@@ -36,7 +45,7 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
+      "text-base font-medium text-black flex items-center gap-2",
       className
     )}
     {...props}
@@ -60,7 +69,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+  <div ref={ref} className={cn("p-4", className)} {...props} />
 ))
 CardContent.displayName = "CardContent"
 
@@ -70,10 +79,10 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
+    className={cn("flex items-center p-4 pt-0", className)}
     {...props}
   />
 ))
 CardFooter.displayName = "CardFooter"
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, CardDivider }

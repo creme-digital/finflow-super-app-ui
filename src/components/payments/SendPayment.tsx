@@ -46,7 +46,7 @@ export function SendPayment() {
   };
 
   return (
-    <Card className="max-w-xl mx-auto">
+    <Card className="w-full">
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -120,8 +120,7 @@ export function SendPayment() {
               onChange={handleChange}
             />
           </div>
-          
-          <Button type="submit" className="w-full">Send Payment</Button>
+          <div className="flex justify-end"><Button type="submit" className="w-auto">Send Payment</Button></div>
         </form>
       </CardContent>
     </Card>

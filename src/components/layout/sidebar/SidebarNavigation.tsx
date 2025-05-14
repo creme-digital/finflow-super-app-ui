@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -84,20 +83,22 @@ const CategoryExpanded = ({
         </div>
         
         <CollapsibleContent>
-          {category.items.map(item => (
-            <Link 
-              key={item.href} 
-              to={item.href} 
-              className={cn(
-                'flex items-center gap-3 px-3 py-2 rounded-md text-sidebar-foreground hover:bg-sidebar-accent group transition-colors',
-                window.location.pathname === item.href && 'bg-sidebar-accent'
-              )} 
-              onClick={() => isMobile && setMobileOpen && setMobileOpen(false)}
-            >
-              <item.icon className="w-5 h-5 text-sidebar-foreground/70 group-hover:text-sidebar-foreground" />
-              <span>{item.title}</span>
-            </Link>
-          ))}
+          <div className="flex flex-col space-y-1">
+            {category.items.map(item => (
+              <Link 
+                key={item.href} 
+                to={item.href} 
+                className={cn(
+                  'flex items-center gap-3 px-3 py-2 rounded-md text-sidebar-foreground group transition-colors',
+                  window.location.pathname === item.href && 'bg-[#F2F2F6]'
+                )} 
+                onClick={() => isMobile && setMobileOpen && setMobileOpen(false)}
+              >
+                <item.icon className="w-5 h-5 text-sidebar-foreground/70 group-hover:text-sidebar-foreground" />
+                <span>{item.title}</span>
+              </Link>
+            ))}
+          </div>
         </CollapsibleContent>
       </Collapsible>
     </div>
@@ -117,8 +118,8 @@ const CategoryCompact = ({ category }: { category: NavCategory }) => {
           key={item.href} 
           to={item.href} 
           className={cn(
-            'flex items-center justify-center w-10 h-10 rounded-md text-sidebar-foreground hover:bg-sidebar-accent group transition-colors',
-            window.location.pathname === item.href && 'bg-sidebar-accent'
+            'flex items-center justify-center w-10 h-10 rounded-md text-sidebar-foreground group transition-colors',
+            window.location.pathname === item.href && 'bg-[#1C1A21]'
           )} 
           title={item.title}
         >
