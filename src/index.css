@@ -34,7 +34,7 @@
 
     --radius: 0.5rem;
 
-    --sidebar-background: 220 13% 99%;
+    --sidebar-background: 220 13% 98%;
     --sidebar-foreground: 0 0% 0%;
     --sidebar-primary: 258 94% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -48,7 +48,7 @@
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 84% 7%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
@@ -82,9 +82,7 @@
     --sidebar-border: 257 18% 30%;
     --sidebar-ring: 258 94% 70%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -97,13 +95,18 @@
   }
 }
 
+@layer utilities {
+  .transition-theme {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
+
 @layer components {
   .card-shadow {
     @apply shadow-lg shadow-black/5;
   }
   
   .card-gradient {
-    @apply bg-gradient-to-br from-white to-gray-50;
+    @apply bg-gradient-to-br from-card to-card/50;
   }
-
 }

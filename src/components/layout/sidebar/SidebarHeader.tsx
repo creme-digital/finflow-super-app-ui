@@ -1,8 +1,7 @@
-
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/components/ui/ThemeProvider';
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 interface SidebarHeaderProps {
   expanded: boolean;
@@ -17,37 +16,17 @@ export const SidebarHeader = ({
   setExpanded,
   setMobileOpen
 }: SidebarHeaderProps) => {
+  const { theme } = useTheme();
+
   return (
-    <div className="flex items-center justify-between p-3 border-b border-sidebar-border">
-      <div className={cn('flex items-center gap-2', !expanded && !isMobile && 'hidden')}>
-        <span className="text-black font-extralight tracking-wide text-3xl">meely</span>
-      </div>
-      
-      {!expanded && !isMobile && (
-        <div className="w-8 h-8 mx-auto rounded-md bg-fintech-purple flex items-center justify-center text-white font-bold">
-          F
+    <div className="flex items-center justify-between px-3 py-4 bg-background">
+      <div className="flex items-center gap-2">
+        <div className="w-6 h-6 rounded-[6px] bg-black flex items-center justify-center">
+          <span className="text-white text-[16px] font-bold" style={{fontFamily: 'Inter'}}>M</span>
         </div>
-      )}
-      
-      {isMobile ? (
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => setMobileOpen && setMobileOpen(false)} 
-          className="text-sidebar-foreground hover:bg-sidebar-accent"
-        >
-          <X className="h-4 w-4" />
-        </Button>
-      ) : (
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => setExpanded(!expanded)} 
-          className="text-sidebar-foreground hover:bg-sidebar-accent"
-        >
-          {expanded ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-        </Button>
-      )}
+        <span className="text-foreground text-[14px] font-medium tracking-[-0.02em]" style={{fontFamily: 'Inter'}}>Meely</span>
+      </div>
+      <ThemeToggle />
     </div>
   );
 };

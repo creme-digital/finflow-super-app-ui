@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Table,
@@ -29,7 +28,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Search, FileText } from 'lucide-react';
+import { Search, FileText, Plus } from 'lucide-react';
 
 type Transaction = {
   id: string;
@@ -75,79 +74,82 @@ export function BookkeepingTab() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row gap-4 justify-between">
-        <div className="flex w-full max-w-sm items-center space-x-2">
-          <div className="relative w-full">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search transactions..."
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="w-full pl-8"
-            />
-          </div>
-        </div>
-        <div className="flex space-x-2">
-          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Categories</SelectLabel>
-                {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Button variant="outline" className="h-10">
-            <FileText className="mr-2 h-4 w-4" /> Export
-          </Button>
-        </div>
-      </div>
-
       <Card>
-        <CardHeader className="pb-2">
-          <CardTitle>Transaction Ledger</CardTitle>
-          <CardDescription>
-            A record of your recent financial transactions.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Date</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-                <TableHead className="w-[100px]">Type</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredTransactions.map((transaction) => (
-                <TableRow key={transaction.id}>
-                  <TableCell>{transaction.date}</TableCell>
-                  <TableCell>{transaction.description}</TableCell>
-                  <TableCell>{transaction.category}</TableCell>
-                  <TableCell className="text-right font-medium">
-                    ${transaction.amount.toFixed(2)}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={transaction.type === 'income' ? "default" : "destructive"}>
-                      {transaction.type === 'income' ? 'Income' : 'Expense'}
-                    </Badge>
-                  </TableCell>
+        <CardContent className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <FileText className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
+            <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Transaction Ledger</span>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-between mb-4">
+            <div className="flex w-full max-w-sm items-center space-x-2">
+              <div className="relative w-full">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search transactions..."
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                  className="w-full pl-8"
+                />
+              </div>
+            </div>
+            <div className="flex space-x-2">
+              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Filter by category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Categories</SelectLabel>
+                    {categories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <Button variant="outline" className="h-10">
+                <FileText className="mr-2 h-4 w-4" /> Export
+              </Button>
+            </div>
+          </div>
+          <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
+            <Table className="min-w-full text-sm">
+              <TableHeader>
+                <TableRow style={{ background: '#F8F8FA' }}>
+                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3 w-[100px]">Number</TableHead>
+                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3 w-[140px]">Date</TableHead>
+                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Title</TableHead>
+                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Category</TableHead>
+                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3 text-right">Amount</TableHead>
+                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3 w-[100px]">Type</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filteredTransactions.map((transaction) => (
+                  <TableRow key={transaction.id}>
+                    <TableCell className="font-mono">{transaction.id}</TableCell>
+                    <TableCell className="w-[140px]">{transaction.date}</TableCell>
+                    <TableCell>{transaction.description}</TableCell>
+                    <TableCell>{transaction.category}</TableCell>
+                    <TableCell className="text-right font-mono font-medium">${transaction.amount.toFixed(2)}</TableCell>
+                    <TableCell>
+                      <Badge
+                        bgColor={transaction.type === 'income' ? '#C9EBCC' : '#EBC9C9'}
+                        textColor={transaction.type === 'income' ? '#021B0D' : '#1D0202'}
+                        style={{ borderRadius: 6, fontWeight: 500, fontSize: 13, padding: '2px 12px', display: 'inline-block' }}
+                      >
+                        {transaction.type === 'income' ? 'Income' : 'Expense'}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
-        <CardFooter className="flex justify-between border-t pt-4">
+        <CardFooter className="flex justify-between pt-4">
           <div className="text-sm text-muted-foreground">
             Showing {filteredTransactions.length} of {mockTransactions.length} transactions
           </div>
@@ -156,6 +158,7 @@ export function BookkeepingTab() {
           </div>
         </CardFooter>
       </Card>
+      
     </div>
   );
 }

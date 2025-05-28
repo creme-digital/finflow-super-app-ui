@@ -1,5 +1,6 @@
 import { Layout } from '@/components/layout/Layout';
 import { SettingsTabs } from '@/components/settings/SettingsTabs';
+import { CurrencySelector } from '@/components/settings/CurrencySelector';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Settings = () => {
@@ -13,7 +14,10 @@ const Settings = () => {
           <p className="text-muted-foreground mt-1">Manage your account settings and preferences.</p>
         </div>
         
-        <SettingsTabs />
+        <div className="grid gap-6">
+          <SettingsTabs />
+          <CurrencySelector />
+        </div>
       </div>
     </Layout>
   );

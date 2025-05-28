@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
+import { useCurrency } from '@/contexts/CurrencyContext';
 
 interface BalanceCardProps {
   title: string;
@@ -22,6 +23,17 @@ export function BalanceCard({
   children,
   icon: Icon,
 }: BalanceCardProps) {
+  const { formatAmount, selectedCurrency } = useCurrency();
+
+  // Example balance data - in a real app, this would come from your API
+  const balances = {
+    USD: 5000,
+    GBP: 3950,
+    EUR: 4600,
+  };
+
+  const totalBalance = balances[selectedCurrency];
+
   // Split change into percentage and label if possible
   let percent = '';
   let label = '';
@@ -47,7 +59,7 @@ export function BalanceCard({
       <CardContent>
         <div className="flex flex-col">
           <div className="flex items-baseline gap-2">
-            <div className="text-2xl font-bold">{balance}</div>
+            <div className="text-2xl font-bold">{formatAmount(totalBalance)}</div>
             {percent && (
               <span className={cn(
                 'text-sm font-semibold',

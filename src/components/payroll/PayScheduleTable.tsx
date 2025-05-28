@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Table,
@@ -64,24 +63,17 @@ const paySchedules = [
 export const PayScheduleTable = () => {
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
-        <Button variant="outline">
-          <CalendarCheck className="mr-2 h-4 w-4" />
-          Create Schedule
-        </Button>
-      </div>
-      
-      <div className="border rounded-md">
-        <Table>
+      <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
+        <Table className="min-w-full text-sm">
           <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Frequency</TableHead>
-              <TableHead>Next Pay Date</TableHead>
-              <TableHead>Employees</TableHead>
-              <TableHead>Total Amount</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="w-[80px]">Actions</TableHead>
+            <TableRow style={{ background: '#F8F8FA' }}>
+              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Name</TableHead>
+              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Frequency</TableHead>
+              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Next Pay Date</TableHead>
+              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Employees</TableHead>
+              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Total Amount</TableHead>
+              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Status</TableHead>
+              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3 w-[80px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -93,11 +85,19 @@ export const PayScheduleTable = () => {
                 <TableCell>{schedule.employeeCount}</TableCell>
                 <TableCell>{schedule.totalAmount}</TableCell>
                 <TableCell>
-                  <Badge 
-                    variant={schedule.status === 'Upcoming' ? 'secondary' : 'outline'}
+                  <span
+                    style={{
+                      borderRadius: 6,
+                      fontWeight: 500,
+                      fontSize: 13,
+                      padding: '2px 12px',
+                      display: 'inline-block',
+                      background: schedule.status === 'Upcoming' ? '#C9EBCC' : '#EBC9C9',
+                      color: schedule.status === 'Upcoming' ? '#021B0D' : '#1D0202',
+                    }}
                   >
                     {schedule.status}
-                  </Badge>
+                  </span>
                 </TableCell>
                 <TableCell>
                   <Button size="icon" variant="ghost">

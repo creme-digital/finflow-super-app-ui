@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Table,
@@ -68,19 +67,19 @@ const payrollHistory = [
 
 export const PayrollHistoryTable = () => {
   return (
-    <div className="border rounded-md">
-      <Table>
+    <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
+      <Table className="min-w-full text-sm">
         <TableHeader>
-          <TableRow>
-            <TableHead>ID</TableHead>
-            <TableHead>Pay Period</TableHead>
-            <TableHead>Processed Date</TableHead>
-            <TableHead>Employees</TableHead>
-            <TableHead>Gross Pay</TableHead>
-            <TableHead>Net Pay</TableHead>
-            <TableHead>Taxes</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="w-[100px]">Actions</TableHead>
+          <TableRow style={{ background: '#F8F8FA' }}>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">ID</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Pay Period</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Processed Date</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Employees</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Gross Pay</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Net Pay</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Taxes</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Status</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3 w-[100px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -94,9 +93,19 @@ export const PayrollHistoryTable = () => {
               <TableCell>{payroll.netPay}</TableCell>
               <TableCell>{payroll.taxes}</TableCell>
               <TableCell>
-                <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                <span
+                  style={{
+                    borderRadius: 6,
+                    fontWeight: 500,
+                    fontSize: 13,
+                    padding: '2px 12px',
+                    display: 'inline-block',
+                    background: '#C9EBCC',
+                    color: '#021B0D',
+                  }}
+                >
                   {payroll.status}
-                </Badge>
+                </span>
               </TableCell>
               <TableCell>
                 <div className="flex space-x-2">

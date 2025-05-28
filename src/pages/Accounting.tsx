@@ -4,7 +4,6 @@ import { Layout } from '@/components/layout/Layout';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { BookkeepingTab } from '@/components/accounting/BookkeepingTab';
 import { InvoicingTab } from '@/components/accounting/InvoicingTab';
-import { ReportsTab } from '@/components/accounting/ReportsTab';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Accounting = () => {
@@ -12,7 +11,7 @@ const Accounting = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-          <h2 className="text-3xl font-semibold tracking-tight">Accounting</h2>
+          <h2 className="text-3xl font-semibold tracking-tight">MeelyBooks Dashboard</h2>
           <p className="text-muted-foreground">
             Manage your financial records, create invoices, and generate reports.
           </p>

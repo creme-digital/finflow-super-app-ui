@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Table,
@@ -62,17 +61,17 @@ const employees = [
 
 export const EmployeeTable = () => {
   return (
-    <div className="border rounded-md">
-      <Table>
+    <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
+      <Table className="min-w-full text-sm">
         <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Position</TableHead>
-            <TableHead>Department</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Salary</TableHead>
-            <TableHead>Pay Frequency</TableHead>
-            <TableHead className="w-[100px]">Actions</TableHead>
+          <TableRow style={{ background: '#F8F8FA' }}>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Name</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Position</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Department</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Status</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Salary</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Pay Frequency</TableHead>
+            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3 w-[100px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -82,14 +81,19 @@ export const EmployeeTable = () => {
               <TableCell>{employee.position}</TableCell>
               <TableCell>{employee.department}</TableCell>
               <TableCell>
-                <div className="flex items-center">
-                  <span 
-                    className={`w-2 h-2 rounded-full mr-2 ${
-                      employee.status === 'Active' ? 'bg-green-500' : 'bg-amber-500'
-                    }`} 
-                  />
+                <span
+                  style={{
+                    borderRadius: 6,
+                    fontWeight: 500,
+                    fontSize: 13,
+                    padding: '2px 12px',
+                    display: 'inline-block',
+                    background: employee.status === 'Active' ? '#C9EBCC' : '#EBC9C9',
+                    color: employee.status === 'Active' ? '#021B0D' : '#1D0202',
+                  }}
+                >
                   {employee.status}
-                </div>
+                </span>
               </TableCell>
               <TableCell>{employee.salary}</TableCell>
               <TableCell>{employee.frequency}</TableCell>

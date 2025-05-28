@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -19,7 +18,12 @@ export const useSidebarState = (): UseSidebarStateResult => {
   
   // Track open/closed state of each category
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
-    Fintech: true
+    MeelyPay: true,
+    MeelyBooks: true,
+    MeelyPayroll: true,
+    MeelyTrade: true,
+    MeelyCrypto: true,
+    Account: true
   });
 
   // Auto-collapse sidebar on mobile

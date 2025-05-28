@@ -1,12 +1,14 @@
-
 /**
  * Format a number as currency
  */
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  // Format as de-DE, but remove the trailing $ and prepend it
+  const formatted = new Intl.NumberFormat('de-DE', {
+    style: 'decimal',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(amount);
+  return `$${formatted}`;
 }
 
 /**

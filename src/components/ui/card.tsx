@@ -9,7 +9,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-[10px] border border-white bg-white shadow-[0px_2px_6px_-2px_rgba(0,0,0,0.06),0px_0px_0px_1px_rgba(162,178,198,0.25)]",
+      "rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)] transition-theme",
       className
     )}
     {...props}
@@ -24,7 +24,7 @@ const CardHeader = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex items-center gap-2 px-4 pt-4 pb-3 min-h-[40px] border-b border-[#E5E7EB]",
+      "flex items-center gap-2 px-4 pt-4 pb-3 min-h-[40px] border-b border-border transition-theme",
       className
     )}
     {...props}
@@ -35,7 +35,7 @@ const CardHeader = React.forwardRef<
 CardHeader.displayName = "CardHeader"
 
 const CardDivider = () => (
-  <div className="w-full h-px bg-[#E5E7EB]" />
+  <div className="w-full h-px bg-border transition-theme" />
 )
 
 const CardTitle = React.forwardRef<
@@ -45,7 +45,7 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-base font-medium text-black flex items-center gap-2",
+      "text-base font-medium text-card-foreground flex items-center gap-2 transition-theme",
       className
     )}
     {...props}
@@ -59,7 +59,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-muted-foreground transition-theme", className)}
     {...props}
   />
 ))
@@ -69,7 +69,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-4", className)} {...props} />
+  <div ref={ref} className={cn("p-4 transition-theme", className)} {...props} />
 ))
 CardContent.displayName = "CardContent"
 
@@ -79,7 +79,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center p-4 pt-0", className)}
+    className={cn("flex items-center p-4 pt-0 transition-theme", className)}
     {...props}
   />
 ))

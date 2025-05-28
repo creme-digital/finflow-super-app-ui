@@ -67,26 +67,26 @@ const formatCurrency = (amount: number | null) => {
 export const TaxDeadlinesTab = () => {
   return (
     <div className="space-y-6">
-      <Card>
-        <CardContent className="pt-6">
-          <Table>
+      <Card className="border-[#E3E3EA]">
+        <CardContent className="p-6">
+          <Table className="min-w-full text-sm">
             <TableHeader>
-              <TableRow>
-                <TableHead>Period</TableHead>
-                <TableHead>Due Date</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow style={{ background: '#F8F8FA' }}>
+                <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Quarter</TableHead>
+                <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Due Date</TableHead>
+                <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Description</TableHead>
+                <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Amount</TableHead>
+                <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Status</TableHead>
+                <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {taxDeadlinesData.map((deadline) => (
-                <TableRow key={deadline.id}>
+                <TableRow key={deadline.id} className="hover:bg-[#F8F8FA]">
                   <TableCell className="font-medium">{deadline.quarter}</TableCell>
                   <TableCell>{format(deadline.dueDate, 'MMM d, yyyy')}</TableCell>
                   <TableCell>{deadline.description}</TableCell>
-                  <TableCell>{deadline.amount ? formatCurrency(deadline.amount) : '-'}</TableCell>
+                  <TableCell className="font-mono">{formatCurrency(deadline.amount)}</TableCell>
                   <TableCell>
                     {deadline.status === 'paid' ? (
                       <Badge className="bg-emerald-500 hover:bg-emerald-600">
@@ -123,79 +123,49 @@ export const TaxDeadlinesTab = () => {
         </CardContent>
       </Card>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card>
-          <CardContent className="pt-6">
-            <h3 className="text-lg font-medium mb-4">Deadline Calendar</h3>
-            <div className="space-y-4">
-              {taxDeadlinesData.map((deadline) => (
-                <div key={deadline.id} className="flex items-center p-3 rounded-md border">
-                  <div className={`flex flex-col items-center justify-center mr-4 w-14 h-14 rounded-xl border font-semibold select-none ${
-                    deadline.status === 'paid' ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-amber-50 border-amber-200 text-amber-600'
-                  }`}>
-                    <span className="text-xs uppercase tracking-wide font-bold">{format(deadline.dueDate, 'MMM')}</span>
-                    <span className="text-xl leading-none">{format(deadline.dueDate, 'd')}</span>
-                  </div>
-                  <div>
-                    <div className="font-medium">{deadline.description}</div>
-                    <div className="text-sm text-muted-foreground">{format(deadline.dueDate, 'EEEE, MMMM d, yyyy')}</div>
-                  </div>
-                  {deadline.status === 'paid' && (
-                    <Badge className="ml-auto bg-emerald-500">Paid</Badge>
-                  )}
-                  {deadline.status === 'upcoming' && (
-                    <Badge variant="outline" className="ml-auto border-amber-500 text-amber-500">Upcoming</Badge>
-                  )}
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="pt-6">
-            <h3 className="text-lg font-medium mb-4">Payment Options</h3>
-            <div className="space-y-4">
-              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
-                  <Banknote className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-medium">Direct Payment (IRS)</h4>
-                  <p className="text-sm text-muted-foreground">Pay directly to the IRS via bank account or credit card</p>
-                </div>
+      <Card className="border-[#E3E3EA]">
+        <CardContent className="pt-6">
+          <h3 className="text-lg font-medium mb-4">Payment Options</h3>
+          <div className="space-y-4">
+            <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
+                <Banknote className="h-6 w-6 text-primary" />
               </div>
-              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
-                  <Landmark className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-medium">State Tax Authority</h4>
-                  <p className="text-sm text-muted-foreground">Pay state estimated taxes through state tax portal</p>
-                </div>
-              </div>
-              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
-                  <CalendarCheck className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-medium">Schedule Automatic Payments</h4>
-                  <p className="text-sm text-muted-foreground">Set up automatic payments for all your tax deadlines</p>
-                </div>
-              </div>
-              <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
-                  <History className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-medium">Payment History</h4>
-                  <p className="text-sm text-muted-foreground">View all your previous tax payments</p>
-                </div>
+              <div>
+                <h4 className="font-medium">Direct Payment (IRS)</h4>
+                <p className="text-sm text-muted-foreground">Pay directly to the IRS via bank account or credit card</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+            <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
+                <Landmark className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <h4 className="font-medium">State Tax Authority</h4>
+                <p className="text-sm text-muted-foreground">Pay state estimated taxes through state tax portal</p>
+              </div>
+            </div>
+            <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
+                <CalendarCheck className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <h4 className="font-medium">Schedule Automatic Payments</h4>
+                <p className="text-sm text-muted-foreground">Set up automatic payments for all your tax deadlines</p>
+              </div>
+            </div>
+            <div className="p-3 rounded-md border hover:bg-muted/50 cursor-pointer flex items-center gap-3">
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center border bg-white/50">
+                <History className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <h4 className="font-medium">Payment History</h4>
+                <p className="text-sm text-muted-foreground">View all your previous tax payments</p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
