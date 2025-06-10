@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { SettingsNavigation } from './SettingsNavigation';
 
 export function SettingsMainContent() {
   const [searchParams] = useSearchParams();
@@ -120,7 +121,6 @@ export function SettingsMainContent() {
           Manage your notification preferences
         </p>
       </div>
-      {/* Add notification settings content here */}
       <p className="text-gray-500">Notification settings coming soon...</p>
     </div>
   );
@@ -133,7 +133,6 @@ export function SettingsMainContent() {
           Manage your API keys and integrations
         </p>
       </div>
-      {/* Add API keys content here */}
       <p className="text-gray-500">API keys management coming soon...</p>
     </div>
   );
@@ -152,8 +151,25 @@ export function SettingsMainContent() {
   };
 
   return (
-    <div className="w-full">
-      {renderContent()}
+    <div className="flex gap-6 w-full h-full">
+      {/* Left Navigation */}
+      <div className="w-64 flex-shrink-0">
+        <div
+          className="rounded-[24px] p-6 h-full"
+          style={{ 
+            background: 'rgba(255, 255, 255, 0.64)',
+            border: '1px solid #FFFFFF'
+          }}
+        >
+          <h3 className="text-lg font-semibold mb-6">Settings</h3>
+          <SettingsNavigation activeTab={activeTab} />
+        </div>
+      </div>
+      
+      {/* Main Content */}
+      <div className="flex-1">
+        {renderContent()}
+      </div>
     </div>
   );
 }
