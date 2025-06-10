@@ -82,43 +82,43 @@ export const TaxHistoryTab = () => {
   ];
 
   return (
-    <Card>
+    <Card className="fintech-card">
       <CardContent className="p-0">
-        <Table>
-          <TableHeader>
-            <TableRow className="border-b bg-muted/20">
-              <TableHead className="font-medium text-muted-foreground">Date</TableHead>
-              <TableHead className="font-medium text-muted-foreground">Issuer</TableHead>
-              <TableHead className="font-medium text-muted-foreground">Form</TableHead>
-              <TableHead className="font-medium text-muted-foreground">Amount</TableHead>
-              <TableHead className="font-medium text-muted-foreground">Status</TableHead>
-              <TableHead className="font-medium text-muted-foreground">Action</TableHead>
+        <Table className="fintech-table">
+          <TableHeader className="fintech-table-header">
+            <TableRow className="border-b bg-surface-muted">
+              <TableHead className="fintech-table-header-cell">Date</TableHead>
+              <TableHead className="fintech-table-header-cell">Issuer</TableHead>
+              <TableHead className="fintech-table-header-cell">Form</TableHead>
+              <TableHead className="fintech-table-header-cell">Amount</TableHead>
+              <TableHead className="fintech-table-header-cell">Status</TableHead>
+              <TableHead className="fintech-table-header-cell">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {taxHistory.map((item, index) => (
-              <TableRow key={index} className="border-b border-border/50 hover:bg-muted/30">
-                <TableCell className="font-medium text-foreground py-4">
+              <TableRow key={index} className="fintech-table-row border-b border-border/50">
+                <TableCell className="fintech-table-cell font-medium">
                   {item.date}
                 </TableCell>
-                <TableCell className="text-foreground py-4">
+                <TableCell className="fintech-table-cell">
                   {item.issuer}
                 </TableCell>
-                <TableCell className="text-foreground py-4">
+                <TableCell className="fintech-table-cell">
                   {item.form}
                 </TableCell>
-                <TableCell className="font-medium text-foreground py-4">
+                <TableCell className="fintech-table-cell fintech-mono font-medium">
                   {formatCurrency(item.amount)}
                 </TableCell>
-                <TableCell className="py-4">
+                <TableCell className="fintech-table-cell">
                   <Badge 
                     variant="secondary" 
-                    className="bg-green-100 text-green-700 hover:bg-green-100"
+                    className="bg-success/10 text-success hover:bg-success/20 transition-theme"
                   >
                     {item.status}
                   </Badge>
                 </TableCell>
-                <TableCell className="py-4">
+                <TableCell className="fintech-table-cell">
                   <Button variant="ghost" size="icon" className="h-8 w-8">
                     <MoreHorizontal className="w-4 h-4" />
                   </Button>

@@ -51,13 +51,13 @@ const Crypto = () => {
               <TabsList className="bg-transparent p-0 h-auto">
                 <TabsTrigger 
                   value="trading" 
-                  className="data-[state=active]:bg-transparent data-[state=active]:text-[#6050EA] data-[state=active]:border-b-2 data-[state=active]:border-[#6050EA] data-[state=active]:shadow-none rounded-none px-4 py-2 text-base font-medium"
+                  className="data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none rounded-none px-4 py-2 text-base font-medium transition-theme"
                 >
                   Crypto Trading
                 </TabsTrigger>
                 <TabsTrigger 
                   value="asset" 
-                  className="data-[state=active]:bg-transparent data-[state=active]:text-[#6050EA] data-[state=active]:border-b-2 data-[state=active]:border-[#6050EA] data-[state=active]:shadow-none rounded-none px-4 py-2 text-base font-medium text-[#6D6D74]"
+                  className="data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none rounded-none px-4 py-2 text-base font-medium text-secondary transition-theme"
                 >
                   Asset
                 </TabsTrigger>
@@ -71,42 +71,42 @@ const Crypto = () => {
 
           {/* Account and Asset Selection */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            <Card className="lg:col-span-1">
-              <CardContent className="p-4">
+            <Card className="fintech-card">
+              <CardContent className="fintech-card-content">
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm text-[#6D6D74] mb-2 block">Exchange</label>
-                    <div className="text-sm text-[#6D6D74]">0 BTC : 0.00 USD</div>
+                    <label className="fintech-body mb-2 block">Exchange</label>
+                    <div className="fintech-body">0 BTC : 0.00 USD</div>
                   </div>
                   <div>
-                    <label className="text-sm text-[#6D6D74] mb-2 block">Account 1890980</label>
+                    <label className="fintech-body mb-2 block">Account 1890980</label>
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">$</span>
+                      <div className="w-6 h-6 rounded-full bg-info flex items-center justify-center">
+                        <span className="text-info-foreground text-xs font-bold">$</span>
                       </div>
-                      <span className="font-mono text-lg">${accountBalance.toLocaleString()}</span>
-                      <ChevronDown className="w-4 h-4 text-[#6D6D74]" />
+                      <span className="fintech-mono text-lg text-primary">${accountBalance.toLocaleString()}</span>
+                      <ChevronDown className="w-4 h-4 text-secondary" />
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="lg:col-span-1">
-              <CardContent className="p-4">
+            <Card className="fintech-card">
+              <CardContent className="fintech-card-content">
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm text-[#6D6D74] mb-2 block">Market</label>
+                    <label className="fintech-body mb-2 block">Market</label>
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">₿</span>
+                      <div className="w-6 h-6 rounded-full bg-warning flex items-center justify-center">
+                        <span className="text-warning-foreground text-xs font-bold">₿</span>
                       </div>
-                      <span className="font-medium">{selectedMarket}</span>
+                      <span className="font-medium text-primary">{selectedMarket}</span>
                       <div className="flex items-center gap-1">
-                        <span className="font-mono">{portfolioValue} BTC</span>
-                        <ChevronDown className="w-4 h-4 text-[#6D6D74]" />
+                        <span className="fintech-mono text-primary">{portfolioValue} BTC</span>
+                        <ChevronDown className="w-4 h-4 text-secondary" />
                       </div>
                     </div>
                   </div>
@@ -114,21 +114,21 @@ const Crypto = () => {
               </CardContent>
             </Card>
 
-            <Card className="lg:col-span-1">
-              <CardContent className="p-4">
+            <Card className="fintech-card">
+              <CardContent className="fintech-card-content">
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm text-[#6D6D74] mb-2 block">Trading Pair</label>
+                    <label className="fintech-body mb-2 block">Trading Pair</label>
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">◆</span>
+                      <div className="w-6 h-6 rounded-full bg-foreground flex items-center justify-center">
+                        <span className="text-background text-xs font-bold">◆</span>
                       </div>
-                      <span className="font-medium">{selectedTradingPair}</span>
+                      <span className="font-medium text-primary">{selectedTradingPair}</span>
                       <div className="flex items-center gap-1">
-                        <span className="font-mono">65 ETH</span>
-                        <ChevronDown className="w-4 h-4 text-[#6D6D74]" />
+                        <span className="fintech-mono text-primary">65 ETH</span>
+                        <ChevronDown className="w-4 h-4 text-secondary" />
                       </div>
                     </div>
                   </div>
@@ -140,12 +140,12 @@ const Crypto = () => {
           {/* Market Stats */}
           <div className="grid grid-cols-5 gap-4 mb-6">
             {marketStats.map((stat, index) => (
-              <Card key={index}>
-                <CardContent className="p-4">
+              <Card key={index} className="fintech-card">
+                <CardContent className="fintech-card-content">
                   <div className="space-y-2">
-                    <div className="text-sm text-[#6D6D74]">{stat.label}</div>
-                    <div className="font-mono text-lg font-medium">{stat.value}</div>
-                    <div className={`flex items-center gap-1 text-sm ${stat.positive ? 'text-green-500' : 'text-red-500'}`}>
+                    <div className="fintech-body">{stat.label}</div>
+                    <div className="fintech-mono text-lg font-medium text-primary">{stat.value}</div>
+                    <div className={`flex items-center gap-1 text-sm ${stat.positive ? 'text-success' : 'text-error'}`}>
                       {stat.positive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                       {stat.change}
                     </div>
@@ -158,19 +158,19 @@ const Crypto = () => {
           {/* Chart and Trading Interface */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Chart Section */}
-            <Card className="lg:col-span-2">
-              <CardHeader className="pb-4">
+            <Card className="lg:col-span-2 fintech-card">
+              <CardHeader className="fintech-card-header pb-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                        <BarChart3 className="w-4 h-4" />
+                      <div className="w-8 h-8 rounded-full bg-surface-muted flex items-center justify-center">
+                        <BarChart3 className="w-4 h-4 text-secondary" />
                       </div>
-                      <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                        <Grid3x3 className="w-4 h-4" />
+                      <div className="w-8 h-8 rounded-full bg-surface-muted flex items-center justify-center">
+                        <Grid3x3 className="w-4 h-4 text-secondary" />
                       </div>
                     </div>
-                    <span className="text-sm font-medium">Indicators</span>
+                    <span className="text-sm font-medium text-primary">Indicators</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Button variant="outline" size="sm" className="gap-1">
@@ -201,23 +201,23 @@ const Crypto = () => {
             </Card>
 
             {/* Trading Panel */}
-            <Card>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-base">Price (USDT)</CardTitle>
-                  <CardTitle className="text-base">Amount (BTC)</CardTitle>
-                  <CardTitle className="text-base">Time</CardTitle>
+            <Card className="fintech-card">
+              <CardHeader className="fintech-card-header pb-4">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <CardTitle className="fintech-heading-3">Price (USDT)</CardTitle>
+                  <CardTitle className="fintech-heading-3">Amount (BTC)</CardTitle>
+                  <CardTitle className="fintech-heading-3">Time</CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="max-h-[400px] overflow-y-auto">
-                  <Table>
+                  <Table className="fintech-table">
                     <TableBody>
                       {tradeHistory.map((trade, index) => (
-                        <TableRow key={index} className="border-none">
-                          <TableCell className="text-green-500 font-mono text-sm py-2">{trade.price.toFixed(2)}</TableCell>
-                          <TableCell className="font-mono text-sm py-2">{trade.amount}</TableCell>
-                          <TableCell className="font-mono text-sm py-2">{trade.time}</TableCell>
+                        <TableRow key={index} className="fintech-table-row border-none">
+                          <TableCell className="text-success fintech-mono text-sm py-2">{trade.price.toFixed(2)}</TableCell>
+                          <TableCell className="fintech-mono text-sm py-2 text-primary">{trade.amount}</TableCell>
+                          <TableCell className="fintech-mono text-sm py-2 text-primary">{trade.time}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
