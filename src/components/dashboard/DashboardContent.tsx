@@ -41,7 +41,7 @@ export function DashboardContent() {
       </div>
 
       {/* Money In/Out and Chart Section */}
-      <div className="flex flex-row gap-8 items-start">
+      <div className="flex flex-row gap-8 items-center">
         {/* Money In/Out Summary */}
         <div className="space-y-4 min-w-[200px]">
           <div className="flex items-center gap-3">
@@ -62,7 +62,7 @@ export function DashboardContent() {
         </div>
 
         {/* Bar Chart */}
-        <div className="w-[400px] h-[150px]">
+        <div className="flex-1 h-[150px]">
           <ChartContainer config={chartConfig}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={cashFlowData} margin={{ top: 15, right: 15, left: 15, bottom: 5 }}>
