@@ -46,7 +46,6 @@ const chartConfig = {
 
 export function DashboardContent() {
   return (
-    {/* Main card: 24px border radius, flex-col, 16px gap, auto height (min-height 100%) */}
     <div className="flex flex-col gap-4 min-h-full" style={{ borderRadius: '24px' }}>
       
       {/* Top Main Card items: transparent background, flex-col, 12px spacing, hug content */}
