@@ -142,11 +142,11 @@ const chartConfig = {
   },
   income: {
     label: "Income",
-    color: "#22c55e"
+    color: "#292EE9"
   },
   expense: {
     label: "Expense",
-    color: "#ef4444"
+    color: "#D1D5DC"
   }
 };
 
@@ -332,7 +332,7 @@ export function DashboardContent() {
                 right: 5,
                 left: 5,
                 bottom: 5
-              }} barCategoryGap="10%">
+              }} barCategoryGap="20%">
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{
                   fontSize: 10
@@ -343,8 +343,8 @@ export function DashboardContent() {
                 }} />
                 <ReferenceLine y={0} stroke="#94a3b8" strokeDasharray="2 2" />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="income" fill={chartConfig.income.color} radius={[24, 24, 0, 0]} maxBarSize={12} />
-                <Bar dataKey="expense" fill={chartConfig.expense.color} radius={[0, 0, 24, 24]} maxBarSize={12} />
+                <Bar dataKey="income" fill={chartConfig.income.color} radius={[24, 24, 0, 0]} maxBarSize={24} />
+                <Bar dataKey="expense" fill={chartConfig.expense.color} radius={[0, 0, 24, 24]} maxBarSize={24} />
               </BarChart>
             </ChartContainer>
           </div>
