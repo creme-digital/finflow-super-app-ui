@@ -19,7 +19,7 @@ export function RightSidebarContent() {
       </div>
       
       <div 
-        className="rounded-[24px] p-6" 
+        className="rounded-[24px]" 
         style={{ 
           background: 'rgba(255, 255, 255, 0.64)',
           border: '1px solid #FFFFFF'
@@ -29,7 +29,7 @@ export function RightSidebarContent() {
       </div>
       
       <div 
-        className="rounded-[24px] p-6" 
+        className="rounded-[24px]" 
         style={{ 
           background: 'rgba(255, 255, 255, 0.64)',
           border: '1px solid #FFFFFF'
@@ -39,7 +39,7 @@ export function RightSidebarContent() {
       </div>
       
       <div 
-        className="rounded-[24px] p-6" 
+        className="rounded-[24px]" 
         style={{ 
           background: 'rgba(255, 255, 255, 0.64)',
           border: '1px solid #FFFFFF'
