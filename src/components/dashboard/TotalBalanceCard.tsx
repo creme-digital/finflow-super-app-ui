@@ -8,7 +8,13 @@ export function TotalBalanceCard() {
   const { formatAmount } = useCurrency();
 
   return (
-    <div className="rounded-[16px] p-6 bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)]">
+    <div 
+      className="rounded-[24px] p-6"
+      style={{ 
+        background: 'rgba(255, 255, 255, 0.64)',
+        border: '1px solid #FFFFFF'
+      }}
+    >
       <div className="flex items-center gap-2 mb-4">
         <Wallet className="w-5 h-5 text-muted-foreground" />
         <span className="text-sm font-medium text-foreground">Total Balance</span>
