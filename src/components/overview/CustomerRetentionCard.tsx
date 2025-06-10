@@ -40,7 +40,7 @@ export function CustomerRetentionCard() {
       <div className="flex-1 p-4">
         <div style={{ height: '280px' }}>
           <ChartContainer config={chartConfig} className="w-full h-full">
-            <BarChart data={retentionData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }} barCategoryGap="10%">
+            <BarChart data={retentionData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }} barCategoryGap="10%">
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
               <XAxis 
                 dataKey="week" 
@@ -52,6 +52,7 @@ export function CustomerRetentionCard() {
                 axisLine={false} 
                 tickLine={false} 
                 tick={{ fontSize: 12, fill: '#64748b' }}
+                width={40}
               />
               <ChartTooltip content={<ChartTooltipContent />} />
               <Bar 

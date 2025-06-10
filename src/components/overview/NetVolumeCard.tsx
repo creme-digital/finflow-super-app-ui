@@ -42,7 +42,7 @@ export function NetVolumeCard() {
       <div className="flex-1 p-4">
         <div style={{ height: '280px' }}>
           <ChartContainer config={chartConfig} className="w-full h-full">
-            <LineChart data={netVolumeData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+            <LineChart data={netVolumeData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
               <defs>
                 <linearGradient id="netVolumeGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor={chartConfig.volume.color} stopOpacity={0.8}/>
@@ -61,6 +61,7 @@ export function NetVolumeCard() {
                 tickLine={false} 
                 tick={{ fontSize: 12, fill: '#64748b' }}
                 tickFormatter={(value) => `$${value / 1000}k`}
+                width={40}
               />
               <ChartTooltip 
                 content={<ChartTooltipContent />}
