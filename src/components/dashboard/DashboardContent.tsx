@@ -65,7 +65,7 @@ export function DashboardContent() {
         <div className="flex-1 h-[20px]">
           <ChartContainer config={chartConfig}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={cashFlowData} margin={{ top: 2, right: 10, left: 10, bottom: 2 }} barCategoryGap="20%">
+              <BarChart data={cashFlowData} margin={{ top: 2, right: 10, left: 10, bottom: 2 }} barCategoryGap="60%">
                 <XAxis 
                   dataKey="month" 
                   axisLine={false}
