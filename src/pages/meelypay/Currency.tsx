@@ -1,4 +1,3 @@
-
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,7 +8,7 @@ import { useCurrency } from '@/contexts/CurrencyContext';
 import { ArrowRight, RefreshCw } from 'lucide-react';
 
 export default function MeelyPayCurrency() {
-  const { selectedCurrency, setSelectedCurrency, formatAmount } = useCurrency();
+  const { currency, setCurrency, formatAmount } = useCurrency();
 
   return (
     <Layout>
@@ -30,7 +29,7 @@ export default function MeelyPayCurrency() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label>Default Currency</Label>
-                  <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
+                  <Select value={currency} onValueChange={setCurrency}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select currency" />
                     </SelectTrigger>
@@ -146,4 +145,4 @@ export default function MeelyPayCurrency() {
       </div>
     </Layout>
   );
-}
+} 
