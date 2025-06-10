@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -143,8 +144,10 @@ const MeelyPay = () => {
             <div 
               className="rounded-[24px] p-6"
               style={{ 
-                background: 'rgba(255, 255, 255, 0.64)',
-                border: '1px solid #FFFFFF'
+                border: '1px solid #FFFFFF',
+                boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                borderRadius: '24px',
+                background: 'rgba(255, 255, 255, 0.8)'
               }}
             >
               <h3 className="text-lg font-semibold text-foreground mb-4">Send Again</h3>
