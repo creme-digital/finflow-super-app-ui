@@ -51,13 +51,13 @@ const Crypto = () => {
               <TabsList className="bg-transparent p-0 h-auto">
                 <TabsTrigger 
                   value="trading" 
-                  className="data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none rounded-none px-4 py-2 text-base font-medium transition-theme"
+                  className="data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none rounded-none px-4 py-2 text-base font-medium transition-all duration-300"
                 >
                   Crypto Trading
                 </TabsTrigger>
                 <TabsTrigger 
                   value="asset" 
-                  className="data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none rounded-none px-4 py-2 text-base font-medium text-secondary transition-theme"
+                  className="data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none rounded-none px-4 py-2 text-base font-medium text-secondary transition-all duration-300"
                 >
                   Asset
                 </TabsTrigger>
@@ -71,20 +71,20 @@ const Crypto = () => {
 
           {/* Account and Asset Selection */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            <Card className="fintech-card">
-              <CardContent className="fintech-card-content">
+            <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)] transition-all duration-300">
+              <CardContent className="p-4 transition-all duration-300">
                 <div className="space-y-4">
                   <div>
-                    <label className="fintech-body mb-2 block">Exchange</label>
-                    <div className="fintech-body">0 BTC : 0.00 USD</div>
+                    <label className="text-sm text-secondary mb-2 block">Exchange</label>
+                    <div className="text-sm text-secondary">0 BTC : 0.00 USD</div>
                   </div>
                   <div>
-                    <label className="fintech-body mb-2 block">Account 1890980</label>
+                    <label className="text-sm text-secondary mb-2 block">Account 1890980</label>
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 rounded-full bg-info flex items-center justify-center">
                         <span className="text-info-foreground text-xs font-bold">$</span>
                       </div>
-                      <span className="fintech-mono text-lg text-primary">${accountBalance.toLocaleString()}</span>
+                      <span className="font-mono text-lg text-primary">${accountBalance.toLocaleString()}</span>
                       <ChevronDown className="w-4 h-4 text-secondary" />
                     </div>
                   </div>
@@ -92,11 +92,11 @@ const Crypto = () => {
               </CardContent>
             </Card>
 
-            <Card className="fintech-card">
-              <CardContent className="fintech-card-content">
+            <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)] transition-all duration-300">
+              <CardContent className="p-4 transition-all duration-300">
                 <div className="space-y-4">
                   <div>
-                    <label className="fintech-body mb-2 block">Market</label>
+                    <label className="text-sm text-secondary mb-2 block">Market</label>
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ const Crypto = () => {
                       </div>
                       <span className="font-medium text-primary">{selectedMarket}</span>
                       <div className="flex items-center gap-1">
-                        <span className="fintech-mono text-primary">{portfolioValue} BTC</span>
+                        <span className="font-mono text-primary">{portfolioValue} BTC</span>
                         <ChevronDown className="w-4 h-4 text-secondary" />
                       </div>
                     </div>
@@ -114,11 +114,11 @@ const Crypto = () => {
               </CardContent>
             </Card>
 
-            <Card className="fintech-card">
-              <CardContent className="fintech-card-content">
+            <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)] transition-all duration-300">
+              <CardContent className="p-4 transition-all duration-300">
                 <div className="space-y-4">
                   <div>
-                    <label className="fintech-body mb-2 block">Trading Pair</label>
+                    <label className="text-sm text-secondary mb-2 block">Trading Pair</label>
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
@@ -127,7 +127,7 @@ const Crypto = () => {
                       </div>
                       <span className="font-medium text-primary">{selectedTradingPair}</span>
                       <div className="flex items-center gap-1">
-                        <span className="fintech-mono text-primary">65 ETH</span>
+                        <span className="font-mono text-primary">65 ETH</span>
                         <ChevronDown className="w-4 h-4 text-secondary" />
                       </div>
                     </div>
@@ -140,11 +140,11 @@ const Crypto = () => {
           {/* Market Stats */}
           <div className="grid grid-cols-5 gap-4 mb-6">
             {marketStats.map((stat, index) => (
-              <Card key={index} className="fintech-card">
-                <CardContent className="fintech-card-content">
+              <Card key={index} className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)] transition-all duration-300">
+                <CardContent className="p-4 transition-all duration-300">
                   <div className="space-y-2">
-                    <div className="fintech-body">{stat.label}</div>
-                    <div className="fintech-mono text-lg font-medium text-primary">{stat.value}</div>
+                    <div className="text-sm text-secondary">{stat.label}</div>
+                    <div className="font-mono text-lg font-medium text-primary">{stat.value}</div>
                     <div className={`flex items-center gap-1 text-sm ${stat.positive ? 'text-success' : 'text-error'}`}>
                       {stat.positive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                       {stat.change}
@@ -158,8 +158,8 @@ const Crypto = () => {
           {/* Chart and Trading Interface */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Chart Section */}
-            <Card className="lg:col-span-2 fintech-card">
-              <CardHeader className="fintech-card-header pb-4">
+            <Card className="lg:col-span-2 rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)] transition-all duration-300">
+              <CardHeader className="px-4 pt-4 pb-3 min-h-[40px] border-b border-border transition-all duration-300 pb-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
@@ -201,23 +201,23 @@ const Crypto = () => {
             </Card>
 
             {/* Trading Panel */}
-            <Card className="fintech-card">
-              <CardHeader className="fintech-card-header pb-4">
+            <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)] transition-all duration-300">
+              <CardHeader className="px-4 pt-4 pb-3 min-h-[40px] border-b border-border transition-all duration-300 pb-4">
                 <div className="grid grid-cols-3 gap-4 text-center">
-                  <CardTitle className="fintech-heading-3">Price (USDT)</CardTitle>
-                  <CardTitle className="fintech-heading-3">Amount (BTC)</CardTitle>
-                  <CardTitle className="fintech-heading-3">Time</CardTitle>
+                  <CardTitle className="text-base font-medium text-card-foreground flex items-center gap-2 transition-all duration-300">Price (USDT)</CardTitle>
+                  <CardTitle className="text-base font-medium text-card-foreground flex items-center gap-2 transition-all duration-300">Amount (BTC)</CardTitle>
+                  <CardTitle className="text-base font-medium text-card-foreground flex items-center gap-2 transition-all duration-300">Time</CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="max-h-[400px] overflow-y-auto">
-                  <Table className="fintech-table">
+                  <Table className="w-full border-collapse">
                     <TableBody>
                       {tradeHistory.map((trade, index) => (
-                        <TableRow key={index} className="fintech-table-row border-none">
-                          <TableCell className="text-success fintech-mono text-sm py-2">{trade.price.toFixed(2)}</TableCell>
-                          <TableCell className="fintech-mono text-sm py-2 text-primary">{trade.amount}</TableCell>
-                          <TableCell className="fintech-mono text-sm py-2 text-primary">{trade.time}</TableCell>
+                        <TableRow key={index} className="hover:bg-surface-muted transition-colors border-none">
+                          <TableCell className="text-success font-mono text-sm py-2">{trade.price.toFixed(2)}</TableCell>
+                          <TableCell className="font-mono text-sm py-2 text-primary">{trade.amount}</TableCell>
+                          <TableCell className="font-mono text-sm py-2 text-primary">{trade.time}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

@@ -17,7 +17,7 @@ const Tax = () => {
       mainContent={
         <div className="space-y-6">
           <PageHeader title="">
-            <Button className="gap-2 fintech-button-primary">
+            <Button className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-4 py-2 font-medium transition-colors shadow-[0px_-4px_8px_-4px_rgba(0,0,0,0.08)_inset,0px_0px_0px_1px_rgba(0,0,0,0.04)_inset,0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(221,221,228,0.25)]">
               <Plus className="w-4 h-4" />
               Tax Submission form
             </Button>
@@ -26,10 +26,10 @@ const Tax = () => {
           <Tabs defaultValue="history" value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex items-center justify-between">
               <TabsList className="grid w-fit grid-cols-2 bg-surface-muted/50">
-                <TabsTrigger value="history" className="data-[state=active]:bg-surface transition-theme">
+                <TabsTrigger value="history" className="data-[state=active]:bg-surface transition-all duration-300">
                   Tax History
                 </TabsTrigger>
-                <TabsTrigger value="estimation" className="data-[state=active]:bg-surface transition-theme">
+                <TabsTrigger value="estimation" className="data-[state=active]:bg-surface transition-all duration-300">
                   Tax Estimation
                 </TabsTrigger>
               </TabsList>

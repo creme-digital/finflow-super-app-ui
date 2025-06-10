@@ -82,43 +82,43 @@ export const TaxHistoryTab = () => {
   ];
 
   return (
-    <Card className="fintech-card">
+    <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)] transition-all duration-300">
       <CardContent className="p-0">
-        <Table className="fintech-table">
-          <TableHeader className="fintech-table-header">
+        <Table className="w-full border-collapse">
+          <TableHeader className="bg-surface-muted">
             <TableRow className="border-b bg-surface-muted">
-              <TableHead className="fintech-table-header-cell">Date</TableHead>
-              <TableHead className="fintech-table-header-cell">Issuer</TableHead>
-              <TableHead className="fintech-table-header-cell">Form</TableHead>
-              <TableHead className="fintech-table-header-cell">Amount</TableHead>
-              <TableHead className="fintech-table-header-cell">Status</TableHead>
-              <TableHead className="fintech-table-header-cell">Action</TableHead>
+              <TableHead className="px-4 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">Date</TableHead>
+              <TableHead className="px-4 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">Issuer</TableHead>
+              <TableHead className="px-4 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">Form</TableHead>
+              <TableHead className="px-4 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">Amount</TableHead>
+              <TableHead className="px-4 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">Status</TableHead>
+              <TableHead className="px-4 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {taxHistory.map((item, index) => (
-              <TableRow key={index} className="fintech-table-row border-b border-border/50">
-                <TableCell className="fintech-table-cell font-medium">
+              <TableRow key={index} className="hover:bg-surface-muted transition-colors border-b border-border/50">
+                <TableCell className="px-4 py-3 text-sm text-primary border-b border-border font-medium">
                   {item.date}
                 </TableCell>
-                <TableCell className="fintech-table-cell">
+                <TableCell className="px-4 py-3 text-sm text-primary border-b border-border">
                   {item.issuer}
                 </TableCell>
-                <TableCell className="fintech-table-cell">
+                <TableCell className="px-4 py-3 text-sm text-primary border-b border-border">
                   {item.form}
                 </TableCell>
-                <TableCell className="fintech-table-cell fintech-mono font-medium">
+                <TableCell className="px-4 py-3 text-sm text-primary border-b border-border font-mono font-medium">
                   {formatCurrency(item.amount)}
                 </TableCell>
-                <TableCell className="fintech-table-cell">
+                <TableCell className="px-4 py-3 text-sm text-primary border-b border-border">
                   <Badge 
                     variant="secondary" 
-                    className="bg-success/10 text-success hover:bg-success/20 transition-theme"
+                    className="bg-success/10 text-success hover:bg-success/20 transition-all duration-300"
                   >
                     {item.status}
                   </Badge>
                 </TableCell>
-                <TableCell className="fintech-table-cell">
+                <TableCell className="px-4 py-3 text-sm text-primary border-b border-border">
                   <Button variant="ghost" size="icon" className="h-8 w-8">
                     <MoreHorizontal className="w-4 h-4" />
                   </Button>
