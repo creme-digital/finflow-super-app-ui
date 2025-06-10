@@ -182,7 +182,7 @@ export function DashboardContent() {
         }}>
           <div className="flex items-center gap-2">
             <TrendingUp className="w-4 h-4" />
-            <span className="text-black text-base font-medium" style={{
+            <span className="text-black text-sm font-medium" style={{
               fontFamily: 'Inter'
             }}>
               Money flow
@@ -244,7 +244,7 @@ export function DashboardContent() {
         }}>
           <div className="flex items-center gap-2">
             <DollarSign className="w-4 h-4" />
-            <span className="text-black text-base font-medium" style={{
+            <span className="text-black text-sm font-medium" style={{
               fontFamily: 'Inter'
             }}>
               Balance
