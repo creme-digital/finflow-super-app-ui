@@ -66,7 +66,7 @@ export function AllHoldings() {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium text-muted-foreground">All Activity</h3>
+      <h3 className="text-sm font-medium text-muted-foreground">All Activity</h3>
       
       <div className="space-y-3">
         {holdings.map((holding) => {
