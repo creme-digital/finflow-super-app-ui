@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid, ReferenceLine } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TrendingUp, DollarSign } from 'lucide-react';
 
@@ -80,40 +79,52 @@ const moneyFlowData = [{
 
 const balanceData = [{
   month: 'Jan',
-  balance: 45000
+  income: 28500,
+  expense: -24000
 }, {
   month: 'Feb',
-  balance: 48000
+  income: 31000,
+  expense: -28000
 }, {
   month: 'Mar',
-  balance: 46500
+  income: 29500,
+  expense: -26500
 }, {
   month: 'Apr',
-  balance: 51000
+  income: 32000,
+  expense: -29000
 }, {
   month: 'May',
-  balance: 53000
+  income: 34000,
+  expense: -31000
 }, {
   month: 'Jun',
-  balance: 52500
+  income: 32500,
+  expense: -29500
 }, {
   month: 'Jul',
-  balance: 56000
+  income: 35000,
+  expense: -32000
 }, {
   month: 'Aug',
-  balance: 55000
+  income: 33500,
+  expense: -30500
 }, {
   month: 'Sep',
-  balance: 53500
+  income: 31500,
+  expense: -28500
 }, {
   month: 'Oct',
-  balance: 58000
+  income: 36000,
+  expense: -33000
 }, {
   month: 'Nov',
-  balance: 57000
+  income: 34500,
+  expense: -31500
 }, {
   month: 'Dec',
-  balance: 62000
+  income: 37000,
+  expense: -34000
 }];
 
 const chartConfig = {
@@ -129,9 +140,13 @@ const chartConfig = {
     label: "Money Flow",
     color: "#292EE9"
   },
-  balance: {
-    label: "Balance",
+  income: {
+    label: "Income",
     color: "#22c55e"
+  },
+  expense: {
+    label: "Expense",
+    color: "#ef4444"
   }
 };
 
@@ -291,7 +306,7 @@ export function DashboardContent() {
             <span className="text-black text-sm font-medium" style={{
               fontFamily: 'Inter'
             }}>
-              Balance
+              Income vs Expense
             </span>
           </div>
           <Select defaultValue="7days">
@@ -322,9 +337,14 @@ export function DashboardContent() {
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{
                   fontSize: 10
                 }} />
-                <YAxis hide />
+                <YAxis axisLine={false} tickLine={false} tick={{
+                  fontSize: 10,
+                  fill: '#64748b'
+                }} />
+                <ReferenceLine y={0} stroke="#94a3b8" strokeDasharray="2 2" />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="balance" fill={chartConfig.balance.color} radius={[24, 24, 0, 0]} maxBarSize={12} />
+                <Bar dataKey="income" fill={chartConfig.income.color} radius={[24, 24, 0, 0]} maxBarSize={12} />
+                <Bar dataKey="expense" fill={chartConfig.expense.color} radius={[0, 0, 24, 24]} maxBarSize={12} />
               </BarChart>
             </ChartContainer>
           </div>
