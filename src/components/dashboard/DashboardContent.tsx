@@ -41,9 +41,9 @@ export function DashboardContent() {
       </div>
 
       {/* Money In/Out and Chart Section */}
-      <div className="flex flex-row gap-8 items-center">
+      <div className="flex flex-row gap-8 items-start">
         {/* Money In/Out Summary */}
-        <div className="space-y-4 min-w-[200px]">
+        <div className="space-y-4 min-w-[200px] flex-shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-1 h-6 bg-green-500 rounded-full"></div>
             <div className="flex items-center gap-2">
@@ -62,15 +62,15 @@ export function DashboardContent() {
         </div>
 
         {/* Bar Chart */}
-        <div className="flex-1 h-[60px]">
+        <div className="flex-1 h-[80px] mt-2">
           <ChartContainer config={chartConfig}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={cashFlowData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }} barCategoryGap="60%">
+              <BarChart data={cashFlowData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }} barCategoryGap="20%">
                 <XAxis 
                   dataKey="month" 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 8, fill: '#64748b' }}
+                  tick={{ fontSize: 10, fill: '#64748b' }}
                 />
                 <YAxis 
                   hide 
@@ -83,14 +83,14 @@ export function DashboardContent() {
                 <Bar 
                   dataKey="moneyIn" 
                   fill="var(--color-moneyIn)"
-                  radius={[1, 1, 0, 0]}
-                  maxBarSize={6}
+                  radius={[2, 2, 0, 0]}
+                  maxBarSize={12}
                 />
                 <Bar 
                   dataKey="moneyOut" 
                   fill="var(--color-moneyOut)"
-                  radius={[1, 1, 0, 0]} 
-                  maxBarSize={6}
+                  radius={[2, 2, 0, 0]} 
+                  maxBarSize={12}
                 />
               </BarChart>
             </ResponsiveContainer>
