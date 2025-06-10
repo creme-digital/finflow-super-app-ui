@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
@@ -109,7 +108,7 @@ export function DashboardContent() {
               <div className="w-1 h-6 bg-green-500 rounded-full"></div>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Money in</span>
-                <span className="text-lg font-medium text-green-600">$310,704.49</span>
+                <span className="text-sm font-medium text-green-600">$310,704.49</span>
               </div>
             </div>
             
@@ -118,7 +117,7 @@ export function DashboardContent() {
               <div className="w-1 h-6 bg-red-500 rounded-full"></div>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Money out</span>
-                <span className="text-lg font-medium text-red-600">-$383,025.60</span>
+                <span className="text-sm font-medium text-red-600">-$383,025.60</span>
               </div>
             </div>
           </div>
