@@ -35,8 +35,18 @@ export function CurrencyBalanceCards() {
   return (
     <div className="grid grid-cols-5 gap-6">
       {currencyData.map((currency) => (
-        <Card key={currency.currency} className="overflow-hidden">
-          <CardContent className="p-6">
+        <div 
+          key={currency.currency} 
+          className="flex flex-col overflow-hidden" 
+          style={{
+            border: '1px solid #FFFFFF',
+            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            borderRadius: '16px'
+          }}
+        >
+          <CardContent className="p-6" style={{
+            background: 'rgba(255, 255, 255, 0.8)'
+          }}>
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl">{currency.flag}</span>
               <span className="text-sm font-medium text-foreground">{currency.currency}</span>
@@ -45,12 +55,21 @@ export function CurrencyBalanceCards() {
               {currency.symbol}{currency.balance.toLocaleString()}
             </div>
           </CardContent>
-        </Card>
+        </div>
       ))}
       
       {/* Add New Balance Card */}
-      <Card className="overflow-hidden cursor-pointer hover:bg-muted/50 transition-colors">
-        <CardContent className="p-6 flex flex-col items-center justify-center h-full min-h-[120px]">
+      <div 
+        className="flex flex-col overflow-hidden cursor-pointer hover:bg-muted/50 transition-colors" 
+        style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px'
+        }}
+      >
+        <CardContent className="p-6 flex flex-col items-center justify-center h-full min-h-[120px]" style={{
+          background: 'rgba(255, 255, 255, 0.8)'
+        }}>
           <Button variant="ghost" className="flex flex-col gap-2 h-auto p-0">
             <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
               <Plus className="w-6 h-6 text-muted-foreground" />
@@ -58,7 +77,7 @@ export function CurrencyBalanceCards() {
             <span className="text-sm text-muted-foreground">Add another account</span>
           </Button>
         </CardContent>
-      </Card>
+      </div>
     </div>
   );
 }
