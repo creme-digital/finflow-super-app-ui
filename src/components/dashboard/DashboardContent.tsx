@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
@@ -91,7 +90,7 @@ export function DashboardContent() {
 
       {/* Money Flow Card */}
       <div 
-        className="flex flex-col"
+        className="flex flex-col space-y-0 p-0 overflow-hidden"
         style={{ 
           border: '1px solid #FFFFFF',
           boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
@@ -99,7 +98,7 @@ export function DashboardContent() {
         }}
       >
         {/* Card Header */}
-        <div className="px-3 py-2 flex flex-row justify-between items-center" style={{
+        <div className="p-2 flex flex-row justify-between items-center" style={{
           background: 'rgba(255, 255, 255, 0.8)'
         }}>
           <div className="flex items-center gap-2">
@@ -123,7 +122,7 @@ export function DashboardContent() {
         </div>
         
         {/* Card Content */}
-        <div className="p-4 h-[200px]">
+        <div className="h-[200px] p-4">
           <ChartContainer config={chartConfig}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={moneyFlowData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
@@ -156,7 +155,7 @@ export function DashboardContent() {
 
       {/* Balance Card */}
       <div 
-        className="flex flex-col"
+        className="flex flex-col space-y-0 p-0 overflow-hidden"
         style={{ 
           border: '1px solid #FFFFFF',
           boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
@@ -164,7 +163,7 @@ export function DashboardContent() {
         }}
       >
         {/* Card Header */}
-        <div className="px-3 py-2 flex flex-row justify-between items-center" style={{
+        <div className="p-2 flex flex-row justify-between items-center" style={{
           background: 'rgba(255, 255, 255, 0.8)'
         }}>
           <div className="flex items-center gap-2">
@@ -188,7 +187,7 @@ export function DashboardContent() {
         </div>
         
         {/* Card Content */}
-        <div className="p-4 h-[200px]">
+        <div className="h-[200px] p-4">
           <ChartContainer config={chartConfig}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart 
@@ -220,4 +219,3 @@ export function DashboardContent() {
     </div>
   );
 }
-
