@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { SidebarNav } from './SidebarNav';
 import { useSidebarState } from './sidebar/use-sidebar-state';
@@ -16,8 +17,7 @@ export function Layout({ children }: LayoutProps) {
       <main
         className={cn(
           'min-h-screen transition-all duration-300 p-6',
-          expanded ? 'ml-64' : 'ml-16',
-          isMobile ? 'ml-0' : ''
+          isMobile ? 'ml-0' : 'ml-16'
         )}
       >
         {children}
