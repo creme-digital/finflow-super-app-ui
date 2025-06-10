@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
@@ -88,10 +89,14 @@ export function DashboardContent() {
       </div>
 
       {/* Money Flow Card */}
-      <div className="flex flex-col space-y-0 p-0 rounded-[16px] overflow-hidden" style={{ 
-        background: 'rgba(255, 255, 255, 0.64)',
-        border: '1px solid #FFFFFF'
-      }}>
+      <div 
+        className="flex flex-col space-y-0 p-0 overflow-hidden"
+        style={{ 
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px'
+        }}
+      >
         {/* Card Header */}
         <div className="p-2 flex flex-row justify-between items-center" style={{
           background: 'rgba(255, 255, 255, 0.8)'
@@ -149,10 +154,14 @@ export function DashboardContent() {
       </div>
 
       {/* Balance Card */}
-      <div className="flex flex-col space-y-0 p-0 rounded-[16px] overflow-hidden" style={{ 
-        background: 'rgba(255, 255, 255, 0.64)',
-        border: '1px solid #FFFFFF'
-      }}>
+      <div 
+        className="flex flex-col space-y-0 p-0 overflow-hidden"
+        style={{ 
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px'
+        }}
+      >
         {/* Card Header */}
         <div className="p-2 flex flex-row justify-between items-center" style={{
           background: 'rgba(255, 255, 255, 0.8)'
