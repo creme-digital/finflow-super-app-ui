@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
@@ -69,61 +68,22 @@ export function DashboardContent() {
         </h2>
       </div>
 
-      {/* Money In/Out and Chart Section */}
-      <div className="flex flex-row gap-8 items-start">
-        {/* Money In/Out Summary */}
-        <div className="space-y-4 min-w-[200px] flex-shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-1 h-6 bg-green-500 rounded-full"></div>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Money in</span>
-              <span className="text-lg font-medium text-green-600">$310,704.49</span>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <div className="w-1 h-6 bg-red-500 rounded-full"></div>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Money out</span>
-              <span className="text-lg font-medium text-red-600">-$383,025.60</span>
-            </div>
+      {/* Money In/Out Summary */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-1 h-6 bg-green-500 rounded-full"></div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Money in</span>
+            <span className="text-lg font-medium text-green-600">$310,704.49</span>
           </div>
         </div>
-
-        {/* Bar Chart */}
-        <div className="flex-1 h-[80px] mt-2">
-          <ChartContainer config={chartConfig}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={cashFlowData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }} barCategoryGap="20%">
-                <XAxis 
-                  dataKey="month" 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 10, fill: '#64748b' }}
-                />
-                <YAxis 
-                  hide 
-                  domain={[0, 50000]}
-                />
-                <ChartTooltip 
-                  content={<ChartTooltipContent />}
-                  cursor={{ fill: 'rgba(0, 0, 0, 0.1)' }}
-                />
-                <Bar 
-                  dataKey="moneyIn" 
-                  fill="var(--color-moneyIn)"
-                  radius={[2, 2, 0, 0]}
-                  maxBarSize={12}
-                />
-                <Bar 
-                  dataKey="moneyOut" 
-                  fill="var(--color-moneyOut)"
-                  radius={[2, 2, 0, 0]} 
-                  maxBarSize={12}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+        
+        <div className="flex items-center gap-3">
+          <div className="w-1 h-6 bg-red-500 rounded-full"></div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Money out</span>
+            <span className="text-lg font-medium text-red-600">-$383,025.60</span>
+          </div>
         </div>
       </div>
 
