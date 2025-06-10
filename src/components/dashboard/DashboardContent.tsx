@@ -66,11 +66,11 @@ const balanceData = [{
 const chartConfig = {
   moneyIn: {
     label: "Money In",
-    color: "#22c55e"
+    color: "#292EE9"
   },
   moneyOut: {
     label: "Money Out",
-    color: "#ef4444"
+    color: "#D1D5DC"
   },
   flow: {
     label: "Money Flow",
@@ -136,8 +136,8 @@ export function DashboardContent() {
                 }} />
                 <YAxis hide />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="moneyIn" fill={chartConfig.moneyIn.color} radius={[2, 2, 0, 0]} />
-                <Bar dataKey="moneyOut" fill={chartConfig.moneyOut.color} radius={[2, 2, 0, 0]} />
+                <Bar dataKey="moneyIn" fill={chartConfig.moneyIn.color} radius={[24, 24, 0, 0]} />
+                <Bar dataKey="moneyOut" fill={chartConfig.moneyOut.color} radius={[24, 24, 0, 0]} />
               </BarChart>
             </ChartContainer>
           </div>
