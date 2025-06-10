@@ -4,18 +4,18 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 const cashFlowData = [
-  { month: 'Jan', moneyIn: 285000, moneyOut: 240000 },
-  { month: 'Feb', moneyIn: 310000, moneyOut: 280000 },
-  { month: 'Mar', moneyIn: 295000, moneyOut: 265000 },
-  { month: 'Apr', moneyIn: 320000, moneyOut: 290000 },
-  { month: 'May', moneyIn: 340000, moneyOut: 310000 },
-  { month: 'Jun', moneyIn: 325000, moneyOut: 295000 },
-  { month: 'Jul', moneyIn: 355000, moneyOut: 320000 },
-  { month: 'Aug', moneyIn: 345000, moneyOut: 315000 },
-  { month: 'Sep', moneyIn: 375000, moneyOut: 340000 },
-  { month: 'Oct', moneyIn: 390000, moneyOut: 360000 },
-  { month: 'Nov', moneyIn: 365000, moneyOut: 335000 },
-  { month: 'Dec', moneyIn: 380000, moneyOut: 350000 },
+  { month: 'Jan', moneyIn: 28500, moneyOut: 24000 },
+  { month: 'Feb', moneyIn: 31000, moneyOut: 28000 },
+  { month: 'Mar', moneyIn: 29500, moneyOut: 26500 },
+  { month: 'Apr', moneyIn: 32000, moneyOut: 29000 },
+  { month: 'May', moneyIn: 34000, moneyOut: 31000 },
+  { month: 'Jun', moneyIn: 32500, moneyOut: 29500 },
+  { month: 'Jul', moneyIn: 35500, moneyOut: 32000 },
+  { month: 'Aug', moneyIn: 34500, moneyOut: 31500 },
+  { month: 'Sep', moneyIn: 37500, moneyOut: 34000 },
+  { month: 'Oct', moneyIn: 39000, moneyOut: 36000 },
+  { month: 'Nov', moneyIn: 36500, moneyOut: 33500 },
+  { month: 'Dec', moneyIn: 38000, moneyOut: 35000 },
 ];
 
 const chartConfig = {
