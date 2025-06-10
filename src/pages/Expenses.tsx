@@ -5,49 +5,90 @@ import { ExpenseFilters } from '@/components/expenses/ExpenseFilters';
 import { ExpenseTable } from '@/components/expenses/ExpenseTable';
 import { AddExpenseDialog } from '@/components/expenses/AddExpenseDialog';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Plus, Filter, ChevronDown, Download } from 'lucide-react';
 import { Expense } from '@/types/expenses';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 // Sample data - in a real app this would come from an API
 const sampleExpenses: Expense[] = [
   {
     id: '1',
-    date: new Date('2025-04-25'),
+    date: new Date('2024-05-23'),
     description: 'Office Supplies',
     category: 'Office',
-    amount: 125.99,
+    amount: 8657.41,
     receipt: null,
   },
   {
     id: '2',
-    date: new Date('2025-04-20'),
+    date: new Date('2024-05-23'),
     description: 'Client Lunch',
     category: 'Meals',
-    amount: 84.50,
+    amount: 342.07,
     receipt: null,
   },
   {
     id: '3',
-    date: new Date('2025-04-15'),
+    date: new Date('2024-05-23'),
     description: 'Taxi Ride',
     category: 'Travel',
-    amount: 35.25,
+    amount: 1486.52,
     receipt: null,
   },
   {
     id: '4',
-    date: new Date('2025-04-10'),
+    date: new Date('2024-05-23'),
     description: 'Software Subscription',
     category: 'Software',
-    amount: 49.99,
+    amount: 5653.56,
     receipt: null,
   },
   {
     id: '5',
-    date: new Date('2025-04-05'),
+    date: new Date('2024-05-23'),
     description: 'Hotel Stay',
     category: 'Travel',
-    amount: 245.80,
+    amount: 1595.71,
+    receipt: null,
+  },
+  {
+    id: '6',
+    date: new Date('2024-05-23'),
+    description: 'Office Supplies',
+    category: 'Office',
+    amount: 7738.89,
+    receipt: null,
+  },
+  {
+    id: '7',
+    date: new Date('2024-05-23'),
+    description: 'Client Lunch',
+    category: 'Meals',
+    amount: 8650.33,
+    receipt: null,
+  },
+  {
+    id: '8',
+    date: new Date('2024-05-23'),
+    description: 'Taxi Ride',
+    category: 'Travel',
+    amount: 1207.52,
+    receipt: null,
+  },
+  {
+    id: '9',
+    date: new Date('2024-05-23'),
+    description: 'Software Subscription',
+    category: 'Software',
+    amount: 376.96,
+    receipt: null,
+  },
+  {
+    id: '10',
+    date: new Date('2024-05-23'),
+    description: 'Hotel Stay',
+    category: 'Travel',
+    amount: 7727.07,
     receipt: null,
   },
 ];
@@ -87,29 +128,51 @@ export default function Expenses() {
   };
   
   return (
-    <Layout>
-      <div className="flex flex-col gap-6">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-semibold tracking-tight">Expenses</h1>
-            <p className="text-muted-foreground mt-1">Track and manage your expenses.</p>
+    <Layout
+      title="Expenses"
+      mainContent={
+        <div className="space-y-6">
+          {/* Header */}
+          <PageHeader
+            title="Expenses Details"
+          >
+            <Button 
+              onClick={() => setIsAddExpenseOpen(true)}
+              className="bg-primary text-primary-foreground"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Expenses
+            </Button>
+          </PageHeader>
+
+          {/* Filters */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Button variant="outline" size="sm" className="gap-2">
+                <Filter className="w-4 h-4" />
+                Filters
+              </Button>
+              <Button variant="outline" size="sm" className="gap-2">
+                Category
+                <ChevronDown className="w-4 h-4" />
+              </Button>
+            </div>
+            <Button variant="outline" size="sm" className="gap-2">
+              <Download className="w-4 h-4" />
+              Export All
+            </Button>
           </div>
-          <Button onClick={() => setIsAddExpenseOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" />
-            Add Expense
-          </Button>
+
+          {/* Expenses Table */}
+          <ExpenseTable expenses={filteredExpenses} />
+          
+          <AddExpenseDialog 
+            open={isAddExpenseOpen} 
+            onOpenChange={setIsAddExpenseOpen} 
+            onAddExpense={handleAddExpense} 
+          />
         </div>
-        
-        <ExpenseFilters onFilter={handleFilter} />
-        
-        <ExpenseTable expenses={filteredExpenses} />
-        
-        <AddExpenseDialog 
-          open={isAddExpenseOpen} 
-          onOpenChange={setIsAddExpenseOpen} 
-          onAddExpense={handleAddExpense} 
-        />
-      </div>
-    </Layout>
+      }
+    />
   );
 }

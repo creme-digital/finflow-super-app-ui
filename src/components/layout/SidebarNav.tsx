@@ -26,17 +26,14 @@ export function SidebarNav() {
   }
 
   return (
-    <aside className={`fixed left-0 top-0 z-30 h-screen bg-[#F8F8FA] transition-all duration-300 ${expanded ? 'w-64' : 'w-16'}`}>
+    <aside className="fixed left-0 top-0 z-30 h-screen bg-[#F8F8FA] transition-all duration-300 w-16">
       <div className="flex flex-col h-full">
-        <div className="flex items-center gap-2 px-4 py-4">
+        <div className="flex items-center justify-center px-4 py-4">
           <div className="w-6 h-6 rounded-[6px] bg-black flex items-center justify-center">
             <span className="text-white text-[16px] font-bold" style={{fontFamily: 'Inter'}}>M</span>
           </div>
-          {expanded && (
-            <span className="text-foreground text-[14px] font-medium tracking-[-0.02em]" style={{fontFamily: 'Inter'}}>Meely</span>
-          )}
         </div>
-        <SimplifiedSidebarContent expanded={expanded} />
+        <SimplifiedSidebarContent expanded={false} />
       </div>
     </aside>
   );
