@@ -204,7 +204,7 @@ export function DashboardContent() {
         
         {/* Card content hug height */}
         <div className="p-3">
-          <div style={{ height: '180px' }}>
+          <div style={{ height: '280px' }}>
             <ChartContainer config={chartConfig} className="w-full h-full">
               <LineChart data={moneyFlowData} margin={{
                 top: 5,
@@ -266,7 +266,7 @@ export function DashboardContent() {
         
         {/* Card content hug height */}
         <div className="p-3">
-          <div style={{ height: '180px' }}>
+          <div style={{ height: '280px' }}>
             <ChartContainer config={chartConfig} className="w-full h-full">
               <BarChart data={balanceData} layout="horizontal" margin={{
                 top: 20,
