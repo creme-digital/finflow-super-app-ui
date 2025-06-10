@@ -1,32 +1,11 @@
+
 import React from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { SidebarContent } from './sidebar/SidebarContent';
+import { SimplifiedSidebarContent } from './sidebar/SimplifiedSidebarContent';
 import { useSidebarState } from './sidebar/use-sidebar-state';
-import { ProductSelector } from './sidebar/ProductSelector';
-import { Product, products } from '@/config/navigation-data';
-import { useLocation } from 'react-router-dom';
 
 export function SidebarNav() {
-  const { expanded, mobileOpen, setMobileOpen, isMobile, openCategories, toggleCategory } = useSidebarState();
-  const location = useLocation();
-
-  // Determine current product based on the URL
-  const getCurrentProduct = (): Product => {
-    const path = location.pathname;
-    if (path.startsWith('/meelypay')) return 'meelypay';
-    if (path.startsWith('/meelytrade')) return 'meelytrade';
-    if (path.startsWith('/meelypayroll')) return 'meelypayroll';
-    return 'main';
-  };
-
-  const [currentProduct, setCurrentProduct] = React.useState<Product>(getCurrentProduct());
-
-  // Update current product when URL changes
-  React.useEffect(() => {
-    setCurrentProduct(getCurrentProduct());
-  }, [location.pathname]);
-
-  const currentProductData = products.find(p => p.id === currentProduct);
+  const { expanded, mobileOpen, setMobileOpen, isMobile } = useSidebarState();
 
   if (isMobile) {
     return (
@@ -39,16 +18,7 @@ export function SidebarNav() {
               </div>
               <span className="text-foreground text-[14px] font-medium tracking-[-0.02em]" style={{fontFamily: 'Inter'}}>Meely</span>
             </div>
-            <ProductSelector
-              currentProduct={currentProduct}
-              onProductChange={setCurrentProduct}
-            />
-            <SidebarContent
-              items={currentProductData?.items || []}
-              expanded={expanded}
-              openCategories={openCategories}
-              toggleCategory={toggleCategory}
-            />
+            <SimplifiedSidebarContent expanded={true} />
           </div>
         </SheetContent>
       </Sheet>
@@ -66,16 +36,7 @@ export function SidebarNav() {
             <span className="text-foreground text-[14px] font-medium tracking-[-0.02em]" style={{fontFamily: 'Inter'}}>Meely</span>
           )}
         </div>
-        <ProductSelector
-          currentProduct={currentProduct}
-          onProductChange={setCurrentProduct}
-        />
-        <SidebarContent
-          items={currentProductData?.items || []}
-          expanded={expanded}
-          openCategories={openCategories}
-          toggleCategory={toggleCategory}
-        />
+        <SimplifiedSidebarContent expanded={expanded} />
       </div>
     </aside>
   );

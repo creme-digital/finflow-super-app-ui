@@ -1,18 +1,26 @@
 import { Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
+import Overview from './pages/Overview';
 import Accounts from './pages/Accounts';
 import Cards from './pages/Cards';
 import Transfers from './pages/Transfers';
+import MeelyPay from './pages/MeelyPay';
 import Expenses from './pages/Expenses';
 import Accounting from './pages/Accounting';
+import Transactions from './pages/Transactions';
 import Payroll from './pages/Payroll';
 import Tax from './pages/Tax';
-import Payments from './pages/Payments';
 import Crypto from './pages/Crypto';
 import Rewards from './pages/Rewards';
 import Integrations from './pages/Integrations';
+import Insurance from './pages/Insurance';
+import TradingDashboard from './pages/TradingDashboard';
+import MerchantAccount from './pages/MerchantAccount';
+import Subscriptions from './pages/Subscriptions';
 import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
+
+// Keep existing sub-pages for backward compatibility
 import Bookkeeping from './pages/bookkeeping';
 import Invoicing from './pages/invoicing';
 import Reports from './pages/reports';
@@ -58,20 +66,28 @@ import MeelyPayrollAlerts from './pages/meelypayroll/Alerts';
 
 export const AppRoutes = () => (
   <Routes>
-    {/* Main routes */}
+    {/* Main navigation routes */}
     <Route path="/" element={<Index />} />
+    <Route path="/overview" element={<Overview />} />
     <Route path="/accounts" element={<Accounts />} />
     <Route path="/cards" element={<Cards />} />
     <Route path="/transfers" element={<Transfers />} />
+    <Route path="/meely-pay" element={<MeelyPay />} />
     <Route path="/expenses" element={<Expenses />} />
     <Route path="/accounting" element={<Accounting />} />
+    <Route path="/transactions" element={<Transactions />} />
     <Route path="/payroll" element={<Payroll />} />
     <Route path="/tax" element={<Tax />} />
-    <Route path="/payments" element={<Payments />} />
     <Route path="/crypto" element={<Crypto />} />
     <Route path="/rewards" element={<Rewards />} />
     <Route path="/integrations" element={<Integrations />} />
+    <Route path="/insurance" element={<Insurance />} />
+    <Route path="/trading-dashboard" element={<TradingDashboard />} />
+    <Route path="/merchant-account" element={<MerchantAccount />} />
+    <Route path="/subscriptions" element={<Subscriptions />} />
     <Route path="/settings" element={<Settings />} />
+
+    {/* Keep existing sub-pages for backward compatibility */}
     <Route path="/bookkeeping" element={<Bookkeeping />} />
     <Route path="/invoicing" element={<Invoicing />} />
     <Route path="/invoice-create" element={<InvoiceCreate />} />
@@ -117,4 +133,4 @@ export const AppRoutes = () => (
 
     <Route path="*" element={<NotFound />} />
   </Routes>
-); 
+);

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -7,24 +8,12 @@ interface UseSidebarStateResult {
   mobileOpen: boolean;
   setMobileOpen: (open: boolean) => void;
   isMobile: boolean;
-  openCategories: Record<string, boolean>;
-  toggleCategory: (category: string) => void;
 }
 
 export const useSidebarState = (): UseSidebarStateResult => {
   const [expanded, setExpanded] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const isMobile = useIsMobile();
-  
-  // Track open/closed state of each category
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
-    MeelyPay: true,
-    MeelyBooks: true,
-    MeelyPayroll: true,
-    MeelyTrade: true,
-    MeelyCrypto: true,
-    Account: true
-  });
 
   // Auto-collapse sidebar on mobile
   useEffect(() => {
@@ -47,20 +36,11 @@ export const useSidebarState = (): UseSidebarStateResult => {
     }
   }, [expanded, isMobile]);
 
-  const toggleCategory = (category: string) => {
-    setOpenCategories(prev => ({
-      ...prev,
-      [category]: !prev[category]
-    }));
-  };
-
   return {
     expanded,
     setExpanded,
     mobileOpen,
     setMobileOpen,
-    isMobile,
-    openCategories,
-    toggleCategory
+    isMobile
   };
 };
