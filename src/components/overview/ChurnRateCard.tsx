@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { LineChart, Line, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { TrendingDown } from 'lucide-react';
 
 const churnData = [
@@ -18,7 +18,7 @@ const chartConfig = {
 export function ChurnRateCard() {
   return (
     <div 
-      className="flex flex-col h-full"
+      className="flex flex-col h-full overflow-hidden"
       style={{
         border: '1px solid #FFFFFF',
         boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
@@ -37,33 +37,43 @@ export function ChurnRateCard() {
       </div>
       
       <div className="flex-1 p-4">
-        <ChartContainer config={chartConfig} className="w-full h-full">
-          <LineChart data={churnData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-            <XAxis 
-              dataKey="week" 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fontSize: 12, fill: '#64748b' }} 
-            />
-            <YAxis 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fontSize: 12, fill: '#64748b' }}
-              tickFormatter={(value) => `${value}%`}
-            />
-            <ChartTooltip 
-              content={<ChartTooltipContent />}
-              formatter={(value) => [`${value}%`, 'Churn Rate']}
-            />
-            <Line 
-              type="monotone" 
-              dataKey="rate" 
-              stroke={chartConfig.rate.color} 
-              strokeWidth={2} 
-              dot={{ fill: chartConfig.rate.color, r: 4 }} 
-            />
-          </LineChart>
-        </ChartContainer>
+        <div style={{ height: '280px' }}>
+          <ChartContainer config={chartConfig} className="w-full h-full">
+            <LineChart data={churnData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+              <defs>
+                <linearGradient id="churnGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={chartConfig.rate.color} stopOpacity={0.8}/>
+                  <stop offset="100%" stopColor={chartConfig.rate.color} stopOpacity={0.1}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
+              <XAxis 
+                dataKey="week" 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 12, fill: '#64748b' }} 
+              />
+              <YAxis 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 12, fill: '#64748b' }}
+                tickFormatter={(value) => `${value}%`}
+              />
+              <ChartTooltip 
+                content={<ChartTooltipContent />}
+                formatter={(value) => [`${value}%`, 'Churn Rate']}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="rate" 
+                stroke={chartConfig.rate.color} 
+                strokeWidth={3}
+                dot={false}
+                activeDot={{ r: 6, fill: chartConfig.rate.color, stroke: '#fff', strokeWidth: 2 }}
+              />
+            </LineChart>
+          </ChartContainer>
+        </div>
       </div>
     </div>
   );

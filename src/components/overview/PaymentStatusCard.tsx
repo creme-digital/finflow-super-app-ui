@@ -19,7 +19,7 @@ const chartConfig = {
 export function PaymentStatusCard() {
   return (
     <div 
-      className="flex flex-col h-full"
+      className="flex flex-col h-full overflow-hidden"
       style={{
         border: '1px solid #FFFFFF',
         boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',

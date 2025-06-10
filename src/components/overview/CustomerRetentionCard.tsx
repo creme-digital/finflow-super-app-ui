@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { UserCheck } from 'lucide-react';
 
 const retentionData = [
@@ -19,7 +19,7 @@ const chartConfig = {
 export function CustomerRetentionCard() {
   return (
     <div 
-      className="flex flex-col h-full"
+      className="flex flex-col h-full overflow-hidden"
       style={{
         border: '1px solid #FFFFFF',
         boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
@@ -38,32 +38,37 @@ export function CustomerRetentionCard() {
       </div>
       
       <div className="flex-1 p-4">
-        <ChartContainer config={chartConfig} className="w-full h-full">
-          <BarChart data={retentionData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-            <XAxis 
-              dataKey="week" 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fontSize: 12, fill: '#64748b' }} 
-            />
-            <YAxis 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fontSize: 12, fill: '#64748b' }}
-            />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <Bar 
-              dataKey="new" 
-              fill={chartConfig.new.color} 
-              radius={[2, 2, 0, 0]} 
-            />
-            <Bar 
-              dataKey="return" 
-              fill={chartConfig.return.color} 
-              radius={[2, 2, 0, 0]} 
-            />
-          </BarChart>
-        </ChartContainer>
+        <div style={{ height: '280px' }}>
+          <ChartContainer config={chartConfig} className="w-full h-full">
+            <BarChart data={retentionData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }} barCategoryGap="10%">
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
+              <XAxis 
+                dataKey="week" 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 12, fill: '#64748b' }} 
+              />
+              <YAxis 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 12, fill: '#64748b' }}
+              />
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <Bar 
+                dataKey="new" 
+                fill={chartConfig.new.color} 
+                radius={[24, 24, 0, 0]} 
+                maxBarSize={32}
+              />
+              <Bar 
+                dataKey="return" 
+                fill={chartConfig.return.color} 
+                radius={[24, 24, 0, 0]} 
+                maxBarSize={32}
+              />
+            </BarChart>
+          </ChartContainer>
+        </div>
         
         <div className="flex gap-4 mt-2 justify-center">
           <div className="flex items-center gap-2">

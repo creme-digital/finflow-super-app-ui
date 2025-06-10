@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { LineChart, Line, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Users } from 'lucide-react';
 
 const customerData = [
@@ -19,7 +19,7 @@ const chartConfig = {
 export function NewCustomersCard() {
   return (
     <div 
-      className="flex flex-col h-full"
+      className="flex flex-col h-full overflow-hidden"
       style={{
         border: '1px solid #FFFFFF',
         boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
@@ -38,36 +38,51 @@ export function NewCustomersCard() {
       </div>
       
       <div className="flex-1 p-4">
-        <ChartContainer config={chartConfig} className="w-full h-full">
-          <LineChart data={customerData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-            <XAxis 
-              dataKey="week" 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fontSize: 12, fill: '#64748b' }} 
-            />
-            <YAxis 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fontSize: 12, fill: '#64748b' }}
-            />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <Line 
-              type="monotone" 
-              dataKey="thisMonth" 
-              stroke={chartConfig.thisMonth.color} 
-              strokeWidth={2} 
-              dot={{ fill: chartConfig.thisMonth.color, r: 4 }} 
-            />
-            <Line 
-              type="monotone" 
-              dataKey="lastMonth" 
-              stroke={chartConfig.lastMonth.color} 
-              strokeWidth={2} 
-              dot={{ fill: chartConfig.lastMonth.color, r: 4 }} 
-            />
-          </LineChart>
-        </ChartContainer>
+        <div style={{ height: '280px' }}>
+          <ChartContainer config={chartConfig} className="w-full h-full">
+            <LineChart data={customerData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+              <defs>
+                <linearGradient id="thisMonthGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={chartConfig.thisMonth.color} stopOpacity={0.8}/>
+                  <stop offset="100%" stopColor={chartConfig.thisMonth.color} stopOpacity={0.1}/>
+                </linearGradient>
+                <linearGradient id="lastMonthGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={chartConfig.lastMonth.color} stopOpacity={0.8}/>
+                  <stop offset="100%" stopColor={chartConfig.lastMonth.color} stopOpacity={0.1}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
+              <XAxis 
+                dataKey="week" 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 12, fill: '#64748b' }} 
+              />
+              <YAxis 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 12, fill: '#64748b' }}
+              />
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <Line 
+                type="monotone" 
+                dataKey="thisMonth" 
+                stroke={chartConfig.thisMonth.color} 
+                strokeWidth={3}
+                dot={false}
+                activeDot={{ r: 6, fill: chartConfig.thisMonth.color, stroke: '#fff', strokeWidth: 2 }}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="lastMonth" 
+                stroke={chartConfig.lastMonth.color} 
+                strokeWidth={3}
+                dot={false}
+                activeDot={{ r: 6, fill: chartConfig.lastMonth.color, stroke: '#fff', strokeWidth: 2 }}
+              />
+            </LineChart>
+          </ChartContainer>
+        </div>
         
         <div className="flex gap-4 mt-2 justify-center">
           <div className="flex items-center gap-2">
