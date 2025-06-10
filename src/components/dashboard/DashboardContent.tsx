@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TrendingUp, DollarSign } from 'lucide-react';
 
@@ -156,6 +156,7 @@ export function DashboardContent() {
                 left: 5,
                 bottom: 5
               }} barCategoryGap="10%">
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{
                   fontSize: 10
                 }} />
@@ -212,6 +213,13 @@ export function DashboardContent() {
                 left: 5,
                 bottom: 5
               }}>
+                <defs>
+                  <linearGradient id="flowGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor={chartConfig.flow.color} stopOpacity={0.8}/>
+                    <stop offset="100%" stopColor={chartConfig.flow.color} stopOpacity={0.1}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
                 <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{
                   fontSize: 12,
                   fill: '#64748b'
@@ -221,10 +229,14 @@ export function DashboardContent() {
                   fill: '#64748b'
                 }} />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Line type="monotone" dataKey="flow" stroke={chartConfig.flow.color} strokeWidth={2} dot={{
-                  fill: chartConfig.flow.color,
-                  r: 4
-                }} />
+                <Line 
+                  type="monotone" 
+                  dataKey="flow" 
+                  stroke={chartConfig.flow.color} 
+                  strokeWidth={3}
+                  dot={false}
+                  activeDot={{ r: 6, fill: chartConfig.flow.color, stroke: '#fff', strokeWidth: 2 }}
+                />
               </LineChart>
             </ChartContainer>
           </div>
@@ -274,6 +286,7 @@ export function DashboardContent() {
                 left: 20,
                 bottom: 20
               }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
                 <XAxis type="number" axisLine={false} tickLine={false} />
                 <YAxis type="category" dataKey="category" axisLine={false} tickLine={false} tick={{
                   fontSize: 12,
