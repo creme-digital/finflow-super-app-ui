@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -149,7 +148,14 @@ const MeelyPay = () => {
               <h3 className="text-lg font-semibold text-foreground mb-4">Send Again</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {sendAgainUsers.map((user) => (
-                  <div key={user.id} className="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
+                  <div 
+                    key={user.id} 
+                    className="flex flex-col items-center gap-2 p-4 rounded-lg transition-colors cursor-pointer"
+                    style={{ 
+                      background: 'rgba(255, 255, 255, 0.64)',
+                      border: '1px solid #FFFFFF'
+                    }}
+                  >
                     <Avatar className="w-16 h-16">
                       <AvatarImage src={user.avatar} alt={user.name} />
                       <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-medium">
@@ -199,7 +205,14 @@ const MeelyPay = () => {
               <h3 className="text-lg font-semibold text-foreground mb-6">Banks and Cards</h3>
               <div className="space-y-4">
                 {banksAndCards.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/30">
+                  <div 
+                    key={item.id} 
+                    className="flex items-center justify-between p-3 rounded-lg"
+                    style={{ 
+                      background: 'rgba(255, 255, 255, 0.64)',
+                      border: '1px solid #FFFFFF'
+                    }}
+                  >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                         <Building className="w-4 h-4 text-blue-600" />
