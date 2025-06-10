@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -127,7 +126,7 @@ export default function Cards() {
           {/* Header with Create Card button */}
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-semibold text-foreground">Cards</h1>
-            <Button className="bg-primary text-primary-foreground">
+            <Button>
               <Plus className="w-4 h-4 mr-2" />
               Create Card
             </Button>
