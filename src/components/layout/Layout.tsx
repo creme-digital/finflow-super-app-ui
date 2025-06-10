@@ -1,13 +1,16 @@
+
 import React from 'react';
 import { SidebarNav } from './SidebarNav';
+import { Header } from './Header';
 import { useSidebarState } from './sidebar/use-sidebar-state';
 import { cn } from '@/lib/utils';
 
 interface LayoutProps {
   children: React.ReactNode;
+  title?: string;
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, title = "Dashboard" }: LayoutProps) {
   const { expanded, isMobile } = useSidebarState();
 
   return (
@@ -15,12 +18,15 @@ export function Layout({ children }: LayoutProps) {
       <SidebarNav />
       <main
         className={cn(
-          'min-h-screen transition-all duration-300 p-6',
+          'min-h-screen transition-all duration-300',
           expanded ? 'ml-64' : 'ml-16',
           isMobile ? 'ml-0' : ''
         )}
       >
-        {children}
+        <Header title={title} />
+        <div className="px-6 pb-6">
+          {children}
+        </div>
       </main>
     </div>
   );
