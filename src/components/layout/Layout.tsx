@@ -28,7 +28,7 @@ export function Layout({
         <Header title={title} />
         
         {/* New flex-row div with 24px spacing and reduced bottom padding */}
-        <div className="flex flex-row gap-6 p-4 pb-6 h-[calc(100vh-140px)]">
+        <div className="flex flex-row gap-6 p-4 pb-6 h-[calc(100vh-64px)]">
           {/* Main items div - hug content with overflow auto */}
           <div className={cn("rounded-[24px] p-6 transition-all duration-300 overflow-auto", showRightSidebar ? "flex-1 min-w-[70%]" : "flex-1")} style={{
           background: 'rgba(255, 255, 255, 0.64)',
