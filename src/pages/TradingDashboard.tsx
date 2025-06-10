@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { TrendingUp, TrendingDown, ArrowUpDown } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
 
-const TradingDashboard = () => {
+const TradingMainContent = () => {
   // Mock data for stock tickers
   const stockTickers = [
     {
@@ -64,311 +64,319 @@ const TradingDashboard = () => {
   }));
 
   return (
-    <Layout>
-      <div className="space-y-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-2xl font-semibold">Trading Dashboard</h1>
-        </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-semibold">Trading Dashboard</h1>
+      </div>
 
-        {/* Tabs Navigation */}
-        <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-fit grid-cols-5 bg-muted/30">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-background data-[state=active]:text-blue-600">
-              Overview
-            </TabsTrigger>
-            <TabsTrigger value="portfolio" className="data-[state=active]:bg-background">
-              My Portfolio
-            </TabsTrigger>
-            <TabsTrigger value="stock" className="data-[state=active]:bg-background">
-              Stock
-            </TabsTrigger>
-            <TabsTrigger value="watchlist" className="data-[state=active]:bg-background">
-              Watchlist
-            </TabsTrigger>
-            <TabsTrigger value="wallet" className="data-[state=active]:bg-background">
-              Wallet
-            </TabsTrigger>
-          </TabsList>
+      {/* Tabs Navigation */}
+      <Tabs defaultValue="overview" className="w-full">
+        <TabsList className="grid w-fit grid-cols-5 bg-muted/30">
+          <TabsTrigger value="overview" className="data-[state=active]:bg-background data-[state=active]:text-blue-600">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value="portfolio" className="data-[state=active]:bg-background">
+            My Portfolio
+          </TabsTrigger>
+          <TabsTrigger value="stock" className="data-[state=active]:bg-background">
+            Stock
+          </TabsTrigger>
+          <TabsTrigger value="watchlist" className="data-[state=active]:bg-background">
+            Watchlist
+          </TabsTrigger>
+          <TabsTrigger value="wallet" className="data-[state=active]:bg-background">
+            Wallet
+          </TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="overview" className="space-y-6">
-            {/* Stock Tickers */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {stockTickers.map((stock, index) => (
-                <Card key={index} className="p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">
-                      {stock.logo}
-                    </div>
-                    <div>
-                      <div className="font-semibold">{stock.symbol}</div>
-                      <div className="text-sm text-muted-foreground">{stock.company}</div>
-                    </div>
+        <TabsContent value="overview" className="space-y-6">
+          {/* Stock Tickers */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {stockTickers.map((stock, index) => (
+              <Card key={index} className="p-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">
+                    {stock.logo}
                   </div>
-                  <div className="w-full h-1 bg-blue-200 rounded mb-2">
-                    <div className="h-full w-3/4 bg-blue-600 rounded"></div>
+                  <div>
+                    <div className="font-semibold">{stock.symbol}</div>
+                    <div className="text-sm text-muted-foreground">{stock.company}</div>
                   </div>
-                  {stock.price && (
-                    <div className="flex items-center gap-1">
-                      <span className="font-medium">{stock.price}</span>
-                      <span className={stock.isPositive ? 'text-green-600' : 'text-red-600'}>
-                        {stock.change} 201.01
-                      </span>
-                      {stock.isPositive ? (
-                        <TrendingUp className="w-4 h-4 text-green-600" />
-                      ) : (
-                        <TrendingDown className="w-4 h-4 text-red-600" />
-                      )}
-                    </div>
-                  )}
-                </Card>
-              ))}
-            </div>
+                </div>
+                <div className="w-full h-1 bg-blue-200 rounded mb-2">
+                  <div className="h-full w-3/4 bg-blue-600 rounded"></div>
+                </div>
+                {stock.price && (
+                  <div className="flex items-center gap-1">
+                    <span className="font-medium">{stock.price}</span>
+                    <span className={stock.isPositive ? 'text-green-600' : 'text-red-600'}>
+                      {stock.change} 201.01
+                    </span>
+                    {stock.isPositive ? (
+                      <TrendingUp className="w-4 h-4 text-green-600" />
+                    ) : (
+                      <TrendingDown className="w-4 h-4 text-red-600" />
+                    )}
+                  </div>
+                )}
+              </Card>
+            ))}
+          </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Left Column */}
-              <div className="space-y-6">
-                {/* Account Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Card className="p-4">
-                    <div className="text-sm text-muted-foreground mb-1">Sell</div>
-                    <div className="text-sm text-muted-foreground mb-3">Account Balance (CNY)</div>
-                    <div className="text-2xl font-bold mb-2">112,893.00</div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Left Column */}
+            <div className="space-y-6">
+              {/* Account Info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card className="p-4">
+                  <div className="text-sm text-muted-foreground mb-1">Sell</div>
+                  <div className="text-sm text-muted-foreground mb-3">Account Balance (CNY)</div>
+                  <div className="text-2xl font-bold mb-2">112,893.00</div>
+                  
+                  <div className="mt-4">
+                    <div className="text-sm font-medium mb-2">Stock</div>
+                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-1">
+                      <span>Coin</span>
+                      <span>$2.00</span>
+                    </div>
+                    <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white mb-2">
+                      🅰️
+                    </div>
+                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
+                      <span>Coin</span>
+                      <span>$2.00</span>
+                    </div>
+                    <div className="text-sm text-muted-foreground mb-4">No extra fees</div>
                     
-                    <div className="mt-4">
-                      <div className="text-sm font-medium mb-2">Stock</div>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-1">
-                        <span>Coin</span>
-                        <span>$2.00</span>
-                      </div>
-                      <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white mb-2">
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button className="bg-blue-600 hover:bg-blue-700">Deposit</Button>
+                      <Button variant="outline" className="text-blue-600">Withdraw</Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-4">
+                  <div className="text-sm text-muted-foreground mb-1">Get Started</div>
+                  <div className="text-sm mb-4">January 7, 2024</div>
+                  <div className="text-lg font-bold mb-4">$</div>
+                </Card>
+              </div>
+
+              {/* Trades Overview */}
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle>Trades Overview</CardTitle>
+                    <Select defaultValue="thisyear">
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="thisyear">This Year</SelectItem>
+                        <SelectItem value="lastmonth">Last Month</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="text-sm text-muted-foreground">net profile per month</div>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-[200px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={tradesData}>
+                        <XAxis dataKey="month" axisLine={false} tickLine={false} />
+                        <YAxis hide />
+                        <Bar dataKey="value" fill="#3b82f6" radius={4} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Stock Holdings */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Trades Overview</CardTitle>
+                  <div className="text-sm text-muted-foreground">net profile per month</div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white">
                         🅰️
                       </div>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-                        <span>Coin</span>
-                        <span>$2.00</span>
-                      </div>
-                      <div className="text-sm text-muted-foreground mb-4">No extra fees</div>
-                      
-                      <div className="grid grid-cols-2 gap-2">
-                        <Button className="bg-blue-600 hover:bg-blue-700">Deposit</Button>
-                        <Button variant="outline" className="text-blue-600">Withdraw</Button>
-                      </div>
-                    </div>
-                  </Card>
-
-                  <Card className="p-4">
-                    <div className="text-sm text-muted-foreground mb-1">Get Started</div>
-                    <div className="text-sm mb-4">January 7, 2024</div>
-                    <div className="text-lg font-bold mb-4">$</div>
-                  </Card>
-                </div>
-
-                {/* Trades Overview */}
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle>Trades Overview</CardTitle>
-                      <Select defaultValue="thisyear">
-                        <SelectTrigger className="w-32">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="thisyear">This Year</SelectItem>
-                          <SelectItem value="lastmonth">Last Month</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="text-sm text-muted-foreground">net profile per month</div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="h-[200px] w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={tradesData}>
-                          <XAxis dataKey="month" axisLine={false} tickLine={false} />
-                          <YAxis hide />
-                          <Bar dataKey="value" fill="#3b82f6" radius={4} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Stock Holdings */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Trades Overview</CardTitle>
-                    <div className="text-sm text-muted-foreground">net profile per month</div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white">
-                          🅰️
-                        </div>
-                        <div>
-                          <div className="font-medium">Adobe</div>
-                          <div className="text-sm text-muted-foreground">Adobe</div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-medium">$ 201,01</div>
-                        <div className="text-sm text-red-600">- 201,01 ▼</div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white">
-                          📊
-                        </div>
-                        <div>
-                          <div className="font-medium">ATR</div>
-                          <div className="text-sm text-muted-foreground">Adobe</div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-medium">$ 201,01</div>
-                        <div className="text-sm text-red-600">- 201,01 ▼</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Right Column */}
-              <div className="space-y-6">
-                {/* Trades Overview Chart */}
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle>Trades Overview</CardTitle>
-                        <div className="text-sm text-muted-foreground">net profile per month</div>
-                        <div className="text-lg font-bold mt-2">112,893.00</div>
-                      </div>
-                      <Select defaultValue="alltime">
-                        <SelectTrigger className="w-24">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="alltime">All Time</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="flex gap-4 mt-4">
-                      <label className="flex items-center gap-2">
-                        <input type="radio" name="period" defaultChecked className="text-blue-600" />
-                        <span className="text-sm">This month</span>
-                      </label>
-                      <label className="flex items-center gap-2">
-                        <input type="radio" name="period" className="text-yellow-500" />
-                        <span className="text-sm">Last month</span>
-                      </label>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="h-[200px] w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={tradesData}>
-                          <XAxis dataKey="month" axisLine={false} tickLine={false} />
-                          <YAxis hide />
-                          <Bar dataKey="value" fill="#3b82f6" radius={4} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Earning Report */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Earning Report</CardTitle>
-                    <Tabs defaultValue="week" className="w-fit">
-                      <TabsList className="grid w-fit grid-cols-3">
-                        <TabsTrigger value="week">Week</TabsTrigger>
-                        <TabsTrigger value="month">Month</TabsTrigger>
-                        <TabsTrigger value="year">Year</TabsTrigger>
-                      </TabsList>
-                    </Tabs>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-sm text-muted-foreground mb-2">Account Balance (CNY)</div>
-                    <div className="text-2xl font-bold mb-4">112,893.00</div>
-                    <div className="flex justify-between text-sm">
-                      <span>1k+</span>
-                      <span>$510</span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Trades Table */}
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <span className="font-medium">Price</span>
-                        <ArrowUpDown className="w-4 h-4" />
-                        <span className="font-medium">Amount</span>
-                        <ArrowUpDown className="w-4 h-4" />
-                        <span className="font-medium">Time</span>
-                        <ArrowUpDown className="w-4 h-4" />
+                        <div className="font-medium">Adobe</div>
+                        <div className="text-sm text-muted-foreground">Adobe</div>
                       </div>
                     </div>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="max-h-[400px] overflow-y-auto">
-                      <Table>
-                        <TableBody>
-                          {tradesTableData.map((trade, index) => (
-                            <TableRow key={index} className="border-none">
-                              <TableCell className="text-muted-foreground font-mono text-sm">
-                                {trade.price}
-                              </TableCell>
-                              <TableCell className="font-mono text-sm">
-                                {trade.amount}
-                              </TableCell>
-                              <TableCell className="text-red-600 font-mono text-sm">
-                                {trade.time}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
+                    <div className="text-right">
+                      <div className="font-medium">$ 201,01</div>
+                      <div className="text-sm text-red-600">- 201,01 ▼</div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white">
+                        📊
+                      </div>
+                      <div>
+                        <div className="font-medium">ATR</div>
+                        <div className="text-sm text-muted-foreground">Adobe</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium">$ 201,01</div>
+                      <div className="text-sm text-red-600">- 201,01 ▼</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          </TabsContent>
 
-          {/* Other tab contents */}
-          <TabsContent value="portfolio">
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Portfolio view will be implemented here</p>
-            </div>
-          </TabsContent>
+            {/* Right Column */}
+            <div className="space-y-6">
+              {/* Trades Overview Chart */}
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle>Trades Overview</CardTitle>
+                      <div className="text-sm text-muted-foreground">net profile per month</div>
+                      <div className="text-lg font-bold mt-2">112,893.00</div>
+                    </div>
+                    <Select defaultValue="alltime">
+                      <SelectTrigger className="w-24">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="alltime">All Time</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex gap-4 mt-4">
+                    <label className="flex items-center gap-2">
+                      <input type="radio" name="period" defaultChecked className="text-blue-600" />
+                      <span className="text-sm">This month</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="radio" name="period" className="text-yellow-500" />
+                      <span className="text-sm">Last month</span>
+                    </label>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-[200px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={tradesData}>
+                        <XAxis dataKey="month" axisLine={false} tickLine={false} />
+                        <YAxis hide />
+                        <Bar dataKey="value" fill="#3b82f6" radius={4} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
 
-          <TabsContent value="stock">
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Stock view will be implemented here</p>
-            </div>
-          </TabsContent>
+              {/* Earning Report */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Earning Report</CardTitle>
+                  <Tabs defaultValue="week" className="w-fit">
+                    <TabsList className="grid w-fit grid-cols-3">
+                      <TabsTrigger value="week">Week</TabsTrigger>
+                      <TabsTrigger value="month">Month</TabsTrigger>
+                      <TabsTrigger value="year">Year</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-sm text-muted-foreground mb-2">Account Balance (CNY)</div>
+                  <div className="text-2xl font-bold mb-4">112,893.00</div>
+                  <div className="flex justify-between text-sm">
+                    <span>1k+</span>
+                    <span>$510</span>
+                  </div>
+                </CardContent>
+              </Card>
 
-          <TabsContent value="watchlist">
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Watchlist view will be implemented here</p>
+              {/* Trades Table */}
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <span className="font-medium">Price</span>
+                      <ArrowUpDown className="w-4 h-4" />
+                      <span className="font-medium">Amount</span>
+                      <ArrowUpDown className="w-4 h-4" />
+                      <span className="font-medium">Time</span>
+                      <ArrowUpDown className="w-4 h-4" />
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="max-h-[400px] overflow-y-auto">
+                    <Table>
+                      <TableBody>
+                        {tradesTableData.map((trade, index) => (
+                          <TableRow key={index} className="border-none">
+                            <TableCell className="text-muted-foreground font-mono text-sm">
+                              {trade.price}
+                            </TableCell>
+                            <TableCell className="font-mono text-sm">
+                              {trade.amount}
+                            </TableCell>
+                            <TableCell className="text-red-600 font-mono text-sm">
+                              {trade.time}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          </TabsContent>
+          </div>
+        </TabsContent>
 
-          <TabsContent value="wallet">
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Wallet view will be implemented here</p>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
-    </Layout>
+        {/* Other tab contents */}
+        <TabsContent value="portfolio">
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">Portfolio view will be implemented here</p>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="stock">
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">Stock view will be implemented here</p>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="watchlist">
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">Watchlist view will be implemented here</p>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="wallet">
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">Wallet view will be implemented here</p>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+};
+
+const TradingDashboard = () => {
+  return (
+    <Layout
+      title="Trading Dashboard"
+      showRightSidebar={false}
+      mainContent={<TradingMainContent />}
+    />
   );
 };
 
