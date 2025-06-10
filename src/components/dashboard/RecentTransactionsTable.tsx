@@ -49,7 +49,13 @@ export function RecentTransactionsTable() {
     <div className="space-y-4">
       <h3 className="text-lg font-medium text-muted-foreground">Recent Transaction</h3>
       
-      <div className="rounded-[16px] bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)] overflow-hidden">
+      <div 
+        className="rounded-[24px] overflow-hidden"
+        style={{ 
+          background: 'rgba(255, 255, 255, 0.64)',
+          border: '1px solid #FFFFFF'
+        }}
+      >
         <div className="p-4 border-b border-border">
           <div className="grid grid-cols-2 gap-4">
             <div className="text-sm font-medium text-muted-foreground">To/From</div>

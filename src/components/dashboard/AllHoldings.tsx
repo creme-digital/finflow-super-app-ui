@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Building, TrendingUp, Wallet } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
@@ -74,7 +73,11 @@ export function AllHoldings() {
           return (
             <div
               key={holding.id}
-              className="rounded-[16px] p-4 bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)]"
+              className="rounded-[24px] p-4"
+              style={{ 
+                background: 'rgba(255, 255, 255, 0.64)',
+                border: '1px solid #FFFFFF'
+              }}
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-3">

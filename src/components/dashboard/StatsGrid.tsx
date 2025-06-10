@@ -26,7 +26,11 @@ export function StatsGrid() {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="rounded-[16px] p-4 bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)]"
+          className="rounded-[24px] p-4"
+          style={{ 
+            background: 'rgba(255, 255, 255, 0.64)',
+            border: '1px solid #FFFFFF'
+          }}
         >
           <div className="text-sm text-muted-foreground mb-1">{stat.label}</div>
           <div className="text-3xl font-bold text-foreground">{stat.value}</div>
