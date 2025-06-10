@@ -42,7 +42,7 @@ export function SimplifiedSidebarContent({ expanded }: SimplifiedSidebarContentP
         </nav>
         
         {/* Settings section at the bottom */}
-        <div className="px-2 py-2 border-t space-y-1">
+        <div className="px-2 py-2 space-y-1">
           {settingsNav.map((item) => (
             <NavLink
               key={item.href}
