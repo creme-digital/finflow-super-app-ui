@@ -46,31 +46,31 @@ export function DashboardContent() {
         <div className="space-y-4 min-w-[200px]">
           <div className="flex items-center gap-3">
             <div className="w-1 h-6 bg-green-500 rounded-full"></div>
-            <div>
-              <p className="text-sm text-muted-foreground">Money in</p>
-              <p className="text-lg font-medium text-green-600">$310,704.49</p>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Money in</span>
+              <span className="text-lg font-medium text-green-600">$310,704.49</span>
             </div>
           </div>
           
           <div className="flex items-center gap-3">
             <div className="w-1 h-6 bg-red-500 rounded-full"></div>
-            <div>
-              <p className="text-sm text-muted-foreground">Money out</p>
-              <p className="text-lg font-medium text-red-600">-$383,025.60</p>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Money out</span>
+              <span className="text-lg font-medium text-red-600">-$383,025.60</span>
             </div>
           </div>
         </div>
 
         {/* Bar Chart */}
-        <div className="flex-1 h-[100px]">
+        <div className="flex-1 h-[60px]">
           <ChartContainer config={chartConfig}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={cashFlowData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }} barCategoryGap="20%">
+              <BarChart data={cashFlowData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }} barCategoryGap="20%">
                 <XAxis 
                   dataKey="month" 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fill: '#64748b' }}
+                  tick={{ fontSize: 9, fill: '#64748b' }}
                 />
                 <YAxis hide />
                 <ChartTooltip 
@@ -80,14 +80,14 @@ export function DashboardContent() {
                 <Bar 
                   dataKey="moneyIn" 
                   fill="var(--color-moneyIn)"
-                  radius={[4, 4, 0, 0]}
-                  maxBarSize={12}
+                  radius={[3, 3, 0, 0]}
+                  maxBarSize={10}
                 />
                 <Bar 
                   dataKey="moneyOut" 
                   fill="var(--color-moneyOut)"
-                  radius={[4, 4, 0, 0]} 
-                  maxBarSize={12}
+                  radius={[3, 3, 0, 0]} 
+                  maxBarSize={10}
                 />
               </BarChart>
             </ResponsiveContainer>
