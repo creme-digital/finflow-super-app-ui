@@ -62,15 +62,15 @@ export function DashboardContent() {
         </div>
 
         {/* Bar Chart */}
-        <div className="flex-1 h-[150px]">
+        <div className="flex-1 h-[100px]">
           <ChartContainer config={chartConfig}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={cashFlowData} margin={{ top: 15, right: 15, left: 15, bottom: 5 }}>
+              <BarChart data={cashFlowData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }} barCategoryGap="20%">
                 <XAxis 
                   dataKey="month" 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 11, fill: '#64748b' }}
+                  tick={{ fontSize: 10, fill: '#64748b' }}
                 />
                 <YAxis hide />
                 <ChartTooltip 
@@ -80,14 +80,14 @@ export function DashboardContent() {
                 <Bar 
                   dataKey="moneyIn" 
                   fill="var(--color-moneyIn)"
-                  radius={[8, 8, 0, 0]}
-                  maxBarSize={16}
+                  radius={[4, 4, 0, 0]}
+                  maxBarSize={12}
                 />
                 <Bar 
                   dataKey="moneyOut" 
                   fill="var(--color-moneyOut)"
-                  radius={[8, 8, 0, 0]} 
-                  maxBarSize={16}
+                  radius={[4, 4, 0, 0]} 
+                  maxBarSize={12}
                 />
               </BarChart>
             </ResponsiveContainer>
