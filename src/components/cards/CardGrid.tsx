@@ -17,10 +17,10 @@ interface CardData {
   status: string;
   balance?: string;
   available?: string;
-  cardColor: string;
-  fullCardNumber: string;
-  expiryDate: string;
-  cvv: string;
+  cardColor?: string;
+  fullCardNumber?: string;
+  expiryDate?: string;
+  cvv?: string;
   isLocked?: boolean;
 }
 
