@@ -1,7 +1,8 @@
-
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { TrendingUp, DollarSign } from 'lucide-react';
 
 const cashFlowData = [
   { month: 'Jan', moneyIn: 28500, moneyOut: 24000 },
@@ -28,6 +29,23 @@ const chartConfig = {
     color: "#D1D5DC",
   },
 };
+
+const moneyFlowData = [
+  { day: 'Mon', flow: 2400 },
+  { day: 'Tue', flow: 1398 },
+  { day: 'Wed', flow: 9800 },
+  { day: 'Thu', flow: 3908 },
+  { day: 'Fri', flow: 4800 },
+  { day: 'Sat', flow: 3800 },
+  { day: 'Sun', flow: 4300 },
+];
+
+const balanceData = [
+  { category: 'Food', earned: 1200, spent: 800 },
+  { category: 'Transport', earned: 800, spent: 600 },
+  { category: 'Shopping', earned: 600, spent: 900 },
+  { category: 'Bills', earned: 400, spent: 1200 },
+];
 
 export function DashboardContent() {
   return (
@@ -95,6 +113,146 @@ export function DashboardContent() {
               </BarChart>
             </ResponsiveContainer>
           </ChartContainer>
+        </div>
+      </div>
+
+      {/* Money Flow & Balance Cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Money Flow Card */}
+        <div 
+          className="flex flex-col rounded-[16px] overflow-hidden"
+          style={{ 
+            background: 'rgba(255, 255, 255, 0.64)',
+            border: '1px solid #FFFFFF'
+          }}
+        >
+          {/* Card Header */}
+          <div 
+            className="flex flex-row justify-between items-center p-2"
+            style={{ background: 'rgba(255, 255, 255, 0.8)' }}
+          >
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-foreground" />
+              <span className="text-base font-medium text-foreground" style={{ fontFamily: 'Inter' }}>
+                Money flow
+              </span>
+            </div>
+            <Select defaultValue="7days">
+              <SelectTrigger className="w-[140px] h-8 text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="7days">7 days</SelectItem>
+                <SelectItem value="lastweek">Last Week</SelectItem>
+                <SelectItem value="lastmonth">Last Month</SelectItem>
+                <SelectItem value="ytd">Year to Date</SelectItem>
+                <SelectItem value="lastyear">Last Year</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          {/* Card Content */}
+          <div className="p-4 h-[200px]">
+            <ChartContainer config={{ flow: { label: "Money Flow", color: "#292EE9" } }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={moneyFlowData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                  <XAxis 
+                    dataKey="day" 
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 10, fill: '#64748b' }}
+                  />
+                  <YAxis hide />
+                  <ChartTooltip 
+                    content={<ChartTooltipContent />}
+                    cursor={{ stroke: 'rgba(0, 0, 0, 0.1)' }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="flow" 
+                    stroke="var(--color-flow)"
+                    strokeWidth={2}
+                    dot={{ fill: 'var(--color-flow)', strokeWidth: 2, r: 3 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
+        </div>
+
+        {/* Balance Card */}
+        <div 
+          className="flex flex-col rounded-[16px] overflow-hidden"
+          style={{ 
+            background: 'rgba(255, 255, 255, 0.64)',
+            border: '1px solid #FFFFFF'
+          }}
+        >
+          {/* Card Header */}
+          <div 
+            className="flex flex-row justify-between items-center p-2"
+            style={{ background: 'rgba(255, 255, 255, 0.8)' }}
+          >
+            <div className="flex items-center gap-2">
+              <DollarSign className="h-4 w-4 text-foreground" />
+              <span className="text-base font-medium text-foreground" style={{ fontFamily: 'Inter' }}>
+                Balance
+              </span>
+            </div>
+            <Select defaultValue="7days">
+              <SelectTrigger className="w-[140px] h-8 text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="7days">7 days</SelectItem>
+                <SelectItem value="lastweek">Last Week</SelectItem>
+                <SelectItem value="lastmonth">Last Month</SelectItem>
+                <SelectItem value="ytd">Year to Date</SelectItem>
+                <SelectItem value="lastyear">Last Year</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          {/* Card Content */}
+          <div className="p-4 h-[200px]">
+            <ChartContainer config={{ 
+              earned: { label: "Earned", color: "#10B981" },
+              spent: { label: "Spent", color: "#EF4444" }
+            }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart 
+                  data={balanceData} 
+                  layout="horizontal"
+                  margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+                >
+                  <XAxis type="number" hide />
+                  <YAxis 
+                    type="category" 
+                    dataKey="category" 
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 10, fill: '#64748b' }}
+                  />
+                  <ChartTooltip 
+                    content={<ChartTooltipContent />}
+                    cursor={{ fill: 'rgba(0, 0, 0, 0.1)' }}
+                  />
+                  <Bar 
+                    dataKey="earned" 
+                    fill="var(--color-earned)"
+                    radius={[0, 2, 2, 0]}
+                    maxBarSize={20}
+                  />
+                  <Bar 
+                    dataKey="spent" 
+                    fill="var(--color-spent)"
+                    radius={[0, 2, 2, 0]}
+                    maxBarSize={20}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
         </div>
       </div>
     </div>
