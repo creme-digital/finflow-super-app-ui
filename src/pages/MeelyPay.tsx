@@ -151,9 +151,11 @@ const MeelyPay = () => {
                   <div 
                     key={user.id} 
                     className="flex flex-col items-center gap-2 p-4 rounded-lg transition-colors cursor-pointer"
-                    style={{ 
-                      background: 'rgba(255, 255, 255, 0.64)',
-                      border: '1px solid #FFFFFF'
+                    style={{
+                      border: '1px solid #FFFFFF',
+                      boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                      borderRadius: '16px',
+                      background: 'rgba(255, 255, 255, 0.8)'
                     }}
                   >
                     <Avatar className="w-16 h-16">
@@ -207,10 +209,12 @@ const MeelyPay = () => {
                 {banksAndCards.map((item) => (
                   <div 
                     key={item.id} 
-                    className="flex items-center justify-between p-3 rounded-lg"
-                    style={{ 
-                      background: 'rgba(255, 255, 255, 0.64)',
-                      border: '1px solid #FFFFFF'
+                    className="flex items-center justify-between p-3"
+                    style={{
+                      border: '1px solid #FFFFFF',
+                      boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                      borderRadius: '16px',
+                      background: 'rgba(255, 255, 255, 0.8)'
                     }}
                   >
                     <div className="flex items-center gap-3">
