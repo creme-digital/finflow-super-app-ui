@@ -2,226 +2,115 @@
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ChevronDown, Filter, Download, MoreHorizontal } from 'lucide-react';
-import { formatCurrency } from '@/lib/formatters';
+import { Input } from '@/components/ui/input';
+import { Search, Filter, Download } from 'lucide-react';
 
 const Transactions = () => {
   const transactions = [
     {
-      id: '2110',
-      date: '23/05/2024',
-      toFrom: { name: 'James Hall', avatar: '/placeholder.svg' },
-      amount: 8657.41,
-      account: 'Ops / Payroll',
-      method: 'Request or Invoice Payment'
+      id: 'TXN001',
+      date: '2024-06-10',
+      description: 'Payment from Acme Corp',
+      amount: '+$2,500.00',
+      status: 'Completed',
+      type: 'Credit'
     },
     {
-      id: '2109',
-      date: '23/05/2024',
-      toFrom: { name: 'Rhonda Rhodes', avatar: '/placeholder.svg' },
-      amount: 342.07,
-      account: 'Credit account',
-      method: 'Aluna T. ••7840'
+      id: 'TXN002',
+      date: '2024-06-09',
+      description: 'Office supplies purchase',
+      amount: '-$299.00',
+      status: 'Completed',
+      type: 'Debit'
     },
     {
-      id: '2980',
-      date: '23/05/2024',
-      toFrom: { name: 'Kathy Pacheco', avatar: '/placeholder.svg' },
-      amount: 1486.52,
-      account: 'AP',
-      method: 'Transfer'
+      id: 'TXN003',
+      date: '2024-06-09',
+      description: 'Salary payment to John Doe',
+      amount: '-$3,500.00',
+      status: 'Processing',
+      type: 'Debit'
     },
     {
-      id: '1098',
-      date: '23/05/2024',
-      toFrom: { name: 'Kimberly Mastrangelo', avatar: '/placeholder.svg' },
-      amount: 5653.56,
-      account: 'Ops / Payroll',
-      method: 'Intl. Wire'
-    },
-    {
-      id: '1456',
-      date: '23/05/2024',
-      toFrom: { name: 'Corina McCoy', avatar: '/placeholder.svg' },
-      amount: 1595.71,
-      account: 'Credit account',
-      method: 'Landon S. ••5555'
-    },
-    {
-      id: '1567',
-      date: '23/05/2024',
-      toFrom: { name: 'Iva Ryan', avatar: '/placeholder.svg' },
-      amount: 7738.89,
-      account: 'AP',
-      method: 'Request or Invoice Payment'
-    },
-    {
-      id: '1234',
-      date: '23/05/2024',
-      toFrom: { name: 'Stephanie Nicol', avatar: '/placeholder.svg' },
-      amount: 8650.33,
-      account: 'Ops / Payroll',
-      method: 'Aluna T. ••7840'
-    },
-    {
-      id: '1324',
-      date: '23/05/2024',
-      toFrom: { name: 'Alex Buckmaster', avatar: '/placeholder.svg' },
-      amount: 1207.52,
-      account: 'Ops / Payroll',
-      method: 'Transfer'
-    },
-    {
-      id: '1643',
-      date: '23/05/2024',
-      toFrom: { name: 'Patricia Sanders', avatar: '/placeholder.svg' },
-      amount: 376.96,
-      account: 'Credit account',
-      method: 'Intl. Wire'
+      id: 'TXN004',
+      date: '2024-06-08',
+      description: 'Client invoice payment',
+      amount: '+$1,200.00',
+      status: 'Completed',
+      type: 'Credit'
     },
   ];
 
-  // Generate bar chart data for visualization
-  const chartBars = Array.from({ length: 15 }, (_, i) => ({
-    height: Math.random() * 60 + 20,
-    isHighlight: i === 10 // Highlight one bar
-  }));
-
   return (
-    <Layout
-      title="Transactions"
-      mainContent={
-        <div className="space-y-6">
-          {/* Header */}
-          <PageHeader title="Transactions">
-            <Button variant="outline" size="sm" className="gap-2">
-              <Download className="w-4 h-4" />
-              Export All
-            </Button>
-          </PageHeader>
-
-          {/* Filters Row */}
-          <div className="flex items-center gap-4 px-4">
-            <Button variant="outline" size="sm" className="gap-2">
-              📊 Data View
-              <ChevronDown className="w-4 h-4" />
-            </Button>
+    <Layout>
+      <div className="space-y-6">
+        <PageHeader
+          title="Transactions"
+          subtitle="View and manage all your financial transactions in one place."
+        >
+          <div className="flex gap-2">
             <Button variant="outline" size="sm" className="gap-2">
               <Filter className="w-4 h-4" />
-              Filters
+              Filter
             </Button>
             <Button variant="outline" size="sm" className="gap-2">
-              Date
-              <ChevronDown className="w-4 h-4" />
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              Keywords
-              <ChevronDown className="w-4 h-4" />
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              Amount
-              <ChevronDown className="w-4 h-4" />
+              <Download className="w-4 h-4" />
+              Export
             </Button>
           </div>
-
-          {/* Net Cash Summary Card */}
-          <Card className="mx-4">
-            <CardContent className="p-6">
-              <div className="mb-6">
-                <p className="text-sm text-muted-foreground mb-2">Net cash this month</p>
-                <h2 className="text-4xl font-bold text-foreground">-$72,321.11</h2>
-              </div>
-
-              <div className="flex items-center gap-6 mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-sm"></div>
-                  <span className="text-sm text-muted-foreground">Money in</span>
-                  <span className="text-sm font-medium text-green-600">$310,704.49</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-red-500 rounded-sm"></div>
-                  <span className="text-sm text-muted-foreground">Money out</span>
-                  <span className="text-sm font-medium text-red-600">-$383,025.60</span>
-                </div>
-              </div>
-
-              {/* Bar Chart */}
-              <div className="flex items-end gap-1 h-20">
-                {chartBars.map((bar, i) => (
-                  <div
-                    key={i}
-                    className={`flex-1 rounded-t-sm ${
-                      bar.isHighlight ? 'bg-blue-500' : 'bg-gray-300'
-                    }`}
-                    style={{ height: `${bar.height}%` }}
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Transactions Table */}
-          <Card className="mx-4">
-            <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-b bg-muted/20">
-                    <TableHead className="font-medium text-muted-foreground">Date ↕</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">To/From</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Amount</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Account</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">ID</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Method</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {transactions.map((transaction) => (
-                    <TableRow key={transaction.id} className="border-b border-border/50 hover:bg-muted/30">
-                      <TableCell className="font-medium text-foreground py-4">
-                        {transaction.date}
-                      </TableCell>
-                      <TableCell className="py-4">
-                        <div className="flex items-center gap-3">
-                          <Avatar className="w-8 h-8">
-                            <AvatarImage src={transaction.toFrom.avatar} alt={transaction.toFrom.name} />
-                            <AvatarFallback className="text-xs bg-muted">
-                              {transaction.toFrom.name.split(' ').map(n => n[0]).join('')}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span className="text-sm font-medium text-foreground">{transaction.toFrom.name}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-medium text-foreground py-4">
-                        {formatCurrency(transaction.amount)}
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground py-4">
-                        {transaction.account}
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground py-4">
-                        {transaction.id}
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground py-4">
-                        {transaction.method}
-                      </TableCell>
-                      <TableCell className="py-4">
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+        </PageHeader>
+        
+        <div className="flex gap-4 mb-6">
+          <div className="relative flex-1 max-w-sm">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input 
+              placeholder="Search transactions..." 
+              className="pl-9"
+            />
+          </div>
         </div>
-      }
-    />
+        
+        <Card>
+          <CardHeader>
+            <CardTitle>Transaction History</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {transactions.map((transaction) => (
+                <div key={transaction.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center space-x-4">
+                    <div>
+                      <p className="text-sm font-medium">{transaction.description}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {transaction.id} • {transaction.date}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      transaction.status === 'Completed' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {transaction.status}
+                    </span>
+                    
+                    <span className={`font-medium ${
+                      transaction.type === 'Credit' ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {transaction.amount}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </Layout>
   );
 };
 
