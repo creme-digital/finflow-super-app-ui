@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   title?: string;
   showRightSidebar?: boolean;
   rightSidebarContent?: React.ReactNode;
