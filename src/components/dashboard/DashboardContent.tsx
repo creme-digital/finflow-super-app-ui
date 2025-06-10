@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid, ReferenceLine } from 'recharts';
@@ -332,7 +333,7 @@ export function DashboardContent() {
                 right: 5,
                 left: 5,
                 bottom: 5
-              }} barCategoryGap="20%">
+              }} barCategoryGap="5%">
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{
                   fontSize: 10
@@ -343,8 +344,8 @@ export function DashboardContent() {
                 }} />
                 <ReferenceLine y={0} stroke="#94a3b8" strokeDasharray="2 2" />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="income" fill={chartConfig.income.color} radius={[24, 24, 0, 0]} maxBarSize={24} />
-                <Bar dataKey="expense" fill={chartConfig.expense.color} radius={[0, 0, 24, 24]} maxBarSize={24} />
+                <Bar dataKey="income" fill={chartConfig.income.color} radius={[24, 24, 0, 0]} maxBarSize={32} />
+                <Bar dataKey="expense" fill={chartConfig.expense.color} radius={[0, 0, 24, 24]} maxBarSize={32} />
               </BarChart>
             </ChartContainer>
           </div>
