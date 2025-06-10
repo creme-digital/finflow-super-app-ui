@@ -1,177 +1,262 @@
 
 import React from 'react';
-import { TrendingUp, DollarSign, ArrowUpRight, ArrowDownRight, BarChart3, PieChart, Activity } from 'lucide-react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { TrendingUp, DollarSign } from 'lucide-react';
 
-const chartData = [
-  { month: 'Jan', income: 4500, expenses: 3200 },
-  { month: 'Feb', income: 5200, expenses: 3800 },
-  { month: 'Mar', income: 4800, expenses: 3500 },
-  { month: 'Apr', income: 6200, expenses: 4200 },
-  { month: 'May', income: 5800, expenses: 4000 },
-  { month: 'Jun', income: 6500, expenses: 4500 }
-];
+const cashFlowData = [{
+  month: 'Jan',
+  moneyIn: 28500,
+  moneyOut: 24000
+}, {
+  month: 'Feb',
+  moneyIn: 31000,
+  moneyOut: 28000
+}, {
+  month: 'Mar',
+  moneyIn: 29500,
+  moneyOut: 26500
+}, {
+  month: 'Apr',
+  moneyIn: 32000,
+  moneyOut: 29000
+}, {
+  month: 'May',
+  moneyIn: 34000,
+  moneyOut: 31000
+}, {
+  month: 'Jun',
+  moneyIn: 32500,
+  moneyOut: 29500
+}];
+
+const moneyFlowData = [{
+  day: 'Mon',
+  flow: 12000
+}, {
+  day: 'Tue',
+  flow: 18500
+}, {
+  day: 'Wed',
+  flow: 15000
+}, {
+  day: 'Thu',
+  flow: 22000
+}, {
+  day: 'Fri',
+  flow: 19500
+}, {
+  day: 'Sat',
+  flow: 16000
+}, {
+  day: 'Sun',
+  flow: 14500
+}];
+
+const balanceData = [{
+  category: 'Earned',
+  value: 45000,
+  fill: '#22c55e'
+}, {
+  category: 'Spent',
+  value: -32000,
+  fill: '#ef4444'
+}];
 
 const chartConfig = {
-  income: { label: "Income", color: "#10b981" },
-  expenses: { label: "Expenses", color: "#6366f1" }
+  moneyIn: {
+    label: "Money In",
+    color: "#22c55e"
+  },
+  moneyOut: {
+    label: "Money Out",
+    color: "#ef4444"
+  },
+  flow: {
+    label: "Money Flow",
+    color: "#292EE9"
+  }
 };
 
 export function DashboardContent() {
   return (
-    <div className="space-y-8">
-      {/* Welcome Section */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent mb-2">
-          Welcome back, Alex
-        </h1>
-        <p className="text-muted-foreground text-lg">Here's what's happening with your finances today.</p>
-      </div>
-
-      {/* Main Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="stat-card group">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 accent-gradient rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <DollarSign className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex items-center text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
-              <ArrowUpRight className="w-4 h-4 mr-1" />
-              <span className="text-sm font-medium">+2.5%</span>
-            </div>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-muted-foreground mb-1">Total Balance</p>
-            <p className="text-3xl font-bold text-foreground">$72,321.11</p>
-            <p className="text-sm text-muted-foreground mt-2">+$1,751.89 this month</p>
-          </div>
+    <div className="flex flex-col gap-4 min-h-full" style={{
+      borderRadius: '24px'
+    }}>
+      
+      {/* Top Main Card items: transparent background, flex-col, 12px spacing, hug content */}
+      <div className="flex flex-col gap-3 bg-transparent">
+        
+        {/* Net cash this month */}
+        <div className="space-y-2">
+          <p className="text-sm text-muted-foreground">Net cash this month</p>
+          <h2 className="text-4xl font-medium" style={{
+            fontFamily: 'Inter'
+          }}>
+            $72,321.11
+          </h2>
         </div>
 
-        <div className="stat-card group">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 success-gradient rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <TrendingUp className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex items-center text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
-              <ArrowUpRight className="w-4 h-4 mr-1" />
-              <span className="text-sm font-medium">+12.3%</span>
-            </div>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-muted-foreground mb-1">Monthly Income</p>
-            <p className="text-3xl font-bold text-foreground">$6,500</p>
-            <p className="text-sm text-muted-foreground mt-2">Above average this month</p>
-          </div>
-        </div>
-
-        <div className="stat-card group">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 warning-gradient rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <BarChart3 className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex items-center text-red-600 bg-red-50 px-3 py-1 rounded-full">
-              <ArrowDownRight className="w-4 h-4 mr-1" />
-              <span className="text-sm font-medium">-5.2%</span>
-            </div>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-muted-foreground mb-1">Monthly Expenses</p>
-            <p className="text-3xl font-bold text-foreground">$4,500</p>
-            <p className="text-sm text-muted-foreground mt-2">$232 less than last month</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="modern-card p-8">
-          <div className="flex items-center justify-between mb-6">
+        {/* Div flex-row gap-16px */}
+        <div className="flex flex-row gap-4 justify-between items-center ">
+          
+          {/* Div flex-col gap-12px */}
+          <div className="flex flex-col gap-3">
+            
+            {/* Money in */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <Activity className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-foreground">Cash Flow Trend</h3>
-                <p className="text-sm text-muted-foreground">Monthly income vs expenses</p>
+              <div className="w-1 h-6 bg-green-500 rounded-full"></div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Money in</span>
+                <span className="text-lg font-medium text-green-600">$310,704.49</span>
               </div>
             </div>
-            <div className="flex items-center space-x-6 text-sm">
+            
+            {/* Money out */}
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-6 bg-red-500 rounded-full"></div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-                <span className="text-muted-foreground font-medium">Income</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-indigo-500 rounded-full"></div>
-                <span className="text-muted-foreground font-medium">Expenses</span>
+                <span className="text-sm text-muted-foreground">Money out</span>
+                <span className="text-lg font-medium text-red-600">-$383,025.60</span>
               </div>
             </div>
           </div>
-          <div className="h-72">
+
+          {/* Barchart */}
+          <div className="w-64 h-32">
             <ChartContainer config={chartConfig} className="w-full h-full">
-              <LineChart data={chartData}>
-                <XAxis 
-                  dataKey="month" 
-                  axisLine={false} 
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: '#64748b' }}
-                />
-                <YAxis 
-                  axisLine={false} 
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: '#64748b' }}
-                />
+              <BarChart data={cashFlowData} margin={{
+                top: 5,
+                right: 5,
+                left: 5,
+                bottom: 5
+              }}>
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{
+                  fontSize: 10
+                }} />
+                <YAxis hide />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Line 
-                  type="monotone" 
-                  dataKey="income" 
-                  stroke="#10b981" 
-                  strokeWidth={3}
-                  dot={{ fill: '#10b981', r: 6, strokeWidth: 2, stroke: '#fff' }}
-                  activeDot={{ r: 8, fill: '#10b981', strokeWidth: 2, stroke: '#fff' }}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="expenses" 
-                  stroke="#6366f1" 
-                  strokeWidth={3}
-                  dot={{ fill: '#6366f1', r: 6, strokeWidth: 2, stroke: '#fff' }}
-                  activeDot={{ r: 8, fill: '#6366f1', strokeWidth: 2, stroke: '#fff' }}
-                />
+                <Bar dataKey="moneyIn" fill={chartConfig.moneyIn.color} radius={[2, 2, 0, 0]} />
+                <Bar dataKey="moneyOut" fill={chartConfig.moneyOut.color} radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ChartContainer>
+          </div>
+        </div>
+      </div>
+
+      {/* Card money flow: flex-col, 16px border radius, hug content */}
+      <div className="flex flex-col" style={{
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px'
+      }}>
+        
+        {/* Card header */}
+        <div className="p-3 flex flex-row justify-between items-center" style={{
+          background: 'rgba(255, 255, 255, 0.8)'
+        }}>
+          <div className="flex items-center gap-2">
+            <TrendingUp className="w-4 h-4" />
+            <span className="text-black text-base font-medium" style={{
+              fontFamily: 'Inter'
+            }}>
+              Money flow
+            </span>
+          </div>
+          <Select defaultValue="7days">
+            <SelectTrigger className="w-[140px] h-8">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="7days">7 days</SelectItem>
+              <SelectItem value="lastweek">Last Week</SelectItem>
+              <SelectItem value="lastmonth">Last Month</SelectItem>
+              <SelectItem value="ytd">Year to Date</SelectItem>
+              <SelectItem value="lastyear">Last Year</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        
+        {/* Card content hug height */}
+        <div className="p-3">
+          <div style={{ height: '180px' }}>
+            <ChartContainer config={chartConfig} className="w-full h-full">
+              <LineChart data={moneyFlowData} margin={{
+                top: 5,
+                right: 5,
+                left: 5,
+                bottom: 5
+              }}>
+                <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{
+                  fontSize: 12,
+                  fill: '#64748b'
+                }} />
+                <YAxis axisLine={false} tickLine={false} tick={{
+                  fontSize: 12,
+                  fill: '#64748b'
+                }} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Line type="monotone" dataKey="flow" stroke={chartConfig.flow.color} strokeWidth={2} dot={{
+                  fill: chartConfig.flow.color,
+                  r: 4
+                }} />
               </LineChart>
             </ChartContainer>
           </div>
         </div>
+      </div>
 
-        <div className="modern-card p-8">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
-                <PieChart className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-foreground">Monthly Comparison</h3>
-                <p className="text-sm text-muted-foreground">Side-by-side analysis</p>
-              </div>
-            </div>
+      {/* Card balance: flex-col, 16px border radius, hug content */}
+      <div className="flex flex-col" style={{
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px'
+      }}>
+        
+        {/* Card header */}
+        <div className="p-3 flex flex-row justify-between items-center" style={{
+          background: 'rgba(255, 255, 255, 0.8)'
+        }}>
+          <div className="flex items-center gap-2">
+            <DollarSign className="w-4 h-4" />
+            <span className="text-black text-base font-medium" style={{
+              fontFamily: 'Inter'
+            }}>
+              Balance
+            </span>
           </div>
-          <div className="h-72">
+          <Select defaultValue="7days">
+            <SelectTrigger className="w-[140px] h-8">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="7days">7 days</SelectItem>
+              <SelectItem value="lastweek">Last Week</SelectItem>
+              <SelectItem value="lastmonth">Last Month</SelectItem>
+              <SelectItem value="ytd">Year to Date</SelectItem>
+              <SelectItem value="lastyear">Last Year</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        
+        {/* Card content hug height */}
+        <div className="p-3">
+          <div style={{ height: '180px' }}>
             <ChartContainer config={chartConfig} className="w-full h-full">
-              <BarChart data={chartData} barGap={8}>
-                <XAxis 
-                  dataKey="month" 
-                  axisLine={false} 
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: '#64748b' }}
-                />
-                <YAxis 
-                  axisLine={false} 
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: '#64748b' }}
-                />
+              <BarChart data={balanceData} layout="horizontal" margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 20
+              }}>
+                <XAxis type="number" axisLine={false} tickLine={false} />
+                <YAxis type="category" dataKey="category" axisLine={false} tickLine={false} tick={{
+                  fontSize: 12,
+                  fill: '#64748b'
+                }} />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="income" fill="#10b981" radius={[6, 6, 0, 0]} />
-                <Bar dataKey="expenses" fill="#6366f1" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="value" fill="#22c55e" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ChartContainer>
           </div>

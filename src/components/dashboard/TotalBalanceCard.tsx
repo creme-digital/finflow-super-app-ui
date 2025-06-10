@@ -8,7 +8,7 @@ export function TotalBalanceCard() {
   const { formatAmount } = useCurrency();
 
   return (
-    <div className="p-6">
+    <div className="rounded-[16px] p-6 bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)]">
       <div className="flex items-center gap-2 mb-4">
         <Wallet className="w-5 h-5 text-muted-foreground" />
         <span className="text-lg font-medium text-foreground">Total Balance</span>
@@ -22,19 +22,19 @@ export function TotalBalanceCard() {
       </div>
 
       <div className="grid grid-cols-4 gap-3 mt-6">
-        <Button variant="ghost" className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50 rounded-[16px] bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)]">
+        <Button variant="ghost" className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50">
           <Wallet className="w-5 h-5" />
           <span className="text-xs">Deposit</span>
         </Button>
-        <Button variant="ghost" className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50 rounded-[16px] bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)]">
+        <Button variant="ghost" className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50">
           <Send className="w-5 h-5" />
           <span className="text-xs">Send</span>
         </Button>
-        <Button variant="ghost" className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50 rounded-[16px] bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)]">
+        <Button variant="ghost" className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50">
           <ArrowDownLeft className="w-5 h-5" />
           <span className="text-xs">Receive</span>
         </Button>
-        <Button variant="ghost" className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50 rounded-[16px] bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)]">
+        <Button variant="ghost" className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50">
           <ArrowUpRight className="w-5 h-5" />
           <span className="text-xs">Transfer</span>
         </Button>
