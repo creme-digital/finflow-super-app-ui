@@ -79,13 +79,41 @@ const moneyFlowData = [{
 }];
 
 const balanceData = [{
-  category: 'Earned',
-  value: 45000,
-  fill: '#22c55e'
+  month: 'Jan',
+  balance: 45000
 }, {
-  category: 'Spent',
-  value: -32000,
-  fill: '#ef4444'
+  month: 'Feb',
+  balance: 48000
+}, {
+  month: 'Mar',
+  balance: 46500
+}, {
+  month: 'Apr',
+  balance: 51000
+}, {
+  month: 'May',
+  balance: 53000
+}, {
+  month: 'Jun',
+  balance: 52500
+}, {
+  month: 'Jul',
+  balance: 56000
+}, {
+  month: 'Aug',
+  balance: 55000
+}, {
+  month: 'Sep',
+  balance: 53500
+}, {
+  month: 'Oct',
+  balance: 58000
+}, {
+  month: 'Nov',
+  balance: 57000
+}, {
+  month: 'Dec',
+  balance: 62000
 }];
 
 const chartConfig = {
@@ -100,6 +128,10 @@ const chartConfig = {
   flow: {
     label: "Money Flow",
     color: "#292EE9"
+  },
+  balance: {
+    label: "Balance",
+    color: "#22c55e"
   }
 };
 
@@ -280,20 +312,19 @@ export function DashboardContent() {
         <div className="p-3">
           <div style={{ height: '280px' }}>
             <ChartContainer config={chartConfig} className="w-full h-full">
-              <BarChart data={balanceData} layout="horizontal" margin={{
-                top: 20,
-                right: 30,
-                left: 20,
-                bottom: 20
-              }}>
+              <BarChart data={balanceData} margin={{
+                top: 5,
+                right: 5,
+                left: 5,
+                bottom: 5
+              }} barCategoryGap="10%">
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
-                <XAxis type="number" axisLine={false} tickLine={false} />
-                <YAxis type="category" dataKey="category" axisLine={false} tickLine={false} tick={{
-                  fontSize: 12,
-                  fill: '#64748b'
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{
+                  fontSize: 10
                 }} />
+                <YAxis hide />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="value" fill="#22c55e" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="balance" fill={chartConfig.balance.color} radius={[24, 24, 0, 0]} maxBarSize={12} />
               </BarChart>
             </ChartContainer>
           </div>
