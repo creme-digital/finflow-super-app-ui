@@ -92,7 +92,7 @@ export function DashboardContent() {
         </div>
 
         {/* Div flex-row gap-16px */}
-        <div className="flex flex-row gap-4 justify-between ">
+        <div className="flex flex-row gap-4 justify-between items-center ">
           
           {/* Div flex-col gap-12px */}
           <div className="flex flex-col gap-3">
