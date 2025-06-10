@@ -47,7 +47,7 @@ export function RecentTransactionsTable() {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium text-muted-foreground">Recent Transaction</h3>
+      <h3 className="text-sm font-medium text-muted-foreground">Recent Transaction</h3>
       
       <div 
         className="rounded-[24px] overflow-hidden"
