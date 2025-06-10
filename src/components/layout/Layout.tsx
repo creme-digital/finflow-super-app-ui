@@ -24,7 +24,7 @@ export function Layout({ children, title = "Dashboard" }: LayoutProps) {
         )}
       >
         <Header title={title} />
-        <div className="px-6 pb-6">
+        <div className="p-4">
           {children}
         </div>
       </main>
