@@ -30,15 +30,17 @@ export function Layout({ children, title = "Dashboard", showRightSidebar = false
         
         {/* New flex-row div with 24px spacing */}
         <div className="flex flex-row gap-6 p-4 h-[calc(100vh-120px)]">
-          {/* Main items div - at least 70% width, styled like inactive nav cards */}
+          {/* Main items div - hug content with overflow auto */}
           <div 
             className={cn(
-              "rounded-[24px] p-6 transition-all duration-300",
+              "rounded-[24px] p-6 transition-all duration-300 overflow-auto",
               showRightSidebar ? "flex-1 min-w-[70%]" : "flex-1"
             )}
             style={{ 
               background: 'rgba(255, 255, 255, 0.64)',
-              border: '1px solid #FFFFFF'
+              border: '1px solid #FFFFFF',
+              height: 'fit-content',
+              maxHeight: '100%'
             }}
           >
             {mainContent}

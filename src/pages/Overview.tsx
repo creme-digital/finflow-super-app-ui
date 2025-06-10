@@ -12,6 +12,7 @@ const Overview = () => {
       rightSidebarContent={<RightSidebarContent />}
       mainContent={<OverviewContent />}
     >
+      {/* Empty children to satisfy the required prop */}
     </Layout>
   );
 };
