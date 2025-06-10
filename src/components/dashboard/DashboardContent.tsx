@@ -124,7 +124,7 @@ export function DashboardContent() {
           </div>
 
           {/* Barchart */}
-          <div className="w-64 h-32">
+          <div className="w-full h-32">
             <ChartContainer config={chartConfig} className="w-full h-full">
               <BarChart data={cashFlowData} margin={{
                 top: 5,
