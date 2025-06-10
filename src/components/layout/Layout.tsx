@@ -18,7 +18,7 @@ export function Layout({ children, title = "Dashboard", showRightSidebar = false
   const { expanded, isMobile } = useSidebarState();
 
   return (
-    <div className="min-h-screen bg-[#F8F8FA]">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <SidebarNav />
       <main
         className={cn(
@@ -28,25 +28,21 @@ export function Layout({ children, title = "Dashboard", showRightSidebar = false
       >
         <Header title={title} />
         
-        {/* New flex-row div with 24px spacing */}
-        <div className="flex flex-row gap-6 p-4 h-[calc(100vh-120px)]">
-          {/* Main items div - at least 70% width, styled like inactive nav cards */}
+        {/* Modern flex layout with improved spacing */}
+        <div className="flex flex-row gap-8 p-6 h-[calc(100vh-120px)]">
+          {/* Main content area - modern glass effect */}
           <div 
             className={cn(
-              "rounded-[24px] p-6 transition-all duration-300",
+              "glass-effect rounded-3xl p-8 transition-all duration-300 modern-shadow-lg",
               showRightSidebar ? "flex-1 min-w-[70%]" : "flex-1"
             )}
-            style={{ 
-              background: 'rgba(255, 255, 255, 0.64)',
-              border: '1px solid #FFFFFF'
-            }}
           >
             {mainContent}
           </div>
 
-          {/* Right Sidebar - Simple Container */}
+          {/* Right Sidebar - Clean container */}
           {showRightSidebar && (
-            <div className="w-[30%] min-w-[300px]">
+            <div className="w-[30%] min-w-[320px]">
               <ScrollArea className="h-full w-full">
                 <div className="w-full h-full">
                   {rightSidebarContent}
@@ -56,7 +52,7 @@ export function Layout({ children, title = "Dashboard", showRightSidebar = false
           )}
         </div>
         
-        <div className="p-4">
+        <div className="p-6">
           {children}
         </div>
       </main>
