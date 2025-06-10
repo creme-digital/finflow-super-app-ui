@@ -1,10 +1,9 @@
 
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, ArrowDownToLine, CreditCard, Building, Smartphone, Zap, TrendingUp } from 'lucide-react';
+import { Send, ArrowDownToLine, CreditCard, Building, Smartphone, Zap, TrendingUp, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Sample data for Send Again users
@@ -94,103 +93,130 @@ const MeelyPay = () => {
   return (
     <Layout
       title="Meely Pay"
-      showRightSidebar={true}
-      rightSidebarContent={
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-lg font-semibold text-foreground mb-4">Banks and Cards</h3>
-            <div className="space-y-3">
-              {banksAndCards.map((item) => (
-                <div key={item.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/30">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <Building className="w-4 h-4 text-blue-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-foreground">{item.name}</p>
-                      <p className="text-xs text-muted-foreground">{item.type} {item.accountNumber}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xs text-muted-foreground">Balance:</p>
-                    <p className="text-sm font-semibold text-foreground">{item.balance}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      }
+      showRightSidebar={false}
       mainContent={
-        <div className="space-y-8">
-          {/* Total Balance Card */}
-          <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
-                  <div className="w-3 h-3 bg-white rounded-full"></div>
-                </div>
-                <span className="text-sm text-muted-foreground">Total Balance</span>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Section - Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Total Balance Card */}
+            <div 
+              className="rounded-[24px] p-6"
+              style={{ 
+                background: 'rgba(255, 255, 255, 0.64)',
+                border: '1px solid #FFFFFF'
+              }}
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <Wallet className="w-5 h-5 text-muted-foreground" />
+                <span className="text-sm font-medium text-foreground">Total Balance</span>
               </div>
-              <div className="flex items-end gap-3">
-                <h2 className="text-4xl font-bold text-foreground">$23,569.00</h2>
-                <div className="flex items-center gap-1 text-green-600 mb-1">
-                  <TrendingUp className="w-4 h-4" />
-                  <span className="text-sm font-medium">10.5% (+$908)</span>
+              
+              <div className="mb-6">
+                <div className="flex items-end gap-3">
+                  <div className="text-4xl font-bold text-foreground">$23,569.00</div>
+                  <div className="flex items-center gap-1 text-green-600 mb-1">
+                    <TrendingUp className="w-4 h-4" />
+                    <span className="text-sm font-medium">10.5% (+$908)</span>
+                  </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
 
-          {/* Action Buttons */}
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-            {actionButtons.map((action, index) => {
-              const IconComponent = action.icon;
-              return (
-                <Button
-                  key={index}
-                  variant="outline"
-                  className="h-20 flex flex-col gap-2 hover:bg-muted/50"
-                >
-                  <IconComponent className={cn("w-6 h-6", action.color)} />
-                  <span className="text-xs font-medium">{action.label}</span>
-                </Button>
-              );
-            })}
-          </div>
-
-          {/* Send Again Section */}
-          <div>
-            <h3 className="text-lg font-semibold text-foreground mb-4">Send Again</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {sendAgainUsers.map((user) => (
-                <div key={user.id} className="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
-                  <Avatar className="w-16 h-16">
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-medium">
-                      {user.initials}
-                    </AvatarFallback>
-                  </Avatar>
-                  <p className="text-sm font-medium text-center text-foreground">{user.name}</p>
-                </div>
-              ))}
+              <div className="grid grid-cols-6 gap-3">
+                {actionButtons.map((action, index) => {
+                  const IconComponent = action.icon;
+                  return (
+                    <Button
+                      key={index}
+                      variant="ghost"
+                      className="h-auto flex flex-col gap-2 p-3 hover:bg-muted/50"
+                    >
+                      <IconComponent className={cn("w-5 h-5", action.color)} />
+                      <span className="text-xs font-medium">{action.label}</span>
+                    </Button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          {/* Total Sent and Received */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardContent className="p-6">
+            {/* Send Again Section */}
+            <div 
+              className="rounded-[24px] p-6"
+              style={{ 
+                background: 'rgba(255, 255, 255, 0.64)',
+                border: '1px solid #FFFFFF'
+              }}
+            >
+              <h3 className="text-lg font-semibold text-foreground mb-4">Send Again</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {sendAgainUsers.map((user) => (
+                  <div key={user.id} className="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
+                    <Avatar className="w-16 h-16">
+                      <AvatarImage src={user.avatar} alt={user.name} />
+                      <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-medium">
+                        {user.initials}
+                      </AvatarFallback>
+                    </Avatar>
+                    <p className="text-sm font-medium text-center text-foreground">{user.name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Total Sent and Received */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div 
+                className="rounded-[24px] p-6"
+                style={{ 
+                  background: 'rgba(255, 255, 255, 0.64)',
+                  border: '1px solid #FFFFFF'
+                }}
+              >
                 <h4 className="text-sm text-muted-foreground mb-2">Total Sent</h4>
                 <p className="text-3xl font-bold text-foreground">$12,918.98</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
+              </div>
+              <div 
+                className="rounded-[24px] p-6"
+                style={{ 
+                  background: 'rgba(255, 255, 255, 0.64)',
+                  border: '1px solid #FFFFFF'
+                }}
+              >
                 <h4 className="text-sm text-muted-foreground mb-2">Total Received</h4>
                 <p className="text-3xl font-bold text-foreground">$12,918.98</p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Section - Banks and Cards */}
+          <div className="lg:col-span-1">
+            <div 
+              className="rounded-[24px] p-6"
+              style={{ 
+                background: 'rgba(255, 255, 255, 0.64)',
+                border: '1px solid #FFFFFF'
+              }}
+            >
+              <h3 className="text-lg font-semibold text-foreground mb-6">Banks and Cards</h3>
+              <div className="space-y-4">
+                {banksAndCards.map((item) => (
+                  <div key={item.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/30">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <Building className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{item.name}</p>
+                        <p className="text-xs text-muted-foreground">{item.type} {item.accountNumber}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs text-muted-foreground">Balance:</p>
+                      <p className="text-sm font-semibold text-foreground">{item.balance}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       }
