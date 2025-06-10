@@ -31,8 +31,8 @@ const moneyFlowData = [
 ];
 
 const balanceData = [
-  { category: 'Earned', value: 45000 },
-  { category: 'Spent', value: -32000 },
+  { category: 'Earned', value: 45000, fill: '#22c55e' },
+  { category: 'Spent', value: -32000, fill: '#ef4444' },
 ];
 
 const chartConfig = {
@@ -239,7 +239,7 @@ export function DashboardContent() {
                 />
                 <Bar 
                   dataKey="value" 
-                  fill={(entry) => entry.value > 0 ? "var(--color-earned)" : "var(--color-spent)"}
+                  fill="#22c55e"
                   radius={[0, 4, 4, 0]}
                 />
               </BarChart>
