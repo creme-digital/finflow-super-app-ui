@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Wallet, Send, ArrowDownLeft, ArrowUpRight, Building, TrendingUp, CreditCard, Target, Award, Zap } from 'lucide-react';
+import { Wallet, Send, ArrowDownLeft, ArrowUpRight, Building, TrendingUp, CreditCard, Target, Award, Zap, Activity } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useCurrency } from '@/contexts/CurrencyContext';
