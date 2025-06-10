@@ -28,15 +28,7 @@ export function RightSidebarContent() {
         <AllHoldings />
       </div>
       
-      <div 
-        className="rounded-[24px]" 
-        style={{ 
-          background: 'rgba(255, 255, 255, 0.64)',
-          border: '1px solid #FFFFFF'
-        }}
-      >
-        <StatsGrid />
-      </div>
+      <StatsGrid />
       
       <div 
         className="rounded-[24px]" 
