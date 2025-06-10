@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -135,12 +136,22 @@ export default function Cards() {
           {/* Statistics Cards */}
           <div className="grid grid-cols-5 gap-4">
             {cardStats.map((stat) => (
-              <Card key={stat.key} className="p-4">
-                <CardContent className="p-0">
+              <div
+                key={stat.key}
+                className="flex flex-col overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px'
+                }}
+              >
+                <CardContent className="p-4" style={{
+                  background: 'rgba(255, 255, 255, 0.8)'
+                }}>
                   <div className="text-sm text-muted-foreground mb-1">{stat.label}</div>
                   <div className="text-3xl font-bold text-foreground">{stat.value}</div>
                 </CardContent>
-              </Card>
+              </div>
             ))}
           </div>
 
@@ -186,7 +197,15 @@ export default function Cards() {
           {viewMode === 'grid' ? (
             <CardGrid cards={filteredCards} />
           ) : (
-            <Card>
+            <div
+              className="overflow-hidden"
+              style={{
+                border: '1px solid #FFFFFF',
+                boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                borderRadius: '16px',
+                background: 'rgba(255, 255, 255, 0.8)'
+              }}
+            >
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -237,7 +256,7 @@ export default function Cards() {
                   ))}
                 </TableBody>
               </Table>
-            </Card>
+            </div>
           )}
         </div>
       }

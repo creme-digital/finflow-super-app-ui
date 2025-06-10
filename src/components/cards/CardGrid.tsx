@@ -64,7 +64,15 @@ export function CardGrid({ cards }: CardGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {enhancedCards.map((card) => (
-        <Card key={card.id} className="overflow-hidden transition-all duration-200 hover:shadow-lg">
+        <div
+          key={card.id}
+          className="overflow-hidden transition-all duration-200 hover:shadow-lg"
+          style={{
+            border: '1px solid #FFFFFF',
+            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            borderRadius: '16px'
+          }}
+        >
           {/* Card Visual */}
           <div className={cn(
             "p-6 relative text-white min-h-[200px] flex flex-col justify-between",
@@ -108,7 +116,9 @@ export function CardGrid({ cards }: CardGridProps) {
           </div>
 
           {/* Card Info */}
-          <CardContent className="p-6">
+          <CardContent className="p-6" style={{
+            background: 'rgba(255, 255, 255, 0.8)'
+          }}>
             <div className="flex justify-between mb-4">
               <div>
                 <p className="text-sm text-muted-foreground">Balance</p>
@@ -143,7 +153,7 @@ export function CardGrid({ cards }: CardGridProps) {
               </Button>
             </div>
           </CardContent>
-        </Card>
+        </div>
       ))}
     </div>
   );
