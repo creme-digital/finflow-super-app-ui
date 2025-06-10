@@ -170,7 +170,7 @@ export function DashboardContent() {
       </div>
 
       {/* Card money flow: flex-col, 16px border radius, hug content */}
-      <div className="flex flex-col" style={{
+      <div className="flex flex-col overflow-hidden" style={{
         border: '1px solid #FFFFFF',
         boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
         borderRadius: '16px'
@@ -232,7 +232,7 @@ export function DashboardContent() {
       </div>
 
       {/* Card balance: flex-col, 16px border radius, hug content */}
-      <div className="flex flex-col" style={{
+      <div className="flex flex-col overflow-hidden" style={{
         border: '1px solid #FFFFFF',
         boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
         borderRadius: '16px'
