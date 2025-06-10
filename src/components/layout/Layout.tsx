@@ -28,8 +28,8 @@ export function Layout({ children, title = "Dashboard", showRightSidebar = false
       >
         <Header title={title} />
         
-        {/* New flex-row div with 24px spacing */}
-        <div className="flex flex-row gap-6 p-4 h-[calc(100vh-120px)]">
+        {/* New flex-row div with 24px spacing and reduced bottom padding */}
+        <div className="flex flex-row gap-6 p-4 pb-6 h-[calc(100vh-140px)]">
           {/* Main items div - hug content with overflow auto */}
           <div 
             className={cn(
