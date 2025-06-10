@@ -12,12 +12,6 @@ const cashFlowData = [
   { month: 'Apr', moneyIn: 32000, moneyOut: 29000 },
   { month: 'May', moneyIn: 34000, moneyOut: 31000 },
   { month: 'Jun', moneyIn: 32500, moneyOut: 29500 },
-  { month: 'Jul', moneyIn: 35500, moneyOut: 32000 },
-  { month: 'Aug', moneyIn: 34500, moneyOut: 31500 },
-  { month: 'Sep', moneyIn: 37500, moneyOut: 34000 },
-  { month: 'Oct', moneyIn: 39000, moneyOut: 36000 },
-  { month: 'Nov', moneyIn: 36500, moneyOut: 33500 },
-  { month: 'Dec', moneyIn: 38000, moneyOut: 35000 },
 ];
 
 const moneyFlowData = [
@@ -48,56 +42,79 @@ const chartConfig = {
     label: "Money Flow",
     color: "#292EE9",
   },
-  earned: {
-    label: "Earned",
-    color: "#22c55e",
-  },
-  spent: {
-    label: "Spent",
-    color: "#ef4444",
-  },
 };
 
 export function DashboardContent() {
   return (
-    <div className="space-y-8">
-      {/* Net Cash Section */}
-      <div className="space-y-2">
-        <p className="text-sm text-muted-foreground">Net cash this month</p>
-        <h2 className="text-4xl font-medium" style={{ fontFamily: 'Inter' }}>
-          $72,321.11
-        </h2>
-      </div>
-
-      {/* Money In/Out Summary */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="w-1 h-6 bg-green-500 rounded-full"></div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Money in</span>
-            <span className="text-lg font-medium text-green-600">$310,704.49</span>
-          </div>
-        </div>
+    {/* Main card: 24px border radius, flex-col, 16px gap, auto height (min-height 100%) */}
+    <div className="flex flex-col gap-4 min-h-full" style={{ borderRadius: '24px' }}>
+      
+      {/* Top Main Card items: transparent background, flex-col, 12px spacing, hug content */}
+      <div className="flex flex-col gap-3 bg-transparent">
         
-        <div className="flex items-center gap-3">
-          <div className="w-1 h-6 bg-red-500 rounded-full"></div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Money out</span>
-            <span className="text-lg font-medium text-red-600">-$383,025.60</span>
+        {/* Net cash this month */}
+        <div className="space-y-2">
+          <p className="text-sm text-muted-foreground">Net cash this month</p>
+          <h2 className="text-4xl font-medium" style={{ fontFamily: 'Inter' }}>
+            $72,321.11
+          </h2>
+        </div>
+
+        {/* Div flex-row gap-16px */}
+        <div className="flex flex-row gap-4">
+          
+          {/* Div flex-col gap-12px */}
+          <div className="flex flex-col gap-3">
+            
+            {/* Money in */}
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-6 bg-green-500 rounded-full"></div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Money in</span>
+                <span className="text-lg font-medium text-green-600">$310,704.49</span>
+              </div>
+            </div>
+            
+            {/* Money out */}
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-6 bg-red-500 rounded-full"></div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Money out</span>
+                <span className="text-lg font-medium text-red-600">-$383,025.60</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Barchart */}
+          <div className="w-64 h-32">
+            <ChartContainer config={chartConfig}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={cashFlowData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                  <XAxis 
+                    dataKey="month" 
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 10 }}
+                  />
+                  <YAxis hide />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Bar dataKey="moneyIn" fill="var(--color-moneyIn)" radius={[2, 2, 0, 0]} />
+                  <Bar dataKey="moneyOut" fill="var(--color-moneyOut)" radius={[2, 2, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
           </div>
         </div>
       </div>
 
-      {/* Money Flow Card */}
-      <div 
-        className="flex flex-col space-y-0 p-0 overflow-hidden"
-        style={{ 
-          border: '1px solid #FFFFFF',
-          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-          borderRadius: '16px'
-        }}
-      >
-        {/* Card Header */}
+      {/* Card money flow: flex-col, 16px border radius, hug content */}
+      <div className="flex flex-col overflow-hidden" style={{ 
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px'
+      }}>
+        
+        {/* Card header */}
         <div className="p-2 flex flex-row justify-between items-center" style={{
           background: 'rgba(255, 255, 255, 0.8)'
         }}>
@@ -121,48 +138,46 @@ export function DashboardContent() {
           </Select>
         </div>
         
-        {/* Card Content */}
-        <div className="h-[200px] p-4">
-          <ChartContainer config={chartConfig}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={moneyFlowData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-                <XAxis 
-                  dataKey="day" 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: '#64748b' }}
-                />
-                <YAxis 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: '#64748b' }}
-                />
-                <ChartTooltip 
-                  content={<ChartTooltipContent />}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="flow" 
-                  stroke="var(--color-flow)"
-                  strokeWidth={2}
-                  dot={{ fill: "var(--color-flow)", r: 4 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+        {/* Card content hug height */}
+        <div className="p-4">
+          <div className="h-48">
+            <ChartContainer config={chartConfig}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={moneyFlowData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                  <XAxis 
+                    dataKey="day" 
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 12, fill: '#64748b' }}
+                  />
+                  <YAxis 
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 12, fill: '#64748b' }}
+                  />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Line 
+                    type="monotone" 
+                    dataKey="flow" 
+                    stroke="var(--color-flow)"
+                    strokeWidth={2}
+                    dot={{ fill: "var(--color-flow)", r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
         </div>
       </div>
 
-      {/* Balance Card */}
-      <div 
-        className="flex flex-col space-y-0 p-0 overflow-hidden"
-        style={{ 
-          border: '1px solid #FFFFFF',
-          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-          borderRadius: '16px'
-        }}
-      >
-        {/* Card Header */}
+      {/* Card balance: flex-col, 16px border radius, hug content */}
+      <div className="flex flex-col overflow-hidden" style={{ 
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px'
+      }}>
+        
+        {/* Card header */}
         <div className="p-2 flex flex-row justify-between items-center" style={{
           background: 'rgba(255, 255, 255, 0.8)'
         }}>
@@ -186,34 +201,34 @@ export function DashboardContent() {
           </Select>
         </div>
         
-        {/* Card Content */}
-        <div className="h-[200px] p-4">
-          <ChartContainer config={chartConfig}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart 
-                data={balanceData} 
-                layout="horizontal"
-                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-              >
-                <XAxis type="number" axisLine={false} tickLine={false} />
-                <YAxis 
-                  type="category" 
-                  dataKey="category" 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: '#64748b' }}
-                />
-                <ChartTooltip 
-                  content={<ChartTooltipContent />}
-                />
-                <Bar 
-                  dataKey="value" 
-                  fill="#22c55e"
-                  radius={[0, 4, 4, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+        {/* Card content hug height */}
+        <div className="p-4">
+          <div className="h-48">
+            <ChartContainer config={chartConfig}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart 
+                  data={balanceData} 
+                  layout="horizontal"
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                >
+                  <XAxis type="number" axisLine={false} tickLine={false} />
+                  <YAxis 
+                    type="category" 
+                    dataKey="category" 
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 12, fill: '#64748b' }}
+                  />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Bar 
+                    dataKey="value" 
+                    fill="#22c55e"
+                    radius={[0, 4, 4, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
         </div>
       </div>
     </div>
