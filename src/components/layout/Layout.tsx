@@ -19,8 +19,7 @@ export function Layout({ children, title = "Dashboard" }: LayoutProps) {
       <main
         className={cn(
           'min-h-screen transition-all duration-300',
-          expanded ? 'ml-64' : 'ml-16',
-          isMobile ? 'ml-0' : ''
+          isMobile ? 'ml-0' : 'ml-16'
         )}
       >
         <Header title={title} />
