@@ -4,6 +4,7 @@ import { Layout } from '@/components/layout/Layout';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { BookkeepingTab } from '@/components/accounting/BookkeepingTab';
 import { InvoicingTab } from '@/components/accounting/InvoicingTab';
+import { ReportsTab } from '@/components/accounting/ReportsTab';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Accounting = () => {

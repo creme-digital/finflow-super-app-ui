@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { BalanceCard } from '@/components/dashboard/BalanceCard';
@@ -10,7 +11,6 @@ import { ChartColumnIncreasing, WalletCards, TrendingUp, TrendingDown } from 'lu
 import { Button } from '@/components/ui/button';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
-import Bookkeeping from "./pages/bookkeeping";
 
 const DashboardPage = () => {
   return (
