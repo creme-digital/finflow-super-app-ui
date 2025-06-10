@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
@@ -136,8 +137,8 @@ export function DashboardContent() {
                 }} />
                 <YAxis hide />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="moneyIn" fill={chartConfig.moneyIn.color} radius={[24, 24, 0, 0]} />
-                <Bar dataKey="moneyOut" fill={chartConfig.moneyOut.color} radius={[24, 24, 0, 0]} />
+                <Bar dataKey="moneyIn" fill={chartConfig.moneyIn.color} radius={[24, 24, 0, 0]} maxBarSize={20} />
+                <Bar dataKey="moneyOut" fill={chartConfig.moneyOut.color} radius={[24, 24, 0, 0]} maxBarSize={20} />
               </BarChart>
             </ChartContainer>
           </div>
