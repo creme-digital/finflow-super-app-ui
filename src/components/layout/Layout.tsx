@@ -28,11 +28,14 @@ export function Layout({ children, title = "Dashboard", showRightSidebar = false
       >
         <Header title={title} />
         
-        {/* Main content div using flex-col */}
-        <div className="flex flex-col gap-6 p-4 h-[calc(100vh-120px)]">
-          {/* Main items div - styled like inactive nav cards */}
+        {/* New flex-row div with 24px spacing */}
+        <div className="flex flex-row gap-6 p-4 h-[calc(100vh-120px)]">
+          {/* Main items div - at least 70% width, styled like inactive nav cards */}
           <div 
-            className="rounded-[24px] p-6 flex-1"
+            className={cn(
+              "rounded-[24px] p-6 transition-all duration-300",
+              showRightSidebar ? "flex-1 min-w-[70%]" : "flex-1"
+            )}
             style={{ 
               background: 'rgba(255, 255, 255, 0.64)',
               border: '1px solid #FFFFFF'
@@ -43,7 +46,7 @@ export function Layout({ children, title = "Dashboard", showRightSidebar = false
 
           {/* Right Sidebar - Simple Container */}
           {showRightSidebar && (
-            <div className="w-full">
+            <div className="w-[30%] min-w-[300px]">
               <ScrollArea className="h-full w-full">
                 <div className="w-full h-full">
                   {rightSidebarContent}
