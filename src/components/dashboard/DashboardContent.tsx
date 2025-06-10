@@ -21,11 +21,11 @@ const cashFlowData = [
 const chartConfig = {
   moneyIn: {
     label: "Money In",
-    color: "#22c55e",
+    color: "#292EE9",
   },
   moneyOut: {
     label: "Money Out", 
-    color: "#ef4444",
+    color: "#D1D5DC",
   },
 };
 
@@ -62,15 +62,15 @@ export function DashboardContent() {
         </div>
 
         {/* Bar Chart */}
-        <div className="flex-1 h-[200px]">
+        <div className="w-[400px] h-[150px]">
           <ChartContainer config={chartConfig}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={cashFlowData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <BarChart data={cashFlowData} margin={{ top: 15, right: 15, left: 15, bottom: 5 }}>
                 <XAxis 
                   dataKey="month" 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#64748b' }}
+                  tick={{ fontSize: 11, fill: '#64748b' }}
                 />
                 <YAxis hide />
                 <ChartTooltip 
@@ -80,14 +80,14 @@ export function DashboardContent() {
                 <Bar 
                   dataKey="moneyIn" 
                   fill="var(--color-moneyIn)"
-                  radius={[2, 2, 0, 0]}
-                  maxBarSize={20}
+                  radius={[8, 8, 0, 0]}
+                  maxBarSize={16}
                 />
                 <Bar 
                   dataKey="moneyOut" 
                   fill="var(--color-moneyOut)"
-                  radius={[2, 2, 0, 0]} 
-                  maxBarSize={20}
+                  radius={[8, 8, 0, 0]} 
+                  maxBarSize={16}
                 />
               </BarChart>
             </ResponsiveContainer>
