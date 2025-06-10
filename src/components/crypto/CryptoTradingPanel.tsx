@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
 
 export function CryptoTradingPanel() {
   const [orderType, setOrderType] = useState('buy');
@@ -34,34 +32,34 @@ export function CryptoTradingPanel() {
     <div className="space-y-6">
       {/* Order Book */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium">Order Book</CardTitle>
+        <CardHeader>
+          <CardTitle>Order Book</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <div className="space-y-1">
-            {/* Asks (Sell Orders) */}
+            {/* Asks */}
             <div className="space-y-1">
               {orderBook.asks.reverse().map((ask, index) => (
-                <div key={index} className="flex justify-between items-center px-4 py-1 text-xs hover:bg-red-50">
-                  <span className="text-red-500 font-mono">{ask.price.toFixed(4)}</span>
+                <div key={index} className="flex justify-between items-center px-4 py-1 text-xs hover:bg-red-50 transition-colors">
+                  <span className="text-red-600 font-mono">{ask.price.toFixed(4)}</span>
                   <span className="text-muted-foreground font-mono">{ask.amount.toFixed(4)}</span>
                 </div>
               ))}
             </div>
             
             {/* Current Price */}
-            <div className="px-4 py-2 bg-gray-50 border-y">
+            <div className="px-4 py-3 bg-muted/50 border-y border-border">
               <div className="text-center">
-                <div className="text-lg font-bold font-mono text-red-500">0.1777</div>
-                <div className="text-xs text-muted-foreground">Current Price</div>
+                <div className="text-lg font-bold font-mono text-red-600">0.1777</div>
+                <div className="text-xs text-muted-foreground">Spread: 0.0002</div>
               </div>
             </div>
 
-            {/* Bids (Buy Orders) */}
+            {/* Bids */}
             <div className="space-y-1">
               {orderBook.bids.map((bid, index) => (
-                <div key={index} className="flex justify-between items-center px-4 py-1 text-xs hover:bg-green-50">
-                  <span className="text-green-500 font-mono">{bid.price.toFixed(4)}</span>
+                <div key={index} className="flex justify-between items-center px-4 py-1 text-xs hover:bg-green-50 transition-colors">
+                  <span className="text-green-600 font-mono">{bid.price.toFixed(4)}</span>
                   <span className="text-muted-foreground font-mono">{bid.amount.toFixed(4)}</span>
                 </div>
               ))}
@@ -72,70 +70,70 @@ export function CryptoTradingPanel() {
 
       {/* Trading Form */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium">Place Order</CardTitle>
+        <CardHeader>
+          <CardTitle>Place Order</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <Tabs defaultValue="buy" value={orderType} onValueChange={setOrderType}>
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="buy" className="text-green-600">Buy</TabsTrigger>
-              <TabsTrigger value="sell" className="text-red-600">Sell</TabsTrigger>
+              <TabsTrigger value="buy" className="text-green-600">Buy ETH</TabsTrigger>
+              <TabsTrigger value="sell" className="text-red-600">Sell ETH</TabsTrigger>
             </TabsList>
             
             <TabsContent value="buy" className="space-y-4 mt-4">
               <div className="space-y-2">
-                <Label className="text-xs">Order Type</Label>
+                <Label className="text-xs text-muted-foreground">Order Type</Label>
                 <Select defaultValue="limit">
-                  <SelectTrigger className="h-8">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="limit">Limit</SelectItem>
-                    <SelectItem value="market">Market</SelectItem>
-                    <SelectItem value="stop">Stop</SelectItem>
+                    <SelectItem value="limit">Limit Order</SelectItem>
+                    <SelectItem value="market">Market Order</SelectItem>
+                    <SelectItem value="stop">Stop Order</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-xs">Price</Label>
+                <Label className="text-xs text-muted-foreground">Price (BTC)</Label>
                 <Input 
                   placeholder="0.0000"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  className="h-8 font-mono"
+                  className="font-mono"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label className="text-xs">Amount</Label>
+                <Label className="text-xs text-muted-foreground">Amount (ETH)</Label>
                 <Input 
                   placeholder="0.0000"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="h-8 font-mono"
+                  className="font-mono"
                 />
               </div>
 
               <div className="grid grid-cols-4 gap-1">
-                <Button variant="outline" size="sm" className="h-6 text-xs">25%</Button>
-                <Button variant="outline" size="sm" className="h-6 text-xs">50%</Button>
-                <Button variant="outline" size="sm" className="h-6 text-xs">75%</Button>
-                <Button variant="outline" size="sm" className="h-6 text-xs">100%</Button>
+                <Button variant="outline" size="sm" className="text-xs">25%</Button>
+                <Button variant="outline" size="sm" className="text-xs">50%</Button>
+                <Button variant="outline" size="sm" className="text-xs">75%</Button>
+                <Button variant="outline" size="sm" className="text-xs">100%</Button>
               </div>
 
-              <div className="space-y-1 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Total</span>
+              <div className="space-y-2 py-3 border-t border-border">
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Total Cost</span>
                   <span className="font-mono">0.0000 BTC</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Fee</span>
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Trading Fee</span>
                   <span className="font-mono">0.0000 BTC</span>
                 </div>
               </div>
 
-              <Button className="w-full bg-green-600 hover:bg-green-700 h-8">
+              <Button className="w-full bg-green-600 hover:bg-green-700">
                 Buy ETH
               </Button>
             </TabsContent>
@@ -203,25 +201,25 @@ export function CryptoTradingPanel() {
 
       {/* Market Stats */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium">24h Stats</CardTitle>
+        <CardHeader>
+          <CardTitle>24h Market Stats</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground">High</span>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">24h High</span>
             <span className="font-mono">0.1850</span>
           </div>
-          <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground">Low</span>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">24h Low</span>
             <span className="font-mono">0.1720</span>
           </div>
-          <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground">Volume</span>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">24h Volume</span>
             <span className="font-mono">1,234.56 ETH</span>
           </div>
-          <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground">Change</span>
-            <span className="font-mono text-green-500">+2.45%</span>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">24h Change</span>
+            <span className="font-mono text-green-600">+2.45%</span>
           </div>
         </CardContent>
       </Card>

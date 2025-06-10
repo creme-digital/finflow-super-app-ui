@@ -1,13 +1,13 @@
 
 import { Layout } from '@/components/layout/Layout';
-import { Card, CardContent } from '@/components/ui/card';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, TrendingUp, TrendingDown, Activity, DollarSign, Plus } from 'lucide-react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Search, TrendingUp, TrendingDown, Activity, DollarSign, Plus, Filter, Download } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { TradingViewChart } from '@/components/crypto/TradingViewChart';
 import { CryptoTradingPanel } from '@/components/crypto/CryptoTradingPanel';
@@ -15,163 +15,228 @@ import { CryptoTradingPanel } from '@/components/crypto/CryptoTradingPanel';
 export default function Crypto() {
   const { formatAmount } = useCurrency();
 
-  const accountStats = {
-    balance: 478419.95,
-    btcHoldings: 1.895,
-    ethHoldings: 65,
-    tradingPair: 'ETH/BTC'
-  };
-
-  const priceStats = [
-    { label: '24h Change', value: '12454.37', change: 0.89, positive: true },
-    { label: '24h High', value: '56,354.23', change: 1.58, positive: true },
-    { label: '24h Low', value: '36,899.36', change: -1.71, positive: false },
-    { label: 'BTC/USDT', value: '36,899.36', change: -1.71, positive: false },
-    { label: 'ETH/USDT', value: '3,252', change: 1.58, positive: true }
+  const marketStats = [
+    { 
+      icon: DollarSign, 
+      label: 'Total Market Cap', 
+      value: '2.45T',
+      change: '+2.34%',
+      positive: true 
+    },
+    { 
+      icon: Activity, 
+      label: '24h Volume', 
+      value: '89.2B',
+      change: '+5.67%',
+      positive: true 
+    },
+    { 
+      icon: TrendingUp, 
+      label: 'BTC Dominance', 
+      value: '42.8%',
+      change: '-0.23%',
+      positive: false 
+    },
+    { 
+      icon: Activity, 
+      label: 'Active Cryptos', 
+      value: '13,247',
+      change: '+12',
+      positive: true 
+    }
   ];
 
-  const tradeHistory = [
-    { price: 64345.34, amount: 0.925602, time: '0.925602', type: 'buy' },
-    { price: 64345.34, amount: 0.925602, time: '0.925602', type: 'buy' },
-    { price: 64345.34, amount: 0.925602, time: '0.925602', type: 'buy' },
-    { price: 64345.34, amount: 0.925602, time: '0.925602', type: 'buy' },
-    { price: 64345.34, amount: 0.925602, time: '0.925602', type: 'buy' },
-    { price: 64345.34, amount: 0.925602, time: '0.925602', type: 'sell' },
-    { price: 64345.34, amount: 0.925602, time: '0.925602', type: 'sell' },
-    { price: 64345.34, amount: 0.925602, time: '0.925602', type: 'sell' }
+  const accountData = {
+    balance: 47841.95,
+    btcHoldings: 1.895,
+    ethHoldings: 65,
+    portfolioChange: 2.34
+  };
+
+  const topCryptos = [
+    {
+      symbol: 'BTC',
+      name: 'Bitcoin',
+      price: 65432.10,
+      change: 2.45,
+      volume: '28.5B',
+      marketCap: '1.28T'
+    },
+    {
+      symbol: 'ETH',
+      name: 'Ethereum',
+      price: 3456.78,
+      change: 3.21,
+      volume: '15.2B',
+      marketCap: '415B'
+    },
+    {
+      symbol: 'SOL',
+      name: 'Solana',
+      price: 156.42,
+      change: -1.89,
+      volume: '2.8B',
+      marketCap: '71B'
+    },
+    {
+      symbol: 'ADA',
+      name: 'Cardano',
+      price: 0.487,
+      change: 4.56,
+      volume: '1.2B',
+      marketCap: '17B'
+    }
+  ];
+
+  const recentTrades = [
+    { type: 'buy', symbol: 'BTC', amount: 0.025, price: 65100, time: '2 min ago' },
+    { type: 'sell', symbol: 'ETH', amount: 1.5, price: 3450, time: '5 min ago' },
+    { type: 'buy', symbol: 'SOL', amount: 10, price: 155, time: '8 min ago' },
+    { type: 'sell', symbol: 'ADA', amount: 500, price: 0.49, time: '12 min ago' }
   ];
 
   return (
     <Layout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Crypto</h1>
-        </div>
+        <PageHeader 
+          title="Crypto Trading"
+          subtitle="Trade cryptocurrencies and manage your digital assets"
+        >
+          <div className="flex gap-2">
+            <Button variant="outline">
+              View Portfolio
+            </Button>
+            <Button>
+              <Plus className="w-4 h-4" />
+              Add Funds
+            </Button>
+          </div>
+        </PageHeader>
+
+        {/* Market Overview */}
+        <Card>
+          <CardContent className="flex flex-col md:flex-row gap-6 md:gap-0 md:divide-x md:divide-border p-6">
+            {marketStats.map((stat, index) => (
+              <div key={index} className="flex-1 flex flex-col items-start md:px-6 first:md:pl-0 last:md:pr-0">
+                <div className="flex items-center gap-2 mb-2">
+                  <stat.icon className="w-[18px] h-[18px] text-muted-foreground" />
+                  <span className="text-muted-foreground text-sm font-medium">{stat.label}</span>
+                </div>
+                <div className="text-2xl font-mono font-normal tracking-tight text-foreground mb-1">
+                  {stat.value}
+                </div>
+                <div className={`text-sm font-medium ${stat.positive ? 'text-green-600' : 'text-red-600'}`}>
+                  {stat.change}
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
 
         <Tabs defaultValue="trading" className="w-full">
           <div className="flex items-center justify-between mb-6">
-            <TabsList className="grid w-auto grid-cols-2">
-              <TabsTrigger value="trading" className="text-primary border-b-2 border-primary">
-                Crypto Trading
-              </TabsTrigger>
-              <TabsTrigger value="asset" className="text-muted-foreground">
-                Asset
-              </TabsTrigger>
+            <TabsList>
+              <TabsTrigger value="trading">Trading</TabsTrigger>
+              <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
+              <TabsTrigger value="markets">Markets</TabsTrigger>
             </TabsList>
-            <Button variant="outline" className="gap-2">
-              View Portfolio
-            </Button>
           </div>
 
           <TabsContent value="trading" className="space-y-6">
-            {/* Account and Market Info */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {/* Account Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card>
-                <CardContent className="p-4">
-                  <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground">Exchange</div>
-                    <div className="text-sm">Account 1890980</div>
-                    <div className="text-lg font-semibold">{formatAmount(accountStats.balance)}</div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-4">
-                  <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground">0 BTC : 0.00 USD</div>
-                    <div className="text-sm text-muted-foreground">Market</div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs">₿</div>
-                      <span className="font-medium">BTC</span>
-                      <span className="text-sm text-muted-foreground">{accountStats.btcHoldings} BTC</span>
+                <CardContent className="p-6">
+                  <div className="space-y-3">
+                    <div className="text-sm text-muted-foreground">Total Balance</div>
+                    <div className="text-3xl font-mono font-normal tracking-tight">
+                      {formatAmount(accountData.balance)}
+                    </div>
+                    <div className="flex items-center gap-1 text-sm">
+                      <TrendingUp className="w-4 h-4 text-green-600" />
+                      <span className="text-green-600">+{accountData.portfolioChange}%</span>
+                      <span className="text-muted-foreground">24h</span>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card>
-                <CardContent className="p-4">
-                  <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground">Trading Pair</div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs">Ξ</div>
-                      <span className="font-medium">{accountStats.tradingPair}</span>
-                      <span className="text-sm text-muted-foreground">{accountStats.ethHoldings} ETH</span>
+                <CardContent className="p-6">
+                  <div className="space-y-3">
+                    <div className="text-sm text-muted-foreground">Bitcoin Holdings</div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-bold">
+                        ₿
+                      </div>
+                      <div>
+                        <div className="text-xl font-mono font-normal">{accountData.btcHoldings} BTC</div>
+                        <div className="text-sm text-muted-foreground">≈ {formatAmount(accountData.btcHoldings * 65432)}</div>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card>
-                <CardContent className="p-4">
-                  <Button className="w-full gap-2">
-                    <Plus className="w-4 h-4" />
-                    Add Asset
-                  </Button>
+                <CardContent className="p-6">
+                  <div className="space-y-3">
+                    <div className="text-sm text-muted-foreground">Ethereum Holdings</div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold">
+                        Ξ
+                      </div>
+                      <div>
+                        <div className="text-xl font-mono font-normal">{accountData.ethHoldings} ETH</div>
+                        <div className="text-sm text-muted-foreground">≈ {formatAmount(accountData.ethHoldings * 3456)}</div>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Price Statistics */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-                  {priceStats.map((stat, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="text-lg font-bold font-mono">{stat.value}</div>
-                      <div className="text-sm text-muted-foreground">{stat.label}</div>
-                      <div className={`flex items-center gap-1 text-sm ${stat.positive ? 'text-green-500' : 'text-red-500'}`}>
-                        {stat.positive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-                        {stat.positive ? '+' : ''}{stat.change}%
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Main Trading Interface */}
+            {/* Trading Interface */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              {/* TradingView Chart - Takes up 3/4 of the width */}
               <div className="lg:col-span-3">
                 <TradingViewChart />
               </div>
-
-              {/* Trading Panel - Takes up 1/4 of the width */}
               <div className="lg:col-span-1">
                 <CryptoTradingPanel />
               </div>
             </div>
 
-            {/* Trade History Table */}
+            {/* Recent Trades */}
             <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold">Recent Trades</h3>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">Save</Button>
-                    <Button variant="outline" size="sm">Settings</Button>
-                  </div>
-                </div>
-
-                <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
+              <CardHeader>
+                <CardTitle>Recent Trades</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="rounded-[8px] border border-border overflow-hidden">
                   <Table>
                     <TableHeader>
-                      <TableRow style={{ background: '#F8F8FA' }}>
-                        <TableHead className="text-xs uppercase text-[#9898A5] font-medium">Price (USDT)</TableHead>
-                        <TableHead className="text-xs uppercase text-[#9898A5] font-medium">Amount (BTC)</TableHead>
-                        <TableHead className="text-xs uppercase text-[#9898A5] font-medium">Time</TableHead>
+                      <TableRow className="bg-muted/50">
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Type</TableHead>
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Asset</TableHead>
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Amount</TableHead>
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Price</TableHead>
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Time</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {tradeHistory.map((trade, index) => (
+                      {recentTrades.map((trade, index) => (
                         <TableRow key={index}>
-                          <TableCell className={`font-mono ${trade.type === 'buy' ? 'text-green-500' : 'text-red-500'}`}>
-                            {trade.price.toLocaleString()}
+                          <TableCell>
+                            <Badge 
+                              className={`${trade.type === 'buy' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                            >
+                              {trade.type.toUpperCase()}
+                            </Badge>
                           </TableCell>
+                          <TableCell className="font-medium">{trade.symbol}</TableCell>
                           <TableCell className="font-mono">{trade.amount}</TableCell>
-                          <TableCell className="font-mono text-muted-foreground">{trade.time}</TableCell>
+                          <TableCell className="font-mono">{formatAmount(trade.price)}</TableCell>
+                          <TableCell className="text-muted-foreground">{trade.time}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -181,9 +246,80 @@ export default function Crypto() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="asset">
+          <TabsContent value="markets" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Top Cryptocurrencies</CardTitle>
+                  <div className="flex gap-2">
+                    <div className="relative">
+                      <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                      <Input placeholder="Search assets..." className="pl-8 w-64" />
+                    </div>
+                    <Button variant="outline" size="icon">
+                      <Filter className="h-4 w-4" />
+                    </Button>
+                    <Button variant="outline">
+                      <Download className="h-4 w-4" />
+                      Export
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="rounded-[8px] border border-border overflow-hidden">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-muted/50">
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Asset</TableHead>
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Price</TableHead>
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">24h Change</TableHead>
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Volume</TableHead>
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Market Cap</TableHead>
+                        <TableHead className="text-xs uppercase text-muted-foreground font-medium">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {topCryptos.map((crypto, index) => (
+                        <TableRow key={index}>
+                          <TableCell>
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-bold">
+                                {crypto.symbol.charAt(0)}
+                              </div>
+                              <div>
+                                <div className="font-medium">{crypto.name}</div>
+                                <div className="text-sm text-muted-foreground">{crypto.symbol}</div>
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-mono">{formatAmount(crypto.price)}</TableCell>
+                          <TableCell>
+                            <div className={`flex items-center gap-1 ${crypto.change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                              {crypto.change >= 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+                              {crypto.change >= 0 ? '+' : ''}{crypto.change}%
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-mono">{crypto.volume}</TableCell>
+                          <TableCell className="font-mono">{crypto.marketCap}</TableCell>
+                          <TableCell>
+                            <div className="flex gap-2">
+                              <Button size="sm" variant="outline">Buy</Button>
+                              <Button size="sm" variant="outline">Sell</Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="portfolio">
             <div className="text-center py-12">
-              <p className="text-muted-foreground">Asset view content would go here</p>
+              <p className="text-muted-foreground">Portfolio view will be implemented here</p>
             </div>
           </TabsContent>
         </Tabs>
