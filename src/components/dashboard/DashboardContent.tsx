@@ -131,14 +131,14 @@ export function DashboardContent() {
                 right: 5,
                 left: 5,
                 bottom: 5
-              }}>
+              }} barCategoryGap="20%">
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{
                   fontSize: 10
                 }} />
                 <YAxis hide />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="moneyIn" fill={chartConfig.moneyIn.color} radius={[24, 24, 0, 0]} maxBarSize={20} />
-                <Bar dataKey="moneyOut" fill={chartConfig.moneyOut.color} radius={[24, 24, 0, 0]} maxBarSize={20} />
+                <Bar dataKey="moneyIn" fill={chartConfig.moneyIn.color} radius={[24, 24, 0, 0]} maxBarSize={12} />
+                <Bar dataKey="moneyOut" fill={chartConfig.moneyOut.color} radius={[24, 24, 0, 0]} maxBarSize={12} />
               </BarChart>
             </ChartContainer>
           </div>
