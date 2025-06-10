@@ -23,6 +23,21 @@ export function Layout({ children, title = "Dashboard" }: LayoutProps) {
         )}
       >
         <Header title={title} />
+        
+        {/* New flex-row div with 24px spacing */}
+        <div className="flex flex-row gap-6 p-4">
+          {/* Main items div - at least 70% width, styled like inactive nav cards */}
+          <div 
+            className="flex-1 min-w-[70%] rounded-[24px] p-6"
+            style={{ 
+              background: 'rgba(255, 255, 255, 0.64)',
+              border: '1px solid #FFFFFF'
+            }}
+          >
+            {/* Empty main items area */}
+          </div>
+        </div>
+        
         <div className="p-4">
           {children}
         </div>
