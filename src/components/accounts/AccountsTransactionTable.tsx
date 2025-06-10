@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -98,7 +97,15 @@ const transactions = [
 
 export function AccountsTransactionTable() {
   return (
-    <div className="rounded-[16px] overflow-hidden bg-white/80 border border-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04)]">
+    <div 
+      className="overflow-hidden"
+      style={{
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px',
+        background: 'rgba(255, 255, 255, 0.8)'
+      }}
+    >
       <Table>
         <TableHeader>
           <TableRow className="border-b border-border">
