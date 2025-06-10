@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { TrendingUp, TrendingDown, ArrowUpDown } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 const TradingMainContent = () => {
   // Mock data for stock tickers
@@ -17,7 +18,8 @@ const TradingMainContent = () => {
       price: '201.01',
       change: '+',
       isPositive: true,
-      logo: '🅰️'
+      logo: '🅰️',
+      color: 'bg-red-500'
     },
     {
       symbol: 'AIR',
@@ -25,7 +27,8 @@ const TradingMainContent = () => {
       price: '201.01',
       change: '-',
       isPositive: false,
-      logo: '🏠'
+      logo: '🏠',
+      color: 'bg-red-500'
     },
     {
       symbol: 'ANM',
@@ -33,15 +36,17 @@ const TradingMainContent = () => {
       price: '201.01',
       change: '-',
       isPositive: false,
-      logo: '📊'
+      logo: '📊',
+      color: 'bg-orange-500'
     },
     {
       symbol: 'ACT',
-      company: 'Cordono',
+      company: '',
       price: '',
       change: '',
       isPositive: null,
-      logo: '🅰️'
+      logo: '🅰️',
+      color: 'bg-blue-500'
     }
   ];
 
@@ -49,10 +54,10 @@ const TradingMainContent = () => {
   const tradesData = [
     { month: 'Jan', value: 20 },
     { month: 'Feb', value: 35 },
-    { month: 'Mar', value: 25 },
+    { month: 'Mar', value: 40 },
     { month: 'Apr', value: 45 },
-    { month: 'May', value: 30 },
-    { month: 'Jun', value: 50 },
+    { month: 'May', value: 50 },
+    { month: 'Jun', value: 55 },
     { month: 'Jul', value: 40 }
   ];
 
@@ -62,6 +67,28 @@ const TradingMainContent = () => {
     amount: '0.36985547',
     time: '0.6983641'
   }));
+
+  // Mock data for stock holdings
+  const stockHoldings = [
+    {
+      symbol: 'Adobe',
+      company: 'Adobe',
+      price: '201.01',
+      change: '- 201.01',
+      isPositive: false,
+      logo: '🅰️',
+      color: 'bg-red-500'
+    },
+    {
+      symbol: 'ATR',
+      company: 'Adobe',
+      price: '201.01',
+      change: '- 201.01',
+      isPositive: false,
+      logo: '📊',
+      color: 'bg-orange-500'
+    }
+  ];
 
   return (
     <div className="space-y-6">
@@ -96,12 +123,12 @@ const TradingMainContent = () => {
             {stockTickers.map((stock, index) => (
               <Card key={index} className="p-4">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">
+                  <div className={`w-8 h-8 ${stock.color} rounded flex items-center justify-center text-white text-sm font-bold`}>
                     {stock.logo}
                   </div>
                   <div>
                     <div className="font-semibold">{stock.symbol}</div>
-                    <div className="text-sm text-muted-foreground">{stock.company}</div>
+                    {stock.company && <div className="text-sm text-muted-foreground">{stock.company}</div>}
                   </div>
                 </div>
                 <div className="w-full h-1 bg-blue-200 rounded mb-2">
@@ -124,23 +151,23 @@ const TradingMainContent = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column */}
-            <div className="space-y-6">
-              {/* Account Info */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Column - 2/3 width */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Account Info and Get Started Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Card className="p-4">
+                <Card className="p-6">
                   <div className="text-sm text-muted-foreground mb-1">Sell</div>
-                  <div className="text-sm text-muted-foreground mb-3">Account Balance (CNY)</div>
-                  <div className="text-2xl font-bold mb-2">112,893.00</div>
+                  <div className="text-sm text-muted-foreground mb-4">Account Balance (CNY)</div>
+                  <div className="text-3xl font-bold mb-6">112,893.00</div>
                   
-                  <div className="mt-4">
-                    <div className="text-sm font-medium mb-2">Stock</div>
-                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-1">
+                  <div className="mb-6">
+                    <div className="text-sm font-medium mb-4">Stock</div>
+                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
                       <span>Coin</span>
                       <span>$2.00</span>
                     </div>
-                    <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white mb-2">
+                    <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white mb-4">
                       🅰️
                     </div>
                     <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
@@ -148,26 +175,42 @@ const TradingMainContent = () => {
                       <span>$2.00</span>
                     </div>
                     <div className="text-sm text-muted-foreground mb-4">No extra fees</div>
-                    
-                    <div className="grid grid-cols-2 gap-2">
-                      <Button className="bg-blue-600 hover:bg-blue-700">Deposit</Button>
-                      <Button variant="outline" className="text-blue-600">Withdraw</Button>
-                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button className="bg-blue-600 hover:bg-blue-700">Deposit</Button>
+                    <Button variant="outline" className="text-blue-600">Withdraw</Button>
                   </div>
                 </Card>
 
-                <Card className="p-4">
+                <Card className="p-6">
                   <div className="text-sm text-muted-foreground mb-1">Get Started</div>
                   <div className="text-sm mb-4">January 7, 2024</div>
-                  <div className="text-lg font-bold mb-4">$</div>
+                  <div className="text-6xl font-bold mb-4">$</div>
                 </Card>
               </div>
 
-              {/* Trades Overview */}
+              {/* Trades Overview Chart */}
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle>Trades Overview</CardTitle>
+                    <div>
+                      <CardTitle>Trades Overview</CardTitle>
+                      <div className="text-sm text-muted-foreground">net profile per month</div>
+                      <div className="text-lg font-bold mt-2">Account Balance (CNY)</div>
+                      <div className="text-2xl font-bold">112,893.00</div>
+                      
+                      <div className="flex gap-4 mt-4">
+                        <label className="flex items-center gap-2">
+                          <input type="radio" name="period" defaultChecked className="text-blue-600" />
+                          <span className="text-sm">This month</span>
+                        </label>
+                        <label className="flex items-center gap-2">
+                          <input type="radio" name="period" className="text-yellow-500" />
+                          <span className="text-sm">Last month</span>
+                        </label>
+                      </div>
+                    </div>
                     <Select defaultValue="thisyear">
                       <SelectTrigger className="w-32">
                         <SelectValue />
@@ -178,10 +221,9 @@ const TradingMainContent = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="text-sm text-muted-foreground">net profile per month</div>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-[200px] w-full">
+                  <div className="h-[300px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={tradesData}>
                         <XAxis dataKey="month" axisLine={false} tickLine={false} />
@@ -196,89 +238,43 @@ const TradingMainContent = () => {
               {/* Stock Holdings */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Trades Overview</CardTitle>
+                  <div className="flex items-center justify-between">
+                    <CardTitle>Trades Overview</CardTitle>
+                    <Select defaultValue="thisyear">
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="thisyear">This Year</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                   <div className="text-sm text-muted-foreground">net profile per month</div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white">
-                        🅰️
+                  {stockHoldings.map((stock, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 ${stock.color} rounded flex items-center justify-center text-white`}>
+                          {stock.logo}
+                        </div>
+                        <div>
+                          <div className="font-medium">{stock.symbol}</div>
+                          <div className="text-sm text-muted-foreground">{stock.company}</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="font-medium">Adobe</div>
-                        <div className="text-sm text-muted-foreground">Adobe</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-medium">$ 201,01</div>
-                      <div className="text-sm text-red-600">- 201,01 ▼</div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white">
-                        📊
-                      </div>
-                      <div>
-                        <div className="font-medium">ATR</div>
-                        <div className="text-sm text-muted-foreground">Adobe</div>
+                      <div className="text-right">
+                        <div className="font-medium">$ {stock.price}</div>
+                        <div className="text-sm text-red-600">{stock.change} ▼</div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="font-medium">$ 201,01</div>
-                      <div className="text-sm text-red-600">- 201,01 ▼</div>
-                    </div>
-                  </div>
+                  ))}
                 </CardContent>
               </Card>
             </div>
 
-            {/* Right Column */}
+            {/* Right Column - 1/3 width */}
             <div className="space-y-6">
-              {/* Trades Overview Chart */}
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle>Trades Overview</CardTitle>
-                      <div className="text-sm text-muted-foreground">net profile per month</div>
-                      <div className="text-lg font-bold mt-2">112,893.00</div>
-                    </div>
-                    <Select defaultValue="alltime">
-                      <SelectTrigger className="w-24">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="alltime">All Time</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="flex gap-4 mt-4">
-                    <label className="flex items-center gap-2">
-                      <input type="radio" name="period" defaultChecked className="text-blue-600" />
-                      <span className="text-sm">This month</span>
-                    </label>
-                    <label className="flex items-center gap-2">
-                      <input type="radio" name="period" className="text-yellow-500" />
-                      <span className="text-sm">Last month</span>
-                    </label>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-[200px] w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={tradesData}>
-                        <XAxis dataKey="month" axisLine={false} tickLine={false} />
-                        <YAxis hide />
-                        <Bar dataKey="value" fill="#3b82f6" radius={4} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Earning Report */}
               <Card>
                 <CardHeader>
@@ -293,7 +289,7 @@ const TradingMainContent = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="text-sm text-muted-foreground mb-2">Account Balance (CNY)</div>
-                  <div className="text-2xl font-bold mb-4">112,893.00</div>
+                  <div className="text-3xl font-bold mb-4">112,893.00</div>
                   <div className="flex justify-between text-sm">
                     <span>1k+</span>
                     <span>$510</span>
@@ -306,28 +302,42 @@ const TradingMainContent = () => {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <span className="font-medium">Price</span>
-                      <ArrowUpDown className="w-4 h-4" />
-                      <span className="font-medium">Amount</span>
-                      <ArrowUpDown className="w-4 h-4" />
-                      <span className="font-medium">Time</span>
-                      <ArrowUpDown className="w-4 h-4" />
+                      <div className="flex items-center gap-1">
+                        <span className="font-medium text-sm">Price</span>
+                        <ArrowUpDown className="w-3 h-3" />
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="font-medium text-sm">Amount</span>
+                        <ArrowUpDown className="w-3 h-3" />
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="font-medium text-sm">Time</span>
+                        <ArrowUpDown className="w-3 h-3" />
+                      </div>
                     </div>
+                    <Select defaultValue="alltime">
+                      <SelectTrigger className="w-24">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="alltime">All Time</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="max-h-[400px] overflow-y-auto">
+                  <div className="max-h-[500px] overflow-y-auto">
                     <Table>
                       <TableBody>
                         {tradesTableData.map((trade, index) => (
                           <TableRow key={index} className="border-none">
-                            <TableCell className="text-muted-foreground font-mono text-sm">
+                            <TableCell className="text-muted-foreground font-mono text-xs px-2 py-1">
                               {trade.price}
                             </TableCell>
-                            <TableCell className="font-mono text-sm">
+                            <TableCell className="font-mono text-xs px-2 py-1">
                               {trade.amount}
                             </TableCell>
-                            <TableCell className="text-red-600 font-mono text-sm">
+                            <TableCell className="text-red-600 font-mono text-xs px-2 py-1">
                               {trade.time}
                             </TableCell>
                           </TableRow>
