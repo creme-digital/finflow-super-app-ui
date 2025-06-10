@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
@@ -29,6 +28,30 @@ const cashFlowData = [{
   month: 'Jun',
   moneyIn: 32500,
   moneyOut: 29500
+}, {
+  month: 'Jul',
+  moneyIn: 35000,
+  moneyOut: 32000
+}, {
+  month: 'Aug',
+  moneyIn: 33500,
+  moneyOut: 30500
+}, {
+  month: 'Sep',
+  moneyIn: 31500,
+  moneyOut: 28500
+}, {
+  month: 'Oct',
+  moneyIn: 36000,
+  moneyOut: 33000
+}, {
+  month: 'Nov',
+  moneyIn: 34500,
+  moneyOut: 31500
+}, {
+  month: 'Dec',
+  moneyIn: 37000,
+  moneyOut: 34000
 }];
 
 const moneyFlowData = [{
@@ -131,7 +154,7 @@ export function DashboardContent() {
                 right: 5,
                 left: 5,
                 bottom: 5
-              }} barCategoryGap="20%">
+              }} barCategoryGap="10%">
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{
                   fontSize: 10
                 }} />
