@@ -6,6 +6,17 @@ import { BookkeepingTab } from '@/components/accounting/BookkeepingTab';
 import { InvoicingTab } from '@/components/accounting/InvoicingTab';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
+const ReportsTab = () => (
+  <div className="space-y-4">
+    <div className="text-center p-8">
+      <h3 className="text-lg font-semibold mb-2">Reports Coming Soon</h3>
+      <p className="text-muted-foreground">
+        Financial reports and analytics will be available in this section.
+      </p>
+    </div>
+  </div>
+);
+
 const Accounting = () => {
   return (
     <Layout>
