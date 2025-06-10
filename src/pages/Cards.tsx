@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -9,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Filter, List, Grid2x2, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CardGrid } from '@/components/cards/CardGrid';
 
 // Statistics data
 const cardStats = [
@@ -105,7 +105,7 @@ const cardsData = [
 
 export default function Cards() {
   const [activeTab, setActiveTab] = useState('all');
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
 
   // Filter cards based on active tab
   const filteredCards = activeTab === 'all' 
@@ -182,59 +182,63 @@ export default function Cards() {
             </div>
           </div>
 
-          {/* Cards Table */}
-          <Card>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-12"></TableHead>
-                  <TableHead>Cardholder</TableHead>
-                  <TableHead>Card</TableHead>
-                  <TableHead>Spend this month</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Account</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredCards.map((card) => (
-                  <TableRow key={card.id}>
-                    <TableCell>
-                      <input type="checkbox" className="rounded" />
-                    </TableCell>
-                    <TableCell className="font-medium">{card.cardholder}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-5 bg-primary rounded-sm"></div>
-                        <span className="font-mono text-sm">{card.cardNumber}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-medium">{card.spendThisMonth}</TableCell>
-                    <TableCell>{card.type}</TableCell>
-                    <TableCell>{card.account}</TableCell>
-                    <TableCell>
-                      <Badge 
-                        variant={card.status === 'Active' ? 'default' : 'secondary'}
-                        className={cn(
-                          card.status === 'Active' 
-                            ? 'bg-green-100 text-green-800 hover:bg-green-100' 
-                            : 'bg-orange-100 text-orange-800 hover:bg-orange-100'
-                        )}
-                      >
-                        {card.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Button variant="ghost" size="icon">
-                        <MoreHorizontal className="w-4 h-4" />
-                      </Button>
-                    </TableCell>
+          {/* Cards Display - Conditional rendering based on view mode */}
+          {viewMode === 'grid' ? (
+            <CardGrid cards={filteredCards} />
+          ) : (
+            <Card>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-12"></TableHead>
+                    <TableHead>Cardholder</TableHead>
+                    <TableHead>Card</TableHead>
+                    <TableHead>Spend this month</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Account</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Action</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
+                </TableHeader>
+                <TableBody>
+                  {filteredCards.map((card) => (
+                    <TableRow key={card.id}>
+                      <TableCell>
+                        <input type="checkbox" className="rounded" />
+                      </TableCell>
+                      <TableCell className="font-medium">{card.cardholder}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-5 bg-primary rounded-sm"></div>
+                          <span className="font-mono text-sm">{card.cardNumber}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-medium">{card.spendThisMonth}</TableCell>
+                      <TableCell>{card.type}</TableCell>
+                      <TableCell>{card.account}</TableCell>
+                      <TableCell>
+                        <Badge 
+                          variant={card.status === 'Active' ? 'default' : 'secondary'}
+                          className={cn(
+                            card.status === 'Active' 
+                              ? 'bg-green-100 text-green-800 hover:bg-green-100' 
+                              : 'bg-orange-100 text-orange-800 hover:bg-orange-100'
+                          )}
+                        >
+                          {card.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="ghost" size="icon">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Card>
+          )}
         </div>
       }
     />
