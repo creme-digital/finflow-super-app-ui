@@ -11,9 +11,10 @@ interface LayoutProps {
   title?: string;
   showRightSidebar?: boolean;
   rightSidebarContent?: React.ReactNode;
+  mainContent?: React.ReactNode;
 }
 
-export function Layout({ children, title = "Dashboard", showRightSidebar = false, rightSidebarContent }: LayoutProps) {
+export function Layout({ children, title = "Dashboard", showRightSidebar = false, rightSidebarContent, mainContent }: LayoutProps) {
   const { expanded, isMobile } = useSidebarState();
 
   return (
@@ -40,7 +41,7 @@ export function Layout({ children, title = "Dashboard", showRightSidebar = false
               border: '1px solid #FFFFFF'
             }}
           >
-            {/* Empty main items area */}
+            {mainContent}
           </div>
 
           {/* Right Sidebar - Simple Container */}
