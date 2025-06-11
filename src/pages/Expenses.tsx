@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { ExpenseFilters } from '@/components/expenses/ExpenseFilters';
@@ -7,7 +6,6 @@ import { AddExpenseDialog } from '@/components/expenses/AddExpenseDialog';
 import { Button } from '@/components/ui/button';
 import { Plus, Filter, ChevronDown, Download } from 'lucide-react';
 import { Expense } from '@/types/expenses';
-import { PageHeader } from '@/components/layout/PageHeader';
 
 // Sample data - in a real app this would come from an API
 const sampleExpenses: Expense[] = [
@@ -133,17 +131,13 @@ export default function Expenses() {
       mainContent={
         <div className="space-y-6">
           {/* Header */}
-          <PageHeader
-            title="Expenses Details"
-          >
-            <Button 
-              onClick={() => setIsAddExpenseOpen(true)}
-              className="bg-primary text-primary-foreground"
-            >
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-semibold text-foreground">Expenses Details</h1>
+            <Button onClick={() => setIsAddExpenseOpen(true)}>
               <Plus className="w-4 h-4 mr-2" />
               Add Expenses
             </Button>
-          </PageHeader>
+          </div>
 
           {/* Filters */}
           <div className="flex items-center justify-between">

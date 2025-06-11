@@ -16,15 +16,25 @@ export function ExpenseTable({ expenses }: ExpenseTableProps) {
   const [selectedReceipt, setSelectedReceipt] = useState<string | null>(null);
   
   return (
-    <div className="rounded-md border">
+    <div
+      className="overflow-hidden"
+      style={{
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px',
+        background: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
+      }}
+    >
       <Table>
         <TableHeader>
-          <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-            <TableHead>Receipt</TableHead>
+          <TableRow className="border-b border-border">
+            <TableHead className="text-muted-foreground font-medium">Date</TableHead>
+            <TableHead className="text-muted-foreground font-medium">Description</TableHead>
+            <TableHead className="text-muted-foreground font-medium">Category</TableHead>
+            <TableHead className="text-right text-muted-foreground font-medium">Amount</TableHead>
+            <TableHead className="text-muted-foreground font-medium">Receipt</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -36,11 +46,11 @@ export function ExpenseTable({ expenses }: ExpenseTableProps) {
             </TableRow>
           ) : (
             expenses.map((expense) => (
-              <TableRow key={expense.id}>
-                <TableCell>{format(expense.date, 'MMM d, yyyy')}</TableCell>
-                <TableCell>{expense.description}</TableCell>
-                <TableCell>{expense.category}</TableCell>
-                <TableCell className="text-right">{formatCurrency(expense.amount)}</TableCell>
+              <TableRow key={expense.id} className="border-b border-border last:border-0">
+                <TableCell className="text-foreground">{format(expense.date, 'MMM d, yyyy')}</TableCell>
+                <TableCell className="text-foreground">{expense.description}</TableCell>
+                <TableCell className="text-muted-foreground">{expense.category}</TableCell>
+                <TableCell className="text-right text-foreground font-medium">{formatCurrency(expense.amount)}</TableCell>
                 <TableCell>
                   {expense.receipt ? (
                     <Button 
