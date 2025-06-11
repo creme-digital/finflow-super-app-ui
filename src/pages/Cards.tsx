@@ -176,21 +176,37 @@ export default function Cards() {
               </Button>
               <span className="text-sm text-muted-foreground">No filters applied</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Button 
-                variant={viewMode === 'list' ? 'default' : 'outline'} 
-                size="icon"
+            <div 
+              className="inline-flex h-10 items-center justify-center rounded-full p-1"
+              style={{
+                border: '1px solid #FFFFFF',
+                boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)'
+              }}
+            >
+              <button
+                className={cn(
+                  "inline-flex items-center justify-center whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium transition-all",
+                  viewMode === 'list' 
+                    ? "bg-white text-[#292EE9] shadow-sm" 
+                    : "text-muted-foreground"
+                )}
                 onClick={() => setViewMode('list')}
               >
                 <List className="w-4 h-4" />
-              </Button>
-              <Button 
-                variant={viewMode === 'grid' ? 'default' : 'outline'} 
-                size="icon"
+              </button>
+              <button
+                className={cn(
+                  "inline-flex items-center justify-center whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium transition-all",
+                  viewMode === 'grid' 
+                    ? "bg-white text-[#292EE9] shadow-sm" 
+                    : "text-muted-foreground"
+                )}
                 onClick={() => setViewMode('grid')}
               >
                 <Grid2x2 className="w-4 h-4" />
-              </Button>
+              </button>
             </div>
           </div>
 
