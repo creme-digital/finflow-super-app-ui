@@ -113,7 +113,7 @@ export default function Transfers() {
           <PageHeader
             title="Transfer"
           >
-            <Button className="bg-primary text-primary-foreground">
+            <Button>
               <Plus className="w-4 h-4 mr-2" />
               Transfer
             </Button>
@@ -133,23 +133,33 @@ export default function Transfers() {
           </div>
 
           {/* Transfers Table */}
-          <div className="bg-card rounded-lg border">
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
             <Table>
               <TableHeader>
-                <TableRow className="border-b">
-                  <TableHead className="font-medium text-muted-foreground">Date</TableHead>
-                  <TableHead className="font-medium text-muted-foreground">Method</TableHead>
-                  <TableHead className="font-medium text-muted-foreground">From</TableHead>
-                  <TableHead className="font-medium text-muted-foreground">Account</TableHead>
-                  <TableHead className="font-medium text-muted-foreground">To</TableHead>
-                  <TableHead className="font-medium text-muted-foreground">Amount</TableHead>
-                  <TableHead className="font-medium text-muted-foreground">Action</TableHead>
+                <TableRow className="border-b border-border">
+                  <TableHead className="text-muted-foreground font-medium">Date</TableHead>
+                  <TableHead className="text-muted-foreground font-medium">Method</TableHead>
+                  <TableHead className="text-muted-foreground font-medium">From</TableHead>
+                  <TableHead className="text-muted-foreground font-medium">Account</TableHead>
+                  <TableHead className="text-muted-foreground font-medium">To</TableHead>
+                  <TableHead className="text-muted-foreground font-medium">Amount</TableHead>
+                  <TableHead className="text-muted-foreground font-medium">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {transfersData.map((transfer) => (
                   <TableRow key={transfer.id} className="border-b border-border/50">
-                    <TableCell className="font-medium text-foreground">
+                    <TableCell className="text-foreground">
                       {transfer.date}
                     </TableCell>
                     <TableCell>
@@ -166,31 +176,31 @@ export default function Transfers() {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Avatar className="w-6 h-6">
+                      <div className="flex items-center gap-3">
+                        <Avatar className="w-8 h-8">
                           <AvatarImage src={transfer.from.avatar} alt={transfer.from.name} />
                           <AvatarFallback className="text-xs">
                             {transfer.from.name.split(' ').map(n => n[0]).join('')}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="text-sm font-medium">{transfer.from.name}</span>
+                        <span className="text-foreground font-medium">{transfer.from.name}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
+                    <TableCell className="text-muted-foreground">
                       {transfer.account}
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Avatar className="w-6 h-6">
+                      <div className="flex items-center gap-3">
+                        <Avatar className="w-8 h-8">
                           <AvatarImage src={transfer.to.avatar} alt={transfer.to.name} />
                           <AvatarFallback className="text-xs">
                             {transfer.to.name.split(' ').map(n => n[0]).join('')}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="text-sm font-medium">{transfer.to.name}</span>
+                        <span className="text-foreground font-medium">{transfer.to.name}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="font-medium text-foreground">
+                    <TableCell className="text-foreground font-medium">
                       {transfer.amount}
                     </TableCell>
                     <TableCell>
