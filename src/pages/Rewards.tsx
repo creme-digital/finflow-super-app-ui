@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, Plus } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
@@ -43,41 +43,98 @@ const RewardsMainContent = () => {
 
   return (
     <div className="space-y-6">
-      {/* Stats Overview */}
+      {/* Header with Cards page styling */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Rewards</h1>
+          <p className="text-muted-foreground">Earn rewards through referrals and track your progress</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Button variant="outline" size="sm">
+            View History
+          </Button>
+          <Button size="sm" className="gap-2">
+            <Plus className="w-4 h-4" />
+            Invite Friends
+          </Button>
+        </div>
+      </div>
+
+      {/* Stats Overview with Glass Effect */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
+        <div
+          className="overflow-hidden"
+          style={{
+            border: '1px solid #FFFFFF',
+            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            borderRadius: '16px',
+            background: 'rgba(255, 255, 255, 0.4)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
+          }}
+        >
           <CardContent className="p-6">
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">Total Rewards Earned</div>
               <div className="text-3xl font-bold tracking-tight">{formatAmount(293.00)}</div>
             </div>
           </CardContent>
-        </Card>
+        </div>
 
-        <Card>
+        <div
+          className="overflow-hidden"
+          style={{
+            border: '1px solid #FFFFFF',
+            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            borderRadius: '16px',
+            background: 'rgba(255, 255, 255, 0.4)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
+          }}
+        >
           <CardContent className="p-6">
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">Successful Referrals</div>
               <div className="text-3xl font-bold tracking-tight">17</div>
             </div>
           </CardContent>
-        </Card>
+        </div>
 
-        <Card>
+        <div
+          className="overflow-hidden"
+          style={{
+            border: '1px solid #FFFFFF',
+            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            borderRadius: '16px',
+            background: 'rgba(255, 255, 255, 0.4)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
+          }}
+        >
           <CardContent className="p-6">
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">Average Cashback Rate</div>
               <div className="text-3xl font-bold tracking-tight">4.8%</div>
             </div>
           </CardContent>
-        </Card>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column */}
         <div className="space-y-6">
-          {/* Your Referral Link */}
-          <Card>
+          {/* Your Referral Link with Glass Effect */}
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
             <CardHeader>
               <CardTitle>Your Referral Link</CardTitle>
             </CardHeader>
@@ -108,10 +165,20 @@ const RewardsMainContent = () => {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </div>
 
-          {/* Invite Friends */}
-          <Card>
+          {/* Invite Friends with Glass Effect */}
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
             <CardHeader>
               <CardTitle>Invite Friends</CardTitle>
             </CardHeader>
@@ -131,13 +198,23 @@ const RewardsMainContent = () => {
                 <Button type="submit" className="w-auto px-6">Send Invitation</Button>
               </form>
             </CardContent>
-          </Card>
+          </div>
         </div>
 
         {/* Right Column */}
         <div>
-          {/* Referral Tier Progress */}
-          <Card>
+          {/* Referral Tier Progress with Glass Effect */}
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
             <CardHeader>
               <CardTitle>Referral Tier Progress</CardTitle>
             </CardHeader>
@@ -156,7 +233,7 @@ const RewardsMainContent = () => {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </div>
         </div>
       </div>
     </div>
