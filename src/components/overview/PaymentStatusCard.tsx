@@ -27,7 +27,7 @@ export function PaymentStatusCard() {
       }}
     >
       <div className="p-4 flex items-center gap-2" style={{
-        background: 'rgba(255, 255, 255, 0.8)'
+        background: 'rgba(255, 255, 255, 0.4)'
       }}>
         <DollarSign className="w-4 h-4" />
         <span className="text-black text-base font-medium" style={{
