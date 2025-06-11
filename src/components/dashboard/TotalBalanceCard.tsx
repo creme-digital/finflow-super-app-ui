@@ -4,10 +4,12 @@ import { Wallet, Send, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { DepositDialog } from './DepositDialog';
+import { SendDialog } from './SendDialog';
 
 export function TotalBalanceCard() {
   const { formatAmount } = useCurrency();
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
+  const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
 
   const buttonStyle = {
     border: '1px solid #FFFFFF',
@@ -20,6 +22,10 @@ export function TotalBalanceCard() {
 
   const handleDepositClick = () => {
     setIsDepositDialogOpen(true);
+  };
+
+  const handleSendClick = () => {
+    setIsSendDialogOpen(true);
   };
 
   return (
@@ -57,6 +63,7 @@ export function TotalBalanceCard() {
             variant="ghost" 
             className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
             style={buttonStyle}
+            onClick={handleSendClick}
           >
             <Send className="w-5 h-5" />
             <span className="text-xs">Send</span>
@@ -83,6 +90,11 @@ export function TotalBalanceCard() {
       <DepositDialog 
         open={isDepositDialogOpen} 
         onOpenChange={setIsDepositDialogOpen} 
+      />
+      
+      <SendDialog 
+        open={isSendDialogOpen} 
+        onOpenChange={setIsSendDialogOpen} 
       />
     </>
   );
