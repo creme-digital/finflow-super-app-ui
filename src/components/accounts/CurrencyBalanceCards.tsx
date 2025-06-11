@@ -41,13 +41,14 @@ export function CurrencyBalanceCards() {
           style={{
             border: '1px solid #FFFFFF',
             boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-            borderRadius: '16px'
+            borderRadius: '16px',
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
           }}
         >
-          {/* Card header */}
-          <div className="p-3 flex flex-row justify-between items-center" style={{
-            background: 'rgba(255, 255, 255, 0.8)'
-          }}>
+          {/* Card content with all information */}
+          <div className="p-4 space-y-3">
             <div className="flex items-center gap-2">
               <span className="text-lg">{currency.flag}</span>
               <span className="text-black text-sm font-medium" style={{
@@ -56,11 +57,10 @@ export function CurrencyBalanceCards() {
                 {currency.currency}
               </span>
             </div>
-          </div>
-          
-          {/* Card content */}
-          <div className="p-3">
-            <div className="text-2xl font-bold text-foreground">
+            
+            <div className="text-3xl font-medium text-foreground" style={{
+              fontFamily: 'Inter'
+            }}>
               {currency.symbol}{currency.balance.toLocaleString()}
             </div>
           </div>
@@ -73,13 +73,14 @@ export function CurrencyBalanceCards() {
         style={{
           border: '1px solid #FFFFFF',
           boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-          borderRadius: '16px'
+          borderRadius: '16px',
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
         }}
       >
-        <div className="p-3 flex flex-row justify-between items-center" style={{
-          background: 'rgba(255, 255, 255, 0.8)'
-        }}>
-          <div className="flex items-center gap-2">
+        <div className="p-4 flex flex-col items-center justify-center h-full min-h-[120px] space-y-3">
+          <div className="flex items-center gap-2 mb-2">
             <Plus className="w-4 h-4" />
             <span className="text-black text-sm font-medium" style={{
               fontFamily: 'Inter'
@@ -87,9 +88,7 @@ export function CurrencyBalanceCards() {
               Add Account
             </span>
           </div>
-        </div>
-        
-        <div className="p-3 flex flex-col items-center justify-center h-full min-h-[80px]">
+          
           <Button variant="ghost" className="flex flex-col gap-2 h-auto p-0">
             <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
               <Plus className="w-6 h-6 text-muted-foreground" />
