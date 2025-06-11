@@ -101,9 +101,12 @@ export function AccountsTransactionTable() {
     <div 
       className="overflow-hidden"
       style={{
-        border: '1px solid rgba(255, 255, 255, 0.8)',
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
         borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.8)'
+        background: 'rgba(255, 255, 255, 0.8)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
       }}
     >
       <Table>
