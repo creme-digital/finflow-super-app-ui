@@ -94,64 +94,80 @@ const MerchantAccountMainContent = () => {
   return (
     <div className="space-y-6">
       {/* Header with Tab and Action Button */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div className="flex items-center gap-8">
-          <button 
-            onClick={() => setActiveTab('payment-history')}
-            className={`text-lg font-medium pb-2 border-b-2 transition-colors ${
-              activeTab === 'payment-history' 
-                ? 'text-blue-600 border-blue-600' 
-                : 'text-muted-foreground border-transparent hover:text-foreground'
-            }`}
-          >
-            Payment History
-          </button>
-        </div>
-        <Button className="gap-2 bg-blue-600 hover:bg-blue-700">
-          <Plus className="w-4 h-4" />
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-semibold text-foreground">Merchant Account</h1>
+        <Button>
+          <Plus className="w-4 h-4 mr-2" />
           Create Merchant Account
         </Button>
       </div>
 
-      {/* Account Cards */}
+      {/* Tab Navigation with glass effect */}
+      <div 
+        className="inline-flex h-10 items-center justify-center rounded-full p-1"
+        style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}
+      >
+        <button 
+          onClick={() => setActiveTab('payment-history')}
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium transition-all bg-white text-[#292EE9] shadow-sm"
+        >
+          Payment History
+        </button>
+      </div>
+
+      {/* Account Cards with glass effect */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {accounts.map((account, index) => (
-          <Card key={index} className="p-6">
-            <CardContent className="p-0">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center text-2xl">
-                  {account.icon}
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg">{account.name}</h3>
-                  <p className="text-muted-foreground text-sm">{account.type}</p>
-                  <p className="text-3xl font-bold mt-2">{account.balance}</p>
-                  <p className="text-muted-foreground text-sm">Current Balance</p>
-                </div>
+          <div
+            key={index}
+            className="overflow-hidden p-6"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
+            <div className="flex items-start gap-4 mb-6">
+              <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center text-2xl">
+                {account.icon}
               </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-lg">{account.name}</h3>
+                <p className="text-muted-foreground text-sm">{account.type}</p>
+                <p className="text-3xl font-bold mt-2">{account.balance}</p>
+                <p className="text-muted-foreground text-sm">Current Balance</p>
+              </div>
+            </div>
 
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-sm mb-3">Account Details</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Account Number</span>
-                      <span className="font-medium">{account.accountNumber}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Routing Number</span>
-                      <span className="font-medium">{account.routingNumber}</span>
-                    </div>
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-medium text-sm mb-3">Account Details</h4>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Account Number</span>
+                    <span className="font-medium">{account.accountNumber}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Routing Number</span>
+                    <span className="font-medium">{account.routingNumber}</span>
                   </div>
                 </div>
-
-                <Button variant="ghost" className="w-full justify-between p-0 h-auto text-left">
-                  <span className="text-sm font-medium">View Details</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
               </div>
-            </CardContent>
-          </Card>
+
+              <Button variant="ghost" className="w-full justify-between p-0 h-auto text-left">
+                <span className="text-sm font-medium">View Details</span>
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
         ))}
       </div>
 
@@ -167,43 +183,51 @@ const MerchantAccountMainContent = () => {
         </Button>
       </div>
 
-      {/* Payment History Table */}
-      <Card>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-b">
-                <TableHead className="text-left font-medium">Date</TableHead>
-                <TableHead className="text-left font-medium">Account</TableHead>
-                <TableHead className="text-left font-medium">Product Name</TableHead>
-                <TableHead className="text-left font-medium">Amount</TableHead>
-                <TableHead className="text-left font-medium">Status</TableHead>
-                <TableHead className="text-left font-medium">Action</TableHead>
+      {/* Payment History Table with glass effect */}
+      <div
+        className="overflow-hidden"
+        style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px',
+          background: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}
+      >
+        <Table>
+          <TableHeader>
+            <TableRow className="border-b">
+              <TableHead className="text-left font-medium">Date</TableHead>
+              <TableHead className="text-left font-medium">Account</TableHead>
+              <TableHead className="text-left font-medium">Product Name</TableHead>
+              <TableHead className="text-left font-medium">Amount</TableHead>
+              <TableHead className="text-left font-medium">Status</TableHead>
+              <TableHead className="text-left font-medium">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {paymentHistory.map((item, index) => (
+              <TableRow key={index} className="border-b last:border-b-0">
+                <TableCell className="font-medium">{item.date}</TableCell>
+                <TableCell>{item.account}</TableCell>
+                <TableCell>{item.productName}</TableCell>
+                <TableCell className="font-medium">{item.amount}</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-100">
+                    {item.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paymentHistory.map((item, index) => (
-                <TableRow key={index} className="border-b last:border-b-0">
-                  <TableCell className="font-medium">{item.date}</TableCell>
-                  <TableCell>{item.account}</TableCell>
-                  <TableCell>{item.productName}</TableCell>
-                  <TableCell className="font-medium">{item.amount}</TableCell>
-                  <TableCell>
-                    <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-100">
-                      {item.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };
