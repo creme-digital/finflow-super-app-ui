@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 
@@ -19,7 +18,6 @@ const TabsList = React.forwardRef<
     style={{
       border: '1px solid #FFFFFF',
       boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-      background: 'rgba(255, 255, 255, 0.8)',
       backdropFilter: 'blur(10px)',
       WebkitBackdropFilter: 'blur(10px)'
     }}
