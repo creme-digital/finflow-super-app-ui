@@ -48,8 +48,8 @@ export function DepositDialog({ open, onOpenChange }: DepositDialogProps) {
       <DialogContent 
         className="sm:max-w-[500px] p-0 border-0"
         style={{
-          background: 'rgba(255, 255, 255, 0.64)',
-          border: '1px solid rgba(255, 255, 255, 0.8)',
+          background: 'rgba(255, 255, 255, 0.95)',
+          border: '1px solid rgba(255, 255, 255, 0.9)',
           borderRadius: '24px',
           backdropFilter: 'blur(10px)',
           WebkitBackdropFilter: 'blur(10px)'
@@ -61,7 +61,10 @@ export function DepositDialog({ open, onOpenChange }: DepositDialogProps) {
           </DialogTitle>
         </DialogHeader>
         
-        <div className="px-6 pb-6 space-y-4">
+        <div 
+          className="px-6 pb-6 space-y-4 overflow-auto"
+          style={{ maxHeight: '500px' }}
+        >
           {/* From Account */}
           <div className="space-y-2">
             <Label htmlFor="fromAccount">From Account</Label>
