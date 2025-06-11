@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
-import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -138,20 +137,19 @@ const Accounting = () => {
       mainContent={
         <div className="space-y-6">
           {/* Header */}
-          <PageHeader
-            title="Accounting Details"
-          >
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-semibold text-foreground">Accounting Details</h1>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" className="gap-2">
                 <Download className="w-4 h-4" />
                 Export All
               </Button>
-              <Button className="bg-primary text-primary-foreground">
+              <Button>
                 <Plus className="w-4 h-4 mr-2" />
                 Create Invoice
               </Button>
             </div>
-          </PageHeader>
+          </div>
 
           {/* Filters */}
           <div className="flex items-center gap-4">
@@ -168,7 +166,18 @@ const Accounting = () => {
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {summaryData.map((item, i) => (
-              <Card key={i}>
+              <div
+                key={i}
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-muted-foreground">{item.label}</span>
@@ -179,79 +188,87 @@ const Accounting = () => {
                   </div>
                   <div className="text-sm text-muted-foreground">{item.subtitle}</div>
                 </CardContent>
-              </Card>
+              </div>
             ))}
           </div>
 
           {/* Invoices Table */}
-          <Card>
-            <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-b">
-                    <TableHead className="w-12 p-4">
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
+            <Table>
+              <TableHeader>
+                <TableRow className="border-b border-border">
+                  <TableHead className="w-12 p-4">
+                    <input type="checkbox" className="w-4 h-4" />
+                  </TableHead>
+                  <TableHead className="font-medium text-muted-foreground">Date</TableHead>
+                  <TableHead className="font-medium text-muted-foreground">Status</TableHead>
+                  <TableHead className="font-medium text-muted-foreground">Customer</TableHead>
+                  <TableHead className="font-medium text-muted-foreground">Amount</TableHead>
+                  <TableHead className="font-medium text-muted-foreground">Invoice No.</TableHead>
+                  <TableHead className="font-medium text-muted-foreground">Invoice Date</TableHead>
+                  <TableHead className="font-medium text-muted-foreground">Recurring</TableHead>
+                  <TableHead className="font-medium text-muted-foreground">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {invoicesData.map((invoice, i) => (
+                  <TableRow key={i} className="border-b border-border last:border-0">
+                    <TableCell className="p-4">
                       <input type="checkbox" className="w-4 h-4" />
-                    </TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Date</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Status</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Customer</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Amount</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Invoice No.</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Invoice Date</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Recurring</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Action</TableHead>
+                    </TableCell>
+                    <TableCell className="font-medium text-foreground">
+                      {invoice.date}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        style={{
+                          backgroundColor: statusStyles[invoice.status]?.bg,
+                          color: statusStyles[invoice.status]?.color,
+                          borderRadius: 6,
+                          fontWeight: 500,
+                          fontSize: 12,
+                          padding: '4px 8px',
+                        }}
+                        className="hover:bg-current"
+                      >
+                        {invoice.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="font-medium text-foreground">
+                      {invoice.customer}
+                    </TableCell>
+                    <TableCell className="font-medium text-foreground">
+                      {formatCurrency(invoice.amount)}
+                    </TableCell>
+                    <TableCell className="text-foreground">
+                      {invoice.invoiceNo}
+                    </TableCell>
+                    <TableCell className="text-foreground">
+                      {invoice.invoiceDate}
+                    </TableCell>
+                    <TableCell className="text-foreground">
+                      {invoice.recurring}
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <MoreHorizontal className="w-4 h-4" />
+                      </Button>
+                    </TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {invoicesData.map((invoice, i) => (
-                    <TableRow key={i} className="border-b border-border/50">
-                      <TableCell className="p-4">
-                        <input type="checkbox" className="w-4 h-4" />
-                      </TableCell>
-                      <TableCell className="font-medium text-foreground">
-                        {invoice.date}
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          style={{
-                            backgroundColor: statusStyles[invoice.status]?.bg,
-                            color: statusStyles[invoice.status]?.color,
-                            borderRadius: 6,
-                            fontWeight: 500,
-                            fontSize: 12,
-                            padding: '4px 8px',
-                          }}
-                          className="hover:bg-current"
-                        >
-                          {invoice.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="font-medium text-foreground">
-                        {invoice.customer}
-                      </TableCell>
-                      <TableCell className="font-medium text-foreground">
-                        {formatCurrency(invoice.amount)}
-                      </TableCell>
-                      <TableCell className="text-foreground">
-                        {invoice.invoiceNo}
-                      </TableCell>
-                      <TableCell className="text-foreground">
-                        {invoice.invoiceDate}
-                      </TableCell>
-                      <TableCell className="text-foreground">
-                        {invoice.recurring}
-                      </TableCell>
-                      <TableCell>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       }
     />
