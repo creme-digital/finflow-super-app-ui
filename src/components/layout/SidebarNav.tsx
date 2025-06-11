@@ -26,7 +26,7 @@ export function SidebarNav() {
   }
 
   return (
-    <aside className="fixed left-0 top-0 z-30 h-screen bg-[#F8F8FA] transition-all duration-300 w-16">
+    <aside className="fixed left-0 top-0 z-30 h-screen transition-all duration-300 w-16">
       <div className="flex flex-col h-full">
         <div className="flex items-center justify-center px-4 py-4">
           <div className="w-6 h-6 rounded-[6px] bg-black flex items-center justify-center">
