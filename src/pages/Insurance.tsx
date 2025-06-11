@@ -86,24 +86,24 @@ const InsuranceMainContent = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header with Action Buttons */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-semibold">Insurance</h1>
+      {/* Header with Cards page styling */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-semibold text-foreground">Insurance</h1>
         <div className="flex gap-3">
           <Button variant="secondary" className="gap-2 bg-emerald-500 hover:bg-emerald-600 text-white">
             <Plus className="w-4 h-4" />
             Claim Insurance
           </Button>
-          <Button variant="default" className="gap-2">
+          <Button className="gap-2">
             <Plus className="w-4 h-4" />
             Apply Insurance
           </Button>
         </div>
       </div>
 
-      {/* Tabs */}
+      {/* Tabs with Accounts page styling */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-fit grid-cols-2 bg-muted/30">
+        <TabsList className="mb-6">
           <TabsTrigger value="applied" className="data-[state=active]:bg-background data-[state=active]:text-blue-600">
             Applied Insurance
           </TabsTrigger>
@@ -125,53 +125,71 @@ const InsuranceMainContent = () => {
             </Button>
           </div>
 
-          {/* Table */}
-          <Card>
-            <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-b">
-                    <TableHead className="text-left font-medium">Date</TableHead>
-                    <TableHead className="text-left font-medium">Issuer</TableHead>
-                    <TableHead className="text-left font-medium">Form</TableHead>
-                    <TableHead className="text-left font-medium">Amount</TableHead>
-                    <TableHead className="text-left font-medium">Status</TableHead>
-                    <TableHead className="text-left font-medium">Action</TableHead>
+          {/* Table with Accounts page glass styling */}
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
+            <Table>
+              <TableHeader>
+                <TableRow className="border-b">
+                  <TableHead className="text-left font-medium">Date</TableHead>
+                  <TableHead className="text-left font-medium">Issuer</TableHead>
+                  <TableHead className="text-left font-medium">Form</TableHead>
+                  <TableHead className="text-left font-medium">Amount</TableHead>
+                  <TableHead className="text-left font-medium">Status</TableHead>
+                  <TableHead className="text-left font-medium">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {insuranceData.map((item, index) => (
+                  <TableRow key={index} className="border-b last:border-b-0">
+                    <TableCell className="font-medium">{item.date}</TableCell>
+                    <TableCell>{item.issuer}</TableCell>
+                    <TableCell>{item.form}</TableCell>
+                    <TableCell className="font-medium">{item.amount}</TableCell>
+                    <TableCell>
+                      <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-100">
+                        {item.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {insuranceData.map((item, index) => (
-                    <TableRow key={index} className="border-b last:border-b-0">
-                      <TableCell className="font-medium">{item.date}</TableCell>
-                      <TableCell>{item.issuer}</TableCell>
-                      <TableCell>{item.form}</TableCell>
-                      <TableCell className="font-medium">{item.amount}</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-100">
-                          {item.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </TabsContent>
 
         <TabsContent value="claim" className="space-y-4">
-          <Card>
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
             <CardContent className="p-8 text-center">
               <div className="text-muted-foreground">
                 <p>No claim insurance data available</p>
               </div>
             </CardContent>
-          </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
