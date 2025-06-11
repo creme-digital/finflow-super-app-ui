@@ -140,9 +140,12 @@ export default function Cards() {
                 key={stat.key}
                 className="flex flex-col overflow-hidden"
                 style={{
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
                   borderRadius: '16px',
-                  background: 'rgba(255, 255, 255, 0.4)'
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
                 }}
               >
                 <CardContent className="p-4">
@@ -154,48 +157,15 @@ export default function Cards() {
           </div>
 
           {/* Filter Tabs */}
-          <div 
-            className="rounded-[24px] p-1"
-            style={{
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              background: 'rgba(255, 255, 255, 0.4)'
-            }}
-          >
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="bg-transparent w-full">
-                <TabsTrigger 
-                  value="all" 
-                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-foreground font-medium rounded-full"
-                >
-                  All Card
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="physical" 
-                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-muted-foreground rounded-full"
-                >
-                  Physical
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="virtual" 
-                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-muted-foreground rounded-full"
-                >
-                  Virtual
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="personal" 
-                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-muted-foreground rounded-full"
-                >
-                  Personal
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="business" 
-                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-muted-foreground rounded-full"
-                >
-                  Business
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="mb-6">
+              <TabsTrigger value="all">All Card</TabsTrigger>
+              <TabsTrigger value="physical">Physical</TabsTrigger>
+              <TabsTrigger value="virtual">Virtual</TabsTrigger>
+              <TabsTrigger value="personal">Personal</TabsTrigger>
+              <TabsTrigger value="business">Business</TabsTrigger>
+            </TabsList>
+          </Tabs>
 
           {/* Filters and View Controls */}
           <div className="flex justify-between items-center">
@@ -231,9 +201,12 @@ export default function Cards() {
             <div
               className="overflow-hidden"
               style={{
-                border: '1px solid rgba(255, 255, 255, 0.2)',
+                border: '1px solid #FFFFFF',
+                boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
                 borderRadius: '16px',
-                background: 'rgba(255, 255, 255, 0.4)'
+                background: 'rgba(255, 255, 255, 0.4)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)'
               }}
             >
               <Table>
