@@ -7,16 +7,16 @@ export function TotalStatsSection() {
       <div 
         className="rounded-[24px] p-6"
         style={{ 
-          background: 'rgba(255, 255, 255, 0.64)',
-          border: '1px solid rgba(255, 255, 255, 0.8)'
+          background: 'rgba(255, 255, 255, 0.2)',
+          border: '1px solid rgba(255, 255, 255, 0.2)'
         }}
       >
         <div
           className="p-4 rounded-lg"
           style={{
-            border: '1px solid rgba(255, 255, 255, 0.8)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
             borderRadius: '16px',
-            background: 'rgba(255, 255, 255, 0.8)'
+            background: 'rgba(255, 255, 255, 0.2)'
           }}
         >
           <h4 className="text-sm text-muted-foreground mb-2">Total Sent</h4>
@@ -26,16 +26,16 @@ export function TotalStatsSection() {
       <div 
         className="rounded-[24px] p-6"
         style={{ 
-          background: 'rgba(255, 255, 255, 0.64)',
-          border: '1px solid rgba(255, 255, 255, 0.8)'
+          background: 'rgba(255, 255, 255, 0.2)',
+          border: '1px solid rgba(255, 255, 255, 0.2)'
         }}
       >
         <div
           className="p-4 rounded-lg"
           style={{
-            border: '1px solid rgba(255, 255, 255, 0.8)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
             borderRadius: '16px',
-            background: 'rgba(255, 255, 255, 0.8)'
+            background: 'rgba(255, 255, 255, 0.2)'
           }}
         >
           <h4 className="text-sm text-muted-foreground mb-2">Total Received</h4>

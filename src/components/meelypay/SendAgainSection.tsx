@@ -34,9 +34,9 @@ export function SendAgainSection() {
     <div 
       className="rounded-[24px] p-6"
       style={{ 
-        border: '1px solid rgba(255, 255, 255, 0.8)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '24px',
-        background: 'rgba(255, 255, 255, 0.8)'
+        background: 'rgba(255, 255, 255, 0.2)'
       }}
     >
       <h3 className="text-lg font-semibold text-foreground mb-4">Send Again</h3>

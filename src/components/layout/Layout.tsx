@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SidebarNav } from './SidebarNav';
 import { Header } from './Header';
@@ -32,7 +31,7 @@ export function Layout({
         <div className="flex flex-row gap-6 p-4 pb-6 h-[calc(100vh-64px)]">
           {/* Main items div - hug content with overflow auto */}
           <div className={cn("rounded-[24px] p-6 transition-all duration-300 overflow-auto", showRightSidebar ? "flex-1 min-w-[70%]" : "flex-1")} style={{
-          background: 'rgba(255, 255, 255, 0.64)',
+          background: 'rgba(255, 255, 255, 0.2)',
           border: '1px solid #FFFFFF',
           height: 'fit-content',
           maxHeight: '100%'

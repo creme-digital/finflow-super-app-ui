@@ -19,9 +19,9 @@ export function SendAgainUserCard({ user, onClick }: SendAgainUserCardProps) {
     <div 
       className="flex flex-col items-center gap-2 p-4 rounded-lg transition-colors cursor-pointer"
       style={{
-        border: '1px solid rgba(255, 255, 255, 0.8)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.8)'
+        background: 'rgba(255, 255, 255, 0.2)'
       }}
       onClick={onClick}
     >

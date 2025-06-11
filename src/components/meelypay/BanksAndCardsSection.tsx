@@ -52,8 +52,8 @@ export function BanksAndCardsSection() {
     <div 
       className="rounded-[24px] p-6"
       style={{ 
-        background: 'rgba(255, 255, 255, 0.64)',
-        border: '1px solid rgba(255, 255, 255, 0.8)'
+        background: 'rgba(255, 255, 255, 0.2)',
+        border: '1px solid rgba(255, 255, 255, 0.2)'
       }}
     >
       <h3 className="text-lg font-semibold text-foreground mb-6">Banks and Cards</h3>

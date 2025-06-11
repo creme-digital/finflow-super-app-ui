@@ -8,9 +8,9 @@ export function TotalBalanceSection() {
     <div 
       className="rounded-[24px] p-6"
       style={{ 
-        border: '1px solid rgba(255, 255, 255, 0.8)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '24px',
-        background: 'rgba(255, 255, 255, 0.8)'
+        background: 'rgba(255, 255, 255, 0.2)'
       }}
     >
       <div className="flex items-center gap-2 mb-4">
