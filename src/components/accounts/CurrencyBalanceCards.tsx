@@ -80,15 +80,6 @@ export function CurrencyBalanceCards() {
         }}
       >
         <div className="p-4 flex flex-col items-center justify-center h-full min-h-[120px] space-y-3">
-          <div className="flex items-center gap-2 mb-2">
-            <Plus className="w-4 h-4" />
-            <span className="text-black text-sm font-medium" style={{
-              fontFamily: 'Inter'
-            }}>
-              Add Account
-            </span>
-          </div>
-          
           <Button variant="ghost" className="flex flex-col gap-2 h-auto p-0">
             <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
               <Plus className="w-6 h-6 text-muted-foreground" />
