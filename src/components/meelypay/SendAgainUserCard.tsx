@@ -21,7 +21,7 @@ export function SendAgainUserCard({ user, onClick }: SendAgainUserCardProps) {
       style={{
         border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.2)'
+        background: 'rgba(255, 255, 255, 0.4)'
       }}
       onClick={onClick}
     >

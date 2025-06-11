@@ -36,7 +36,7 @@ export function SendAgainSection() {
       style={{ 
         border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '24px',
-        background: 'rgba(255, 255, 255, 0.2)'
+        background: 'rgba(255, 255, 255, 0.4)'
       }}
     >
       <h3 className="text-lg font-semibold text-foreground mb-4">Send Again</h3>

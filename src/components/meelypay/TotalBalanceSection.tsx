@@ -10,7 +10,7 @@ export function TotalBalanceSection() {
       style={{ 
         border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '24px',
-        background: 'rgba(255, 255, 255, 0.2)'
+        background: 'rgba(255, 255, 255, 0.4)'
       }}
     >
       <div className="flex items-center gap-2 mb-4">

@@ -7,7 +7,7 @@ export function TotalStatsSection() {
       <div 
         className="rounded-[24px] p-6"
         style={{ 
-          background: 'rgba(255, 255, 255, 0.2)',
+          background: 'rgba(255, 255, 255, 0.4)',
           border: '1px solid rgba(255, 255, 255, 0.2)'
         }}
       >
@@ -16,7 +16,7 @@ export function TotalStatsSection() {
           style={{
             border: '1px solid rgba(255, 255, 255, 0.2)',
             borderRadius: '16px',
-            background: 'rgba(255, 255, 255, 0.2)'
+            background: 'rgba(255, 255, 255, 0.4)'
           }}
         >
           <h4 className="text-sm text-muted-foreground mb-2">Total Sent</h4>
@@ -26,7 +26,7 @@ export function TotalStatsSection() {
       <div 
         className="rounded-[24px] p-6"
         style={{ 
-          background: 'rgba(255, 255, 255, 0.2)',
+          background: 'rgba(255, 255, 255, 0.4)',
           border: '1px solid rgba(255, 255, 255, 0.2)'
         }}
       >
@@ -35,7 +35,7 @@ export function TotalStatsSection() {
           style={{
             border: '1px solid rgba(255, 255, 255, 0.2)',
             borderRadius: '16px',
-            background: 'rgba(255, 255, 255, 0.2)'
+            background: 'rgba(255, 255, 255, 0.4)'
           }}
         >
           <h4 className="text-sm text-muted-foreground mb-2">Total Received</h4>
