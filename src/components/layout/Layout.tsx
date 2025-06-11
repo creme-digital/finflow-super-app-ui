@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { SidebarNav } from './SidebarNav';
 import { Header } from './Header';
@@ -22,7 +23,7 @@ export function Layout({
     expanded,
     isMobile
   } = useSidebarState();
-  return <div className="min-h-screen bg-[#F8F8FA]">
+  return <div className="min-h-screen bg-gradient-to-br from-[#E0EDF9] to-[#F4E1F8]">
       <SidebarNav />
       <main className={cn('min-h-screen transition-all duration-300', isMobile ? 'ml-0' : 'ml-16')}>
         <Header title={title} />
