@@ -68,8 +68,7 @@ export function CardGrid({ cards }: CardGridProps) {
           key={card.id}
           className="overflow-hidden transition-all duration-200 hover:shadow-lg"
           style={{
-            border: '1px solid #FFFFFF',
-            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
             borderRadius: '16px'
           }}
         >
@@ -116,9 +115,12 @@ export function CardGrid({ cards }: CardGridProps) {
           </div>
 
           {/* Card Info */}
-          <CardContent className="p-6" style={{
-            background: 'rgba(255, 255, 255, 0.8)'
-          }}>
+          <CardContent 
+            className="p-6" 
+            style={{
+              background: 'rgba(255, 255, 255, 0.4)'
+            }}
+          >
             <div className="flex justify-between mb-4">
               <div>
                 <p className="text-sm text-muted-foreground">Balance</p>

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -139,14 +140,12 @@ export default function Cards() {
                 key={stat.key}
                 className="flex flex-col overflow-hidden"
                 style={{
-                  border: '1px solid #FFFFFF',
-                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                  borderRadius: '16px'
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)'
                 }}
               >
-                <CardContent className="p-4" style={{
-                  background: 'rgba(255, 255, 255, 0.8)'
-                }}>
+                <CardContent className="p-4">
                   <div className="text-sm text-muted-foreground mb-1">{stat.label}</div>
                   <div className="text-3xl font-bold text-foreground">{stat.value}</div>
                 </CardContent>
@@ -155,15 +154,48 @@ export default function Cards() {
           </div>
 
           {/* Filter Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="bg-muted">
-              <TabsTrigger value="all" className="text-primary font-medium">All Card</TabsTrigger>
-              <TabsTrigger value="physical" className="text-muted-foreground">Physical</TabsTrigger>
-              <TabsTrigger value="virtual" className="text-muted-foreground">Virtual</TabsTrigger>
-              <TabsTrigger value="personal" className="text-muted-foreground">Personal</TabsTrigger>
-              <TabsTrigger value="business" className="text-muted-foreground">Business</TabsTrigger>
-            </TabsList>
-          </Tabs>
+          <div 
+            className="rounded-[24px] p-1"
+            style={{
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              background: 'rgba(255, 255, 255, 0.4)'
+            }}
+          >
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="bg-transparent w-full">
+                <TabsTrigger 
+                  value="all" 
+                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-foreground font-medium rounded-full"
+                >
+                  All Card
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="physical" 
+                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-muted-foreground rounded-full"
+                >
+                  Physical
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="virtual" 
+                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-muted-foreground rounded-full"
+                >
+                  Virtual
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="personal" 
+                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-muted-foreground rounded-full"
+                >
+                  Personal
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="business" 
+                  className="data-[state=active]:bg-white data-[state=active]:text-blue-600 text-muted-foreground rounded-full"
+                >
+                  Business
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
 
           {/* Filters and View Controls */}
           <div className="flex justify-between items-center">
@@ -199,10 +231,9 @@ export default function Cards() {
             <div
               className="overflow-hidden"
               style={{
-                border: '1px solid #FFFFFF',
-                boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
                 borderRadius: '16px',
-                background: 'rgba(255, 255, 255, 0.8)'
+                background: 'rgba(255, 255, 255, 0.4)'
               }}
             >
               <Table>
