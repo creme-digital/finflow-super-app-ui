@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
@@ -46,7 +46,7 @@ export function DepositDialog({ open, onOpenChange }: DepositDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
-        className="sm:max-w-[500px] p-0 border-0"
+        className="sm:max-w-[500px] p-0 border-0 flex flex-col gap-0"
         style={{
           background: 'rgba(255, 255, 255, 0.95)',
           border: '1px solid rgba(255, 255, 255, 0.9)',
@@ -55,14 +55,24 @@ export function DepositDialog({ open, onOpenChange }: DepositDialogProps) {
           WebkitBackdropFilter: 'blur(10px)'
         }}
       >
-        <DialogHeader className="p-6 pb-4">
-          <DialogTitle className="text-xl font-semibold text-foreground">
+        {/* Header */}
+        <div className="flex justify-between items-center p-4 border-b border-border">
+          <h2 className="text-xl font-semibold text-foreground">
             Make a Deposit
-          </DialogTitle>
-        </DialogHeader>
-        
+          </h2>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onOpenChange(false)}
+            className="h-8 w-8"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Content */}
         <div 
-          className="px-6 pb-6 space-y-4 overflow-auto"
+          className="flex flex-col gap-3 p-4 overflow-auto"
           style={{ maxHeight: '500px' }}
         >
           {/* From Account */}
@@ -203,23 +213,23 @@ export function DepositDialog({ open, onOpenChange }: DepositDialogProps) {
               placeholder="Optional remarks"
             />
           </div>
+        </div>
 
-          {/* Buttons */}
-          <div className="flex gap-3 pt-4">
-            <Button
-              variant="secondary"
-              onClick={handleCancel}
-              className="flex-1"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleDeposit}
-              className="flex-1"
-            >
-              Deposit
-            </Button>
-          </div>
+        {/* Fixed Buttons */}
+        <div className="flex gap-2 p-4 border-t border-border">
+          <Button
+            variant="secondary"
+            onClick={handleCancel}
+            className="flex-1"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDeposit}
+            className="flex-1"
+          >
+            Deposit
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
