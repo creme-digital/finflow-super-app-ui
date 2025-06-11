@@ -6,8 +6,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChevronDown, Filter, Download, MoreHorizontal, Plus } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
+import { TaxDashboard } from '@/components/tax/TaxDashboard';
 
 const Tax = () => {
   const taxRecords = [
@@ -98,8 +100,12 @@ const Tax = () => {
       title="Tax"
       mainContent={
         <div className="space-y-6">
-          {/* Header */}
-          <PageHeader title="Tax">
+          {/* Header with Cards styling */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">Tax</h1>
+              <p className="text-muted-foreground">Manage tax records and submissions</p>
+            </div>
             <div className="flex items-center gap-3">
               <Button variant="outline" size="sm" className="gap-2">
                 <Download className="w-4 h-4" />
@@ -110,76 +116,88 @@ const Tax = () => {
                 Tax Submission form
               </Button>
             </div>
-          </PageHeader>
+          </div>
 
-          {/* Tab Navigation */}
-          <div className="flex items-center justify-between px-4">
-            <div className="flex items-center gap-6">
-              <button className="text-sm font-medium text-primary border-b-2 border-primary pb-2">
-                Tax History
-              </button>
-              <button className="text-sm font-medium text-muted-foreground pb-2">
-                Tax Estimation
-              </button>
+          {/* Tabs with Glass Effect */}
+          <Tabs defaultValue="dashboard" className="w-full">
+            <div className="flex items-center justify-between mb-6">
+              <TabsList>
+                <TabsTrigger value="dashboard">Tax Estimation</TabsTrigger>
+                <TabsTrigger value="history">Tax History</TabsTrigger>
+              </TabsList>
             </div>
-          </div>
 
-          {/* Filters Row */}
-          <div className="flex items-center gap-4 px-4">
-            <Button variant="outline" size="sm" className="gap-2">
-              <Filter className="w-4 h-4" />
-              Filters
-            </Button>
-          </div>
+            <TabsContent value="dashboard" className="space-y-6">
+              <TaxDashboard />
+            </TabsContent>
 
-          {/* Tax Records Table */}
-          <Card className="mx-4">
-            <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-b bg-muted/20">
-                    <TableHead className="font-medium text-muted-foreground">Date ↕</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Issuer</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Form</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Amount</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Status ↕</TableHead>
-                    <TableHead className="font-medium text-muted-foreground">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {taxRecords.map((record) => (
-                    <TableRow key={record.id} className="border-b border-border/50 hover:bg-muted/30">
-                      <TableCell className="font-medium text-foreground py-4">
-                        {record.date}
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground py-4">
-                        {record.issuer}
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground py-4">
-                        {record.form}
-                      </TableCell>
-                      <TableCell className="font-medium text-foreground py-4">
-                        {formatCurrency(record.amount)}
-                      </TableCell>
-                      <TableCell className="py-4">
-                        <Badge 
-                          variant="secondary" 
-                          className="bg-green-100 text-green-800 hover:bg-green-100"
-                        >
-                          {record.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="py-4">
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </TableCell>
+            <TabsContent value="history" className="space-y-6">
+              {/* Filters Row */}
+              <div className="flex items-center gap-4">
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Filter className="w-4 h-4" />
+                  Filters
+                </Button>
+              </div>
+
+              {/* Tax Records Table with Glass Effect */}
+              <div
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-b border-border">
+                      <TableHead className="font-medium text-muted-foreground">Date ↕</TableHead>
+                      <TableHead className="font-medium text-muted-foreground">Issuer</TableHead>
+                      <TableHead className="font-medium text-muted-foreground">Form</TableHead>
+                      <TableHead className="font-medium text-muted-foreground">Amount</TableHead>
+                      <TableHead className="font-medium text-muted-foreground">Status ↕</TableHead>
+                      <TableHead className="font-medium text-muted-foreground">Action</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                  </TableHeader>
+                  <TableBody>
+                    {taxRecords.map((record) => (
+                      <TableRow key={record.id} className="border-b border-border last:border-0">
+                        <TableCell className="font-medium text-foreground py-4">
+                          {record.date}
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground py-4">
+                          {record.issuer}
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground py-4">
+                          {record.form}
+                        </TableCell>
+                        <TableCell className="font-medium text-foreground py-4">
+                          {formatCurrency(record.amount)}
+                        </TableCell>
+                        <TableCell className="py-4">
+                          <Badge 
+                            variant="secondary" 
+                            className="bg-green-100 text-green-800 hover:bg-green-100"
+                          >
+                            {record.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="py-4">
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <MoreHorizontal className="w-4 h-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       }
     />
