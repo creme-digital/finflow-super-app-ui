@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BankAccountCard } from './BankAccountCard';
 
@@ -49,17 +50,23 @@ const banksAndCards = [
 export function BanksAndCardsSection() {
   return (
     <div 
-      className="rounded-[24px] p-6"
-      style={{ 
+      className="overflow-hidden"
+      style={{
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px',
         background: 'rgba(255, 255, 255, 0.4)',
-        border: '1px solid rgba(255, 255, 255, 0.2)'
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
       }}
     >
-      <h3 className="text-lg font-semibold text-foreground mb-6">Banks and Cards</h3>
-      <div className="space-y-4">
-        {banksAndCards.map((item) => (
-          <BankAccountCard key={item.id} account={item} />
-        ))}
+      <div className="p-6">
+        <h3 className="text-lg font-semibold text-foreground mb-6">Banks and Cards</h3>
+        <div className="space-y-4">
+          {banksAndCards.map((item) => (
+            <BankAccountCard key={item.id} account={item} />
+          ))}
+        </div>
       </div>
     </div>
   );

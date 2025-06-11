@@ -32,18 +32,23 @@ const sendAgainUsers = [
 export function SendAgainSection() {
   return (
     <div 
-      className="rounded-[24px] p-6"
-      style={{ 
-        border: '1px solid rgba(255, 255, 255, 0.2)',
-        borderRadius: '24px',
-        background: 'rgba(255, 255, 255, 0.4)'
+      className="overflow-hidden"
+      style={{
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px',
+        background: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
       }}
     >
-      <h3 className="text-lg font-semibold text-foreground mb-4">Send Again</h3>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {sendAgainUsers.map((user) => (
-          <SendAgainUserCard key={user.id} user={user} />
-        ))}
+      <div className="p-6">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Send Again</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {sendAgainUsers.map((user) => (
+            <SendAgainUserCard key={user.id} user={user} />
+          ))}
+        </div>
       </div>
     </div>
   );

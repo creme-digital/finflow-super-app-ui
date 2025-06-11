@@ -18,11 +18,14 @@ interface BankAccountCardProps {
 export function BankAccountCard({ account, onClick }: BankAccountCardProps) {
   return (
     <div 
-      className="flex items-center justify-between p-3 cursor-pointer"
+      className="flex items-center justify-between p-3 cursor-pointer transition-colors hover:bg-muted/20"
       style={{
-        border: '1px solid rgba(255, 255, 255, 0.2)',
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
         borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.4)'
+        background: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
       }}
       onClick={onClick}
     >

@@ -17,11 +17,14 @@ interface SendAgainUserCardProps {
 export function SendAgainUserCard({ user, onClick }: SendAgainUserCardProps) {
   return (
     <div 
-      className="flex flex-col items-center gap-2 p-4 rounded-lg transition-colors cursor-pointer"
+      className="flex flex-col items-center gap-2 p-4 cursor-pointer transition-colors hover:bg-muted/20"
       style={{
-        border: '1px solid rgba(255, 255, 255, 0.2)',
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
         borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.4)'
+        background: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
       }}
       onClick={onClick}
     >
