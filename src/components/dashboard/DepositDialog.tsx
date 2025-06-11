@@ -220,7 +220,7 @@ export function DepositDialog({ open, onOpenChange }: DepositDialogProps) {
           <Button
             variant="secondary"
             onClick={handleCancel}
-            className="flex-1"
+            className="flex-1 rounded-full"
           >
             Cancel
           </Button>
