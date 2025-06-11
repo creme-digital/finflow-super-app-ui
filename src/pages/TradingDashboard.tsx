@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { TrendingUp, TrendingDown, ArrowUpDown } from 'lucide-react';
+import { TrendingUp, TrendingDown, ArrowUpDown, Plus } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 const TradingMainContent = () => {
@@ -50,7 +50,6 @@ const TradingMainContent = () => {
     }
   ];
 
-  // Mock data for trades overview chart
   const tradesData = [
     { month: 'Jan', value: 20 },
     { month: 'Feb', value: 35 },
@@ -61,14 +60,12 @@ const TradingMainContent = () => {
     { month: 'Jul', value: 40 }
   ];
 
-  // Mock data for trades table
   const tradesTableData = Array.from({ length: 20 }, (_, i) => ({
     price: '568,388.00',
     amount: '0.36985547',
     time: '0.6983641'
   }));
 
-  // Mock data for stock holdings
   const stockHoldings = [
     {
       symbol: 'Adobe',
@@ -92,106 +89,157 @@ const TradingMainContent = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-semibold">Trading Dashboard</h1>
+      {/* Header with Cards page styling */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Trading Dashboard</h1>
+          <p className="text-muted-foreground">Track your trading performance and market activity</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Button variant="outline" size="sm">
+            View Portfolio
+          </Button>
+          <Button size="sm" className="gap-2">
+            <Plus className="w-4 h-4" />
+            New Trade
+          </Button>
+        </div>
       </div>
 
-      {/* Tabs Navigation */}
+      {/* Tabs with Accounts page styling */}
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-fit grid-cols-5 bg-muted/30">
-          <TabsTrigger value="overview" className="data-[state=active]:bg-background data-[state=active]:text-blue-600">
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="portfolio" className="data-[state=active]:bg-background">
-            My Portfolio
-          </TabsTrigger>
-          <TabsTrigger value="stock" className="data-[state=active]:bg-background">
-            Stock
-          </TabsTrigger>
-          <TabsTrigger value="watchlist" className="data-[state=active]:bg-background">
-            Watchlist
-          </TabsTrigger>
-          <TabsTrigger value="wallet" className="data-[state=active]:bg-background">
-            Wallet
-          </TabsTrigger>
-        </TabsList>
+        <div className="flex items-center justify-between mb-6">
+          <TabsList>
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="portfolio">My Portfolio</TabsTrigger>
+            <TabsTrigger value="stock">Stock</TabsTrigger>
+            <TabsTrigger value="watchlist">Watchlist</TabsTrigger>
+            <TabsTrigger value="wallet">Wallet</TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="overview" className="space-y-6">
-          {/* Stock Tickers */}
+          {/* Stock Tickers with Glass Effect */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {stockTickers.map((stock, index) => (
-              <Card key={index} className="p-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-8 h-8 ${stock.color} rounded flex items-center justify-center text-white text-sm font-bold`}>
-                    {stock.logo}
+              <div
+                key={index}
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`w-8 h-8 ${stock.color} rounded flex items-center justify-center text-white text-sm font-bold`}>
+                      {stock.logo}
+                    </div>
+                    <div>
+                      <div className="font-semibold">{stock.symbol}</div>
+                      {stock.company && <div className="text-sm text-muted-foreground">{stock.company}</div>}
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-semibold">{stock.symbol}</div>
-                    {stock.company && <div className="text-sm text-muted-foreground">{stock.company}</div>}
+                  <div className="w-full h-1 bg-blue-200 rounded mb-2">
+                    <div className="h-full w-3/4 bg-blue-600 rounded"></div>
                   </div>
-                </div>
-                <div className="w-full h-1 bg-blue-200 rounded mb-2">
-                  <div className="h-full w-3/4 bg-blue-600 rounded"></div>
-                </div>
-                {stock.price && (
-                  <div className="flex items-center gap-1">
-                    <span className="font-medium">{stock.price}</span>
-                    <span className={stock.isPositive ? 'text-green-600' : 'text-red-600'}>
-                      {stock.change} 201.01
-                    </span>
-                    {stock.isPositive ? (
-                      <TrendingUp className="w-4 h-4 text-green-600" />
-                    ) : (
-                      <TrendingDown className="w-4 h-4 text-red-600" />
-                    )}
-                  </div>
-                )}
-              </Card>
+                  {stock.price && (
+                    <div className="flex items-center gap-1">
+                      <span className="font-medium">{stock.price}</span>
+                      <span className={stock.isPositive ? 'text-green-600' : 'text-red-600'}>
+                        {stock.change} 201.01
+                      </span>
+                      {stock.isPositive ? (
+                        <TrendingUp className="w-4 h-4 text-green-600" />
+                      ) : (
+                        <TrendingDown className="w-4 h-4 text-red-600" />
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </div>
             ))}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column - 2/3 width */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Account Info and Get Started Cards */}
+              {/* Account Info and Get Started Cards with Glass Effect */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Card className="p-6">
-                  <div className="text-sm text-muted-foreground mb-1">Sell</div>
-                  <div className="text-sm text-muted-foreground mb-4">Account Balance (CNY)</div>
-                  <div className="text-3xl font-bold mb-6">112,893.00</div>
-                  
-                  <div className="mb-6">
-                    <div className="text-sm font-medium mb-4">Stock</div>
-                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-                      <span>Coin</span>
-                      <span>$2.00</span>
+                <div
+                  className="overflow-hidden"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    borderRadius: '16px',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <CardContent className="p-6">
+                    <div className="text-sm text-muted-foreground mb-1">Sell</div>
+                    <div className="text-sm text-muted-foreground mb-4">Account Balance (CNY)</div>
+                    <div className="text-3xl font-bold mb-6">112,893.00</div>
+                    
+                    <div className="mb-6">
+                      <div className="text-sm font-medium mb-4">Stock</div>
+                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
+                        <span>Coin</span>
+                        <span>$2.00</span>
+                      </div>
+                      <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white mb-4">
+                        🅰️
+                      </div>
+                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
+                        <span>Coin</span>
+                        <span>$2.00</span>
+                      </div>
+                      <div className="text-sm text-muted-foreground mb-4">No extra fees</div>
                     </div>
-                    <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white mb-4">
-                      🅰️
+                    
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button className="bg-blue-600 hover:bg-blue-700">Deposit</Button>
+                      <Button variant="outline" className="text-blue-600">Withdraw</Button>
                     </div>
-                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-                      <span>Coin</span>
-                      <span>$2.00</span>
-                    </div>
-                    <div className="text-sm text-muted-foreground mb-4">No extra fees</div>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button className="bg-blue-600 hover:bg-blue-700">Deposit</Button>
-                    <Button variant="outline" className="text-blue-600">Withdraw</Button>
-                  </div>
-                </Card>
+                  </CardContent>
+                </div>
 
-                <Card className="p-6">
-                  <div className="text-sm text-muted-foreground mb-1">Get Started</div>
-                  <div className="text-sm mb-4">January 7, 2024</div>
-                  <div className="text-6xl font-bold mb-4">$</div>
-                </Card>
+                <div
+                  className="overflow-hidden"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    borderRadius: '16px',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <CardContent className="p-6">
+                    <div className="text-sm text-muted-foreground mb-1">Get Started</div>
+                    <div className="text-sm mb-4">January 7, 2024</div>
+                    <div className="text-6xl font-bold mb-4">$</div>
+                  </CardContent>
+                </div>
               </div>
 
-              {/* Trades Overview Chart */}
-              <Card>
+              {/* Trades Overview Chart with Glass Effect */}
+              <div
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
@@ -233,10 +281,20 @@ const TradingMainContent = () => {
                     </ResponsiveContainer>
                   </div>
                 </CardContent>
-              </Card>
+              </div>
 
-              {/* Stock Holdings */}
-              <Card>
+              {/* Stock Holdings with Glass Effect */}
+              <div
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle>Trades Overview</CardTitle>
@@ -270,13 +328,23 @@ const TradingMainContent = () => {
                     </div>
                   ))}
                 </CardContent>
-              </Card>
+              </div>
             </div>
 
             {/* Right Column - 1/3 width */}
             <div className="space-y-6">
-              {/* Earning Report */}
-              <Card>
+              {/* Earning Report with Glass Effect */}
+              <div
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
                 <CardHeader>
                   <CardTitle>Earning Report</CardTitle>
                   <Tabs defaultValue="week" className="w-fit">
@@ -295,10 +363,20 @@ const TradingMainContent = () => {
                     <span>$510</span>
                   </div>
                 </CardContent>
-              </Card>
+              </div>
 
-              {/* Trades Table */}
-              <Card>
+              {/* Trades Table with Glass Effect */}
+              <div
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
@@ -346,33 +424,81 @@ const TradingMainContent = () => {
                     </Table>
                   </div>
                 </CardContent>
-              </Card>
+              </div>
             </div>
           </div>
         </TabsContent>
 
         {/* Other tab contents */}
         <TabsContent value="portfolio">
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Portfolio view will be implemented here</p>
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
+            <CardContent className="p-8 text-center">
+              <p className="text-muted-foreground">Portfolio view will be implemented here</p>
+            </CardContent>
           </div>
         </TabsContent>
 
         <TabsContent value="stock">
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Stock view will be implemented here</p>
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
+            <CardContent className="p-8 text-center">
+              <p className="text-muted-foreground">Stock view will be implemented here</p>
+            </CardContent>
           </div>
         </TabsContent>
 
         <TabsContent value="watchlist">
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Watchlist view will be implemented here</p>
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
+            <CardContent className="p-8 text-center">
+              <p className="text-muted-foreground">Watchlist view will be implemented here</p>
+            </CardContent>
           </div>
         </TabsContent>
 
         <TabsContent value="wallet">
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Wallet view will be implemented here</p>
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
+            <CardContent className="p-8 text-center">
+              <p className="text-muted-foreground">Wallet view will be implemented here</p>
+            </CardContent>
           </div>
         </TabsContent>
       </Tabs>
