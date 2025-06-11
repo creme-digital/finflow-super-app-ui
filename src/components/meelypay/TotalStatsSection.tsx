@@ -8,14 +8,13 @@ export function TotalStatsSection() {
         className="rounded-[24px] p-6"
         style={{ 
           background: 'rgba(255, 255, 255, 0.64)',
-          border: '1px solid #FFFFFF'
+          border: '1px solid rgba(255, 255, 255, 0.8)'
         }}
       >
         <div
           className="p-4 rounded-lg"
           style={{
-            border: '1px solid #FFFFFF',
-            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.8)',
             borderRadius: '16px',
             background: 'rgba(255, 255, 255, 0.8)'
           }}
@@ -28,14 +27,13 @@ export function TotalStatsSection() {
         className="rounded-[24px] p-6"
         style={{ 
           background: 'rgba(255, 255, 255, 0.64)',
-          border: '1px solid #FFFFFF'
+          border: '1px solid rgba(255, 255, 255, 0.8)'
         }}
       >
         <div
           className="p-4 rounded-lg"
           style={{
-            border: '1px solid #FFFFFF',
-            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.8)',
             borderRadius: '16px',
             background: 'rgba(255, 255, 255, 0.8)'
           }}

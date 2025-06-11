@@ -8,8 +8,7 @@ export function TotalBalanceSection() {
     <div 
       className="rounded-[24px] p-6"
       style={{ 
-        border: '1px solid #FFFFFF',
-        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        border: '1px solid rgba(255, 255, 255, 0.8)',
         borderRadius: '24px',
         background: 'rgba(255, 255, 255, 0.8)'
       }}

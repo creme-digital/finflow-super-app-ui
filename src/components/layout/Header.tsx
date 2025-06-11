@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Bell, Settings, ChevronDown } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -18,8 +19,8 @@ export function Header({ title }: HeaderProps) {
         <div 
           className="flex items-center justify-center w-10 h-10 rounded-full transition-colors cursor-pointer"
           style={{ 
-            background: 'rgba(255, 255, 255, 0.64)',
-            border: '1px solid #FFFFFF'
+            background: 'rgba(255, 255, 255, 0.8)',
+            border: '1px solid rgba(255, 255, 255, 0.8)'
           }}
         >
           <Bell className="h-5 w-5 text-foreground" />
@@ -29,8 +30,8 @@ export function Header({ title }: HeaderProps) {
         <div 
           className="flex items-center justify-center w-10 h-10 rounded-full transition-colors cursor-pointer"
           style={{ 
-            background: 'rgba(255, 255, 255, 0.64)',
-            border: '1px solid #FFFFFF'
+            background: 'rgba(255, 255, 255, 0.8)',
+            border: '1px solid rgba(255, 255, 255, 0.8)'
           }}
         >
           <Settings className="h-5 w-5 text-foreground" />
@@ -40,8 +41,8 @@ export function Header({ title }: HeaderProps) {
         <div 
           className="flex items-center gap-2 px-3 py-2 rounded-full transition-colors cursor-pointer"
           style={{ 
-            background: 'rgba(255, 255, 255, 0.64)',
-            border: '1px solid #FFFFFF'
+            background: 'rgba(255, 255, 255, 0.8)',
+            border: '1px solid rgba(255, 255, 255, 0.8)'
           }}
         >
           <Avatar className="w-6 h-6">
