@@ -92,16 +92,30 @@ export default function Crypto() {
               }}
             >
               <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="text-sm text-muted-foreground">Exchange</div>
-                  <div className="space-y-2">
-                    <div className="text-sm text-muted-foreground">{exchangeData.account}</div>
+                <div className="flex flex-col space-y-4">
+                  {/* Top row: Exchange label and BTC text */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">Exchange</div>
+                    <div className="text-xs text-muted-foreground">{exchangeData.btcBalance}</div>
+                  </div>
+                  
+                  {/* Bottom row: Account selector */}
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.4)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)'
+                    }}
+                  >
                     <div className="flex items-center gap-2">
                       <DollarSign className="w-4 h-4 text-blue-600" />
-                      <span className="text-lg font-semibold">${exchangeData.balance.toLocaleString()}</span>
-                      <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                      <div>
+                        <div className="text-sm text-muted-foreground">{exchangeData.account}</div>
+                        <div className="text-lg font-semibold">${exchangeData.balance.toLocaleString()}</div>
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground">{exchangeData.btcBalance}</div>
+                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
                   </div>
                 </div>
               </CardContent>
@@ -120,19 +134,30 @@ export default function Crypto() {
               }}
             >
               <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="text-sm text-muted-foreground">Market</div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold">
-                      ₿
-                    </div>
-                    <span className="text-lg font-semibold">{marketData.symbol}</span>
+                <div className="flex flex-col space-y-4">
+                  {/* Top row: Market label */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">Market</div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold">
-                      ₿
+                  
+                  {/* Bottom row: Market selector */}
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.4)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)'
+                    }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold">
+                        ₿
+                      </div>
+                      <div>
+                        <div className="text-lg font-semibold">{marketData.symbol}</div>
+                        <div className="text-sm font-medium">{marketData.amount}</div>
+                      </div>
                     </div>
-                    <span className="text-sm font-medium">{marketData.amount}</span>
                     <ChevronDown className="w-4 h-4 text-muted-foreground" />
                   </div>
                 </div>
@@ -152,14 +177,30 @@ export default function Crypto() {
               }}
             >
               <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="text-sm text-muted-foreground">Trading Pair</div>
-                  <div className="text-lg font-semibold">{tradingPairData.pair}</div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center text-white text-xs font-bold">
-                      ◆
+                <div className="flex flex-col space-y-4">
+                  {/* Top row: Trading Pair label */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">Trading Pair</div>
+                  </div>
+                  
+                  {/* Bottom row: Trading pair selector */}
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.4)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)'
+                    }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center text-white text-xs font-bold">
+                        ◆
+                      </div>
+                      <div>
+                        <div className="text-lg font-semibold">{tradingPairData.pair}</div>
+                        <div className="text-sm font-medium">{tradingPairData.amount}</div>
+                      </div>
                     </div>
-                    <span className="text-sm font-medium">{tradingPairData.amount}</span>
                     <ChevronDown className="w-4 h-4 text-muted-foreground" />
                   </div>
                 </div>
@@ -167,31 +208,43 @@ export default function Crypto() {
             </div>
           </div>
 
-          {/* Market Changes Section */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="space-y-2">
-              <div className="text-2xl font-bold">12454.37</div>
-              <div className="text-sm text-muted-foreground">24h Change</div>
-              <div className="text-green-600 font-medium">↗ 0.89%</div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-2xl font-bold">56,354.23</div>
-              <div className="text-sm text-muted-foreground">24h High</div>
-              <div className="text-green-600 font-medium">↗ 1.58%</div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-2xl font-bold">36,899.36</div>
-              <div className="text-sm text-muted-foreground">24h Low</div>
-              <div className="text-red-600 font-medium">↘ 1.71%</div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-2xl font-bold">ETH/USDT</div>
-              <div className="text-sm text-muted-foreground">3.252</div>
-              <div className="text-green-600 font-medium">↗ 1.58%</div>
+          {/* Market Changes Section - Smaller text and glass card */}
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
+              <div className="space-y-1">
+                <div className="text-lg font-bold">12454.37</div>
+                <div className="text-xs text-muted-foreground">24h Change</div>
+                <div className="text-green-600 font-medium text-sm">↗ 0.89%</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-lg font-bold">56,354.23</div>
+                <div className="text-xs text-muted-foreground">24h High</div>
+                <div className="text-green-600 font-medium text-sm">↗ 1.58%</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-lg font-bold">36,899.36</div>
+                <div className="text-xs text-muted-foreground">24h Low</div>
+                <div className="text-red-600 font-medium text-sm">↘ 1.71%</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-lg font-bold">ETH/USDT</div>
+                <div className="text-xs text-muted-foreground">3.252</div>
+                <div className="text-green-600 font-medium text-sm">↗ 1.58%</div>
+              </div>
             </div>
           </div>
 
-          {/* Full width market changes card */}
+          {/* Full width market changes table */}
           <div
             className="overflow-hidden"
             style={{
