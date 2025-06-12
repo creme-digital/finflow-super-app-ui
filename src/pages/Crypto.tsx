@@ -115,21 +115,22 @@ export default function Crypto() {
             </div>
           </div>
 
-          {/* Market Overview with Glass Effect */}
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
-            <CardContent className="flex flex-col md:flex-row gap-6 md:gap-0 md:divide-x md:divide-border p-6">
-              {marketStats.map((stat, index) => (
-                <div key={index} className="flex-1 flex flex-col items-start md:px-6 first:md:pl-0 last:md:pr-0">
+          {/* Market Overview - Individual Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {marketStats.map((stat, index) => (
+              <div
+                key={index}
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
+                <CardContent className="p-6">
                   <div className="flex items-center gap-2 mb-2">
                     <stat.icon className="w-[18px] h-[18px] text-muted-foreground" />
                     <span className="text-muted-foreground text-sm font-medium">{stat.label}</span>
@@ -140,9 +141,9 @@ export default function Crypto() {
                   <div className={`text-sm font-medium ${stat.positive ? 'text-green-600' : 'text-red-600'}`}>
                     {stat.change}
                   </div>
-                </div>
-              ))}
-            </CardContent>
+                </CardContent>
+              </div>
+            ))}
           </div>
 
           {/* Tabs with Glass Effect */}
