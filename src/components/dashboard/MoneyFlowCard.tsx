@@ -1,10 +1,8 @@
-
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TrendingUp } from 'lucide-react';
-
 const moneyFlowData = [{
   day: 'Mon',
   flow: 12000
@@ -27,31 +25,28 @@ const moneyFlowData = [{
   day: 'Sun',
   flow: 14500
 }];
-
 const chartConfig = {
   flow: {
     label: "Money Flow",
     color: "#292EE9"
   }
 };
-
 export function MoneyFlowCard() {
-  return (
-    <div className="flex flex-col overflow-hidden" style={{
-      border: '1px solid #FFFFFF',
-      boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-      borderRadius: '16px'
-    }}>
+  return <div className="flex flex-col overflow-hidden" style={{
+    border: '1px solid #FFFFFF',
+    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+    borderRadius: '16px'
+  }}>
       
       {/* Card header */}
-      <div className="p-3 flex flex-row justify-between items-center" style={{
-        background: 'rgba(255, 255, 255, 0.8)'
-      }}>
+      <div style={{
+      background: 'rgba(255, 255, 255, 0.8)'
+    }} className="p-3 flex flex-row justify-between items-center bg-white/40">
         <div className="flex items-center gap-2">
           <TrendingUp className="w-4 h-4" />
           <span className="text-black text-sm font-medium" style={{
-            fontFamily: 'Inter'
-          }}>
+          fontFamily: 'Inter'
+        }}>
             Money flow
           </span>
         </div>
@@ -71,42 +66,41 @@ export function MoneyFlowCard() {
       
       {/* Card content hug height */}
       <div className="p-3">
-        <div style={{ height: '280px' }}>
+        <div style={{
+        height: '280px'
+      }}>
           <ChartContainer config={chartConfig} className="w-full h-full">
             <LineChart data={moneyFlowData} margin={{
-              top: 5,
-              right: 5,
-              left: 5,
-              bottom: 5
-            }}>
+            top: 5,
+            right: 5,
+            left: 5,
+            bottom: 5
+          }}>
               <defs>
                 <linearGradient id="flowGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={chartConfig.flow.color} stopOpacity={0.8}/>
-                  <stop offset="100%" stopColor={chartConfig.flow.color} stopOpacity={0.1}/>
+                  <stop offset="0%" stopColor={chartConfig.flow.color} stopOpacity={0.8} />
+                  <stop offset="100%" stopColor={chartConfig.flow.color} stopOpacity={0.1} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
               <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{
-                fontSize: 12,
-                fill: '#64748b'
-              }} />
+              fontSize: 12,
+              fill: '#64748b'
+            }} />
               <YAxis axisLine={false} tickLine={false} tick={{
-                fontSize: 12,
-                fill: '#64748b'
-              }} />
+              fontSize: 12,
+              fill: '#64748b'
+            }} />
               <ChartTooltip content={<ChartTooltipContent />} />
-              <Line 
-                type="monotone" 
-                dataKey="flow" 
-                stroke={chartConfig.flow.color} 
-                strokeWidth={3}
-                dot={false}
-                activeDot={{ r: 6, fill: chartConfig.flow.color, stroke: '#fff', strokeWidth: 2 }}
-              />
+              <Line type="monotone" dataKey="flow" stroke={chartConfig.flow.color} strokeWidth={3} dot={false} activeDot={{
+              r: 6,
+              fill: chartConfig.flow.color,
+              stroke: '#fff',
+              strokeWidth: 2
+            }} />
             </LineChart>
           </ChartContainer>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
