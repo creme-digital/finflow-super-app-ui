@@ -78,77 +78,168 @@ export default function Crypto() {
           </div>
 
           {/* Three cards: Exchange, Market & Trading Pair */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Exchange Card */}
-            <div className="bg-[#E8F2FF] rounded-2xl p-6 border border-white/20">
-              <div className="flex flex-col space-y-4">
-                {/* Header with label and BTC balance */}
-                <div className="flex items-center justify-between">
-                  <div className="text-sm font-medium text-gray-600">Exchange</div>
-                  <div className="text-xs text-gray-500">{exchangeData.btcBalance}</div>
-                </div>
-                
-                {/* Account info */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                      <DollarSign className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-600">{exchangeData.account}</div>
-                      <div className="text-xl font-semibold text-gray-900">${exchangeData.balance.toLocaleString()}</div>
-                    </div>
+            <div
+              className="overflow-hidden"
+              style={{
+                border: '1px solid #FFFFFF',
+                boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                borderRadius: '16px',
+                background: 'rgba(255, 255, 255, 0.4)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)'
+              }}
+            >
+              <CardContent className="p-6">
+                <div className="flex flex-col space-y-4">
+                  {/* Top row: Exchange label and BTC text */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">Exchange</div>
+                    <div className="text-xs text-muted-foreground">{exchangeData.btcBalance}</div>
                   </div>
-                  <ChevronDown className="w-4 h-4 text-gray-400" />
+                  
+                  {/* Bottom row: Account selector */}
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.4)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)'
+                    }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <DollarSign className="w-4 h-4 text-blue-600" />
+                      <div>
+                        <div className="text-sm text-muted-foreground">{exchangeData.account}</div>
+                        <div className="text-lg font-semibold">${exchangeData.balance.toLocaleString()}</div>
+                      </div>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                  </div>
                 </div>
-              </div>
+              </CardContent>
             </div>
 
             {/* Market Card */}
-            <div className="bg-[#E8F2FF] rounded-2xl p-6 border border-white/20">
-              <div className="flex flex-col space-y-4">
-                {/* Header */}
-                <div className="flex items-center justify-between">
-                  <div className="text-sm font-medium text-gray-600">Market</div>
-                </div>
-                
-                {/* Market info */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm font-bold">₿</span>
-                    </div>
-                    <div>
-                      <div className="text-xl font-semibold text-gray-900">{marketData.symbol}</div>
-                      <div className="text-sm font-medium text-gray-600">{marketData.amount}</div>
-                    </div>
+            <div
+              className="overflow-hidden"
+              style={{
+                border: '1px solid #FFFFFF',
+                boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                borderRadius: '16px',
+                background: 'rgba(255, 255, 255, 0.4)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)'
+              }}
+            >
+              <CardContent className="p-6">
+                <div className="flex flex-col space-y-4">
+                  {/* Top row: Market label */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">Market</div>
                   </div>
-                  <ChevronDown className="w-4 h-4 text-gray-400" />
+                  
+                  {/* Bottom row: Market selector */}
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.4)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)'
+                    }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold">
+                        ₿
+                      </div>
+                      <div>
+                        <div className="text-lg font-semibold">{marketData.symbol}</div>
+                        <div className="text-sm font-medium">{marketData.amount}</div>
+                      </div>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                  </div>
                 </div>
-              </div>
+              </CardContent>
             </div>
 
             {/* Trading Pair Card */}
-            <div className="bg-[#E8F2FF] rounded-2xl p-6 border border-white/20">
-              <div className="flex flex-col space-y-4">
-                {/* Header */}
-                <div className="flex items-center justify-between">
-                  <div className="text-sm font-medium text-gray-600">Trading Pair</div>
-                </div>
-                
-                {/* Trading pair info */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm font-bold">◆</span>
-                    </div>
-                    <div>
-                      <div className="text-xl font-semibold text-gray-900">{tradingPairData.pair}</div>
-                      <div className="text-sm font-medium text-gray-600">{tradingPairData.amount}</div>
-                    </div>
+            <div
+              className="overflow-hidden"
+              style={{
+                border: '1px solid #FFFFFF',
+                boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                borderRadius: '16px',
+                background: 'rgba(255, 255, 255, 0.4)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)'
+              }}
+            >
+              <CardContent className="p-6">
+                <div className="flex flex-col space-y-4">
+                  {/* Top row: Trading Pair label */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">Trading Pair</div>
                   </div>
-                  <ChevronDown className="w-4 h-4 text-gray-400" />
+                  
+                  {/* Bottom row: Trading pair selector */}
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.4)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)'
+                    }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center text-white text-xs font-bold">
+                        ◆
+                      </div>
+                      <div>
+                        <div className="text-lg font-semibold">{tradingPairData.pair}</div>
+                        <div className="text-sm font-medium">{tradingPairData.amount}</div>
+                      </div>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                  </div>
                 </div>
+              </CardContent>
+            </div>
+          </div>
+
+          {/* Market Changes Section - Smaller text and glass card */}
+          <div
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+          >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
+              <div className="space-y-1">
+                <div className="text-lg font-bold">12454.37</div>
+                <div className="text-xs text-muted-foreground">24h Change</div>
+                <div className="text-green-600 font-medium text-sm">↗ 0.89%</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-lg font-bold">56,354.23</div>
+                <div className="text-xs text-muted-foreground">24h High</div>
+                <div className="text-green-600 font-medium text-sm">↗ 1.58%</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-lg font-bold">36,899.36</div>
+                <div className="text-xs text-muted-foreground">24h Low</div>
+                <div className="text-red-600 font-medium text-sm">↘ 1.71%</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-lg font-bold">ETH/USDT</div>
+                <div className="text-xs text-muted-foreground">3.252</div>
+                <div className="text-green-600 font-medium text-sm">↗ 1.58%</div>
               </div>
             </div>
           </div>
