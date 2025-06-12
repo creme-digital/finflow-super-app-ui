@@ -99,11 +99,10 @@ export default function Crypto() {
       title="Crypto Trading"
       mainContent={
         <div className="space-y-6">
-          {/* Header with Cards styling */}
+          {/* Header with consistent styling */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">Crypto Trading</h1>
-              <p className="text-muted-foreground">Trade cryptocurrencies and manage your digital assets</p>
             </div>
             <div className="flex items-center gap-3">
               <Button variant="outline" size="sm">
@@ -135,7 +134,7 @@ export default function Crypto() {
                     <stat.icon className="w-[18px] h-[18px] text-muted-foreground" />
                     <span className="text-muted-foreground text-sm font-medium">{stat.label}</span>
                   </div>
-                  <div className="text-2xl font-mono font-normal tracking-tight text-foreground mb-1">
+                  <div className="text-2xl font-bold tracking-tight text-foreground mb-1">
                     {stat.value}
                   </div>
                   <div className={`text-sm font-medium ${stat.positive ? 'text-green-600' : 'text-red-600'}`}>
@@ -173,7 +172,7 @@ export default function Crypto() {
                   <CardContent className="p-6">
                     <div className="space-y-3">
                       <div className="text-sm text-muted-foreground">Total Balance</div>
-                      <div className="text-3xl font-mono font-normal tracking-tight">
+                      <div className="text-3xl font-bold tracking-tight">
                         {formatAmount(accountData.balance)}
                       </div>
                       <div className="flex items-center gap-1 text-sm">
@@ -204,7 +203,7 @@ export default function Crypto() {
                           ₿
                         </div>
                         <div>
-                          <div className="text-xl font-mono font-normal">{accountData.btcHoldings} BTC</div>
+                          <div className="text-xl font-bold">{accountData.btcHoldings} BTC</div>
                           <div className="text-sm text-muted-foreground">≈ {formatAmount(accountData.btcHoldings * 65432)}</div>
                         </div>
                       </div>
@@ -231,7 +230,7 @@ export default function Crypto() {
                           Ξ
                         </div>
                         <div>
-                          <div className="text-xl font-mono font-normal">{accountData.ethHoldings} ETH</div>
+                          <div className="text-xl font-bold">{accountData.ethHoldings} ETH</div>
                           <div className="text-sm text-muted-foreground">≈ {formatAmount(accountData.ethHoldings * 3456)}</div>
                         </div>
                       </div>
@@ -287,8 +286,8 @@ export default function Crypto() {
                             </Badge>
                           </TableCell>
                           <TableCell className="font-medium py-4">{trade.symbol}</TableCell>
-                          <TableCell className="font-mono py-4">{trade.amount}</TableCell>
-                          <TableCell className="font-mono py-4">{formatAmount(trade.price)}</TableCell>
+                          <TableCell className="py-4">{trade.amount}</TableCell>
+                          <TableCell className="py-4">{formatAmount(trade.price)}</TableCell>
                           <TableCell className="text-muted-foreground py-4">{trade.time}</TableCell>
                         </TableRow>
                       ))}
@@ -354,15 +353,15 @@ export default function Crypto() {
                               </div>
                             </div>
                           </TableCell>
-                          <TableCell className="font-mono py-4">{formatAmount(crypto.price)}</TableCell>
+                          <TableCell className="py-4">{formatAmount(crypto.price)}</TableCell>
                           <TableCell className="py-4">
                             <div className={`flex items-center gap-1 ${crypto.change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                               {crypto.change >= 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
                               {crypto.change >= 0 ? '+' : ''}{crypto.change}%
                             </div>
                           </TableCell>
-                          <TableCell className="font-mono py-4">{crypto.volume}</TableCell>
-                          <TableCell className="font-mono py-4">{crypto.marketCap}</TableCell>
+                          <TableCell className="py-4">{crypto.volume}</TableCell>
+                          <TableCell className="py-4">{crypto.marketCap}</TableCell>
                           <TableCell className="py-4">
                             <div className="flex gap-2">
                               <Button size="sm" variant="outline">Buy</Button>
