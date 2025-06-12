@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -13,6 +13,7 @@ declare global {
 
 export function TradingViewChart() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -38,6 +39,9 @@ export function TradingViewChart() {
           hide_top_toolbar: false,
           hide_legend: false,
           save_image: false,
+          onChartReady: () => {
+            setIsLoading(false);
+          },
           overrides: {
             "paneProperties.background": "transparent",
             "paneProperties.backgroundType": "solid",
@@ -51,12 +55,22 @@ export function TradingViewChart() {
         });
       }
     };
+    script.onerror = () => {
+      console.error('Failed to load TradingView script');
+      setIsLoading(false);
+    };
     document.head.appendChild(script);
+
+    // Set a timeout to hide loading after 10 seconds if chart doesn't load
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 10000);
 
     return () => {
       if (document.head.contains(script)) {
         document.head.removeChild(script);
       }
+      clearTimeout(timeout);
     };
   }, []);
 
@@ -143,12 +157,14 @@ export function TradingViewChart() {
           className="w-full h-full"
         />
         
-        <div className="absolute inset-0 flex items-center justify-center bg-white/10 backdrop-blur-sm">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
-            <p className="text-sm text-muted-foreground">Loading chart...</p>
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/10 backdrop-blur-sm">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+              <p className="text-sm text-muted-foreground">Loading chart...</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
