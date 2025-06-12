@@ -23,8 +23,8 @@ export function TradingViewChart() {
       if (window.TradingView && containerRef.current) {
         new window.TradingView.widget({
           autosize: true,
-          symbol: "BINANCE:ETHBTC",
-          interval: "1h",
+          symbol: "COINBASE:ETHUSD", // Changed to a more reliable symbol
+          interval: "1H",
           timezone: "Etc/UTC",
           theme: "light",
           style: "1",
@@ -36,10 +36,22 @@ export function TradingViewChart() {
           studies: ["Volume@tv-basicstudies"],
           height: 400,
           width: "100%",
-          hide_top_toolbar: false,
+          hide_top_toolbar: true, // Changed to true to hide toolbar conflicts
           hide_legend: false,
           save_image: false,
+          disabled_features: [
+            "header_symbol_search",
+            "header_resolutions",
+            "header_chart_type",
+            "header_settings",
+            "header_indicators",
+            "header_compare",
+            "header_undo_redo",
+            "header_screenshot",
+            "header_fullscreen_button"
+          ],
           onChartReady: () => {
+            console.log('TradingView chart loaded successfully');
             setIsLoading(false);
           },
           overrides: {
@@ -61,10 +73,11 @@ export function TradingViewChart() {
     };
     document.head.appendChild(script);
 
-    // Set a timeout to hide loading after 10 seconds if chart doesn't load
+    // Set a timeout to hide loading after 15 seconds if chart doesn't load
     const timeout = setTimeout(() => {
+      console.log('TradingView chart loading timeout');
       setIsLoading(false);
-    }, 10000);
+    }, 15000);
 
     return () => {
       if (document.head.contains(script)) {
@@ -123,8 +136,8 @@ export function TradingViewChart() {
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/20">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium">Trabot, ETH / BTC</span>
-            <span className="text-xs text-muted-foreground">• 1h • Binance</span>
+            <span className="text-sm font-medium">Ethereum / USD</span>
+            <span className="text-xs text-muted-foreground">• 1h • Coinbase</span>
             <div className="w-2 h-2 rounded-full bg-green-500"></div>
           </div>
         </div>
@@ -132,19 +145,19 @@ export function TradingViewChart() {
         <div className="flex items-center gap-6 text-sm">
           <div className="flex items-center gap-1">
             <span className="text-xs text-muted-foreground">O</span>
-            <span className="font-mono">0.03031</span>
+            <span className="font-mono">3,456.78</span>
           </div>
           <div className="flex items-center gap-1">
             <span className="text-xs text-muted-foreground">H</span>
-            <span className="font-mono">0.03033</span>
+            <span className="font-mono">3,478.92</span>
           </div>
           <div className="flex items-center gap-1">
             <span className="text-xs text-muted-foreground">L</span>
-            <span className="font-mono">0.03028</span>
+            <span className="font-mono">3,445.12</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-red-600">-0.00003</span>
-            <span className="text-red-600">(-0.10%)</span>
+            <span className="font-mono text-green-600">+23.45</span>
+            <span className="text-green-600">(+0.68%)</span>
           </div>
         </div>
       </div>
