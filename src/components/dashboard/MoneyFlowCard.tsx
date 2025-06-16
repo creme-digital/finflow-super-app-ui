@@ -40,7 +40,7 @@ export function MoneyFlowCard() {
       
       {/* Card header */}
       <div style={{
-      background: 'rgba(255, 255, 255, 0.8)'
+      background: 'rgba(255, 255, 255, 0.6)'
     }} className="p-3 flex flex-row justify-between items-center bg-white/40">
         <div className="flex items-center gap-2">
           <TrendingUp className="w-4 h-4" />

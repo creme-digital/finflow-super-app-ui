@@ -76,7 +76,7 @@ export function IncomeExpenseCard() {
       
       {/* Card header */}
       <div className="p-3 flex flex-row justify-between items-center" style={{
-        background: 'rgba(255, 255, 255, 0.4)'
+        background: 'rgba(255, 255, 255, 0.6)'
       }}>
         <div className="flex items-center gap-2">
           <DollarSign className="w-4 h-4" />

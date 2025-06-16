@@ -43,7 +43,7 @@ export function GrossVolumeCard() {
     borderRadius: '16px'
   }}>
       <div style={{
-      background: 'rgba(255, 255, 255, 0.8)'
+      background: 'rgba(255, 255, 255, 0.6)'
     }} className="p-4 flex items-center gap-2 bg-white/40">
         <TrendingUp className="w-4 h-4" />
         <span className="text-black text-base font-medium" style={{
