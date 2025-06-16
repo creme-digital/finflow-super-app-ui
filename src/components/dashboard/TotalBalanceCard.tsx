@@ -6,12 +6,14 @@ import { useCurrency } from '@/contexts/CurrencyContext';
 import { DepositDialog } from './DepositDialog';
 import { SendDialog } from './SendDialog';
 import { ReceiveDialog } from './ReceiveDialog';
+import { TransferDialog } from './TransferDialog';
 
 export function TotalBalanceCard() {
   const { formatAmount } = useCurrency();
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
   const [isReceiveDialogOpen, setIsReceiveDialogOpen] = useState(false);
+  const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
 
   const buttonStyle = {
     border: '1px solid #FFFFFF',
@@ -32,6 +34,10 @@ export function TotalBalanceCard() {
 
   const handleReceiveClick = () => {
     setIsReceiveDialogOpen(true);
+  };
+
+  const handleTransferClick = () => {
+    setIsTransferDialogOpen(true);
   };
 
   return (
@@ -87,6 +93,7 @@ export function TotalBalanceCard() {
             variant="ghost" 
             className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
             style={buttonStyle}
+            onClick={handleTransferClick}
           >
             <ArrowUpRight className="w-5 h-5" />
             <span className="text-xs">Transfer</span>
@@ -107,6 +114,11 @@ export function TotalBalanceCard() {
       <ReceiveDialog 
         open={isReceiveDialogOpen} 
         onOpenChange={setIsReceiveDialogOpen} 
+      />
+
+      <TransferDialog 
+        open={isTransferDialogOpen} 
+        onOpenChange={setIsTransferDialogOpen} 
       />
     </>
   );
