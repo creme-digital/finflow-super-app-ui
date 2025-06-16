@@ -22,7 +22,7 @@ export function PaymentStatusCard() {
       className="flex flex-col h-full overflow-hidden"
       style={{
         border: '1px solid #FFFFFF',
-        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.06)',
         borderRadius: '16px'
       }}
     >
