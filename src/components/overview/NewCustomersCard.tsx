@@ -32,7 +32,7 @@ const chartConfig = {
 export function NewCustomersCard() {
   return <div className="flex flex-col h-full overflow-hidden" style={{
     border: '1px solid #FFFFFF',
-    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.06)',
+    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
     borderRadius: '16px'
   }}>
       <div style={{
