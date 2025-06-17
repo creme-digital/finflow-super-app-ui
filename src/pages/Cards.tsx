@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -200,24 +201,24 @@ export default function Cards() {
 
           {/* Filters and View Controls */}
           <div className="flex justify-between items-center">
-            {selectedCards.length > 0 ? (
-              <Button 
-                variant="destructive" 
-                onClick={() => setDeleteDialogOpen(true)}
-                className="bg-red-600 hover:bg-red-700 text-white"
-              >
-                <Trash2 className="w-4 h-4 mr-2" />
-                Delete {selectedCards.length} Card{selectedCards.length > 1 ? 's' : ''}
-              </Button>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm">
-                  <Filter className="w-4 h-4 mr-2" />
-                  Filters
+            <div className="flex items-center gap-2">
+              {selectedCards.length > 0 && (
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setDeleteDialogOpen(true)}
+                  className="bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700 rounded-full"
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Delete {selectedCards.length} Card{selectedCards.length > 1 ? 's' : ''}
                 </Button>
-                <span className="text-sm text-muted-foreground">No filters applied</span>
-              </div>
-            )}
+              )}
+              <Button variant="outline" size="sm" className="rounded-full">
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+              </Button>
+              <span className="text-sm text-muted-foreground">No filters applied</span>
+            </div>
             <div 
               className="inline-flex h-10 items-center justify-center rounded-full p-1"
               style={{
