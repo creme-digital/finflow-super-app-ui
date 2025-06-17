@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Sheet,
@@ -35,7 +34,7 @@ export function TransactionDrawer({ open, onOpenChange, transaction }: Transacti
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="left" className="w-[400px] sm:w-[540px]">
+      <SheetContent side="right" className="w-[400px] sm:w-[540px]">
         <SheetHeader>
           <SheetTitle>Transaction Details</SheetTitle>
           <SheetDescription>
