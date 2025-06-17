@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -85,22 +85,21 @@ const SubscriptionsMainContent = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header with Cards page styling */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Subscription</h1>
-          <p className="text-muted-foreground">Manage your subscription plans and billing</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm">
-            View All
-          </Button>
-          <Button size="sm" className="gap-2">
-            <Plus className="w-4 h-4" />
-            Create Subscription
-          </Button>
-        </div>
-      </div>
+      {/* Header with consistent styling */}
+      <PageHeader 
+        title="Subscription"
+        children={
+          <div className="flex items-center gap-3">
+            <Button variant="outline" size="sm">
+              View All
+            </Button>
+            <Button size="sm" className="gap-2">
+              <Plus className="w-4 h-4" />
+              Create Subscription
+            </Button>
+          </div>
+        }
+      />
 
       {/* Tabs with Accounts page styling */}
       <Tabs defaultValue="all" className="w-full">
