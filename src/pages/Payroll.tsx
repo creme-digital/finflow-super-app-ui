@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -8,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Filter, Download, MoreHorizontal, UserPlus } from 'lucide-react';
+import { ChevronDown, Filter, Download, MoreHorizontal, UserPlus, Edit2, Trash2 } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 
 const Payroll = () => {
@@ -148,6 +147,16 @@ const Payroll = () => {
 
   const getActiveFiltersCount = () => {
     return filters.department.length + filters.frequency.length + filters.status.length;
+  };
+
+  const handleEditEmployee = (employeeId: string) => {
+    console.log('Edit employee:', employeeId);
+    // TODO: Implement edit functionality
+  };
+
+  const handleRemoveEmployee = (employeeId: string, employeeName: string) => {
+    console.log('Remove employee:', employeeId, employeeName);
+    // TODO: Implement remove functionality
   };
 
   const activeFiltersCount = getActiveFiltersCount();
@@ -356,9 +365,31 @@ const Payroll = () => {
                           </Badge>
                         </TableCell>
                         <TableCell className="py-4">
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <MoreHorizontal className="w-4 h-4" />
-                          </Button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <MoreHorizontal className="w-4 h-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="bg-white">
+                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem 
+                                onClick={() => handleEditEmployee(employee.id)}
+                                className="cursor-pointer"
+                              >
+                                <Edit2 className="mr-2 h-4 w-4" />
+                                Edit User
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => handleRemoveEmployee(employee.id, employee.name)}
+                                className="cursor-pointer text-red-600 focus:text-red-600"
+                              >
+                                <Trash2 className="mr-2 h-4 w-4" />
+                                Remove User
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </TableCell>
                       </TableRow>
                     ))}
