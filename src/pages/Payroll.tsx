@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { ChevronDown, Filter, Download, MoreHorizontal, UserPlus, Edit2, Trash2 } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
+import { EditPayrollDialog } from '@/components/payroll/EditPayrollDialog';
 
 const Payroll = () => {
   const [filters, setFilters] = useState({
@@ -16,6 +17,9 @@ const Payroll = () => {
     frequency: [] as string[],
     status: [] as string[]
   });
+
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
 
   const employees = [
     {
@@ -149,14 +153,15 @@ const Payroll = () => {
     return filters.department.length + filters.frequency.length + filters.status.length;
   };
 
-  const handleEditEmployee = (employeeId: string) => {
-    console.log('Edit employee:', employeeId);
-    // TODO: Implement edit functionality
+  const handleEditPayroll = (employee: any) => {
+    console.log('Edit payroll for:', employee.id);
+    setSelectedEmployee(employee);
+    setEditDialogOpen(true);
   };
 
-  const handleRemoveEmployee = (employeeId: string, employeeName: string) => {
-    console.log('Remove employee:', employeeId, employeeName);
-    // TODO: Implement remove functionality
+  const handleRemovePayroll = (employeeId: string, employeeName: string) => {
+    console.log('Remove payroll for:', employeeId, employeeName);
+    // TODO: Implement remove payroll functionality
   };
 
   const activeFiltersCount = getActiveFiltersCount();
@@ -375,18 +380,18 @@ const Payroll = () => {
                               <DropdownMenuLabel>Actions</DropdownMenuLabel>
                               <DropdownMenuSeparator />
                               <DropdownMenuItem 
-                                onClick={() => handleEditEmployee(employee.id)}
+                                onClick={() => handleEditPayroll(employee)}
                                 className="cursor-pointer"
                               >
                                 <Edit2 className="mr-2 h-4 w-4" />
-                                Edit User
+                                Edit Payroll
                               </DropdownMenuItem>
                               <DropdownMenuItem 
-                                onClick={() => handleRemoveEmployee(employee.id, employee.name)}
+                                onClick={() => handleRemovePayroll(employee.id, employee.name)}
                                 className="cursor-pointer text-red-600 focus:text-red-600"
                               >
                                 <Trash2 className="mr-2 h-4 w-4" />
-                                Remove User
+                                Remove Payroll
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
@@ -410,6 +415,13 @@ const Payroll = () => {
               </div>
             </TabsContent>
           </Tabs>
+
+          {/* Edit Payroll Dialog */}
+          <EditPayrollDialog
+            open={editDialogOpen}
+            onOpenChange={setEditDialogOpen}
+            employee={selectedEmployee}
+          />
         </div>
       }
     />
