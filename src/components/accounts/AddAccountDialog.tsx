@@ -150,24 +150,20 @@ export function AddAccountDialog({ open, onOpenChange }: AddAccountDialogProps) 
           {/* Type */}
           <div className="space-y-3">
             <Label>Personal or Business</Label>
-            <div className={`p-3 rounded-md border-2 transition-colors ${
-              formData.type ? 'border-primary' : 'border-gray-300'
-            }`}>
-              <RadioGroup 
-                value={formData.type} 
-                onValueChange={(value) => handleInputChange('type', value)}
-                className="flex gap-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="personal" id="personal" />
-                  <Label htmlFor="personal" className="font-normal">Personal</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="business" id="business" />
-                  <Label htmlFor="business" className="font-normal">Business</Label>
-                </div>
-              </RadioGroup>
-            </div>
+            <RadioGroup 
+              value={formData.type} 
+              onValueChange={(value) => handleInputChange('type', value)}
+              className="flex gap-4"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="personal" id="personal" />
+                <Label htmlFor="personal" className="font-normal">Personal</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="business" id="business" />
+                <Label htmlFor="business" className="font-normal">Business</Label>
+              </div>
+            </RadioGroup>
           </div>
         </div>
 
