@@ -8,6 +8,7 @@ import { ReceiveDialog } from '@/components/dashboard/ReceiveDialog';
 import { AddCardDialog } from '@/components/cards/AddCardDialog';
 import { PayToBankDialog } from '@/components/dashboard/PayToBankDialog';
 import { PayPhoneDialog } from '@/components/dashboard/PayPhoneDialog';
+import { UtilityDialog } from '@/components/dashboard/UtilityDialog';
 
 export function TotalBalanceSection() {
   const { formatAmount } = useCurrency();
@@ -16,6 +17,7 @@ export function TotalBalanceSection() {
   const [addCardDialogOpen, setAddCardDialogOpen] = useState(false);
   const [payToBankDialogOpen, setPayToBankDialogOpen] = useState(false);
   const [payPhoneDialogOpen, setPayPhoneDialogOpen] = useState(false);
+  const [utilityDialogOpen, setUtilityDialogOpen] = useState(false);
 
   const buttonStyle = {
     border: '1px solid #FFFFFF',
@@ -96,6 +98,7 @@ export function TotalBalanceSection() {
           variant="ghost" 
           className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
           style={buttonStyle}
+          onClick={() => setUtilityDialogOpen(true)}
         >
           <UtilityPole className="w-5 h-5" />
           <span className="text-xs">Utility</span>
@@ -130,6 +133,12 @@ export function TotalBalanceSection() {
       <PayPhoneDialog 
         open={payPhoneDialogOpen}
         onOpenChange={setPayPhoneDialogOpen}
+      />
+
+      {/* Utility Dialog */}
+      <UtilityDialog 
+        open={utilityDialogOpen}
+        onOpenChange={setUtilityDialogOpen}
       />
     </div>
   );
