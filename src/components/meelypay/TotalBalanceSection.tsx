@@ -5,12 +5,14 @@ import { useCurrency } from '@/contexts/CurrencyContext';
 import { SendDialog } from '@/components/dashboard/SendDialog';
 import { ReceiveDialog } from '@/components/dashboard/ReceiveDialog';
 import { AddCardDialog } from '@/components/cards/AddCardDialog';
+import { PayToBankDialog } from '@/components/dashboard/PayToBankDialog';
 
 export function TotalBalanceSection() {
   const { formatAmount } = useCurrency();
   const [sendDialogOpen, setSendDialogOpen] = useState(false);
   const [receiveDialogOpen, setReceiveDialogOpen] = useState(false);
   const [addCardDialogOpen, setAddCardDialogOpen] = useState(false);
+  const [payToBankDialogOpen, setPayToBankDialogOpen] = useState(false);
 
   const buttonStyle = {
     border: '1px solid #FFFFFF',
@@ -73,6 +75,7 @@ export function TotalBalanceSection() {
           variant="ghost" 
           className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
           style={buttonStyle}
+          onClick={() => setPayToBankDialogOpen(true)}
         >
           <Banknote className="w-5 h-5" />
           <span className="text-xs">Pay to Bank</span>
@@ -111,6 +114,12 @@ export function TotalBalanceSection() {
       <AddCardDialog 
         open={addCardDialogOpen}
         onOpenChange={setAddCardDialogOpen}
+      />
+
+      {/* Pay to Bank Dialog */}
+      <PayToBankDialog 
+        open={payToBankDialogOpen}
+        onOpenChange={setPayToBankDialogOpen}
       />
     </div>
   );
