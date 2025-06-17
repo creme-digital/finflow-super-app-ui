@@ -11,6 +11,7 @@ import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Edit2, Trash2 } fr
 import { formatCurrency } from '@/lib/formatters';
 import { EditPayrollDialog } from '@/components/payroll/EditPayrollDialog';
 import { CreatePayrollDialog } from '@/components/payroll/CreatePayrollDialog';
+import { RunPayrollDialog } from '@/components/payroll/RunPayrollDialog';
 
 const Payroll = () => {
   const [filters, setFilters] = useState({
@@ -21,6 +22,7 @@ const Payroll = () => {
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [runPayrollDialogOpen, setRunPayrollDialogOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
 
   const employees = [
@@ -182,7 +184,12 @@ const Payroll = () => {
                   <Download className="w-4 h-4" />
                   Export All
                 </Button>
-                <Button variant="default" size="sm" className="gap-2">
+                <Button 
+                  variant="default" 
+                  size="sm" 
+                  className="gap-2"
+                  onClick={() => setRunPayrollDialogOpen(true)}
+                >
                   Run Payroll
                 </Button>
                 <Button 
@@ -434,6 +441,13 @@ const Payroll = () => {
           <CreatePayrollDialog
             open={createDialogOpen}
             onOpenChange={setCreateDialogOpen}
+          />
+
+          {/* Run Payroll Dialog */}
+          <RunPayrollDialog
+            open={runPayrollDialogOpen}
+            onOpenChange={setRunPayrollDialogOpen}
+            employees={filteredEmployees}
           />
         </div>
       }
