@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,9 +10,10 @@ import { X } from 'lucide-react';
 interface SendDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  prefilledRecipientName?: string;
 }
 
-export function SendDialog({ open, onOpenChange }: SendDialogProps) {
+export function SendDialog({ open, onOpenChange, prefilledRecipientName }: SendDialogProps) {
   const [formData, setFormData] = useState({
     fromAccount: '',
     recipientName: '',
@@ -21,6 +22,13 @@ export function SendDialog({ open, onOpenChange }: SendDialogProps) {
     paymentMethod: '',
     memo: ''
   });
+
+  // Update recipient name when dialog opens with prefilled data
+  useEffect(() => {
+    if (open && prefilledRecipientName) {
+      setFormData(prev => ({ ...prev, recipientName: prefilledRecipientName }));
+    }
+  }, [open, prefilledRecipientName]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));

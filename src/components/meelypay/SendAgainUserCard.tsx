@@ -11,10 +11,14 @@ interface SendAgainUser {
 
 interface SendAgainUserCardProps {
   user: SendAgainUser;
-  onClick?: () => void;
+  onSendClick?: (userName: string) => void;
 }
 
-export function SendAgainUserCard({ user, onClick }: SendAgainUserCardProps) {
+export function SendAgainUserCard({ user, onSendClick }: SendAgainUserCardProps) {
+  const handleClick = () => {
+    onSendClick?.(user.name);
+  };
+
   return (
     <div 
       className="flex flex-col items-center gap-2 p-4 cursor-pointer transition-colors hover:bg-muted/20"
@@ -26,7 +30,7 @@ export function SendAgainUserCard({ user, onClick }: SendAgainUserCardProps) {
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)'
       }}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <Avatar className="w-16 h-16">
         <AvatarImage src={user.avatar} alt={user.name} />

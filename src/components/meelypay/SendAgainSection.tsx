@@ -1,6 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { SendAgainUserCard } from './SendAgainUserCard';
+import { SendDialog } from '@/components/dashboard/SendDialog';
 
 const sendAgainUsers = [
   {
@@ -30,6 +31,14 @@ const sendAgainUsers = [
 ];
 
 export function SendAgainSection() {
+  const [sendDialogOpen, setSendDialogOpen] = useState(false);
+  const [selectedUserName, setSelectedUserName] = useState('');
+
+  const handleUserSendClick = (userName: string) => {
+    setSelectedUserName(userName);
+    setSendDialogOpen(true);
+  };
+
   return (
     <div 
       className="overflow-hidden"
@@ -46,10 +55,20 @@ export function SendAgainSection() {
         <h3 className="text-lg font-semibold text-foreground mb-4">Send Again</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {sendAgainUsers.map((user) => (
-            <SendAgainUserCard key={user.id} user={user} />
+            <SendAgainUserCard 
+              key={user.id} 
+              user={user} 
+              onSendClick={handleUserSendClick}
+            />
           ))}
         </div>
       </div>
+
+      <SendDialog 
+        open={sendDialogOpen}
+        onOpenChange={setSendDialogOpen}
+        prefilledRecipientName={selectedUserName}
+      />
     </div>
   );
 }
