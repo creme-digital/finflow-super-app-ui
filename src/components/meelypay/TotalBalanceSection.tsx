@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Wallet, Send, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
+import { Wallet, Send, ArrowDownLeft, CreditCard, Banknote, Phone, UtilityPole } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCurrency } from '@/contexts/CurrencyContext';
 
@@ -36,15 +36,7 @@ export function TotalBalanceSection() {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mt-6">
-        <Button 
-          variant="ghost" 
-          className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
-          style={buttonStyle}
-        >
-          <Wallet className="w-5 h-5" />
-          <span className="text-xs">Deposit</span>
-        </Button>
+      <div className="grid grid-cols-3 gap-3 mt-6">
         <Button 
           variant="ghost" 
           className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
@@ -66,8 +58,32 @@ export function TotalBalanceSection() {
           className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
           style={buttonStyle}
         >
-          <ArrowUpRight className="w-5 h-5" />
-          <span className="text-xs">Transfer</span>
+          <CreditCard className="w-5 h-5" />
+          <span className="text-xs">Add Card</span>
+        </Button>
+        <Button 
+          variant="ghost" 
+          className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
+          style={buttonStyle}
+        >
+          <Banknote className="w-5 h-5" />
+          <span className="text-xs">Pay to Bank</span>
+        </Button>
+        <Button 
+          variant="ghost" 
+          className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
+          style={buttonStyle}
+        >
+          <Phone className="w-5 h-5" />
+          <span className="text-xs">Pay Phone</span>
+        </Button>
+        <Button 
+          variant="ghost" 
+          className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
+          style={buttonStyle}
+        >
+          <UtilityPole className="w-5 h-5" />
+          <span className="text-xs">Utility</span>
         </Button>
       </div>
     </div>
