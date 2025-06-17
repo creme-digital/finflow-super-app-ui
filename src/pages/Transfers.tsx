@@ -9,6 +9,7 @@ import { Plus, Filter, ChevronDown, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { TransferDialog } from '@/components/dashboard/TransferDialog';
+import { TransactionDrawer } from '@/components/accounts/TransactionDrawer';
 
 // Sample transfer data
 const transfersData = [{
@@ -152,6 +153,7 @@ const transfersData = [{
   },
   amount: '$7,727.07'
 }];
+
 export default function Transfers() {
   const [filters, setFilters] = useState({
     method: [] as string[],
@@ -159,6 +161,8 @@ export default function Transfers() {
     date: [] as string[]
   });
   const [transferDialogOpen, setTransferDialogOpen] = useState(false);
+  const [transactionDrawerOpen, setTransactionDrawerOpen] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
 
   // Filter transfers based on applied filters
   const filteredTransfers = transfersData.filter(transfer => {
@@ -167,12 +171,14 @@ export default function Transfers() {
     const dateMatch = filters.date.length === 0 || filters.date.includes(transfer.date);
     return methodMatch && accountMatch && dateMatch;
   });
+
   const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
     setFilters(prev => ({
       ...prev,
       [filterType]: checked ? [...prev[filterType], value] : prev[filterType].filter(item => item !== value)
     }));
   };
+
   const clearAllFilters = () => {
     setFilters({
       method: [],
@@ -180,11 +186,32 @@ export default function Transfers() {
       date: []
     });
   };
+
   const getActiveFiltersCount = () => {
     return filters.method.length + filters.account.length + filters.date.length;
   };
+
+  const handleTransactionClick = (transfer: any) => {
+    // Convert transfer data to transaction format expected by TransactionDrawer
+    const transaction = {
+      id: transfer.id,
+      date: transfer.date,
+      person: transfer.from,
+      amount: parseFloat(transfer.amount.replace('$', '').replace(',', '')),
+      account: transfer.account,
+      method: transfer.method
+    };
+    setSelectedTransaction(transaction);
+    setTransactionDrawerOpen(true);
+  };
+
   const activeFiltersCount = getActiveFiltersCount();
-  return <Layout title="Transfer" mainContent={<div className="space-y-6">
+
+  return (
+    <Layout 
+      title="Transfer" 
+      mainContent={
+        <div className="space-y-6">
           {/* Header */}
           <PageHeader title="Transfer">
             <Button onClick={() => setTransferDialogOpen(true)}>
@@ -200,59 +227,84 @@ export default function Transfers() {
                 <Button variant="outline" size="sm" className="rounded-full relative gap-2">
                   <Filter className="w-4 h-4" />
                   Filters
-                  {activeFiltersCount > 0 && <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                  {activeFiltersCount > 0 && (
+                    <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
                       {activeFiltersCount}
-                    </Badge>}
+                    </Badge>
+                  )}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-56 bg-white">
                 <DropdownMenuLabel>Filter by Method</DropdownMenuLabel>
-                <DropdownMenuCheckboxItem checked={filters.method.includes('ACH Transfer')} onCheckedChange={checked => handleFilterChange('method', 'ACH Transfer', checked)}>
+                <DropdownMenuCheckboxItem 
+                  checked={filters.method.includes('ACH Transfer')} 
+                  onCheckedChange={(checked) => handleFilterChange('method', 'ACH Transfer', checked)}
+                >
                   ACH Transfer
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem checked={filters.method.includes('Wire Transfer')} onCheckedChange={checked => handleFilterChange('method', 'Wire Transfer', checked)}>
+                <DropdownMenuCheckboxItem 
+                  checked={filters.method.includes('Wire Transfer')} 
+                  onCheckedChange={(checked) => handleFilterChange('method', 'Wire Transfer', checked)}
+                >
                   Wire Transfer
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem checked={filters.method.includes('international')} onCheckedChange={checked => handleFilterChange('method', 'international', checked)}>
+                <DropdownMenuCheckboxItem 
+                  checked={filters.method.includes('international')} 
+                  onCheckedChange={(checked) => handleFilterChange('method', 'international', checked)}
+                >
                   International
                 </DropdownMenuCheckboxItem>
                 
                 <DropdownMenuSeparator />
                 
                 <DropdownMenuLabel>Filter by Account</DropdownMenuLabel>
-                <DropdownMenuCheckboxItem checked={filters.account.includes('Ops / Payroll')} onCheckedChange={checked => handleFilterChange('account', 'Ops / Payroll', checked)}>
+                <DropdownMenuCheckboxItem 
+                  checked={filters.account.includes('Ops / Payroll')} 
+                  onCheckedChange={(checked) => handleFilterChange('account', 'Ops / Payroll', checked)}
+                >
                   Ops / Payroll
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem checked={filters.account.includes('Credit account')} onCheckedChange={checked => handleFilterChange('account', 'Credit account', checked)}>
+                <DropdownMenuCheckboxItem 
+                  checked={filters.account.includes('Credit account')} 
+                  onCheckedChange={(checked) => handleFilterChange('account', 'Credit account', checked)}
+                >
                   Credit account
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem checked={filters.account.includes('AP')} onCheckedChange={checked => handleFilterChange('account', 'AP', checked)}>
+                <DropdownMenuCheckboxItem 
+                  checked={filters.account.includes('AP')} 
+                  onCheckedChange={(checked) => handleFilterChange('account', 'AP', checked)}
+                >
                   AP
                 </DropdownMenuCheckboxItem>
                 
-                {activeFiltersCount > 0 && <>
+                {activeFiltersCount > 0 && (
+                  <>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
                       Clear all filters
                     </DropdownMenuItem>
-                  </>}
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
             
             <span className="text-sm text-muted-foreground">
-              {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+              {activeFiltersCount > 0 
+                ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` 
+                : 'No filters applied'
+              }
             </span>
           </div>
 
           {/* Transfers Table */}
           <div className="overflow-hidden" style={{
-      border: '1px solid #FFFFFF',
-      boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-      borderRadius: '16px',
-      background: 'rgba(255, 255, 255, 0.4)',
-      backdropFilter: 'blur(10px)',
-      WebkitBackdropFilter: 'blur(10px)'
-    }}>
+            border: '1px solid #FFFFFF',
+            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            borderRadius: '16px',
+            background: 'rgba(255, 255, 255, 0.4)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
+          }}>
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-border">
@@ -266,12 +318,25 @@ export default function Transfers() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredTransfers.map(transfer => <TableRow key={transfer.id} className="border-b border-border/50">
+                {filteredTransfers.map((transfer) => (
+                  <TableRow 
+                    key={transfer.id} 
+                    className="border-b border-border/50 cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleTransactionClick(transfer)}
+                  >
                     <TableCell className="text-foreground">
                       {transfer.date}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary" className={cn("font-normal", transfer.method === 'ACH Transfer' && "bg-blue-50 text-blue-700 hover:bg-blue-50", transfer.method === 'Wire Transfer' && "bg-green-50 text-green-700 hover:bg-green-50", transfer.method === 'international' && "bg-purple-50 text-purple-700 hover:bg-purple-50")}>
+                      <Badge 
+                        variant="secondary" 
+                        className={cn(
+                          "font-normal",
+                          transfer.method === 'ACH Transfer' && "bg-blue-50 text-blue-700 hover:bg-blue-50",
+                          transfer.method === 'Wire Transfer' && "bg-green-50 text-green-700 hover:bg-green-50",
+                          transfer.method === 'international' && "bg-purple-50 text-purple-700 hover:bg-purple-50"
+                        )}
+                      >
                         {transfer.method}
                       </Badge>
                     </TableCell>
@@ -304,11 +369,20 @@ export default function Transfers() {
                       {transfer.amount}
                     </TableCell>
                     <TableCell>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // Handle more actions here if needed
+                        }}
+                      >
                         <MoreHorizontal className="w-4 h-4" />
                       </Button>
                     </TableCell>
-                  </TableRow>)}
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </div>
@@ -318,7 +392,17 @@ export default function Transfers() {
             open={transferDialogOpen}
             onOpenChange={setTransferDialogOpen}
           />
-        </div>} />;
+
+          {/* Transaction Drawer */}
+          <TransactionDrawer
+            open={transactionDrawerOpen}
+            onOpenChange={setTransactionDrawerOpen}
+            transaction={selectedTransaction}
+          />
+        </div>
+      } 
+    />
+  );
 }
 
 // ... keep existing code (TransferData interface)
