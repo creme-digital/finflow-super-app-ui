@@ -1,4 +1,3 @@
-
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -43,22 +42,21 @@ const RewardsMainContent = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header with Cards page styling */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Rewards</h1>
-          <p className="text-muted-foreground">Earn rewards through referrals and track your progress</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm">
-            View History
-          </Button>
-          <Button size="sm" className="gap-2">
-            <Plus className="w-4 h-4" />
-            Invite Friends
-          </Button>
-        </div>
-      </div>
+      {/* Header with consistent styling */}
+      <PageHeader 
+        title="Rewards"
+        children={
+          <div className="flex items-center gap-3">
+            <Button variant="outline" size="sm">
+              View History
+            </Button>
+            <Button size="sm" className="gap-2">
+              <Plus className="w-4 h-4" />
+              Invite Friends
+            </Button>
+          </div>
+        }
+      />
 
       {/* Stats Overview with Glass Effect */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
