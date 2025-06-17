@@ -1,11 +1,12 @@
-
 import React, { useState } from 'react';
 import { Wallet, Send, ArrowDownLeft, CreditCard, Banknote, Phone, UtilityPole } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCurrency } from '@/contexts/CurrencyContext';
+import { SendDialog } from '@/components/dashboard/SendDialog';
 
 export function TotalBalanceSection() {
   const { formatAmount } = useCurrency();
+  const [sendDialogOpen, setSendDialogOpen] = useState(false);
 
   const buttonStyle = {
     border: '1px solid #FFFFFF',
@@ -41,6 +42,7 @@ export function TotalBalanceSection() {
           variant="ghost" 
           className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
           style={buttonStyle}
+          onClick={() => setSendDialogOpen(true)}
         >
           <Send className="w-5 h-5" />
           <span className="text-xs">Send</span>
@@ -86,6 +88,12 @@ export function TotalBalanceSection() {
           <span className="text-xs">Utility</span>
         </Button>
       </div>
+
+      {/* Send Dialog */}
+      <SendDialog 
+        open={sendDialogOpen}
+        onOpenChange={setSendDialogOpen}
+      />
     </div>
   );
 }
