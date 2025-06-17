@@ -3,10 +3,12 @@ import { Wallet, Send, ArrowDownLeft, CreditCard, Banknote, Phone, UtilityPole }
 import { Button } from '@/components/ui/button';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { SendDialog } from '@/components/dashboard/SendDialog';
+import { ReceiveDialog } from '@/components/dashboard/ReceiveDialog';
 
 export function TotalBalanceSection() {
   const { formatAmount } = useCurrency();
   const [sendDialogOpen, setSendDialogOpen] = useState(false);
+  const [receiveDialogOpen, setReceiveDialogOpen] = useState(false);
 
   const buttonStyle = {
     border: '1px solid #FFFFFF',
@@ -51,6 +53,7 @@ export function TotalBalanceSection() {
           variant="ghost" 
           className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
           style={buttonStyle}
+          onClick={() => setReceiveDialogOpen(true)}
         >
           <ArrowDownLeft className="w-5 h-5" />
           <span className="text-xs">Receive</span>
@@ -93,6 +96,12 @@ export function TotalBalanceSection() {
       <SendDialog 
         open={sendDialogOpen}
         onOpenChange={setSendDialogOpen}
+      />
+
+      {/* Receive Dialog */}
+      <ReceiveDialog 
+        open={receiveDialogOpen}
+        onOpenChange={setReceiveDialogOpen}
       />
     </div>
   );
