@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, ChevronDown, Download, MoreHorizontal, Info } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 
@@ -131,6 +132,43 @@ const statusStyles = {
 };
 
 const Accounting = () => {
+  const [filters, setFilters] = useState({
+    status: [] as string[],
+    customer: [] as string[],
+    recurring: [] as string[]
+  });
+
+  // Filter invoices based on applied filters
+  const filteredInvoices = invoicesData.filter(invoice => {
+    const statusMatch = filters.status.length === 0 || filters.status.includes(invoice.status);
+    const customerMatch = filters.customer.length === 0 || filters.customer.includes(invoice.customer);
+    const recurringMatch = filters.recurring.length === 0 || filters.recurring.includes(invoice.recurring);
+    return statusMatch && customerMatch && recurringMatch;
+  });
+
+  const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: checked 
+        ? [...prev[filterType], value]
+        : prev[filterType].filter(item => item !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      status: [],
+      customer: [],
+      recurring: []
+    });
+  };
+
+  const getActiveFiltersCount = () => {
+    return filters.status.length + filters.customer.length + filters.recurring.length;
+  };
+
+  const activeFiltersCount = getActiveFiltersCount();
+
   return (
     <Layout
       title="Accounting"
@@ -151,16 +189,123 @@ const Accounting = () => {
             </div>
           </div>
 
-          {/* Filters */}
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm" className="gap-2">
-              <Filter className="w-4 h-4" />
-              Filters
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              Status
-              <ChevronDown className="w-4 h-4" />
-            </Button>
+          {/* Filters - matching Cards page styling */}
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="rounded-full relative gap-2">
+                  <Filter className="w-4 h-4" />
+                  Filters
+                  {activeFiltersCount > 0 && (
+                    <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                      {activeFiltersCount}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56 bg-white">
+                <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem
+                  checked={filters.status.includes('Overdue')}
+                  onCheckedChange={(checked) => handleFilterChange('status', 'Overdue', checked)}
+                >
+                  Overdue
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.status.includes('Not due yet')}
+                  onCheckedChange={(checked) => handleFilterChange('status', 'Not due yet', checked)}
+                >
+                  Not due yet
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.status.includes('Paid')}
+                  onCheckedChange={(checked) => handleFilterChange('status', 'Paid', checked)}
+                >
+                  Paid
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.status.includes('Processing')}
+                  onCheckedChange={(checked) => handleFilterChange('status', 'Processing', checked)}
+                >
+                  Processing
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.status.includes('Canceled')}
+                  onCheckedChange={(checked) => handleFilterChange('status', 'Canceled', checked)}
+                >
+                  Canceled
+                </DropdownMenuCheckboxItem>
+                
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuLabel>Filter by Customer</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem
+                  checked={filters.customer.includes('James Hall')}
+                  onCheckedChange={(checked) => handleFilterChange('customer', 'James Hall', checked)}
+                >
+                  James Hall
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.customer.includes('Rhonda Rhodes')}
+                  onCheckedChange={(checked) => handleFilterChange('customer', 'Rhonda Rhodes', checked)}
+                >
+                  Rhonda Rhodes
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.customer.includes('Kathy Pacheco')}
+                  onCheckedChange={(checked) => handleFilterChange('customer', 'Kathy Pacheco', checked)}
+                >
+                  Kathy Pacheco
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.customer.includes('Kimberly Mastrangelo')}
+                  onCheckedChange={(checked) => handleFilterChange('customer', 'Kimberly Mastrangelo', checked)}
+                >
+                  Kimberly Mastrangelo
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.customer.includes('Corina McCoy')}
+                  onCheckedChange={(checked) => handleFilterChange('customer', 'Corina McCoy', checked)}
+                >
+                  Corina McCoy
+                </DropdownMenuCheckboxItem>
+                
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuLabel>Filter by Recurring</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem
+                  checked={filters.recurring.includes('Monthly')}
+                  onCheckedChange={(checked) => handleFilterChange('recurring', 'Monthly', checked)}
+                >
+                  Monthly
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.recurring.includes('Weekly')}
+                  onCheckedChange={(checked) => handleFilterChange('recurring', 'Weekly', checked)}
+                >
+                  Weekly
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.recurring.includes('One Time')}
+                  onCheckedChange={(checked) => handleFilterChange('recurring', 'One Time', checked)}
+                >
+                  One Time
+                </DropdownMenuCheckboxItem>
+                
+                {activeFiltersCount > 0 && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
+                      Clear all filters
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            <span className="text-sm text-muted-foreground">
+              {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+            </span>
           </div>
 
           {/* Summary Cards */}
@@ -221,7 +366,7 @@ const Accounting = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {invoicesData.map((invoice, i) => (
+                {filteredInvoices.map((invoice, i) => (
                   <TableRow key={i} className="border-b border-border last:border-0">
                     <TableCell className="p-4">
                       <input type="checkbox" className="w-4 h-4" />
