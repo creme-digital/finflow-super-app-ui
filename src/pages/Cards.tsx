@@ -6,10 +6,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Filter, List, Grid2x2, MoreHorizontal } from 'lucide-react';
+import { Plus, Filter, List, Grid2x2, MoreHorizontal, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CardGrid } from '@/components/cards/CardGrid';
 import { AddCardDialog } from '@/components/cards/AddCardDialog';
+import { DeleteCardsDialog } from '@/components/cards/DeleteCardsDialog';
 
 // Statistics data
 const cardStats = [
@@ -108,6 +109,8 @@ export default function Cards() {
   const [activeTab, setActiveTab] = useState('all');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
   const [addCardDialogOpen, setAddCardDialogOpen] = useState(false);
+  const [selectedCards, setSelectedCards] = useState<string[]>([]);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   // Filter cards based on active tab
   const filteredCards = activeTab === 'all' 
@@ -119,6 +122,33 @@ export default function Cards() {
         if (activeTab === 'business') return card.account.includes('Business') || card.account.includes('Ops');
         return true;
       });
+
+  const handleCardSelect = (cardId: string, isSelected: boolean) => {
+    if (isSelected) {
+      setSelectedCards(prev => [...prev, cardId]);
+    } else {
+      setSelectedCards(prev => prev.filter(id => id !== cardId));
+    }
+  };
+
+  const handleSelectAll = (isSelected: boolean) => {
+    if (isSelected) {
+      setSelectedCards(filteredCards.map(card => card.id));
+    } else {
+      setSelectedCards([]);
+    }
+  };
+
+  const handleDeleteCards = () => {
+    // Handle delete logic here
+    console.log('Deleting cards:', selectedCards);
+    setSelectedCards([]);
+    setDeleteDialogOpen(false);
+    // In a real app, you would call an API to delete the cards
+  };
+
+  const isAllSelected = filteredCards.length > 0 && selectedCards.length === filteredCards.length;
+  const isSomeSelected = selectedCards.length > 0 && selectedCards.length < filteredCards.length;
 
   return (
     <Layout
@@ -170,13 +200,24 @@ export default function Cards() {
 
           {/* Filters and View Controls */}
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
-                <Filter className="w-4 h-4 mr-2" />
-                Filters
+            {selectedCards.length > 0 ? (
+              <Button 
+                variant="destructive" 
+                onClick={() => setDeleteDialogOpen(true)}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                Delete {selectedCards.length} Card{selectedCards.length > 1 ? 's' : ''}
               </Button>
-              <span className="text-sm text-muted-foreground">No filters applied</span>
-            </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm">
+                  <Filter className="w-4 h-4 mr-2" />
+                  Filters
+                </Button>
+                <span className="text-sm text-muted-foreground">No filters applied</span>
+              </div>
+            )}
             <div 
               className="inline-flex h-10 items-center justify-center rounded-full p-1"
               style={{
@@ -229,7 +270,17 @@ export default function Cards() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-12"></TableHead>
+                    <TableHead className="w-12">
+                      <input 
+                        type="checkbox" 
+                        className="rounded"
+                        checked={isAllSelected}
+                        ref={(el) => {
+                          if (el) el.indeterminate = isSomeSelected;
+                        }}
+                        onChange={(e) => handleSelectAll(e.target.checked)}
+                      />
+                    </TableHead>
                     <TableHead>Cardholder</TableHead>
                     <TableHead>Card</TableHead>
                     <TableHead>Spend this month</TableHead>
@@ -243,7 +294,12 @@ export default function Cards() {
                   {filteredCards.map((card) => (
                     <TableRow key={card.id}>
                       <TableCell>
-                        <input type="checkbox" className="rounded" />
+                        <input 
+                          type="checkbox" 
+                          className="rounded"
+                          checked={selectedCards.includes(card.id)}
+                          onChange={(e) => handleCardSelect(card.id, e.target.checked)}
+                        />
                       </TableCell>
                       <TableCell className="font-medium">{card.cardholder}</TableCell>
                       <TableCell>
@@ -283,6 +339,14 @@ export default function Cards() {
           <AddCardDialog
             open={addCardDialogOpen}
             onOpenChange={setAddCardDialogOpen}
+          />
+
+          {/* Delete Cards Confirmation Dialog */}
+          <DeleteCardsDialog
+            open={deleteDialogOpen}
+            onOpenChange={setDeleteDialogOpen}
+            selectedCount={selectedCards.length}
+            onConfirm={handleDeleteCards}
           />
         </div>
       }
