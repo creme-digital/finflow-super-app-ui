@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, ChevronDown, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -104,6 +104,44 @@ const transfersData = [
 ];
 
 export default function Transfers() {
+  const [filters, setFilters] = useState({
+    method: [] as string[],
+    account: [] as string[],
+    date: [] as string[]
+  });
+
+  // Filter transfers based on applied filters
+  const filteredTransfers = transfersData.filter(transfer => {
+    const methodMatch = filters.method.length === 0 || filters.method.includes(transfer.method);
+    const accountMatch = filters.account.length === 0 || filters.account.includes(transfer.account);
+    const dateMatch = filters.date.length === 0 || filters.date.includes(transfer.date);
+
+    return methodMatch && accountMatch && dateMatch;
+  });
+
+  const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: checked 
+        ? [...prev[filterType], value]
+        : prev[filterType].filter(item => item !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      method: [],
+      account: [],
+      date: []
+    });
+  };
+
+  const getActiveFiltersCount = () => {
+    return filters.method.length + filters.account.length + filters.date.length;
+  };
+
+  const activeFiltersCount = getActiveFiltersCount();
+
   return (
     <Layout
       title="Transfer"
@@ -119,17 +157,80 @@ export default function Transfers() {
             </Button>
           </PageHeader>
 
-          {/* Filters */}
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm" className="gap-2">
-              <Filter className="w-4 h-4" />
-              Filters
-            </Button>
+          {/* Filters - matching Cards page styling */}
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="rounded-full relative gap-2">
+                  <Filter className="w-4 h-4" />
+                  Filters
+                  {activeFiltersCount > 0 && (
+                    <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                      {activeFiltersCount}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56 bg-white">
+                <DropdownMenuLabel>Filter by Method</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem
+                  checked={filters.method.includes('ACH Transfer')}
+                  onCheckedChange={(checked) => handleFilterChange('method', 'ACH Transfer', checked)}
+                >
+                  ACH Transfer
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.method.includes('Wire Transfer')}
+                  onCheckedChange={(checked) => handleFilterChange('method', 'Wire Transfer', checked)}
+                >
+                  Wire Transfer
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.method.includes('international')}
+                  onCheckedChange={(checked) => handleFilterChange('method', 'international', checked)}
+                >
+                  International
+                </DropdownMenuCheckboxItem>
+                
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuLabel>Filter by Account</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem
+                  checked={filters.account.includes('Ops / Payroll')}
+                  onCheckedChange={(checked) => handleFilterChange('account', 'Ops / Payroll', checked)}
+                >
+                  Ops / Payroll
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.account.includes('Credit account')}
+                  onCheckedChange={(checked) => handleFilterChange('account', 'Credit account', checked)}
+                >
+                  Credit account
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={filters.account.includes('AP')}
+                  onCheckedChange={(checked) => handleFilterChange('account', 'AP', checked)}
+                >
+                  AP
+                </DropdownMenuCheckboxItem>
+                
+                {activeFiltersCount > 0 && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
+                      Clear all filters
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button variant="outline" size="sm" className="gap-2">
               Status
               <ChevronDown className="w-4 h-4" />
             </Button>
-            <span className="text-sm text-muted-foreground">No filters applied</span>
+            <span className="text-sm text-muted-foreground">
+              {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+            </span>
           </div>
 
           {/* Transfers Table */}
@@ -157,7 +258,7 @@ export default function Transfers() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {transfersData.map((transfer) => (
+                {filteredTransfers.map((transfer) => (
                   <TableRow key={transfer.id} className="border-b border-border/50">
                     <TableCell className="text-foreground">
                       {transfer.date}
@@ -219,6 +320,7 @@ export default function Transfers() {
   );
 }
 
+// ... keep existing code (TransferData interface)
 export interface TransferData {
   sourceAccount: string;
   destinationAccount: string;
