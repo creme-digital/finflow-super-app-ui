@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,11 +8,18 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Download, Filter, Plus, Search, FileText, DollarSign, Clock, AlertCircle, TrendingUp, TrendingDown, Calendar, Edit2, Trash2 } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
 
 const MeelyPayrollTax = () => {
   const { formatAmount } = useCurrency();
+
+  const [filters, setFilters] = useState({
+    type: [] as string[],
+    status: [] as string[],
+    period: [] as string[]
+  });
 
   const taxMetrics = [
     {
@@ -92,6 +100,44 @@ const MeelyPayrollTax = () => {
       dueDate: '2024-07-15'
     }
   ];
+
+  // Filter tax filings based on applied filters
+  const filteredTaxFiling = taxFiling.filter(filing => {
+    const typeMatch = filters.type.length === 0 || filters.type.includes(filing.type);
+    const statusMatch = filters.status.length === 0 || filters.status.includes(filing.status);
+    const periodMatch = filters.period.length === 0 || filters.period.includes(filing.period);
+    return typeMatch && statusMatch && periodMatch;
+  });
+
+  const filteredUpcomingFiling = upcomingFiling.filter(filing => {
+    const typeMatch = filters.type.length === 0 || filters.type.includes(filing.type);
+    const statusMatch = filters.status.length === 0 || filters.status.includes(filing.status);
+    const periodMatch = filters.period.length === 0 || filters.period.includes(filing.period);
+    return typeMatch && statusMatch && periodMatch;
+  });
+
+  const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: checked 
+        ? [...prev[filterType], value]
+        : prev[filterType].filter(item => item !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      type: [],
+      status: [],
+      period: []
+    });
+  };
+
+  const getActiveFiltersCount = () => {
+    return filters.type.length + filters.status.length + filters.period.length;
+  };
+
+  const activeFiltersCount = getActiveFiltersCount();
 
   return (
     <Layout>
@@ -188,15 +234,88 @@ const MeelyPayrollTax = () => {
           </TabsList>
 
           <TabsContent value="filed" className="space-y-4">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div className="flex flex-1 items-center space-x-2">
-                <div className="relative flex-1">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search tax filings..." className="pl-8" />
-                </div>
-                <Button variant="outline" size="icon">
-                  <Filter className="h-4 w-4" />
-                </Button>
+            {/* Filters - matching Cards page styling */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="rounded-full relative gap-2">
+                      <Filter className="w-4 h-4" />
+                      Filters
+                      {activeFiltersCount > 0 && (
+                        <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                          {activeFiltersCount}
+                        </Badge>
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-56 bg-white">
+                    <DropdownMenuLabel>Filter by Type</DropdownMenuLabel>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.type.includes('Federal Income Tax')}
+                      onCheckedChange={(checked) => handleFilterChange('type', 'Federal Income Tax', checked)}
+                    >
+                      Federal Income Tax
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.type.includes('State Income Tax')}
+                      onCheckedChange={(checked) => handleFilterChange('type', 'State Income Tax', checked)}
+                    >
+                      State Income Tax
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.type.includes('Social Security')}
+                      onCheckedChange={(checked) => handleFilterChange('type', 'Social Security', checked)}
+                    >
+                      Social Security
+                    </DropdownMenuCheckboxItem>
+                    
+                    <DropdownMenuSeparator />
+                    
+                    <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.status.includes('filed')}
+                      onCheckedChange={(checked) => handleFilterChange('status', 'filed', checked)}
+                    >
+                      Filed
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.status.includes('pending')}
+                      onCheckedChange={(checked) => handleFilterChange('status', 'pending', checked)}
+                    >
+                      Pending
+                    </DropdownMenuCheckboxItem>
+                    
+                    <DropdownMenuSeparator />
+                    
+                    <DropdownMenuLabel>Filter by Period</DropdownMenuLabel>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.period.includes('Q1 2024')}
+                      onCheckedChange={(checked) => handleFilterChange('period', 'Q1 2024', checked)}
+                    >
+                      Q1 2024
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.period.includes('Q2 2024')}
+                      onCheckedChange={(checked) => handleFilterChange('period', 'Q2 2024', checked)}
+                    >
+                      Q2 2024
+                    </DropdownMenuCheckboxItem>
+                    
+                    {activeFiltersCount > 0 && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
+                          Clear all filters
+                        </DropdownMenuItem>
+                      </>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                
+                <span className="text-sm text-muted-foreground">
+                  {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+                </span>
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" className="w-full md:w-auto">
@@ -211,7 +330,7 @@ const MeelyPayrollTax = () => {
             </div>
 
             <div className="grid gap-4">
-              {taxFiling.map((filing) => (
+              {filteredTaxFiling.map((filing) => (
                 <Card key={filing.id}>
                   <CardContent className="p-6">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -247,15 +366,88 @@ const MeelyPayrollTax = () => {
           </TabsContent>
 
           <TabsContent value="upcoming" className="space-y-4">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div className="flex flex-1 items-center space-x-2">
-                <div className="relative flex-1">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search upcoming filings..." className="pl-8" />
-                </div>
-                <Button variant="outline" size="icon">
-                  <Filter className="h-4 w-4" />
-                </Button>
+            {/* Filters - matching Cards page styling */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="rounded-full relative gap-2">
+                      <Filter className="w-4 h-4" />
+                      Filters
+                      {activeFiltersCount > 0 && (
+                        <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                          {activeFiltersCount}
+                        </Badge>
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-56 bg-white">
+                    <DropdownMenuLabel>Filter by Type</DropdownMenuLabel>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.type.includes('Federal Income Tax')}
+                      onCheckedChange={(checked) => handleFilterChange('type', 'Federal Income Tax', checked)}
+                    >
+                      Federal Income Tax
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.type.includes('State Income Tax')}
+                      onCheckedChange={(checked) => handleFilterChange('type', 'State Income Tax', checked)}
+                    >
+                      State Income Tax
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.type.includes('Social Security')}
+                      onCheckedChange={(checked) => handleFilterChange('type', 'Social Security', checked)}
+                    >
+                      Social Security
+                    </DropdownMenuCheckboxItem>
+                    
+                    <DropdownMenuSeparator />
+                    
+                    <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.status.includes('filed')}
+                      onCheckedChange={(checked) => handleFilterChange('status', 'filed', checked)}
+                    >
+                      Filed
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.status.includes('pending')}
+                      onCheckedChange={(checked) => handleFilterChange('status', 'pending', checked)}
+                    >
+                      Pending
+                    </DropdownMenuCheckboxItem>
+                    
+                    <DropdownMenuSeparator />
+                    
+                    <DropdownMenuLabel>Filter by Period</DropdownMenuLabel>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.period.includes('Q1 2024')}
+                      onCheckedChange={(checked) => handleFilterChange('period', 'Q1 2024', checked)}
+                    >
+                      Q1 2024
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={filters.period.includes('Q2 2024')}
+                      onCheckedChange={(checked) => handleFilterChange('period', 'Q2 2024', checked)}
+                    >
+                      Q2 2024
+                    </DropdownMenuCheckboxItem>
+                    
+                    {activeFiltersCount > 0 && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
+                          Clear all filters
+                        </DropdownMenuItem>
+                      </>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                
+                <span className="text-sm text-muted-foreground">
+                  {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+                </span>
               </div>
               <Button className="w-full md:w-auto">
                 <Plus className="h-4 w-4 mr-2" />
@@ -264,7 +456,7 @@ const MeelyPayrollTax = () => {
             </div>
 
             <div className="grid gap-4">
-              {upcomingFiling.map((filing) => (
+              {filteredUpcomingFiling.map((filing) => (
                 <Card key={filing.id}>
                   <CardContent className="p-6">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -388,4 +580,4 @@ const MeelyPayrollTax = () => {
   );
 };
 
-export default MeelyPayrollTax; 
+export default MeelyPayrollTax;
