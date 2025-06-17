@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Plus, Filter, List, Grid2x2, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CardGrid } from '@/components/cards/CardGrid';
+import { AddCardDialog } from '@/components/cards/AddCardDialog';
 
 // Statistics data
 const cardStats = [
@@ -107,6 +107,7 @@ const cardsData = [
 export default function Cards() {
   const [activeTab, setActiveTab] = useState('all');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
+  const [addCardDialogOpen, setAddCardDialogOpen] = useState(false);
 
   // Filter cards based on active tab
   const filteredCards = activeTab === 'all' 
@@ -127,7 +128,7 @@ export default function Cards() {
           {/* Header with Create Card button */}
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-semibold text-foreground">Cards</h1>
-            <Button>
+            <Button onClick={() => setAddCardDialogOpen(true)}>
               <Plus className="w-4 h-4 mr-2" />
               Create Card
             </Button>
@@ -277,6 +278,12 @@ export default function Cards() {
               </Table>
             </div>
           )}
+
+          {/* Add Card Dialog */}
+          <AddCardDialog
+            open={addCardDialogOpen}
+            onOpenChange={setAddCardDialogOpen}
+          />
         </div>
       }
     />
