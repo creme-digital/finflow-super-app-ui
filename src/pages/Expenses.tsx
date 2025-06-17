@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { ExpenseFilters } from '@/components/expenses/ExpenseFilters';
@@ -189,7 +188,7 @@ export default function Expenses() {
           <PageHeader title="Expenses Details">
             <Button onClick={() => setIsAddExpenseOpen(true)}>
               <Plus className="w-4 h-4 mr-2" />
-              Add Expenses
+              Add Expense
             </Button>
           </PageHeader>
 
@@ -302,7 +301,6 @@ export default function Expenses() {
           <AddExpenseDialog 
             open={isAddExpenseOpen} 
             onOpenChange={setIsAddExpenseOpen} 
-            onAddExpense={handleAddExpense} 
           />
         </div>
       }
