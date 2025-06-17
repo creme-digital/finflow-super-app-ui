@@ -12,10 +12,14 @@ interface BankAccount {
 
 interface BankAccountCardProps {
   account: BankAccount;
-  onClick?: () => void;
+  onClick?: (account: BankAccount) => void;
 }
 
 export function BankAccountCard({ account, onClick }: BankAccountCardProps) {
+  const handleClick = () => {
+    onClick?.(account);
+  };
+
   return (
     <div 
       className="flex items-center justify-between p-3 cursor-pointer transition-colors hover:bg-muted/20"
@@ -27,7 +31,7 @@ export function BankAccountCard({ account, onClick }: BankAccountCardProps) {
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)'
       }}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
