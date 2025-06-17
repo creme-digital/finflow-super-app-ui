@@ -239,8 +239,8 @@ const MeelyPayrollTax = () => {
               <div className="flex items-center gap-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="rounded-full relative gap-2">
-                      <Filter className="w-4 h-4" />
+                    <Button variant="outline" size="sm" className="rounded-full relative">
+                      <Filter className="w-4 h-4 mr-2" />
                       Filters
                       {activeFiltersCount > 0 && (
                         <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
@@ -371,8 +371,8 @@ const MeelyPayrollTax = () => {
               <div className="flex items-center gap-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="rounded-full relative gap-2">
-                      <Filter className="w-4 h-4" />
+                    <Button variant="outline" size="sm" className="rounded-full relative">
+                      <Filter className="w-4 h-4 mr-2" />
                       Filters
                       {activeFiltersCount > 0 && (
                         <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
