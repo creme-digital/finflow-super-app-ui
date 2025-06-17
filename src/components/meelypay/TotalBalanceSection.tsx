@@ -4,11 +4,13 @@ import { Button } from '@/components/ui/button';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { SendDialog } from '@/components/dashboard/SendDialog';
 import { ReceiveDialog } from '@/components/dashboard/ReceiveDialog';
+import { AddCardDialog } from '@/components/cards/AddCardDialog';
 
 export function TotalBalanceSection() {
   const { formatAmount } = useCurrency();
   const [sendDialogOpen, setSendDialogOpen] = useState(false);
   const [receiveDialogOpen, setReceiveDialogOpen] = useState(false);
+  const [addCardDialogOpen, setAddCardDialogOpen] = useState(false);
 
   const buttonStyle = {
     border: '1px solid #FFFFFF',
@@ -62,6 +64,7 @@ export function TotalBalanceSection() {
           variant="ghost" 
           className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
           style={buttonStyle}
+          onClick={() => setAddCardDialogOpen(true)}
         >
           <CreditCard className="w-5 h-5" />
           <span className="text-xs">Add Card</span>
@@ -102,6 +105,12 @@ export function TotalBalanceSection() {
       <ReceiveDialog 
         open={receiveDialogOpen}
         onOpenChange={setReceiveDialogOpen}
+      />
+
+      {/* Add Card Dialog */}
+      <AddCardDialog 
+        open={addCardDialogOpen}
+        onOpenChange={setAddCardDialogOpen}
       />
     </div>
   );
