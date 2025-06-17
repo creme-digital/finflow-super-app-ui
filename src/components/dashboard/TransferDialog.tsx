@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -7,13 +6,14 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { X } from 'lucide-react';
-
 interface TransferDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
-
-export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
+export function TransferDialog({
+  open,
+  onOpenChange
+}: TransferDialogProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [transferType, setTransferType] = useState('ach');
   const [formData, setFormData] = useState({
@@ -25,22 +25,24 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
     recipientEmail: '',
     memo: ''
   });
-
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
-
   const handleContinue = () => {
     setCurrentPage(2);
   };
-
   const handleBack = () => {
     setCurrentPage(1);
   };
-
   const handleTransfer = () => {
     // Handle transfer logic here
-    console.log('Transfer data:', { ...formData, transferType });
+    console.log('Transfer data:', {
+      ...formData,
+      transferType
+    });
     onOpenChange(false);
     // Reset form when closing
     setCurrentPage(1);
@@ -54,58 +56,48 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
       memo: ''
     });
   };
-
   const handleCancel = () => {
     onOpenChange(false);
     setCurrentPage(1);
   };
-
   const getTransferTypeTitle = () => {
     switch (transferType) {
-      case 'ach': return 'ACH Transfer';
-      case 'wire': return 'Wire Transfer';
-      case 'international': return 'International Transfer';
-      default: return 'Transfer';
+      case 'ach':
+        return 'ACH Transfer';
+      case 'wire':
+        return 'Wire Transfer';
+      case 'international':
+        return 'International Transfer';
+      default:
+        return 'Transfer';
     }
   };
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent 
-        className="sm:max-w-[500px] p-0 border-0 flex flex-col gap-0"
-        style={{
-          background: 'rgba(255, 255, 255, 0.95)',
-          border: '1px solid rgba(255, 255, 255, 0.9)',
-          borderRadius: '24px',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)'
-        }}
-      >
+  return <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[500px] p-0 border-0 flex flex-col gap-0" style={{
+      background: 'rgba(255, 255, 255, 0.95)',
+      border: '1px solid rgba(255, 255, 255, 0.9)',
+      borderRadius: '24px',
+      backdropFilter: 'blur(10px)',
+      WebkitBackdropFilter: 'blur(10px)'
+    }}>
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-border">
           <h2 className="text-xl font-semibold text-foreground">
             {currentPage === 1 ? 'Transfer Funds' : 'Confirm Transfer'}
           </h2>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onOpenChange(false)}
-            className="h-8 w-8"
-          >
+          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)} className="h-8 w-8">
             <X className="h-4 w-4" />
           </Button>
         </div>
 
         {/* Content */}
-        <div 
-          className="flex flex-col gap-3 p-4 overflow-auto"
-          style={{ maxHeight: '500px' }}
-        >
-          {currentPage === 1 ? (
-            <>
+        <div className="flex flex-col gap-3 p-4 overflow-auto" style={{
+        maxHeight: '500px'
+      }}>
+          {currentPage === 1 ? <>
               {/* Transfer Type Tabs */}
               <Tabs value={transferType} onValueChange={setTransferType} className="w-full">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-3 bg-white/[0.63]">
                   <TabsTrigger value="ach">ACH Transfer</TabsTrigger>
                   <TabsTrigger value="wire">Wire Transfer</TabsTrigger>
                   <TabsTrigger value="international">International</TabsTrigger>
@@ -117,7 +109,7 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                     {/* From Account */}
                     <div className="space-y-2">
                       <Label htmlFor="fromAccount">From Account</Label>
-                      <Select value={formData.fromAccount} onValueChange={(value) => handleInputChange('fromAccount', value)}>
+                      <Select value={formData.fromAccount} onValueChange={value => handleInputChange('fromAccount', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select account" />
                         </SelectTrigger>
@@ -133,35 +125,19 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                     {/* Recipient Name */}
                     <div className="space-y-2">
                       <Label htmlFor="recipientName">Recipient Name</Label>
-                      <Input
-                        id="recipientName"
-                        value={formData.recipientName}
-                        onChange={(e) => handleInputChange('recipientName', e.target.value)}
-                        placeholder="Enter recipient name"
-                      />
+                      <Input id="recipientName" value={formData.recipientName} onChange={e => handleInputChange('recipientName', e.target.value)} placeholder="Enter recipient name" />
                     </div>
 
                     {/* Routing Number */}
                     <div className="space-y-2">
                       <Label htmlFor="routingNumber">Routing Number</Label>
-                      <Input
-                        id="routingNumber"
-                        value={formData.routingNumber}
-                        onChange={(e) => handleInputChange('routingNumber', e.target.value)}
-                        placeholder="9-digit routing number"
-                        maxLength={9}
-                      />
+                      <Input id="routingNumber" value={formData.routingNumber} onChange={e => handleInputChange('routingNumber', e.target.value)} placeholder="9-digit routing number" maxLength={9} />
                     </div>
 
                     {/* Account Number */}
                     <div className="space-y-2">
                       <Label htmlFor="accountNumber">Account Number</Label>
-                      <Input
-                        id="accountNumber"
-                        value={formData.accountNumber}
-                        onChange={(e) => handleInputChange('accountNumber', e.target.value)}
-                        placeholder="Enter account number"
-                      />
+                      <Input id="accountNumber" value={formData.accountNumber} onChange={e => handleInputChange('accountNumber', e.target.value)} placeholder="Enter account number" />
                     </div>
 
                     {/* Amount */}
@@ -169,40 +145,20 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                       <Label htmlFor="amount">Amount</Label>
                       <div className="relative">
                         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-                        <Input
-                          id="amount"
-                          type="number"
-                          value={formData.amount}
-                          onChange={(e) => handleInputChange('amount', e.target.value)}
-                          placeholder="0.00"
-                          className="pl-8"
-                          step="0.01"
-                          min="0"
-                        />
+                        <Input id="amount" type="number" value={formData.amount} onChange={e => handleInputChange('amount', e.target.value)} placeholder="0.00" className="pl-8" step="0.01" min="0" />
                       </div>
                     </div>
 
                     {/* Recipient Email */}
                     <div className="space-y-2">
                       <Label htmlFor="recipientEmail">Recipient Email</Label>
-                      <Input
-                        id="recipientEmail"
-                        type="email"
-                        value={formData.recipientEmail}
-                        onChange={(e) => handleInputChange('recipientEmail', e.target.value)}
-                        placeholder="Enter email address"
-                      />
+                      <Input id="recipientEmail" type="email" value={formData.recipientEmail} onChange={e => handleInputChange('recipientEmail', e.target.value)} placeholder="Enter email address" />
                     </div>
 
                     {/* Memo */}
                     <div className="space-y-2">
                       <Label htmlFor="memo">Memo (Optional)</Label>
-                      <Input
-                        id="memo"
-                        value={formData.memo}
-                        onChange={(e) => handleInputChange('memo', e.target.value)}
-                        placeholder="Optional memo"
-                      />
+                      <Input id="memo" value={formData.memo} onChange={e => handleInputChange('memo', e.target.value)} placeholder="Optional memo" />
                     </div>
                   </div>
                 </TabsContent>
@@ -213,7 +169,7 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                     {/* From Account */}
                     <div className="space-y-2">
                       <Label htmlFor="fromAccount">From Account</Label>
-                      <Select value={formData.fromAccount} onValueChange={(value) => handleInputChange('fromAccount', value)}>
+                      <Select value={formData.fromAccount} onValueChange={value => handleInputChange('fromAccount', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select account" />
                         </SelectTrigger>
@@ -229,35 +185,19 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                     {/* Recipient Name */}
                     <div className="space-y-2">
                       <Label htmlFor="recipientName">Recipient Name</Label>
-                      <Input
-                        id="recipientName"
-                        value={formData.recipientName}
-                        onChange={(e) => handleInputChange('recipientName', e.target.value)}
-                        placeholder="Enter recipient name"
-                      />
+                      <Input id="recipientName" value={formData.recipientName} onChange={e => handleInputChange('recipientName', e.target.value)} placeholder="Enter recipient name" />
                     </div>
 
                     {/* Routing Number */}
                     <div className="space-y-2">
                       <Label htmlFor="routingNumber">Routing Number</Label>
-                      <Input
-                        id="routingNumber"
-                        value={formData.routingNumber}
-                        onChange={(e) => handleInputChange('routingNumber', e.target.value)}
-                        placeholder="9-digit routing number"
-                        maxLength={9}
-                      />
+                      <Input id="routingNumber" value={formData.routingNumber} onChange={e => handleInputChange('routingNumber', e.target.value)} placeholder="9-digit routing number" maxLength={9} />
                     </div>
 
                     {/* Account Number */}
                     <div className="space-y-2">
                       <Label htmlFor="accountNumber">Account Number</Label>
-                      <Input
-                        id="accountNumber"
-                        value={formData.accountNumber}
-                        onChange={(e) => handleInputChange('accountNumber', e.target.value)}
-                        placeholder="Enter account number"
-                      />
+                      <Input id="accountNumber" value={formData.accountNumber} onChange={e => handleInputChange('accountNumber', e.target.value)} placeholder="Enter account number" />
                     </div>
 
                     {/* Amount */}
@@ -265,40 +205,20 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                       <Label htmlFor="amount">Amount</Label>
                       <div className="relative">
                         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-                        <Input
-                          id="amount"
-                          type="number"
-                          value={formData.amount}
-                          onChange={(e) => handleInputChange('amount', e.target.value)}
-                          placeholder="0.00"
-                          className="pl-8"
-                          step="0.01"
-                          min="0"
-                        />
+                        <Input id="amount" type="number" value={formData.amount} onChange={e => handleInputChange('amount', e.target.value)} placeholder="0.00" className="pl-8" step="0.01" min="0" />
                       </div>
                     </div>
 
                     {/* Recipient Email */}
                     <div className="space-y-2">
                       <Label htmlFor="recipientEmail">Recipient Email</Label>
-                      <Input
-                        id="recipientEmail"
-                        type="email"
-                        value={formData.recipientEmail}
-                        onChange={(e) => handleInputChange('recipientEmail', e.target.value)}
-                        placeholder="Enter email address"
-                      />
+                      <Input id="recipientEmail" type="email" value={formData.recipientEmail} onChange={e => handleInputChange('recipientEmail', e.target.value)} placeholder="Enter email address" />
                     </div>
 
                     {/* Memo */}
                     <div className="space-y-2">
                       <Label htmlFor="memo">Memo (Optional)</Label>
-                      <Input
-                        id="memo"
-                        value={formData.memo}
-                        onChange={(e) => handleInputChange('memo', e.target.value)}
-                        placeholder="Optional memo"
-                      />
+                      <Input id="memo" value={formData.memo} onChange={e => handleInputChange('memo', e.target.value)} placeholder="Optional memo" />
                     </div>
                   </div>
                 </TabsContent>
@@ -309,7 +229,7 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                     {/* From Account */}
                     <div className="space-y-2">
                       <Label htmlFor="fromAccount">From Account</Label>
-                      <Select value={formData.fromAccount} onValueChange={(value) => handleInputChange('fromAccount', value)}>
+                      <Select value={formData.fromAccount} onValueChange={value => handleInputChange('fromAccount', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select account" />
                         </SelectTrigger>
@@ -325,34 +245,19 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                     {/* Recipient Name */}
                     <div className="space-y-2">
                       <Label htmlFor="recipientName">Recipient Name</Label>
-                      <Input
-                        id="recipientName"
-                        value={formData.recipientName}
-                        onChange={(e) => handleInputChange('recipientName', e.target.value)}
-                        placeholder="Enter recipient name"
-                      />
+                      <Input id="recipientName" value={formData.recipientName} onChange={e => handleInputChange('recipientName', e.target.value)} placeholder="Enter recipient name" />
                     </div>
 
                     {/* Routing Number */}
                     <div className="space-y-2">
                       <Label htmlFor="routingNumber">SWIFT/BIC Code</Label>
-                      <Input
-                        id="routingNumber"
-                        value={formData.routingNumber}
-                        onChange={(e) => handleInputChange('routingNumber', e.target.value)}
-                        placeholder="Enter SWIFT/BIC code"
-                      />
+                      <Input id="routingNumber" value={formData.routingNumber} onChange={e => handleInputChange('routingNumber', e.target.value)} placeholder="Enter SWIFT/BIC code" />
                     </div>
 
                     {/* Account Number */}
                     <div className="space-y-2">
                       <Label htmlFor="accountNumber">Account Number / IBAN</Label>
-                      <Input
-                        id="accountNumber"
-                        value={formData.accountNumber}
-                        onChange={(e) => handleInputChange('accountNumber', e.target.value)}
-                        placeholder="Enter account number or IBAN"
-                      />
+                      <Input id="accountNumber" value={formData.accountNumber} onChange={e => handleInputChange('accountNumber', e.target.value)} placeholder="Enter account number or IBAN" />
                     </div>
 
                     {/* Amount */}
@@ -360,48 +265,26 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                       <Label htmlFor="amount">Amount</Label>
                       <div className="relative">
                         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-                        <Input
-                          id="amount"
-                          type="number"
-                          value={formData.amount}
-                          onChange={(e) => handleInputChange('amount', e.target.value)}
-                          placeholder="0.00"
-                          className="pl-8"
-                          step="0.01"
-                          min="0"
-                        />
+                        <Input id="amount" type="number" value={formData.amount} onChange={e => handleInputChange('amount', e.target.value)} placeholder="0.00" className="pl-8" step="0.01" min="0" />
                       </div>
                     </div>
 
                     {/* Recipient Email */}
                     <div className="space-y-2">
                       <Label htmlFor="recipientEmail">Recipient Email</Label>
-                      <Input
-                        id="recipientEmail"
-                        type="email"
-                        value={formData.recipientEmail}
-                        onChange={(e) => handleInputChange('recipientEmail', e.target.value)}
-                        placeholder="Enter email address"
-                      />
+                      <Input id="recipientEmail" type="email" value={formData.recipientEmail} onChange={e => handleInputChange('recipientEmail', e.target.value)} placeholder="Enter email address" />
                     </div>
 
                     {/* Memo */}
                     <div className="space-y-2">
                       <Label htmlFor="memo">Memo (Optional)</Label>
-                      <Input
-                        id="memo"
-                        value={formData.memo}
-                        onChange={(e) => handleInputChange('memo', e.target.value)}
-                        placeholder="Optional memo"
-                      />
+                      <Input id="memo" value={formData.memo} onChange={e => handleInputChange('memo', e.target.value)} placeholder="Optional memo" />
                     </div>
                   </div>
                 </TabsContent>
               </Tabs>
-            </>
-          ) : (
-            /* Page 2 - Transfer Summary */
-            <div className="space-y-6">
+            </> : (/* Page 2 - Transfer Summary */
+        <div className="space-y-6">
               {/* Header */}
               <div className="text-center space-y-2">
                 <h3 className="text-lg font-medium text-muted-foreground">
@@ -450,27 +333,18 @@ export function TransferDialog({ open, onOpenChange }: TransferDialogProps) {
                   We partner with Apex Clearing Corporation to offer your Treasury account and hold your Treasury funds.
                 </p>
               </div>
-            </div>
-          )}
+            </div>)}
         </div>
 
         {/* Fixed Buttons */}
         <div className="flex gap-2 p-4 border-t border-border">
-          <Button
-            variant="secondary"
-            onClick={currentPage === 1 ? handleCancel : handleBack}
-            className="flex-1 rounded-full"
-          >
+          <Button variant="secondary" onClick={currentPage === 1 ? handleCancel : handleBack} className="flex-1 rounded-full">
             {currentPage === 1 ? 'Cancel' : 'Back'}
           </Button>
-          <Button
-            onClick={currentPage === 1 ? handleContinue : handleTransfer}
-            className="flex-1"
-          >
+          <Button onClick={currentPage === 1 ? handleContinue : handleTransfer} className="flex-1">
             {currentPage === 1 ? 'Continue' : 'Transfer'}
           </Button>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 }
