@@ -1,15 +1,22 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { ChevronDown, Filter, Download, MoreHorizontal, Plus } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 
 const Transactions = () => {
+  const [filters, setFilters] = useState({
+    account: [] as string[],
+    method: [] as string[]
+  });
+
   const transactions = [
     {
       id: '2110',
@@ -85,6 +92,35 @@ const Transactions = () => {
     },
   ];
 
+  // Filter transactions based on applied filters
+  const filteredTransactions = transactions.filter(transaction => {
+    const accountMatch = filters.account.length === 0 || filters.account.includes(transaction.account);
+    const methodMatch = filters.method.length === 0 || filters.method.includes(transaction.method);
+    return accountMatch && methodMatch;
+  });
+
+  const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: checked 
+        ? [...prev[filterType], value]
+        : prev[filterType].filter(item => item !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      account: [],
+      method: []
+    });
+  };
+
+  const getActiveFiltersCount = () => {
+    return filters.account.length + filters.method.length;
+  };
+
+  const activeFiltersCount = getActiveFiltersCount();
+
   // Generate bar chart data for visualization
   const chartBars = Array.from({ length: 15 }, (_, i) => ({
     height: Math.random() * 60 + 20,
@@ -104,34 +140,95 @@ const Transactions = () => {
             </Button>
           </PageHeader>
 
-          {/* Filters Row */}
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm" className="gap-2">
-              📊 Data View
-              <ChevronDown className="w-4 h-4" />
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Filter className="w-4 h-4" />
-              Filters
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              Date
-              <ChevronDown className="w-4 h-4" />
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              Keywords
-              <ChevronDown className="w-4 h-4" />
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              Amount
-              <ChevronDown className="w-4 h-4" />
-            </Button>
-            <div className="ml-auto">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Download className="w-4 h-4" />
-                Export All
-              </Button>
+          {/* Filters - matching Cards page styling */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="rounded-full relative gap-2">
+                    <Filter className="w-4 h-4" />
+                    Filters
+                    {activeFiltersCount > 0 && (
+                      <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                        {activeFiltersCount}
+                      </Badge>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56 bg-white">
+                  <DropdownMenuLabel>Filter by Account</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.account.includes('Ops / Payroll')}
+                    onCheckedChange={(checked) => handleFilterChange('account', 'Ops / Payroll', checked)}
+                  >
+                    Ops / Payroll
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.account.includes('Credit account')}
+                    onCheckedChange={(checked) => handleFilterChange('account', 'Credit account', checked)}
+                  >
+                    Credit account
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.account.includes('AP')}
+                    onCheckedChange={(checked) => handleFilterChange('account', 'AP', checked)}
+                  >
+                    AP
+                  </DropdownMenuCheckboxItem>
+                  
+                  <DropdownMenuSeparator />
+                  
+                  <DropdownMenuLabel>Filter by Method</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.method.includes('Request or Invoice Payment')}
+                    onCheckedChange={(checked) => handleFilterChange('method', 'Request or Invoice Payment', checked)}
+                  >
+                    Request or Invoice Payment
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.method.includes('Transfer')}
+                    onCheckedChange={(checked) => handleFilterChange('method', 'Transfer', checked)}
+                  >
+                    Transfer
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.method.includes('Intl. Wire')}
+                    onCheckedChange={(checked) => handleFilterChange('method', 'Intl. Wire', checked)}
+                  >
+                    Intl. Wire
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.method.includes('Aluna T. ••7840')}
+                    onCheckedChange={(checked) => handleFilterChange('method', 'Aluna T. ••7840', checked)}
+                  >
+                    Aluna T. ••7840
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.method.includes('Landon S. ••5555')}
+                    onCheckedChange={(checked) => handleFilterChange('method', 'Landon S. ••5555', checked)}
+                  >
+                    Landon S. ••5555
+                  </DropdownMenuCheckboxItem>
+                  
+                  {activeFiltersCount > 0 && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
+                        Clear all filters
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <span className="text-sm text-muted-foreground">
+                {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+              </span>
             </div>
+            <Button variant="outline" size="sm" className="gap-2">
+              <Download className="w-4 h-4" />
+              Export All
+            </Button>
           </div>
 
           {/* Net Cash Summary Card */}
@@ -205,7 +302,7 @@ const Transactions = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {transactions.map((transaction) => (
+                {filteredTransactions.map((transaction) => (
                   <TableRow key={transaction.id} className="border-b border-border last:border-0">
                     <TableCell className="font-medium text-foreground py-4">
                       {transaction.date}
