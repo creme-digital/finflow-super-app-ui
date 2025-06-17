@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,10 +7,17 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { ChevronDown, Filter, Download, MoreHorizontal, UserPlus } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 
 const Payroll = () => {
+  const [filters, setFilters] = useState({
+    department: [] as string[],
+    frequency: [] as string[],
+    status: [] as string[]
+  });
+
   const employees = [
     {
       id: 'EMP-001',
@@ -114,6 +121,37 @@ const Payroll = () => {
     }
   ];
 
+  // Filter employees based on applied filters
+  const filteredEmployees = employees.filter(employee => {
+    const departmentMatch = filters.department.length === 0 || filters.department.includes(employee.department);
+    const frequencyMatch = filters.frequency.length === 0 || filters.frequency.includes(employee.frequency);
+    const statusMatch = filters.status.length === 0 || filters.status.includes(employee.status);
+    return departmentMatch && frequencyMatch && statusMatch;
+  });
+
+  const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: checked 
+        ? [...prev[filterType], value]
+        : prev[filterType].filter(item => item !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      department: [],
+      frequency: [],
+      status: []
+    });
+  };
+
+  const getActiveFiltersCount = () => {
+    return filters.department.length + filters.frequency.length + filters.status.length;
+  };
+
+  const activeFiltersCount = getActiveFiltersCount();
+
   return (
     <Layout
       title="Payroll"
@@ -150,27 +188,116 @@ const Payroll = () => {
             </div>
 
             <TabsContent value="employees" className="space-y-6">
-              {/* Filters Row */}
-              <div className="flex items-center gap-4">
+              {/* Filters - matching Cards page styling */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" className="rounded-full relative gap-2">
+                        <Filter className="w-4 h-4" />
+                        Filters
+                        {activeFiltersCount > 0 && (
+                          <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                            {activeFiltersCount}
+                          </Badge>
+                        )}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-56 bg-white">
+                      <DropdownMenuLabel>Filter by Department</DropdownMenuLabel>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.department.includes('Engineer')}
+                        onCheckedChange={(checked) => handleFilterChange('department', 'Engineer', checked)}
+                      >
+                        Engineer
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.department.includes('Marketing')}
+                        onCheckedChange={(checked) => handleFilterChange('department', 'Marketing', checked)}
+                      >
+                        Marketing
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.department.includes('Design')}
+                        onCheckedChange={(checked) => handleFilterChange('department', 'Design', checked)}
+                      >
+                        Design
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.department.includes('Finance')}
+                        onCheckedChange={(checked) => handleFilterChange('department', 'Finance', checked)}
+                      >
+                        Finance
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.department.includes('Business')}
+                        onCheckedChange={(checked) => handleFilterChange('department', 'Business', checked)}
+                      >
+                        Business
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.department.includes('Project')}
+                        onCheckedChange={(checked) => handleFilterChange('department', 'Project', checked)}
+                      >
+                        Project
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.department.includes('Product')}
+                        onCheckedChange={(checked) => handleFilterChange('department', 'Product', checked)}
+                      >
+                        Product
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.department.includes('DevOps')}
+                        onCheckedChange={(checked) => handleFilterChange('department', 'DevOps', checked)}
+                      >
+                        DevOps
+                      </DropdownMenuCheckboxItem>
+                      
+                      <DropdownMenuSeparator />
+                      
+                      <DropdownMenuLabel>Filter by Frequency</DropdownMenuLabel>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.frequency.includes('Bi-Weekly')}
+                        onCheckedChange={(checked) => handleFilterChange('frequency', 'Bi-Weekly', checked)}
+                      >
+                        Bi-Weekly
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.frequency.includes('Monthly')}
+                        onCheckedChange={(checked) => handleFilterChange('frequency', 'Monthly', checked)}
+                      >
+                        Monthly
+                      </DropdownMenuCheckboxItem>
+                      
+                      <DropdownMenuSeparator />
+                      
+                      <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.status.includes('Paid')}
+                        onCheckedChange={(checked) => handleFilterChange('status', 'Paid', checked)}
+                      >
+                        Paid
+                      </DropdownMenuCheckboxItem>
+                      
+                      {activeFiltersCount > 0 && (
+                        <>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
+                            Clear all filters
+                          </DropdownMenuItem>
+                        </>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  
+                  <span className="text-sm text-muted-foreground">
+                    {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+                  </span>
+                </div>
                 <Button variant="outline" size="sm" className="gap-2">
-                  <Filter className="w-4 h-4" />
-                  Filters
-                </Button>
-                <Button variant="outline" size="sm" className="gap-2">
-                  Department
-                  <ChevronDown className="w-4 h-4" />
-                </Button>
-                <Button variant="outline" size="sm" className="gap-2">
-                  Pay Period
-                  <ChevronDown className="w-4 h-4" />
-                </Button>
-                <Button variant="outline" size="sm" className="gap-2">
-                  Frequency
-                  <ChevronDown className="w-4 h-4" />
-                </Button>
-                <Button variant="outline" size="sm" className="gap-2">
-                  Status
-                  <ChevronDown className="w-4 h-4" />
+                  <Download className="w-4 h-4" />
+                  Export All
                 </Button>
               </div>
 
@@ -200,7 +327,7 @@ const Payroll = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {employees.map((employee) => (
+                    {filteredEmployees.map((employee) => (
                       <TableRow key={employee.id} className="border-b border-border last:border-0">
                         <TableCell className="font-medium text-foreground py-4">
                           {employee.name}
