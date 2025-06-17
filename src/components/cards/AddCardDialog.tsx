@@ -118,7 +118,7 @@ export function AddCardDialog({
             {/* Type */}
             <div className="space-y-3">
               <Label>Type</Label>
-              <RadioGroup value={formData.type} onValueChange={value => handleInputChange('type', value)} className="flex gap-0">
+              <RadioGroup value={formData.type} onValueChange={value => handleInputChange('type', value)} className="flex gap-2 ">
                 <div className="w-full px-[12px] py-[12px] bg-white rounded-xl border flex items-center space-x-2">
                   <RadioGroupItem value="virtual" id="virtual" />
                   <Label htmlFor="virtual" className="font-normal">Virtual Card</Label>
