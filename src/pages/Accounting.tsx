@@ -353,9 +353,6 @@ const Accounting = () => {
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-border">
-                  <TableHead className="w-12 p-4">
-                    <input type="checkbox" className="w-4 h-4" />
-                  </TableHead>
                   <TableHead className="font-medium text-muted-foreground">Date</TableHead>
                   <TableHead className="font-medium text-muted-foreground">Status</TableHead>
                   <TableHead className="font-medium text-muted-foreground">Customer</TableHead>
@@ -369,9 +366,6 @@ const Accounting = () => {
               <TableBody>
                 {filteredInvoices.map((invoice, i) => (
                   <TableRow key={i} className="border-b border-border last:border-0">
-                    <TableCell className="p-4">
-                      <input type="checkbox" className="w-4 h-4" />
-                    </TableCell>
                     <TableCell className="font-medium text-foreground">
                       {invoice.date}
                     </TableCell>
