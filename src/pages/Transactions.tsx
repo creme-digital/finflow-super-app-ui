@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -10,12 +9,14 @@ import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { ChevronDown, Filter, Download, MoreHorizontal, Plus } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
+import { AddTransactionDialog } from '@/components/transactions/AddTransactionDialog';
 
 const Transactions = () => {
   const [filters, setFilters] = useState({
     account: [] as string[],
     method: [] as string[]
   });
+  const [isAddTransactionOpen, setIsAddTransactionOpen] = useState(false);
 
   const transactions = [
     {
@@ -134,7 +135,7 @@ const Transactions = () => {
         <div className="space-y-6">
           {/* Header */}
           <PageHeader title="Transactions">
-            <Button>
+            <Button onClick={() => setIsAddTransactionOpen(true)}>
               <Plus className="w-4 h-4 mr-2" />
               New Transaction
             </Button>
@@ -340,6 +341,11 @@ const Transactions = () => {
               </TableBody>
             </Table>
           </div>
+
+          <AddTransactionDialog 
+            open={isAddTransactionOpen} 
+            onOpenChange={setIsAddTransactionOpen} 
+          />
         </div>
       }
     />
