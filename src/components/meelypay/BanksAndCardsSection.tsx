@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { BankAccountCard } from './BankAccountCard';
-import { BankTransactionsDialog } from './BankTransactionsDialog';
+import { BankTransactionsDrawer } from './BankTransactionsDrawer';
 
 const banksAndCards = [
   {
@@ -50,11 +49,11 @@ const banksAndCards = [
 
 export function BanksAndCardsSection() {
   const [selectedAccount, setSelectedAccount] = useState<typeof banksAndCards[0] | null>(null);
-  const [transactionsDialogOpen, setTransactionsDialogOpen] = useState(false);
+  const [transactionsDrawerOpen, setTransactionsDrawerOpen] = useState(false);
 
   const handleAccountClick = (account: typeof banksAndCards[0]) => {
     setSelectedAccount(account);
-    setTransactionsDialogOpen(true);
+    setTransactionsDrawerOpen(true);
   };
 
   return (
@@ -84,9 +83,9 @@ export function BanksAndCardsSection() {
         </div>
       </div>
 
-      <BankTransactionsDialog
-        open={transactionsDialogOpen}
-        onOpenChange={setTransactionsDialogOpen}
+      <BankTransactionsDrawer
+        open={transactionsDrawerOpen}
+        onOpenChange={setTransactionsDrawerOpen}
         account={selectedAccount}
       />
     </>
