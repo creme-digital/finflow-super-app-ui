@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -7,11 +8,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { Plus, Filter, List, Grid2x2, MoreHorizontal, Trash2 } from 'lucide-react';
+import { Plus, Filter, List, Grid2x2, MoreHorizontal, Trash2, ArrowRight, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CardGrid } from '@/components/cards/CardGrid';
 import { AddCardDialog } from '@/components/cards/AddCardDialog';
 import { DeleteCardsDialog } from '@/components/cards/DeleteCardsDialog';
+import { CardDetailsSheet } from '@/components/cards/CardDetailsSheet';
 
 // Statistics data
 const cardStats = [
@@ -112,6 +114,8 @@ export default function Cards() {
   const [addCardDialogOpen, setAddCardDialogOpen] = useState(false);
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [cardDetailsOpen, setCardDetailsOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState<typeof cardsData[0] | null>(null);
   const [filters, setFilters] = useState({
     status: [] as string[],
     type: [] as string[],
@@ -180,6 +184,11 @@ export default function Cards() {
     setSelectedCards([]);
     setDeleteDialogOpen(false);
     // In a real app, you would call an API to delete the cards
+  };
+
+  const handleCardClick = (card: typeof cardsData[0]) => {
+    setSelectedCard(card);
+    setCardDetailsOpen(true);
   };
 
   const isAllSelected = filteredCards.length > 0 && selectedCards.length === filteredCards.length;
@@ -363,7 +372,119 @@ export default function Cards() {
 
           {/* Cards Display - Conditional rendering based on view mode */}
           {viewMode === 'grid' ? (
-            <CardGrid cards={filteredCards} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredCards.map((card) => {
+                const cardColors = [
+                  'bg-gradient-to-br from-gray-800 to-gray-900',
+                  'bg-gradient-to-br from-blue-800 to-blue-900', 
+                  'bg-gradient-to-br from-purple-800 to-purple-900',
+                  'bg-gradient-to-br from-green-800 to-green-900',
+                  'bg-gradient-to-br from-red-800 to-red-900',
+                  'bg-gradient-to-br from-indigo-800 to-indigo-900',
+                  'bg-gradient-to-br from-pink-800 to-pink-900',
+                  'bg-gradient-to-br from-yellow-800 to-yellow-900'
+                ];
+                const cardColor = cardColors[parseInt(card.id) % cardColors.length];
+
+                return (
+                  <div
+                    key={card.id}
+                    className="overflow-hidden transition-all duration-200 hover:shadow-lg cursor-pointer"
+                    style={{
+                      border: '1px solid #FFFFFF',
+                      boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                      borderRadius: '16px',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)'
+                    }}
+                    onClick={() => handleCardClick(card)}
+                  >
+                    {/* Card Visual */}
+                    <div className={cn(
+                      "p-6 relative text-white min-h-[200px] flex flex-col justify-between",
+                      cardColor
+                    )}>
+                      {card.status === 'Card locked' && (
+                        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center">
+                          <Lock className="h-8 w-8 text-white" />
+                        </div>
+                      )}
+                      
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="text-sm text-white/80">Finaci</p>
+                        </div>
+                        <div>
+                          <p className="text-lg font-bold">VISA</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div className="w-12 h-8 bg-yellow-400 rounded-sm"></div>
+                        
+                        <div>
+                          <p className="text-xl font-mono tracking-wider">
+                            {card.cardNumber}
+                          </p>
+                        </div>
+
+                        <div className="flex justify-between">
+                          <div>
+                            <p className="text-xs text-white/70">Card Holder name</p>
+                            <p className="font-medium">{card.cardholder}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-white/70">Expiry Date</p>
+                            <p className="font-medium">02/30</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Card Info */}
+                    <CardContent 
+                      className="p-6" 
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.4)'
+                      }}
+                    >
+                      <div className="flex justify-between mb-4">
+                        <div>
+                          <p className="text-sm text-muted-foreground">Balance</p>
+                          <p className="text-xl font-bold">$81,237</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-muted-foreground">Available</p>
+                          <p className="text-xl font-bold">$81,237</p>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center">
+                        <Badge 
+                          variant={card.status === 'Active' ? 'default' : 'secondary'}
+                          className={cn(
+                            card.status === 'Active' 
+                              ? 'bg-green-100 text-green-800 hover:bg-green-100' 
+                              : 'bg-orange-100 text-orange-800 hover:bg-orange-100'
+                          )}
+                        >
+                          {card.status}
+                        </Badge>
+                        
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          className="text-muted-foreground hover:text-foreground"
+                        >
+                          View Details
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </div>
+                );
+              })}
+            </div>
           ) : (
             <div
               className="overflow-hidden"
@@ -401,8 +522,12 @@ export default function Cards() {
                 </TableHeader>
                 <TableBody>
                   {filteredCards.map((card) => (
-                    <TableRow key={card.id}>
-                      <TableCell>
+                    <TableRow 
+                      key={card.id} 
+                      className="cursor-pointer hover:bg-muted/50"
+                      onClick={() => handleCardClick(card)}
+                    >
+                      <TableCell onClick={(e) => e.stopPropagation()}>
                         <input 
                           type="checkbox" 
                           className="rounded"
@@ -432,7 +557,7 @@ export default function Cards() {
                           {card.status}
                         </Badge>
                       </TableCell>
-                      <TableCell>
+                      <TableCell onClick={(e) => e.stopPropagation()}>
                         <Button variant="ghost" size="icon">
                           <MoreHorizontal className="w-4 h-4" />
                         </Button>
@@ -456,6 +581,13 @@ export default function Cards() {
             onOpenChange={setDeleteDialogOpen}
             selectedCount={selectedCards.length}
             onConfirm={handleDeleteCards}
+          />
+
+          {/* Card Details Sheet */}
+          <CardDetailsSheet
+            open={cardDetailsOpen}
+            onOpenChange={setCardDetailsOpen}
+            card={selectedCard}
           />
         </div>
       }
