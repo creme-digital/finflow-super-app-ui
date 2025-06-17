@@ -144,12 +144,12 @@ export function AddAccountDialog({
           {/* Type */}
           <div className="space-y-3">
             <Label>Personal or Business</Label>
-            <RadioGroup value={formData.type} onValueChange={value => handleInputChange('type', value)} className="flex gap-4">
+            <RadioGroup value={formData.type} onValueChange={value => handleInputChange('type', value)} className="flex gap-0 ">
               <div className="w-full px-[12px] py-[12px] bg-white rounded-xl border flex items-center space-x-2 ">
                 <RadioGroupItem value="personal" id="personal" />
                 <Label htmlFor="personal" className="font-normal">Personal</Label>
               </div>
-              <div className="flex items-center space-x-2 ">
+              <div className="w-full px-[12px] py-[12px] bg-white rounded-xl border flex items-center space-x-2 ">
                 <RadioGroupItem value="business" id="business" />
                 <Label htmlFor="business" className="font-normal">Business</Label>
               </div>
