@@ -8,6 +8,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Plus, Filter, ChevronDown, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageHeader } from '@/components/layout/PageHeader';
+import { TransferDialog } from '@/components/dashboard/TransferDialog';
 
 // Sample transfer data
 const transfersData = [{
@@ -157,6 +158,7 @@ export default function Transfers() {
     account: [] as string[],
     date: [] as string[]
   });
+  const [transferDialogOpen, setTransferDialogOpen] = useState(false);
 
   // Filter transfers based on applied filters
   const filteredTransfers = transfersData.filter(transfer => {
@@ -185,7 +187,7 @@ export default function Transfers() {
   return <Layout title="Transfer" mainContent={<div className="space-y-6">
           {/* Header */}
           <PageHeader title="Transfer">
-            <Button>
+            <Button onClick={() => setTransferDialogOpen(true)}>
               <Plus className="w-4 h-4 mr-2" />
               Transfer
             </Button>
@@ -310,10 +312,17 @@ export default function Transfers() {
               </TableBody>
             </Table>
           </div>
+
+          {/* Transfer Dialog */}
+          <TransferDialog 
+            open={transferDialogOpen}
+            onOpenChange={setTransferDialogOpen}
+          />
         </div>} />;
 }
 
 // ... keep existing code (TransferData interface)
+
 export interface TransferData {
   sourceAccount: string;
   destinationAccount: string;
