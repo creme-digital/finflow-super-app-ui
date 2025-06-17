@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -7,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, List, Grid2x2, MoreHorizontal, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CardGrid } from '@/components/cards/CardGrid';
@@ -112,17 +112,51 @@ export default function Cards() {
   const [addCardDialogOpen, setAddCardDialogOpen] = useState(false);
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    status: [] as string[],
+    type: [] as string[],
+    account: [] as string[]
+  });
 
-  // Filter cards based on active tab
-  const filteredCards = activeTab === 'all' 
-    ? cardsData 
-    : cardsData.filter(card => {
-        if (activeTab === 'physical') return card.type === 'Physical';
-        if (activeTab === 'virtual') return card.type === 'Virtual';
-        if (activeTab === 'personal') return card.account.includes('Personal');
-        if (activeTab === 'business') return card.account.includes('Business') || card.account.includes('Ops');
-        return true;
-      });
+  // Filter cards based on active tab and applied filters
+  const filteredCards = cardsData.filter(card => {
+    // Tab filtering
+    let tabMatch = true;
+    if (activeTab !== 'all') {
+      if (activeTab === 'physical') tabMatch = card.type === 'Physical';
+      else if (activeTab === 'virtual') tabMatch = card.type === 'Virtual';
+      else if (activeTab === 'personal') tabMatch = card.account.includes('Personal');
+      else if (activeTab === 'business') tabMatch = card.account.includes('Business') || card.account.includes('Ops');
+    }
+
+    // Additional filters
+    const statusMatch = filters.status.length === 0 || filters.status.includes(card.status);
+    const typeMatch = filters.type.length === 0 || filters.type.includes(card.type);
+    const accountMatch = filters.account.length === 0 || filters.account.includes(card.account);
+
+    return tabMatch && statusMatch && typeMatch && accountMatch;
+  });
+
+  const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: checked 
+        ? [...prev[filterType], value]
+        : prev[filterType].filter(item => item !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      status: [],
+      type: [],
+      account: []
+    });
+  };
+
+  const getActiveFiltersCount = () => {
+    return filters.status.length + filters.type.length + filters.account.length;
+  };
 
   const handleCardSelect = (cardId: string, isSelected: boolean) => {
     if (isSelected) {
@@ -150,6 +184,7 @@ export default function Cards() {
 
   const isAllSelected = filteredCards.length > 0 && selectedCards.length === filteredCards.length;
   const isSomeSelected = selectedCards.length > 0 && selectedCards.length < filteredCards.length;
+  const activeFiltersCount = getActiveFiltersCount();
 
   return (
     <Layout
@@ -213,11 +248,84 @@ export default function Cards() {
                   Delete {selectedCards.length} Card{selectedCards.length > 1 ? 's' : ''}
                 </Button>
               )}
-              <Button variant="outline" size="sm" className="rounded-full">
-                <Filter className="w-4 h-4 mr-2" />
-                Filters
-              </Button>
-              <span className="text-sm text-muted-foreground">No filters applied</span>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="rounded-full relative">
+                    <Filter className="w-4 h-4 mr-2" />
+                    Filters
+                    {activeFiltersCount > 0 && (
+                      <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                        {activeFiltersCount}
+                      </Badge>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56 bg-white">
+                  <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.status.includes('Active')}
+                    onCheckedChange={(checked) => handleFilterChange('status', 'Active', checked)}
+                  >
+                    Active
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.status.includes('Card locked')}
+                    onCheckedChange={(checked) => handleFilterChange('status', 'Card locked', checked)}
+                  >
+                    Card locked
+                  </DropdownMenuCheckboxItem>
+                  
+                  <DropdownMenuSeparator />
+                  
+                  <DropdownMenuLabel>Filter by Type</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.type.includes('Physical')}
+                    onCheckedChange={(checked) => handleFilterChange('type', 'Physical', checked)}
+                  >
+                    Physical
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.type.includes('Virtual')}
+                    onCheckedChange={(checked) => handleFilterChange('type', 'Virtual', checked)}
+                  >
+                    Virtual
+                  </DropdownMenuCheckboxItem>
+                  
+                  <DropdownMenuSeparator />
+                  
+                  <DropdownMenuLabel>Filter by Account</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.account.includes('Ops / Payroll')}
+                    onCheckedChange={(checked) => handleFilterChange('account', 'Ops / Payroll', checked)}
+                  >
+                    Ops / Payroll
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.account.includes('Credit account')}
+                    onCheckedChange={(checked) => handleFilterChange('account', 'Credit account', checked)}
+                  >
+                    Credit account
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.account.includes('AP')}
+                    onCheckedChange={(checked) => handleFilterChange('account', 'AP', checked)}
+                  >
+                    AP
+                  </DropdownMenuCheckboxItem>
+                  
+                  {activeFiltersCount > 0 && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
+                        Clear all filters
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <span className="text-sm text-muted-foreground">
+                {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+              </span>
             </div>
             <div 
               className="inline-flex h-10 items-center justify-center rounded-full p-1"
