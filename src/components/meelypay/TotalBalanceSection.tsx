@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Wallet, Send, ArrowDownLeft, CreditCard, Banknote, Phone, UtilityPole } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -6,6 +7,7 @@ import { SendDialog } from '@/components/dashboard/SendDialog';
 import { ReceiveDialog } from '@/components/dashboard/ReceiveDialog';
 import { AddCardDialog } from '@/components/cards/AddCardDialog';
 import { PayToBankDialog } from '@/components/dashboard/PayToBankDialog';
+import { PayPhoneDialog } from '@/components/dashboard/PayPhoneDialog';
 
 export function TotalBalanceSection() {
   const { formatAmount } = useCurrency();
@@ -13,6 +15,7 @@ export function TotalBalanceSection() {
   const [receiveDialogOpen, setReceiveDialogOpen] = useState(false);
   const [addCardDialogOpen, setAddCardDialogOpen] = useState(false);
   const [payToBankDialogOpen, setPayToBankDialogOpen] = useState(false);
+  const [payPhoneDialogOpen, setPayPhoneDialogOpen] = useState(false);
 
   const buttonStyle = {
     border: '1px solid #FFFFFF',
@@ -84,6 +87,7 @@ export function TotalBalanceSection() {
           variant="ghost" 
           className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
           style={buttonStyle}
+          onClick={() => setPayPhoneDialogOpen(true)}
         >
           <Phone className="w-5 h-5" />
           <span className="text-xs">Pay Phone</span>
@@ -120,6 +124,12 @@ export function TotalBalanceSection() {
       <PayToBankDialog 
         open={payToBankDialogOpen}
         onOpenChange={setPayToBankDialogOpen}
+      />
+
+      {/* Pay Phone Dialog */}
+      <PayPhoneDialog 
+        open={payPhoneDialogOpen}
+        onOpenChange={setPayPhoneDialogOpen}
       />
     </div>
   );
