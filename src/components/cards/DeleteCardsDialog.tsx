@@ -34,10 +34,10 @@ export function DeleteCardsDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel className="rounded-full">Cancel</AlertDialogCancel>
           <AlertDialogAction 
             onClick={onConfirm}
-            className="bg-red-600 hover:bg-red-700 text-white"
+            className="bg-red-600 hover:bg-red-700 text-white rounded-full"
           >
             Delete Card{selectedCount > 1 ? 's' : ''}
           </AlertDialogAction>
