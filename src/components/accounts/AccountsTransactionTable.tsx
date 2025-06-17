@@ -1,8 +1,10 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Eye } from 'lucide-react';
+import { TransactionDrawer } from './TransactionDrawer';
 
 const transactions = [
   {
@@ -96,60 +98,80 @@ const transactions = [
 ];
 
 export function AccountsTransactionTable() {
+  const [selectedTransaction, setSelectedTransaction] = useState<typeof transactions[0] | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleViewTransaction = (transaction: typeof transactions[0]) => {
+    setSelectedTransaction(transaction);
+    setDrawerOpen(true);
+  };
+
   return (
-    <div 
-      className="overflow-hidden"
-      style={{
-        border: '1px solid #FFFFFF',
-        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-        borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.4)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
-      }}
-    >
-      <Table>
-        <TableHeader>
-          <TableRow className="border-b border-border">
-            <TableHead className="text-muted-foreground font-medium">Date</TableHead>
-            <TableHead className="text-muted-foreground font-medium">To/From</TableHead>
-            <TableHead className="text-muted-foreground font-medium">Amount</TableHead>
-            <TableHead className="text-muted-foreground font-medium">Account</TableHead>
-            <TableHead className="text-muted-foreground font-medium">ID</TableHead>
-            <TableHead className="text-muted-foreground font-medium">Method</TableHead>
-            <TableHead className="text-muted-foreground font-medium">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {transactions.map((transaction) => (
-            <TableRow key={transaction.id} className="border-b border-border last:border-0">
-              <TableCell className="text-foreground">{transaction.date}</TableCell>
-              <TableCell>
-                <div className="flex items-center gap-3">
-                  <Avatar className="w-8 h-8">
-                    <AvatarImage src={transaction.person.avatar} alt={transaction.person.name} />
-                    <AvatarFallback>
-                      {transaction.person.name.split(' ').map(n => n[0]).join('')}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="text-foreground font-medium">{transaction.person.name}</span>
-                </div>
-              </TableCell>
-              <TableCell className="text-foreground font-medium">
-                ${transaction.amount.toLocaleString()}
-              </TableCell>
-              <TableCell className="text-muted-foreground">{transaction.account}</TableCell>
-              <TableCell className="text-muted-foreground">{transaction.id}</TableCell>
-              <TableCell className="text-muted-foreground">{transaction.method}</TableCell>
-              <TableCell>
-                <Button variant="ghost" size="icon">
-                  <Eye className="w-4 h-4" />
-                </Button>
-              </TableCell>
+    <>
+      <div 
+        className="overflow-hidden"
+        style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px',
+          background: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}
+      >
+        <Table>
+          <TableHeader>
+            <TableRow className="border-b border-border">
+              <TableHead className="text-muted-foreground font-medium">Date</TableHead>
+              <TableHead className="text-muted-foreground font-medium">To/From</TableHead>
+              <TableHead className="text-muted-foreground font-medium">Amount</TableHead>
+              <TableHead className="text-muted-foreground font-medium">Account</TableHead>
+              <TableHead className="text-muted-foreground font-medium">ID</TableHead>
+              <TableHead className="text-muted-foreground font-medium">Method</TableHead>
+              <TableHead className="text-muted-foreground font-medium">Action</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+          </TableHeader>
+          <TableBody>
+            {transactions.map((transaction) => (
+              <TableRow key={transaction.id} className="border-b border-border last:border-0">
+                <TableCell className="text-foreground">{transaction.date}</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-3">
+                    <Avatar className="w-8 h-8">
+                      <AvatarImage src={transaction.person.avatar} alt={transaction.person.name} />
+                      <AvatarFallback>
+                        {transaction.person.name.split(' ').map(n => n[0]).join('')}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-foreground font-medium">{transaction.person.name}</span>
+                  </div>
+                </TableCell>
+                <TableCell className="text-foreground font-medium">
+                  ${transaction.amount.toLocaleString()}
+                </TableCell>
+                <TableCell className="text-muted-foreground">{transaction.account}</TableCell>
+                <TableCell className="text-muted-foreground">{transaction.id}</TableCell>
+                <TableCell className="text-muted-foreground">{transaction.method}</TableCell>
+                <TableCell>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    onClick={() => handleViewTransaction(transaction)}
+                  >
+                    <Eye className="w-4 h-4" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      <TransactionDrawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        transaction={selectedTransaction}
+      />
+    </>
   );
 }
