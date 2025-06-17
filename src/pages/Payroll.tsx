@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -118,26 +119,25 @@ const Payroll = () => {
       title="Payroll"
       mainContent={
         <div className="space-y-6">
-          {/* Header with Cards styling */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">Payroll</h1>
-              <p className="text-muted-foreground">Manage employee payroll and schedules</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Download className="w-4 h-4" />
-                Export All
-              </Button>
-              <Button variant="default" size="sm" className="gap-2">
-                Run Payroll
-              </Button>
-              <Button variant="default" size="sm" className="gap-2">
-                <UserPlus className="w-4 h-4" />
-                Add Employee
-              </Button>
-            </div>
-          </div>
+          {/* Header with consistent styling */}
+          <PageHeader 
+            title="Payroll"
+            children={
+              <div className="flex items-center gap-3">
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Download className="w-4 h-4" />
+                  Export All
+                </Button>
+                <Button variant="default" size="sm" className="gap-2">
+                  Run Payroll
+                </Button>
+                <Button variant="default" size="sm" className="gap-2">
+                  <UserPlus className="w-4 h-4" />
+                  Add Employee
+                </Button>
+              </div>
+            }
+          />
 
           {/* Tabs with Glass Effect */}
           <Tabs defaultValue="employees" className="w-full">
