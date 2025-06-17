@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -7,9 +8,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Filter, Download, MoreHorizontal, UserPlus, Edit2, Trash2 } from 'lucide-react';
+import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Edit2, Trash2 } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 import { EditPayrollDialog } from '@/components/payroll/EditPayrollDialog';
+import { CreatePayrollDialog } from '@/components/payroll/CreatePayrollDialog';
 
 const Payroll = () => {
   const [filters, setFilters] = useState({
@@ -19,6 +21,7 @@ const Payroll = () => {
   });
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
 
   const employees = [
@@ -164,6 +167,10 @@ const Payroll = () => {
     // TODO: Implement remove payroll functionality
   };
 
+  const handleCreatePayroll = () => {
+    setCreateDialogOpen(true);
+  };
+
   const activeFiltersCount = getActiveFiltersCount();
 
   return (
@@ -183,9 +190,9 @@ const Payroll = () => {
                 <Button variant="default" size="sm" className="gap-2">
                   Run Payroll
                 </Button>
-                <Button variant="default" size="sm" className="gap-2">
-                  <UserPlus className="w-4 h-4" />
-                  Add Employee
+                <Button variant="default" size="sm" className="gap-2" onClick={handleCreatePayroll}>
+                  <Plus className="w-4 h-4" />
+                  Create Payroll
                 </Button>
               </div>
             }
@@ -421,6 +428,12 @@ const Payroll = () => {
             open={editDialogOpen}
             onOpenChange={setEditDialogOpen}
             employee={selectedEmployee}
+          />
+
+          {/* Create Payroll Dialog */}
+          <CreatePayrollDialog
+            open={createDialogOpen}
+            onOpenChange={setCreateDialogOpen}
           />
         </div>
       }
