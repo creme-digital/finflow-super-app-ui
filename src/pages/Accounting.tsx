@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, ChevronDown, Download, MoreHorizontal, Info } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
+import { AddInvoiceDialog } from '@/components/accounting/AddInvoiceDialog';
 
 const summaryData = [
   {
@@ -137,6 +137,7 @@ const Accounting = () => {
     customer: [] as string[],
     recurring: [] as string[]
   });
+  const [isCreateInvoiceOpen, setIsCreateInvoiceOpen] = useState(false);
 
   // Filter invoices based on applied filters
   const filteredInvoices = invoicesData.filter(invoice => {
@@ -182,7 +183,7 @@ const Accounting = () => {
                 <Download className="w-4 h-4" />
                 Export All
               </Button>
-              <Button>
+              <Button onClick={() => setIsCreateInvoiceOpen(true)}>
                 <Plus className="w-4 h-4 mr-2" />
                 Create Invoice
               </Button>
@@ -414,6 +415,11 @@ const Accounting = () => {
               </TableBody>
             </Table>
           </div>
+
+          <AddInvoiceDialog 
+            open={isCreateInvoiceOpen} 
+            onOpenChange={setIsCreateInvoiceOpen} 
+          />
         </div>
       }
     />
