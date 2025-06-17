@@ -167,7 +167,7 @@ export function AddExpenseDialog({ open, onOpenChange }: AddExpenseDialogProps) 
               <Input
                 id="receipt"
                 type="file"
-                accept="image/*"
+                accept="image/*,application/pdf"
                 onChange={handleFileChange}
                 className="hidden"
               />
@@ -183,11 +183,17 @@ export function AddExpenseDialog({ open, onOpenChange }: AddExpenseDialogProps) 
             
             {previewUrl && (
               <div className="mt-2 relative border rounded-md p-2 h-24">
-                <img 
-                  src={previewUrl} 
-                  alt="Receipt preview" 
-                  className="h-full object-contain mx-auto"
-                />
+                {formData.receipt?.type === 'application/pdf' ? (
+                  <div className="h-full flex items-center justify-center text-sm text-muted-foreground">
+                    PDF: {formData.receipt.name}
+                  </div>
+                ) : (
+                  <img 
+                    src={previewUrl} 
+                    alt="Receipt preview" 
+                    className="h-full object-contain mx-auto"
+                  />
+                )}
               </div>
             )}
           </div>
