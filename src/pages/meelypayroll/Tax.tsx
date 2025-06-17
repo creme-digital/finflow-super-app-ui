@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -239,7 +238,7 @@ const MeelyPayrollTax = () => {
               <div className="flex items-center gap-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="rounded-full relative">
+                    <Button variant="outline" size="sm" className="rounded-full">
                       <Filter className="w-4 h-4 mr-2" />
                       Filters
                       {activeFiltersCount > 0 && (
@@ -249,7 +248,7 @@ const MeelyPayrollTax = () => {
                       )}
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-56 bg-white">
+                  <DropdownMenuContent align="start" className="w-56 bg-white border border-gray-200 shadow-lg z-50">
                     <DropdownMenuLabel>Filter by Type</DropdownMenuLabel>
                     <DropdownMenuCheckboxItem
                       checked={filters.type.includes('Federal Income Tax')}
@@ -371,7 +370,7 @@ const MeelyPayrollTax = () => {
               <div className="flex items-center gap-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="rounded-full relative">
+                    <Button variant="outline" size="sm" className="rounded-full">
                       <Filter className="w-4 h-4 mr-2" />
                       Filters
                       {activeFiltersCount > 0 && (
@@ -381,7 +380,7 @@ const MeelyPayrollTax = () => {
                       )}
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-56 bg-white">
+                  <DropdownMenuContent align="start" className="w-56 bg-white border border-gray-200 shadow-lg z-50">
                     <DropdownMenuLabel>Filter by Type</DropdownMenuLabel>
                     <DropdownMenuCheckboxItem
                       checked={filters.type.includes('Federal Income Tax')}
@@ -562,7 +561,7 @@ const MeelyPayrollTax = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <h4 className="font-medium">Tax Withholding Forms</h4>
-                        <p className="text-sm text-muted-foreground">Current</p>
+                        <p className="text-sm text-muted-foreground">2023</p>
                       </div>
                       <Button variant="outline" size="sm">
                         <Download className="h-4 w-4 mr-2" />
