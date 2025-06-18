@@ -340,7 +340,7 @@ export default function Crypto() {
                   </div>
                 </TabsContent>
 
-                <TabsContent value="assets" className="mt-6">
+                <TabsContent value="assets" className="mt-6 w-full">
                   <CryptoPortfolio />
                 </TabsContent>
 
