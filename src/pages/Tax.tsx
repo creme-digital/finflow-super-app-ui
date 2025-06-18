@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { ChevronDown, Filter, Download, MoreHorizontal, Plus } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
+import { TaxDashboard } from '@/components/tax/TaxDashboard';
 
 const Tax = () => {
   const [filters, setFilters] = useState({
@@ -349,9 +349,7 @@ const Tax = () => {
             </TabsContent>
             
             <TabsContent value="estimation">
-              <div className="text-center py-8 text-muted-foreground">
-                Tax Estimation content coming soon
-              </div>
+              <TaxDashboard />
             </TabsContent>
           </Tabs>
         </div>
