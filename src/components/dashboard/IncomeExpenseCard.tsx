@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ReferenceLine } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DollarSign } from 'lucide-react';
+
 const balanceData = [{
   month: 'Jan',
   income: 28500,
@@ -52,6 +54,7 @@ const balanceData = [{
   income: 37000,
   expense: -34000
 }];
+
 const chartConfig = {
   income: {
     label: "Income",
@@ -62,6 +65,37 @@ const chartConfig = {
     color: "#D1D5DC"
   }
 };
+
 export function IncomeExpenseCard() {
-  return;
+  return (
+    <div className="bg-white rounded-2xl p-6 shadow-sm border">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold">Income vs Expense</h3>
+        <Select defaultValue="12m">
+          <SelectTrigger className="w-[100px]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="12m">12 months</SelectItem>
+            <SelectItem value="6m">6 months</SelectItem>
+            <SelectItem value="3m">3 months</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      
+      <div className="h-64">
+        <ChartContainer config={chartConfig} className="w-full h-full">
+          <BarChart data={balanceData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
+            <XAxis dataKey="month" axisLine={false} tickLine={false} />
+            <YAxis axisLine={false} tickLine={false} />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <ReferenceLine y={0} stroke="#000" />
+            <Bar dataKey="income" fill={chartConfig.income.color} radius={[4, 4, 0, 0]} />
+            <Bar dataKey="expense" fill={chartConfig.expense.color} radius={[0, 0, 4, 4]} />
+          </BarChart>
+        </ChartContainer>
+      </div>
+    </div>
+  );
 }
