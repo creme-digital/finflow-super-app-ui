@@ -1,15 +1,22 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { ChevronDown, Filter, Download, MoreHorizontal, Plus } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 
 const Tax = () => {
+  const [filters, setFilters] = useState({
+    form: [] as string[],
+    status: [] as string[],
+    year: [] as string[]
+  });
+
   const taxRecords = [
     {
       id: 'TAX-001',
@@ -93,6 +100,37 @@ const Tax = () => {
     }
   ];
 
+  // Filter tax records based on applied filters
+  const filteredTaxRecords = taxRecords.filter(record => {
+    const formMatch = filters.form.length === 0 || filters.form.includes(record.form);
+    const statusMatch = filters.status.length === 0 || filters.status.includes(record.status);
+    const yearMatch = filters.year.length === 0 || filters.year.includes(record.date.split('/')[2]);
+    return formMatch && statusMatch && yearMatch;
+  });
+
+  const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: checked 
+        ? [...prev[filterType], value]
+        : prev[filterType].filter(item => item !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      form: [],
+      status: [],
+      year: []
+    });
+  };
+
+  const getActiveFiltersCount = () => {
+    return filters.form.length + filters.status.length + filters.year.length;
+  };
+
+  const activeFiltersCount = getActiveFiltersCount();
+
   return (
     <Layout
       title="Tax"
@@ -121,11 +159,134 @@ const Tax = () => {
             </TabsList>
 
             <TabsContent value="history" className="space-y-6">
-              {/* Filters Row */}
-              <div className="flex items-center gap-4">
+              {/* Filters - matching Payroll page styling */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" className="rounded-full relative gap-2">
+                        <Filter className="w-4 h-4" />
+                        Filters
+                        {activeFiltersCount > 0 && (
+                          <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                            {activeFiltersCount}
+                          </Badge>
+                        )}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-56 bg-white">
+                      <DropdownMenuLabel>Filter by Form Type</DropdownMenuLabel>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.form.includes('1092-NEC')}
+                        onCheckedChange={(checked) => handleFilterChange('form', '1092-NEC', checked)}
+                      >
+                        1092-NEC
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.form.includes('1029-MISC')}
+                        onCheckedChange={(checked) => handleFilterChange('form', '1029-MISC', checked)}
+                      >
+                        1029-MISC
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.form.includes('1077-K')}
+                        onCheckedChange={(checked) => handleFilterChange('form', '1077-K', checked)}
+                      >
+                        1077-K
+                      </DropdownMenuCheckboxItem>
+                      
+                      <DropdownMenuSeparator />
+                      
+                      <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.status.includes('Submitted')}
+                        onCheckedChange={(checked) => handleFilterChange('status', 'Submitted', checked)}
+                      >
+                        Submitted
+                      </DropdownMenuCheckboxItem>
+                      
+                      <DropdownMenuSeparator />
+                      
+                      <DropdownMenuLabel>Filter by Year</DropdownMenuLabel>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2025')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2025', checked)}
+                      >
+                        2025
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2024')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2024', checked)}
+                      >
+                        2024
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2023')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2023', checked)}
+                      >
+                        2023
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2022')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2022', checked)}
+                      >
+                        2022
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2021')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2021', checked)}
+                      >
+                        2021
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2020')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2020', checked)}
+                      >
+                        2020
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2019')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2019', checked)}
+                      >
+                        2019
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2018')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2018', checked)}
+                      >
+                        2018
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2017')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2017', checked)}
+                      >
+                        2017
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem
+                        checked={filters.year.includes('2016')}
+                        onCheckedChange={(checked) => handleFilterChange('year', '2016', checked)}
+                      >
+                        2016
+                      </DropdownMenuCheckboxItem>
+                      
+                      {activeFiltersCount > 0 && (
+                        <>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
+                            Clear all filters
+                          </DropdownMenuItem>
+                        </>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  
+                  <span className="text-sm text-muted-foreground">
+                    {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+                  </span>
+                </div>
                 <Button variant="outline" size="sm" className="gap-2">
-                  <Filter className="w-4 h-4" />
-                  Filters
+                  <Download className="w-4 h-4" />
+                  Export All
                 </Button>
               </div>
 
@@ -153,7 +314,7 @@ const Tax = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {taxRecords.map((record) => (
+                    {filteredTaxRecords.map((record) => (
                       <TableRow key={record.id} className="border-b border-border last:border-0">
                         <TableCell className="font-medium text-foreground py-4">
                           {record.date}
