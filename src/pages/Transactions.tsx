@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -121,6 +122,11 @@ const Transactions = () => {
 
   const getActiveFiltersCount = () => {
     return filters.account.length + filters.method.length;
+  };
+
+  const handleViewTransaction = (transaction: typeof transactions[0]) => {
+    setSelectedTransaction(transaction);
+    setDrawerOpen(true);
   };
 
   const activeFiltersCount = getActiveFiltersCount();
