@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
@@ -443,16 +444,76 @@ const Tax = () => {
                   }}
                 >
                   <h3 className="text-lg font-semibold mb-4">Quarterly Tax Estimates</h3>
-                  <ChartContainer config={chartConfig} className="h-[300px] w-full">
-                    <BarChart data={quarterlyData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="quarter" />
-                      <YAxis />
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                      <Bar dataKey="estimated" fill="var(--color-estimated)" name="Estimated" />
-                      <Bar dataKey="actual" fill="var(--color-actual)" name="Actual" />
-                    </BarChart>
-                  </ChartContainer>
+                  <div style={{ height: '300px' }}>
+                    <ChartContainer config={chartConfig} className="w-full h-full">
+                      <BarChart 
+                        data={quarterlyData} 
+                        margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
+                        barCategoryGap="20%"
+                      >
+                        <defs>
+                          <linearGradient id="estimatedGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor={chartConfig.estimated.color} stopOpacity={0.8} />
+                            <stop offset="100%" stopColor={chartConfig.estimated.color} stopOpacity={0.3} />
+                          </linearGradient>
+                          <linearGradient id="actualGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor={chartConfig.actual.color} stopOpacity={0.8} />
+                            <stop offset="100%" stopColor={chartConfig.actual.color} stopOpacity={0.3} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.4} />
+                        <XAxis 
+                          dataKey="quarter" 
+                          axisLine={false} 
+                          tickLine={false} 
+                          tick={{ fontSize: 12, fill: '#64748b', fontFamily: 'Inter' }} 
+                        />
+                        <YAxis 
+                          axisLine={false} 
+                          tickLine={false} 
+                          tick={{ fontSize: 12, fill: '#64748b', fontFamily: 'Inter' }} 
+                          width={50}
+                          tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                        />
+                        <ChartTooltip 
+                          content={<ChartTooltipContent />}
+                          cursor={{ fill: 'rgba(59, 130, 246, 0.05)' }}
+                        />
+                        <Bar 
+                          dataKey="estimated" 
+                          fill="url(#estimatedGradient)"
+                          radius={[4, 4, 0, 0]} 
+                          maxBarSize={40}
+                          name="Estimated"
+                        />
+                        <Bar 
+                          dataKey="actual" 
+                          fill="url(#actualGradient)"
+                          radius={[4, 4, 0, 0]} 
+                          maxBarSize={40}
+                          name="Actual"
+                        />
+                      </BarChart>
+                    </ChartContainer>
+                  </div>
+                  
+                  {/* Modern Legend */}
+                  <div className="flex gap-6 mt-4 justify-center">
+                    <div className="flex items-center gap-2">
+                      <div 
+                        className="w-3 h-3 rounded-full" 
+                        style={{ backgroundColor: chartConfig.estimated.color }}
+                      />
+                      <span className="text-sm text-muted-foreground font-medium">Estimated</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div 
+                        className="w-3 h-3 rounded-full" 
+                        style={{ backgroundColor: chartConfig.actual.color }}
+                      />
+                      <span className="text-sm text-muted-foreground font-medium">Actual</span>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Tax Breakdown Pie Chart */}
@@ -467,25 +528,73 @@ const Tax = () => {
                   }}
                 >
                   <h3 className="text-lg font-semibold mb-4">Tax Breakdown</h3>
-                  <ChartContainer config={{}} className="h-[300px] w-full">
-                    <PieChart>
-                      <Pie
-                        data={taxBreakdownData}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        outerRadius={80}
-                        fill="#8884d8"
-                        dataKey="value"
-                        label={({ category, percent }) => `${category} ${(percent * 100).toFixed(0)}%`}
-                      >
-                        {taxBreakdownData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                    </PieChart>
-                  </ChartContainer>
+                  <div style={{ height: '300px' }}>
+                    <ChartContainer config={{}} className="w-full h-full">
+                      <PieChart>
+                        <defs>
+                          {taxBreakdownData.map((entry, index) => (
+                            <linearGradient key={`gradient-${index}`} id={`gradient-${index}`} x1="0" y1="0" x2="1" y2="1">
+                              <stop offset="0%" stopColor={entry.color} stopOpacity={0.8} />
+                              <stop offset="100%" stopColor={entry.color} stopOpacity={0.6} />
+                            </linearGradient>
+                          ))}
+                        </defs>
+                        <Pie
+                          data={taxBreakdownData}
+                          cx="50%"
+                          cy="50%"
+                          labelLine={false}
+                          outerRadius={100}
+                          innerRadius={40}
+                          paddingAngle={2}
+                          dataKey="value"
+                          stroke="none"
+                        >
+                          {taxBreakdownData.map((entry, index) => (
+                            <Cell 
+                              key={`cell-${index}`} 
+                              fill={`url(#gradient-${index})`}
+                            />
+                          ))}
+                        </Pie>
+                        <ChartTooltip 
+                          content={({ active, payload }) => {
+                            if (active && payload && payload.length) {
+                              const data = payload[0].payload;
+                              return (
+                                <div className="bg-white rounded-xl shadow-lg px-4 py-3 border border-gray-100">
+                                  <p className="font-semibold text-sm mb-1">{data.category}</p>
+                                  <p className="text-sm">
+                                    <span className="font-medium">${data.value.toLocaleString()}</span>
+                                    <span className="text-muted-foreground ml-2">
+                                      ({((data.value / taxBreakdownData.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)
+                                    </span>
+                                  </p>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                      </PieChart>
+                    </ChartContainer>
+                  </div>
+                  
+                  {/* Modern Legend */}
+                  <div className="space-y-2 mt-4">
+                    {taxBreakdownData.map((entry, index) => (
+                      <div key={index} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div 
+                            className="w-3 h-3 rounded-full" 
+                            style={{ backgroundColor: entry.color }}
+                          />
+                          <span className="text-sm text-muted-foreground font-medium">{entry.category}</span>
+                        </div>
+                        <span className="text-sm font-semibold">${entry.value.toLocaleString()}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </TabsContent>
