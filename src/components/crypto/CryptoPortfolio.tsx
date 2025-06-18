@@ -4,17 +4,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { TrendingUp, TrendingDown, ArrowUpRight, Activity, Wallet, Plus } from 'lucide-react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, BarChart, Bar } from 'recharts';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import type { TooltipProps } from 'recharts';
 
 const portfolioData = [
-  { date: 'Jan', value: 35800 },
-  { date: 'Feb', value: 32800 },
-  { date: 'Mar', value: 39500 },
-  { date: 'Apr', value: 36200 },
-  { date: 'May', value: 42500 },
-  { date: 'Jun', value: 40955 },
+  { date: 'Jan', value: 35800, moneyIn: 310704, moneyOut: 383025 },
+  { date: 'Feb', value: 32800, moneyIn: 325000, moneyOut: 290000 },
+  { date: 'Mar', value: 39500, moneyIn: 298000, moneyOut: 310000 },
+  { date: 'Apr', value: 36200, moneyIn: 315000, moneyOut: 295000 },
+  { date: 'May', value: 42500, moneyIn: 335000, moneyOut: 320000 },
+  { date: 'Jun', value: 40955, moneyIn: 310704, moneyOut: 383025 },
 ];
 
 const holdings = [
@@ -41,7 +41,7 @@ function CustomTooltip({ active, payload, label }: TooltipProps<any, any>) {
       <div className="bg-white rounded-xl shadow-lg px-4 py-2 border border-gray-100">
         <p className="font-semibold text-sm mb-1">{label}</p>
         <div className="flex items-center gap-2 text-sm">
-          <span className="font-medium">${payload[0].value.toLocaleString()}</span>
+          <span className="font-medium">{payload[0].value.toLocaleString()}</span>
         </div>
       </div>
     );
@@ -77,15 +77,71 @@ export function CryptoPortfolio() {
       filteredData = portfolioData;
   }
 
-  const totalValue = 40955.00;
-  const changePercent = 7.3;
-  const changeAmount = 2856.00;
+  const totalValue = 72321.11;
+  const moneyIn = 310704.49;
+  const moneyOut = 383025.60;
 
   return (
     <div className="space-y-6">
+      {/* Net Cash This Month - Matching Index Page Design */}
+      <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)]">
+        <CardContent className="p-6">
+          <div className="mb-6">
+            <div className="text-sm text-muted-foreground mb-2">Net crypto value this month</div>
+            <div className="text-4xl font-bold text-foreground mb-4">
+              {formatAmount(totalValue)}
+            </div>
+            
+            <div className="flex items-center gap-6 mb-6">
+              <div className="flex items-center gap-2">
+                <div className="w-1 h-4 bg-green-500 rounded-full"></div>
+                <span className="text-sm text-muted-foreground">Money in</span>
+                <span className="text-sm font-medium text-green-600">
+                  {formatAmount(moneyIn)}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-1 h-4 bg-red-500 rounded-full"></div>
+                <span className="text-sm text-muted-foreground">Money out</span>
+                <span className="text-sm font-medium text-red-600">
+                  -{formatAmount(moneyOut)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Bar Chart - Matching Index Page Style */}
+          <div className="h-[200px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={filteredData} margin={{ top: 20, right: 20, left: 0, bottom: 20 }}>
+                <XAxis 
+                  dataKey="date" 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: '#64748b', fontSize: 12 }}
+                />
+                <YAxis hide />
+                <Bar 
+                  dataKey="moneyIn" 
+                  fill="#3b82f6"
+                  radius={[2, 2, 0, 0]}
+                  opacity={0.8}
+                />
+                <Bar 
+                  dataKey="moneyOut" 
+                  fill="#e5e7eb"
+                  radius={[2, 2, 0, 0]}
+                  opacity={0.6}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Currency Balance Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
+        <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)]">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -102,14 +158,14 @@ export function CryptoPortfolio() {
               <div className="text-green-600 flex items-center gap-1">
                 <TrendingUp className="w-4 h-4" />
                 <span className="text-sm font-medium">
-                  +{changePercent}% ({formatAmount(changeAmount)})
+                  +7.3% ({formatAmount(2856.00)})
                 </span>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)]">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -123,11 +179,11 @@ export function CryptoPortfolio() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)]">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-2xl font-bold text-green-600">+{changePercent}%</div>
+                <div className="text-2xl font-bold text-green-600">+7.3%</div>
                 <p className="text-sm text-muted-foreground">24h Performance</p>
               </div>
               <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
@@ -139,10 +195,10 @@ export function CryptoPortfolio() {
       </div>
 
       {/* Portfolio Chart */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Portfolio Performance</CardTitle>
+      <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)]">
+        <CardHeader className="flex items-center gap-2 px-4 pt-4 pb-3 min-h-[40px] border-b border-border">
+          <div className="flex items-center justify-between w-full">
+            <CardTitle className="text-base font-medium text-card-foreground flex items-center gap-2">Portfolio Performance</CardTitle>
             <div className="flex gap-1">
               {RANGE_OPTIONS.map((option) => (
                 <Button
@@ -158,7 +214,7 @@ export function CryptoPortfolio() {
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4">
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={filteredData} margin={{ top: 20, right: 20, left: 0, bottom: 20 }}>
@@ -201,10 +257,10 @@ export function CryptoPortfolio() {
       </Card>
 
       {/* Holdings Table */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Your Holdings</CardTitle>
+      <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)]">
+        <CardHeader className="flex items-center gap-2 px-4 pt-4 pb-3 min-h-[40px] border-b border-border">
+          <div className="flex items-center justify-between w-full">
+            <CardTitle className="text-base font-medium text-card-foreground flex items-center gap-2">Your Holdings</CardTitle>
             <Button size="sm" className="gap-2">
               <Plus className="h-4 w-4" />
               Add Asset
