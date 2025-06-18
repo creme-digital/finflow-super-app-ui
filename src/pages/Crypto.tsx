@@ -1,4 +1,3 @@
-
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -127,10 +126,12 @@ export default function Crypto() {
           {/* Header with tabs and View Portfolio button */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-6">
-              <Tabs defaultValue="crypto-trading" className="w-auto">
+              <Tabs defaultValue="overview" className="w-auto">
                 <TabsList>
-                  <TabsTrigger value="crypto-trading" className="text-blue-600 font-medium">Crypto Trading</TabsTrigger>
-                  <TabsTrigger value="asset" className="text-muted-foreground font-medium">Asset</TabsTrigger>
+                  <TabsTrigger value="overview" className="text-blue-600 font-medium">Overview</TabsTrigger>
+                  <TabsTrigger value="assets" className="text-muted-foreground font-medium">Assets</TabsTrigger>
+                  <TabsTrigger value="watchlist" className="text-muted-foreground font-medium">Watchlist</TabsTrigger>
+                  <TabsTrigger value="coins" className="text-muted-foreground font-medium">Coins</TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
