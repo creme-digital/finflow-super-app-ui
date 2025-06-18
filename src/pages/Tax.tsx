@@ -457,11 +457,11 @@ const Tax = () => {
                   
                   {/* Card content */}
                   <div className="p-3">
-                    <div style={{ height: '280px' }}>
+                    <div style={{ height: '320px' }}>
                       <ModernBarChart
                         data={quarterlyData}
                         dataKeys={barChartDataKeys}
-                        height={280}
+                        height={320}
                       />
                     </div>
                   </div>
@@ -487,10 +487,11 @@ const Tax = () => {
                   
                   {/* Card content */}
                   <div className="p-3">
-                    <div style={{ height: '280px' }}>
+                    <div style={{ height: '320px' }}>
                       <ModernPieChart
                         data={taxBreakdownData}
-                        height={280}
+                        height={320}
+                        showLegend={true}
                       />
                     </div>
                   </div>
