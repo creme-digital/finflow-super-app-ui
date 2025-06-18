@@ -8,69 +8,54 @@ import { Copy, Check, Plus } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
-
 const RewardsMainContent = () => {
-  const { formatAmount } = useCurrency();
-  const { toast } = useToast();
+  const {
+    formatAmount
+  } = useCurrency();
+  const {
+    toast
+  } = useToast();
   const [email, setEmail] = useState('');
   const [copied, setCopied] = useState(false);
-
   const referralLink = 'https://meely.com/invite/user21938127';
   const referralCode = 'USER21938127';
   const referralProgress = 70;
-
   const handleCopyLink = () => {
     navigator.clipboard.writeText(referralLink);
     setCopied(true);
     toast({
       title: "Link copied!",
-      description: "The referral link has been copied to your clipboard.",
+      description: "The referral link has been copied to your clipboard."
     });
     setTimeout(() => setCopied(false), 2000);
   };
-
   const handleInvite = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
       toast({
         title: "Invitation sent!",
-        description: `A referral invitation has been sent to ${email}.`,
+        description: `A referral invitation has been sent to ${email}.`
       });
       setEmail('');
     }
   };
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Header with consistent styling */}
-      <PageHeader 
-        title="Rewards"
-        children={
-          <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm">
-              View History
-            </Button>
-            <Button size="sm" className="gap-2">
-              <Plus className="w-4 h-4" />
-              Invite Friends
-            </Button>
-          </div>
-        }
-      />
+      <PageHeader title="Rewards" children={<div className="flex items-center gap-3">
+            
+            
+          </div>} />
 
       {/* Stats Overview with Glass Effect */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div
-          className="overflow-hidden"
-          style={{
-            border: '1px solid #FFFFFF',
-            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-            borderRadius: '16px',
-            background: 'rgba(255, 255, 255, 0.4)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)'
-          }}
-        >
+        <div className="overflow-hidden" style={{
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px',
+        background: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
+      }}>
           <CardContent className="p-6">
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">Total Rewards Earned</div>
@@ -79,17 +64,14 @@ const RewardsMainContent = () => {
           </CardContent>
         </div>
 
-        <div
-          className="overflow-hidden"
-          style={{
-            border: '1px solid #FFFFFF',
-            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-            borderRadius: '16px',
-            background: 'rgba(255, 255, 255, 0.4)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)'
-          }}
-        >
+        <div className="overflow-hidden" style={{
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px',
+        background: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
+      }}>
           <CardContent className="p-6">
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">Successful Referrals</div>
@@ -98,17 +80,14 @@ const RewardsMainContent = () => {
           </CardContent>
         </div>
 
-        <div
-          className="overflow-hidden"
-          style={{
-            border: '1px solid #FFFFFF',
-            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-            borderRadius: '16px',
-            background: 'rgba(255, 255, 255, 0.4)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)'
-          }}
-        >
+        <div className="overflow-hidden" style={{
+        border: '1px solid #FFFFFF',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+        borderRadius: '16px',
+        background: 'rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
+      }}>
           <CardContent className="p-6">
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">Average Cashback Rate</div>
@@ -122,17 +101,14 @@ const RewardsMainContent = () => {
         {/* Left Column */}
         <div className="space-y-6">
           {/* Your Referral Link with Glass Effect */}
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px',
+          background: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}>
             <CardHeader>
               <CardTitle>Your Referral Link</CardTitle>
             </CardHeader>
@@ -140,17 +116,8 @@ const RewardsMainContent = () => {
               <div>
                 <div className="text-sm text-muted-foreground mb-3">Share this link with friends to earn rewards when they sign up</div>
                 <div className="flex space-x-2">
-                  <Input
-                    value={referralLink}
-                    readOnly
-                    className="font-mono text-sm"
-                  />
-                  <Button 
-                    variant="outline" 
-                    size="icon"
-                    onClick={handleCopyLink}
-                    className="shrink-0"
-                  >
+                  <Input value={referralLink} readOnly className="font-mono text-sm" />
+                  <Button variant="outline" size="icon" onClick={handleCopyLink} className="shrink-0">
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </Button>
                 </div>
@@ -166,17 +133,14 @@ const RewardsMainContent = () => {
           </div>
 
           {/* Invite Friends with Glass Effect */}
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px',
+          background: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}>
             <CardHeader>
               <CardTitle>Invite Friends</CardTitle>
             </CardHeader>
@@ -185,13 +149,7 @@ const RewardsMainContent = () => {
               <form onSubmit={handleInvite} className="space-y-4">
                 <div>
                   <label htmlFor="email" className="text-sm font-medium mb-2 block">Email</label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder=""
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                  <Input id="email" type="email" placeholder="" value={email} onChange={e => setEmail(e.target.value)} />
                 </div>
                 <Button type="submit" className="w-auto px-6">Send Invitation</Button>
               </form>
@@ -202,17 +160,14 @@ const RewardsMainContent = () => {
         {/* Right Column */}
         <div>
           {/* Referral Tier Progress with Glass Effect */}
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px',
+          background: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}>
             <CardHeader>
               <CardTitle>Referral Tier Progress</CardTitle>
             </CardHeader>
@@ -234,16 +189,8 @@ const RewardsMainContent = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default function Rewards() {
-  return (
-    <Layout 
-      title="Reward" 
-      showRightSidebar={false}
-      mainContent={<RewardsMainContent />}
-    />
-  );
+  return <Layout title="Reward" showRightSidebar={false} mainContent={<RewardsMainContent />} />;
 }
