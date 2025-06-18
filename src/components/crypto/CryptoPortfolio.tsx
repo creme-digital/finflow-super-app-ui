@@ -7,7 +7,7 @@ import { NetCashSection } from '@/components/dashboard/NetCashSection';
 import { MoneyFlowCard } from '@/components/dashboard/MoneyFlowCard';
 import { IncomeExpenseCard } from '@/components/dashboard/IncomeExpenseCard';
 export function CryptoPortfolio() {
-  return <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
+  return <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full w-full">
       {/* Left side - Main Content (3/4 width) */}
       <div className="lg:col-span-3">
         <div className="flex flex-col gap-6 min-h-full" style={{
@@ -26,8 +26,6 @@ export function CryptoPortfolio() {
       </div>
 
       {/* Right side - Sidebar Content (1/4 width) */}
-      <div className="lg:col-span-1">
-        
-      </div>
+      
     </div>;
 }
