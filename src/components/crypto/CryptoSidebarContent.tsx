@@ -85,32 +85,32 @@ export function CryptoSidebarContent() {
 
   return (
     <div className="space-y-6">
-      {/* Total Crypto Amount Card - matching /index page design */}
-      <Card className="bg-white">
+      {/* Total Crypto Amount Card */}
+      <Card>
         <CardHeader>
           <CardTitle className="text-lg font-medium">Total Crypto</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <div className="text-3xl font-bold text-black">{formatAmount(totalCryptoValue)}</div>
+            <div className="text-3xl font-bold">{formatAmount(totalCryptoValue)}</div>
             <div className="text-green-600 text-sm font-medium">
               ↗ {changePercent}% (+{formatAmount(changeAmount)})
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs bg-white text-black border hover:bg-gray-50" variant="outline">
+            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs" variant="outline">
               <Plus className="w-5 h-5" />
               Buy
             </Button>
-            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs bg-white text-black border hover:bg-gray-50" variant="outline">
+            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs" variant="outline">
               <ArrowUpRight className="w-5 h-5" />
               Send
             </Button>
-            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs bg-white text-black border hover:bg-gray-50" variant="outline">
+            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs" variant="outline">
               <ArrowDownLeft className="w-5 h-5" />
               Receive
             </Button>
-            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs bg-white text-black border hover:bg-gray-50" variant="outline">
+            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs" variant="outline">
               <ArrowLeftRight className="w-5 h-5" />
               Transfer
             </Button>
@@ -121,10 +121,10 @@ export function CryptoSidebarContent() {
       {/* All Activity Section Header */}
       <div className="text-muted-foreground text-sm font-medium">All Activity</div>
 
-      {/* Latest Crypto Transactions - matching /index page list design */}
+      {/* Latest Crypto Transactions */}
       <div className="space-y-3">
         {recentTransactions.map((transaction) => (
-          <Card key={transaction.id} className="bg-white">
+          <Card key={transaction.id}>
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -132,7 +132,7 @@ export function CryptoSidebarContent() {
                     {getTransactionIcon(transaction.type)}
                   </div>
                   <div>
-                    <div className="font-medium text-black capitalize">{transaction.type === 'swap' ? 'Crypto Swap' : `${transaction.type} Crypto`}</div>
+                    <div className="font-medium capitalize">{transaction.type === 'swap' ? 'Crypto Swap' : `${transaction.type} Crypto`}</div>
                     <div className="text-sm text-muted-foreground">{transaction.crypto}</div>
                     <div className="text-blue-600 text-sm cursor-pointer hover:underline">
                       View Transaction
