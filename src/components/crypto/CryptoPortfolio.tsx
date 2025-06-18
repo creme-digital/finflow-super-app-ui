@@ -26,13 +26,6 @@ const holdings = [
   { name: 'Chainlink', symbol: 'LINK', amount: '150', value: 2217, change: -1.8, positive: false },
 ];
 
-const recentTransactions = [
-  { id: '1', type: 'Buy', asset: 'Bitcoin', amount: '0.1 BTC', value: 5920, date: '2024-03-15', status: 'completed' },
-  { id: '2', type: 'Sell', asset: 'Ethereum', amount: '1.5 ETH', value: 3675, date: '2024-03-14', status: 'completed' },
-  { id: '3', type: 'Buy', asset: 'Solana', amount: '25 SOL', value: 2200, date: '2024-03-13', status: 'completed' },
-  { id: '4', type: 'Buy', asset: 'Cardano', amount: '500 ADA', value: 650, date: '2024-03-12', status: 'pending' },
-];
-
 const RANGE_OPTIONS = [
   { label: '1W', value: '1W' },
   { label: '1M', value: '1M' },
@@ -253,62 +246,6 @@ export function CryptoPortfolio() {
                           Trade
                         </Button>
                       </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-      </div>
-
-      {/* Recent Transactions */}
-      <div className="overflow-hidden" style={{
-        border: '1px solid #FFFFFF',
-        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-        borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.4)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
-      }}>
-        <div className="p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <TrendingDown className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
-            <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Recent Transactions</span>
-          </div>
-
-          <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow style={{ background: '#F8F8FA' }}>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Type</TableHead>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Asset</TableHead>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Amount</TableHead>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Value</TableHead>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Date</TableHead>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {recentTransactions.map((tx) => (
-                  <TableRow key={tx.id}>
-                    <TableCell>
-                      <span className={tx.type === 'Buy' ? 'text-green-600 font-medium' : 'text-red-600 font-medium'}>
-                        {tx.type}
-                      </span>
-                    </TableCell>
-                    <TableCell className="font-medium">{tx.asset}</TableCell>
-                    <TableCell>{tx.amount}</TableCell>
-                    <TableCell className="font-mono">{formatAmount(tx.value)}</TableCell>
-                    <TableCell className="text-[#6D6D74]">{tx.date}</TableCell>
-                    <TableCell>
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                        tx.status === 'completed' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {tx.status}
-                      </span>
                     </TableCell>
                   </TableRow>
                 ))}
