@@ -1,3 +1,4 @@
+
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Search, TrendingUp, TrendingDown, Activity, DollarSign, Plus, Filter, Download, ChevronDown } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { TradingViewChart } from '@/components/crypto/TradingViewChart';
-import { CryptoSidebarContent } from '@/components/crypto/CryptoSidebarContent';
+import { CryptoRightPanel } from '@/components/crypto/CryptoRightPanel';
 
 export default function Crypto() {
   const { formatAmount } = useCurrency();
@@ -120,7 +121,7 @@ export default function Crypto() {
     <Layout 
       title="Crypto Trading" 
       showRightSidebar={true}
-      rightSidebarContent={<CryptoSidebarContent />}
+      rightSidebarContent={<CryptoRightPanel />}
       mainContent={
         <div className="space-y-6">
           {/* Header with tabs and View Portfolio button */}
