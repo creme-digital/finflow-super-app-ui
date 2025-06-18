@@ -38,24 +38,6 @@ export const modernChartConfig: ChartConfig = {
   },
 };
 
-// Gradient definitions for charts
-export const chartGradientDefs = (
-  <defs>
-    <linearGradient id="primaryGradient" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stopColor={CHART_COLORS.primary} stopOpacity={0.8} />
-      <stop offset="100%" stopColor={CHART_COLORS.primary} stopOpacity={0.3} />
-    </linearGradient>
-    <linearGradient id="secondaryGradient" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stopColor={CHART_COLORS.secondary} stopOpacity={0.8} />
-      <stop offset="100%" stopColor={CHART_COLORS.secondary} stopOpacity={0.3} />
-    </linearGradient>
-    <linearGradient id="tertiaryGradient" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stopColor={CHART_COLORS.tertiary} stopOpacity={0.8} />
-      <stop offset="100%" stopColor={CHART_COLORS.tertiary} stopOpacity={0.3} />
-    </linearGradient>
-  </defs>
-);
-
 // Common chart styling props
 export const modernChartStyles = {
   barChart: {
@@ -98,18 +80,6 @@ export const modernChartStyles = {
 
 // Helper function to format Y-axis values
 export const formatYAxisValue = (value: number) => `$${(value / 1000).toFixed(0)}k`;
-
-// Helper function to create pie chart gradients
-export const createPieGradients = (data: Array<{ color: string }>) => (
-  <defs>
-    {data.map((entry, index) => (
-      <linearGradient key={`gradient-${index}`} id={`gradient-${index}`} x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stopColor={entry.color} stopOpacity={0.8} />
-        <stop offset="100%" stopColor={entry.color} stopOpacity={0.6} />
-      </linearGradient>
-    ))}
-  </defs>
-);
 
 // Modern legend component styles
 export const modernLegendStyles = {

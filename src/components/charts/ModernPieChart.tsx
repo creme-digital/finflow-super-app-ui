@@ -2,7 +2,8 @@
 import React from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import { ChartContainer, ChartTooltip } from '@/components/ui/chart';
-import { modernChartStyles, createPieGradients, modernLegendStyles } from '@/lib/chart-config';
+import { modernChartStyles, modernLegendStyles } from '@/lib/chart-config';
+import { createPieGradients } from './ChartGradients';
 
 interface PieChartData {
   category: string;
