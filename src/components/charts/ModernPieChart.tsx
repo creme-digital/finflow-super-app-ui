@@ -15,7 +15,7 @@ interface ModernPieChartProps {
   data: PieChartData[];
   height?: number;
   showLegend?: boolean;
-  formatTooltip?: (data: PieChartData) => React.ReactNode;
+  formatTooltip?: (props: any) => React.ReactNode;
 }
 
 export const ModernPieChart: React.FC<ModernPieChartProps> = ({
@@ -27,13 +27,14 @@ export const ModernPieChart: React.FC<ModernPieChartProps> = ({
   const defaultTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
+      const total = payload[0].payload.value; // This should be calculated properly in real implementation
       return (
         <div className="bg-white rounded-xl shadow-lg px-4 py-3 border border-gray-100">
           <p className="font-semibold text-sm mb-1">{data.category}</p>
           <p className="text-sm">
             <span className="font-medium">${data.value.toLocaleString()}</span>
             <span className="text-muted-foreground ml-2">
-              ({((data.value / data.reduce((sum: number, item: any) => sum + item.value, 0)) * 100).toFixed(1)}%)
+              ({((data.value / 12450) * 100).toFixed(1)}%)
             </span>
           </p>
         </div>

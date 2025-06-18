@@ -372,7 +372,7 @@ const Tax = () => {
             </TabsContent>
             
             <TabsContent value="estimation" className="space-y-6">
-              {/* 3 Numbers at Top */}
+              {/* Updated Top Cards to match accounting page styling */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div
                   className="p-6 rounded-[16px]"
@@ -384,11 +384,10 @@ const Tax = () => {
                     WebkitBackdropFilter: 'blur(10px)'
                   }}
                 >
-                  <div className="flex items-center gap-2 mb-2">
-                    <Receipt className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
-                    <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Estimated Tax</span>
+                  <div className="mb-4">
+                    <div className="text-3xl font-bold mb-2" style={{ fontFamily: 'Inter' }}>$12,450</div>
+                    <div className="text-sm text-muted-foreground">Estimated Tax</div>
                   </div>
-                  <div style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 32, fontWeight: 400, letterSpacing: '-0.64px' }}>$12,450</div>
                 </div>
 
                 <div
@@ -401,11 +400,10 @@ const Tax = () => {
                     WebkitBackdropFilter: 'blur(10px)'
                   }}
                 >
-                  <div className="flex items-center gap-2 mb-2">
-                    <CalendarCheck className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
-                    <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Next Deadline</span>
+                  <div className="mb-4">
+                    <div className="text-3xl font-bold mb-2" style={{ fontFamily: 'Inter' }}>Jun 15, 2025</div>
+                    <div className="text-sm text-muted-foreground">Next Deadline</div>
                   </div>
-                  <div style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 32, fontWeight: 400, letterSpacing: '-0.64px' }}>Jun 15, 2025</div>
                 </div>
 
                 <div
@@ -418,11 +416,10 @@ const Tax = () => {
                     WebkitBackdropFilter: 'blur(10px)'
                   }}
                 >
-                  <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
-                    <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>YTD Payments</span>
+                  <div className="mb-4">
+                    <div className="text-3xl font-bold mb-2" style={{ fontFamily: 'Inter' }}>$3,125</div>
+                    <div className="text-sm text-muted-foreground">YTD Payments</div>
                   </div>
-                  <div style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 32, fontWeight: 400, letterSpacing: '-0.64px' }}>$3,125</div>
                 </div>
               </div>
 

@@ -48,7 +48,8 @@ export const ModernBarChart: React.FC<ModernBarChartProps> = ({
               dataKey={dataKey.key}
               fill={`url(#${dataKey.key}Gradient)`}
               name={dataKey.name}
-              {...modernChartStyles.barChart.barProps}
+              radius={[4, 4, 0, 0] as [number, number, number, number]}
+              maxBarSize={40}
             />
           ))}
         </BarChart>
