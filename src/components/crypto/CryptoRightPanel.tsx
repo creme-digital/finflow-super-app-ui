@@ -1,9 +1,8 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowUpRight, ArrowDownLeft, ArrowLeftRight, Plus } from 'lucide-react';
+import { ArrowUpRight, ArrowDownLeft, ArrowLeftRight, Plus, Wallet } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
 
 export function CryptoRightPanel() {
@@ -83,52 +82,77 @@ export function CryptoRightPanel() {
     }
   };
 
+  const buttonStyle = {
+    border: '1px solid #FFFFFF',
+    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+    borderRadius: '12px',
+    background: 'rgba(255, 255, 255, 0.4)',
+    backdropFilter: 'blur(10px)',
+    WebkitBackdropFilter: 'blur(10px)'
+  };
+
   return (
     <div className="space-y-6">
-      {/* Total Crypto Card - using exact same styling as TotalBalance */}
-      <div className="overflow-hidden" style={{
-        border: '1px solid #FFFFFF',
-        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-        borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.4)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
-      }}>
-        <CardHeader>
-          <CardTitle className="text-lg font-medium">Total Crypto</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <div className="text-3xl font-bold">{formatAmount(totalCryptoValue)}</div>
-            <div className="text-green-600 text-sm font-medium">
-              ↗ {changePercent}% (+{formatAmount(changeAmount)})
-            </div>
+      {/* Total Crypto Card - matching TotalBalance design exactly */}
+      <div 
+        className="rounded-[24px] p-6"
+        style={{ 
+          background: 'rgba(255, 255, 255, 0.64)',
+          border: '1px solid #FFFFFF'
+        }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <Wallet className="w-5 h-5 text-muted-foreground" />
+          <span className="text-sm font-medium text-foreground">Total Crypto</span>
+        </div>
+        
+        <div className="mb-2">
+          <div className="text-3xl font-bold text-foreground">{formatAmount(totalCryptoValue)}</div>
+          <div className="text-sm text-green-600 flex items-center gap-1">
+            <span>↑ {changePercent}% (+{formatAmount(changeAmount)})</span>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs" variant="outline">
-              <Plus className="w-5 h-5" />
-              Buy
-            </Button>
-            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs" variant="outline">
-              <ArrowUpRight className="w-5 h-5" />
-              Send
-            </Button>
-            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs" variant="outline">
-              <ArrowDownLeft className="w-5 h-5" />
-              Receive
-            </Button>
-            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs" variant="outline">
-              <ArrowLeftRight className="w-5 h-5" />
-              Transfer
-            </Button>
-          </div>
-        </CardContent>
+        </div>
+
+        <div className="grid grid-cols-4 gap-3 mt-6">
+          <Button 
+            variant="ghost" 
+            className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
+            style={buttonStyle}
+          >
+            <Plus className="w-5 h-5" />
+            <span className="text-xs">Buy</span>
+          </Button>
+          <Button 
+            variant="ghost" 
+            className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
+            style={buttonStyle}
+          >
+            <ArrowUpRight className="w-5 h-5" />
+            <span className="text-xs">Send</span>
+          </Button>
+          <Button 
+            variant="ghost" 
+            className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
+            style={buttonStyle}
+          >
+            <ArrowDownLeft className="w-5 h-5" />
+            <span className="text-xs">Receive</span>
+          </Button>
+          <Button 
+            variant="ghost" 
+            className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
+            style={buttonStyle}
+          >
+            <ArrowLeftRight className="w-5 h-5" />
+            <span className="text-xs">Transfer</span>
+          </Button>
+        </div>
       </div>
 
       {/* All Activity Section Header */}
       <div className="text-muted-foreground text-sm font-medium">All Activity</div>
 
-      {/* Latest Crypto Transactions - using exact same styling as dashboard activity */}
+      {/* Latest Crypto Transactions - matching dashboard activity design */}
       <div className="space-y-3">
         {recentTransactions.map((transaction) => (
           <div key={transaction.id} className="overflow-hidden" style={{
@@ -139,7 +163,7 @@ export function CryptoRightPanel() {
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)'
           }}>
-            <CardContent className="p-4">
+            <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -169,7 +193,7 @@ export function CryptoRightPanel() {
                   </div>
                 </div>
               </div>
-            </CardContent>
+            </div>
           </div>
         ))}
       </div>
