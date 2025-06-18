@@ -84,25 +84,18 @@ export function CryptoPortfolio() {
   const changeAmount = 2856.00;
 
   return (
-    <div className="space-y-6 h-full">
+    <div className="space-y-6 w-full max-w-none">
       {/* Total Portfolio Value Card */}
-      <div className="overflow-hidden" style={{
-        border: '1px solid #FFFFFF',
-        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-        borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.4)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
-      }}>
-        <div className="p-6">
+      <Card className="card-shadow overflow-hidden">
+        <CardContent className="p-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <Wallet className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
-                <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Total Portfolio Value</span>
+                <Wallet className="w-[18px] h-[18px] text-muted-foreground" />
+                <span className="text-sm font-medium text-muted-foreground">Total Portfolio Value</span>
               </div>
               <div className="space-y-2">
-                <div style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 48, fontWeight: 400, letterSpacing: '-0.96px' }}>
+                <div className="text-4xl font-bold font-mono tracking-tight">
                   {formatAmount(totalValue)}
                 </div>
                 <div className="flex items-center gap-2">
@@ -116,19 +109,15 @@ export function CryptoPortfolio() {
             {/* Range Selector */}
             <div className="flex gap-1">
               {RANGE_OPTIONS.map((option) => (
-                <button
+                <Button
                   key={option.value}
                   onClick={() => setSelectedRange(option.value)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors
-                    ${selectedRange === option.value
-                      ? 'bg-black text-white'
-                      : 'bg-[#F8F8FA] text-[#6D6D74] hover:bg-[#F0F0F0]'}
-                  `}
-                  style={{ fontFamily: 'Inter' }}
-                  type="button"
+                  variant={selectedRange === option.value ? 'default' : 'ghost'}
+                  size="sm"
+                  className={selectedRange === option.value ? '' : 'text-muted-foreground hover:text-foreground'}
                 >
                   {option.label}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -172,88 +161,78 @@ export function CryptoPortfolio() {
               </AreaChart>
             </ResponsiveContainer>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* Holdings Table */}
-      <div className="overflow-hidden" style={{
-        border: '1px solid #FFFFFF',
-        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-        borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.4)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
-      }}>
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
+      <Card className="card-shadow overflow-hidden">
+        <CardHeader>
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Activity className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
-              <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Holdings</span>
+              <Activity className="w-[18px] h-[18px] text-muted-foreground" />
+              <CardTitle className="text-base font-medium">Holdings</CardTitle>
             </div>
-            <Button variant="outline" className="gap-2 text-sm">
+            <Button variant="outline" size="sm" className="gap-2">
               View all assets
               <ArrowUpRight className="h-4 w-4" />
             </Button>
           </div>
-
-          <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow style={{ background: '#F8F8FA' }}>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Asset</TableHead>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Holdings</TableHead>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Value</TableHead>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">24h Change</TableHead>
-                  <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Actions</TableHead>
+        </CardHeader>
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Asset</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Holdings</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Value</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wide">24h Change</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {holdings.map((asset) => (
+                <TableRow key={asset.symbol}>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium"
+                        style={{
+                          background: asset.symbol === 'BTC' ? '#F7931A' :
+                                      asset.symbol === 'ETH' ? '#627EEA' :
+                                      asset.symbol === 'SOL' ? '#00FFA3' : 
+                                      asset.symbol === 'ADA' ? '#0033AD' :
+                                      asset.symbol === 'MATIC' ? '#8247E5' : '#375BD2'
+                        }}>
+                        {asset.symbol.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-medium">{asset.name}</div>
+                        <div className="text-sm text-muted-foreground">{asset.symbol}</div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="font-medium">{asset.amount} {asset.symbol}</div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="font-mono font-medium">{formatAmount(asset.value)}</div>
+                  </TableCell>
+                  <TableCell>
+                    <div className={`flex items-center gap-1 ${asset.positive ? 'text-green-600' : 'text-red-600'}`}>
+                      {asset.positive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+                      {asset.positive ? '+' : ''}{asset.change}%
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="outline" size="sm">
+                      Trade
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {holdings.map((asset) => (
-                  <TableRow key={asset.symbol}>
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium"
-                          style={{
-                            background: asset.symbol === 'BTC' ? '#F7931A' :
-                                        asset.symbol === 'ETH' ? '#627EEA' :
-                                        asset.symbol === 'SOL' ? '#00FFA3' : 
-                                        asset.symbol === 'ADA' ? '#0033AD' :
-                                        asset.symbol === 'MATIC' ? '#8247E5' : '#375BD2'
-                          }}>
-                          {asset.symbol.charAt(0)}
-                        </div>
-                        <div>
-                          <div className="font-medium">{asset.name}</div>
-                          <div className="text-sm text-[#6D6D74]">{asset.symbol}</div>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="font-medium">{asset.amount} {asset.symbol}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="font-mono">{formatAmount(asset.value)}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className={`flex items-center gap-1 ${asset.positive ? 'text-green-600' : 'text-red-600'}`}>
-                        {asset.positive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-                        {asset.positive ? '+' : ''}{asset.change}%
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm" className="text-xs">
-                          Trade
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
   );
 }
