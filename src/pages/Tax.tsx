@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
@@ -372,46 +373,67 @@ const Tax = () => {
             </TabsContent>
             
             <TabsContent value="estimation" className="space-y-6">
-              {/* Top Cards - Matching accounting page design exactly */}
+              {/* Top Cards - Glass styling like accounts page */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)]">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-medium text-muted-foreground">Estimated Tax</h3>
-                      <Info className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                    <div className="mt-2">
-                      <div className="text-3xl font-bold">$12k</div>
-                      <p className="text-sm text-muted-foreground">2025 estimates</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-medium text-muted-foreground">Estimated Tax</h3>
+                    <Info className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <div className="mt-2">
+                    <div className="text-3xl font-bold">$12k</div>
+                    <p className="text-sm text-muted-foreground">2025 estimates</p>
+                  </div>
+                </div>
 
-                <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)]">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-medium text-muted-foreground">Next Deadline</h3>
-                      <Info className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                    <div className="mt-2">
-                      <div className="text-3xl font-bold">Jun 15</div>
-                      <p className="text-sm text-muted-foreground">Q2 Payment</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-medium text-muted-foreground">Next Deadline</h3>
+                    <Info className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <div className="mt-2">
+                    <div className="text-3xl font-bold">Jun 15</div>
+                    <p className="text-sm text-muted-foreground">Q2 Payment</p>
+                  </div>
+                </div>
 
-                <Card className="rounded-[12px] bg-card text-card-foreground shadow-[0px_3px_4px_-3px_rgba(0,0,0,0.08),0px_0px_0px_1.5px_rgba(221,221,228,0.25)]">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-medium text-muted-foreground">YTD Payments</h3>
-                      <Info className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                    <div className="mt-2">
-                      <div className="text-3xl font-bold">$3k</div>
-                      <p className="text-sm text-muted-foreground">5 payments</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-medium text-muted-foreground">YTD Payments</h3>
+                    <Info className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <div className="mt-2">
+                    <div className="text-3xl font-bold">$3k</div>
+                    <p className="text-sm text-muted-foreground">5 payments</p>
+                  </div>
+                </div>
               </div>
 
               {/* Charts Row - Using reusable components */}
