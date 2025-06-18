@@ -329,8 +329,8 @@ const Tax = () => {
                     <h3 className="text-sm font-medium text-muted-foreground">Estimated Tax</h3>
                     <Info className="h-4 w-4 text-muted-foreground" />
                   </div>
-                  <div className="mt-2">
-                    <div className="text-3xl font-bold">$12k</div>
+                  <div className="mt-4 flex flex-col gap-1 ">
+                    <div className="text-3xl font-bold">$12,918.18</div>
                     <p className="text-sm text-muted-foreground">Current year estimate based on YTD income</p>
                   </div>
                 </div>
@@ -346,9 +346,9 @@ const Tax = () => {
                     <h3 className="text-sm font-medium text-muted-foreground">Next Deadline</h3>
                     <Info className="h-4 w-4 text-muted-foreground" />
                   </div>
-                  <div className="mt-2">
-                    <div className="text-3xl font-bold">Jun 15</div>
-                    <p className="text-sm text-muted-foreground">Q2 Payment</p>
+                  <div className="mt-4 flex flex-col gap-1 ">
+                    <div className="text-3xl font-bold">Jun 15, 2025</div>
+                    <p className="text-sm text-muted-foreground">Estimated tax payment Q2</p>
                   </div>
                 </div>
 
@@ -363,9 +363,9 @@ const Tax = () => {
                     <h3 className="text-sm font-medium text-muted-foreground">YTD Payments</h3>
                     <Info className="h-4 w-4 text-muted-foreground" />
                   </div>
-                  <div className="mt-2">
-                    <div className="text-3xl font-bold">$3k</div>
-                    <p className="text-sm text-muted-foreground">5 payments</p>
+                  <div className="mt-4 flex flex-col gap-1 ">
+                    <div className="text-3xl font-bold">$4,912.18</div>
+                    <p className="text-sm text-muted-foreground">Tax payments made 25% of annual estimate</p>
                   </div>
                 </div>
               </div>
