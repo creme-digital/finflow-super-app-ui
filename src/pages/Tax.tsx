@@ -6,10 +6,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Receipt, CalendarCheck, FileText, Info } from 'lucide-react';
+import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Receipt, CalendarCheck, FileText, Info, BarChart3, PieChart } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { ModernBarChart } from '@/components/charts/ModernBarChart';
 import { ModernPieChart } from '@/components/charts/ModernPieChart';
 import { CHART_COLORS } from '@/lib/chart-config';
@@ -435,34 +435,66 @@ const Tax = () => {
                 </div>
               </div>
 
-              {/* Charts Row - Using Card components for proper white background styling */}
+              {/* Charts Row - Using exact MoneyFlowCard styling */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Quarterly Tax Estimates Bar Chart */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Quarterly Tax Estimates</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ModernBarChart
-                      data={quarterlyData}
-                      dataKeys={barChartDataKeys}
-                      height={300}
-                    />
-                  </CardContent>
-                </Card>
+                <div className="flex flex-col overflow-hidden" style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px'
+                }}>
+                  {/* Card header */}
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.6)'
+                  }} className="p-3 flex items-center gap-2 bg-white/40">
+                    <BarChart3 className="w-4 h-4" />
+                    <span className="text-black text-sm font-medium" style={{
+                      fontFamily: 'Inter'
+                    }}>
+                      Quarterly Tax Estimates
+                    </span>
+                  </div>
+                  
+                  {/* Card content */}
+                  <div className="p-3">
+                    <div style={{ height: '280px' }}>
+                      <ModernBarChart
+                        data={quarterlyData}
+                        dataKeys={barChartDataKeys}
+                        height={280}
+                      />
+                    </div>
+                  </div>
+                </div>
 
                 {/* Tax Breakdown Pie Chart */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Tax Breakdown</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ModernPieChart
-                      data={taxBreakdownData}
-                      height={300}
-                    />
-                  </CardContent>
-                </Card>
+                <div className="flex flex-col overflow-hidden" style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px'
+                }}>
+                  {/* Card header */}
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.6)'
+                  }} className="p-3 flex items-center gap-2 bg-white/40">
+                    <PieChart className="w-4 h-4" />
+                    <span className="text-black text-sm font-medium" style={{
+                      fontFamily: 'Inter'
+                    }}>
+                      Tax Breakdown
+                    </span>
+                  </div>
+                  
+                  {/* Card content */}
+                  <div className="p-3">
+                    <div style={{ height: '280px' }}>
+                      <ModernPieChart
+                        data={taxBreakdownData}
+                        height={280}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </TabsContent>
           </Tabs>
