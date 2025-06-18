@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Receipt, CalendarCheck, FileText, DollarSign, Calendar, CreditCard } from 'lucide-react';
+import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Receipt, CalendarCheck, FileText } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
@@ -372,86 +372,89 @@ const Tax = () => {
             </TabsContent>
             
             <TabsContent value="estimation" className="space-y-6">
-              {/* Top Cards - Matching accounting page styling */}
+              {/* Top Cards - Fixed overflow and text visibility */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                      <DollarSign className="w-4 h-4" />
-                      Estimated Tax
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">$12,450</div>
-                    <p className="text-xs text-muted-foreground">
-                      For 2025 tax year
-                    </p>
-                  </CardContent>
-                </Card>
+                <div
+                  className="p-6 rounded-[16px] min-h-[120px] flex flex-col justify-center"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="text-3xl font-bold text-foreground mb-2">$12,450</div>
+                  <div className="text-sm text-muted-foreground">Estimated Tax</div>
+                </div>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                      <Calendar className="w-4 h-4" />
-                      Next Deadline
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">Jun 15, 2025</div>
-                    <p className="text-xs text-muted-foreground">
-                      Quarterly payment due
-                    </p>
-                  </CardContent>
-                </Card>
+                <div
+                  className="p-6 rounded-[16px] min-h-[120px] flex flex-col justify-center"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="text-3xl font-bold text-foreground mb-2">Jun 15, 2025</div>
+                  <div className="text-sm text-muted-foreground">Next Deadline</div>
+                </div>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                      <CreditCard className="w-4 h-4" />
-                      YTD Payments
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">$3,125</div>
-                    <p className="text-xs text-muted-foreground">
-                      25% of estimated tax
-                    </p>
-                  </CardContent>
-                </Card>
+                <div
+                  className="p-6 rounded-[16px] min-h-[120px] flex flex-col justify-center"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="text-3xl font-bold text-foreground mb-2">$3,125</div>
+                  <div className="text-sm text-muted-foreground">YTD Payments</div>
+                </div>
               </div>
 
-              {/* Charts Row - Fixed overflow with proper container sizing */}
+              {/* Charts Row - Using reusable components */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Quarterly Tax Estimates Bar Chart */}
-                <Card className="overflow-hidden">
-                  <CardHeader>
-                    <CardTitle className="text-lg font-semibold">Quarterly Tax Estimates</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="p-6 pt-0">
-                      <ModernBarChart
-                        data={quarterlyData}
-                        dataKeys={barChartDataKeys}
-                        height={280}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <h3 className="text-lg font-semibold mb-4">Quarterly Tax Estimates</h3>
+                  <ModernBarChart
+                    data={quarterlyData}
+                    dataKeys={barChartDataKeys}
+                    height={300}
+                  />
+                </div>
 
                 {/* Tax Breakdown Pie Chart */}
-                <Card className="overflow-hidden">
-                  <CardHeader>
-                    <CardTitle className="text-lg font-semibold">Tax Breakdown</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="p-6 pt-0">
-                      <ModernPieChart
-                        data={taxBreakdownData}
-                        height={280}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <h3 className="text-lg font-semibold mb-4">Tax Breakdown</h3>
+                  <ModernPieChart
+                    data={taxBreakdownData}
+                    height={300}
+                  />
+                </div>
               </div>
             </TabsContent>
           </Tabs>
