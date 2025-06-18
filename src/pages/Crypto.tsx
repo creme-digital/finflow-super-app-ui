@@ -116,7 +116,7 @@ export default function Crypto() {
           {/* Header with tabs and View Portfolio button */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-6">
-              <Tabs defaultValue="overview" className="w-auto">
+              <Tabs defaultValue="overview" className="w-full ">
                 <TabsList>
                   <TabsTrigger value="overview" className="text-blue-600 font-medium">Overview</TabsTrigger>
                   <TabsTrigger value="assets" className="text-muted-foreground font-medium">Assets</TabsTrigger>
