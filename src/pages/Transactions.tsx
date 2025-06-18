@@ -12,6 +12,7 @@ import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Eye } from 'lucide
 import { formatCurrency } from '@/lib/formatters';
 import { AddTransactionDialog } from '@/components/transactions/AddTransactionDialog';
 import { TransactionDrawer } from '@/components/transactions/TransactionDrawer';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 const Transactions = () => {
   const [filters, setFilters] = useState({
@@ -131,10 +132,10 @@ const Transactions = () => {
 
   const activeFiltersCount = getActiveFiltersCount();
 
-  // Generate bar chart data for visualization
-  const chartBars = Array.from({ length: 15 }, (_, i) => ({
-    height: Math.random() * 60 + 20,
-    isHighlight: i === 10 // Highlight one bar
+  // Generate line chart data for visualization
+  const lineChartData = Array.from({ length: 15 }, (_, i) => ({
+    day: i + 1,
+    value: Math.random() * 60 + 20,
   }));
 
   return (
@@ -272,17 +273,28 @@ const Transactions = () => {
                 </div>
               </div>
 
-              {/* Bar Chart */}
-              <div className="flex items-end gap-1 h-20">
-                {chartBars.map((bar, i) => (
-                  <div
-                    key={i}
-                    className={`flex-1 rounded-t-sm ${
-                      bar.isHighlight ? 'bg-blue-500' : 'bg-gray-300'
-                    }`}
-                    style={{ height: `${bar.height}%` }}
-                  />
-                ))}
+              {/* Line Chart */}
+              <div className="h-20">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={lineChartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.4} />
+                    <XAxis 
+                      dataKey="day" 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={false}
+                    />
+                    <YAxis hide />
+                    <Line 
+                      type="monotone" 
+                      dataKey="value" 
+                      stroke="#3b82f6" 
+                      strokeWidth={2}
+                      dot={false}
+                      activeDot={{ r: 4, fill: '#3b82f6' }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             </CardContent>
           </div>
