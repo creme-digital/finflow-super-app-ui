@@ -11,6 +11,8 @@ export function CryptoSidebarContent() {
 
   // Sample crypto portfolio value
   const totalCryptoValue = 12847.92;
+  const changePercent = 10.5;
+  const changeAmount = 908.00;
 
   // Sample recent crypto transactions
   const recentTransactions = [
@@ -49,15 +51,6 @@ export function CryptoSidebarContent() {
       value: 3250.00,
       date: '2024-03-12',
       status: 'pending'
-    },
-    {
-      id: '5',
-      type: 'buy',
-      crypto: 'ADA',
-      amount: '1000 ADA',
-      value: 487.00,
-      date: '2024-03-11',
-      status: 'completed'
     }
   ];
 
@@ -92,82 +85,80 @@ export function CryptoSidebarContent() {
 
   return (
     <div className="space-y-6">
-      {/* Total Crypto Amount Card */}
-      <Card className="overflow-hidden" style={{
-        border: '1px solid #FFFFFF',
-        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-        borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.4)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
-      }}>
+      {/* Total Crypto Amount Card - matching /index page design */}
+      <Card className="bg-white">
         <CardHeader>
-          <CardTitle className="text-lg">Total Crypto</CardTitle>
+          <CardTitle className="text-lg font-medium">Total Crypto</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="text-3xl font-bold">{formatAmount(totalCryptoValue)}</div>
-          <div className="grid grid-cols-2 gap-2">
-            <Button size="sm" className="h-8 text-xs">
-              <Plus className="w-3 h-3 mr-1" />
+          <div className="space-y-2">
+            <div className="text-3xl font-bold text-black">{formatAmount(totalCryptoValue)}</div>
+            <div className="text-green-600 text-sm font-medium">
+              ↗ {changePercent}% (+{formatAmount(changeAmount)})
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs bg-white text-black border hover:bg-gray-50" variant="outline">
+              <Plus className="w-5 h-5" />
               Buy
             </Button>
-            <Button size="sm" variant="secondary" className="h-8 text-xs">
-              <ArrowLeftRight className="w-3 h-3 mr-1" />
-              Swap
-            </Button>
-            <Button size="sm" variant="secondary" className="h-8 text-xs">
-              <ArrowUpRight className="w-3 h-3 mr-1" />
+            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs bg-white text-black border hover:bg-gray-50" variant="outline">
+              <ArrowUpRight className="w-5 h-5" />
               Send
             </Button>
-            <Button size="sm" variant="secondary" className="h-8 text-xs">
-              <ArrowDownLeft className="w-3 h-3 mr-1" />
+            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs bg-white text-black border hover:bg-gray-50" variant="outline">
+              <ArrowDownLeft className="w-5 h-5" />
               Receive
+            </Button>
+            <Button size="sm" className="h-16 flex flex-col gap-1 text-xs bg-white text-black border hover:bg-gray-50" variant="outline">
+              <ArrowLeftRight className="w-5 h-5" />
+              Transfer
             </Button>
           </div>
         </CardContent>
       </Card>
 
-      {/* Latest Crypto Transactions */}
-      <Card className="overflow-hidden" style={{
-        border: '1px solid #FFFFFF',
-        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-        borderRadius: '16px',
-        background: 'rgba(255, 255, 255, 0.4)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
-      }}>
-        <CardHeader>
-          <CardTitle className="text-lg">Latest Transactions</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {recentTransactions.map((transaction) => (
-            <div key={transaction.id} className="flex items-center justify-between p-3 rounded-lg bg-white/50">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                  {getTransactionIcon(transaction.type)}
+      {/* All Activity Section Header */}
+      <div className="text-muted-foreground text-sm font-medium">All Activity</div>
+
+      {/* Latest Crypto Transactions - matching /index page list design */}
+      <div className="space-y-3">
+        {recentTransactions.map((transaction) => (
+          <Card key={transaction.id} className="bg-white">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                    {getTransactionIcon(transaction.type)}
+                  </div>
+                  <div>
+                    <div className="font-medium text-black capitalize">{transaction.type === 'swap' ? 'Crypto Swap' : `${transaction.type} Crypto`}</div>
+                    <div className="text-sm text-muted-foreground">{transaction.crypto}</div>
+                    <div className="text-blue-600 text-sm cursor-pointer hover:underline">
+                      View Transaction
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-medium text-sm capitalize">{transaction.type}</div>
-                  <div className="text-xs text-muted-foreground">{transaction.crypto}</div>
+                <div className="text-right">
+                  <div className="text-muted-foreground text-sm">Balance:</div>
+                  <div className={`font-medium ${getTransactionColor(transaction.type)}`}>
+                    {transaction.type === 'send' ? '-' : '+'}{formatAmount(transaction.value)}
+                  </div>
+                  <div className="flex items-center justify-end gap-1 mt-1">
+                    {transaction.status === 'completed' ? (
+                      <span className="text-green-600 text-sm">↗ 2.55</span>
+                    ) : (
+                      <Badge variant="secondary" className="text-xs">
+                        {transaction.status}
+                      </Badge>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="text-right">
-                <div className={`font-medium text-sm ${getTransactionColor(transaction.type)}`}>
-                  {transaction.type === 'send' ? '-' : '+'}{formatAmount(transaction.value)}
-                </div>
-                <div className="flex items-center gap-1">
-                  <Badge 
-                    variant={transaction.status === 'completed' ? 'default' : 'secondary'}
-                    className="text-xs"
-                  >
-                    {transaction.status}
-                  </Badge>
-                </div>
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
