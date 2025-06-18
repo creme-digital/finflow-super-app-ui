@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { TotalBalanceCard } from '@/components/dashboard/TotalBalanceCard';
 import { AllHoldings } from '@/components/dashboard/AllHoldings';
@@ -7,15 +6,13 @@ import { RecentTransactionsTable } from '@/components/dashboard/RecentTransactio
 import { NetCashSection } from '@/components/dashboard/NetCashSection';
 import { MoneyFlowCard } from '@/components/dashboard/MoneyFlowCard';
 import { IncomeExpenseCard } from '@/components/dashboard/IncomeExpenseCard';
-
 export function CryptoPortfolio() {
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
+  return <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
       {/* Left side - Main Content (3/4 width) */}
       <div className="lg:col-span-3">
         <div className="flex flex-col gap-6 min-h-full" style={{
-          borderRadius: '24px'
-        }}>
+        borderRadius: '24px'
+      }}>
           
           {/* Net Cash Section */}
           <NetCashSection />
@@ -30,13 +27,7 @@ export function CryptoPortfolio() {
 
       {/* Right side - Sidebar Content (1/4 width) */}
       <div className="lg:col-span-1">
-        <div className="space-y-6">
-          <TotalBalanceCard />
-          <AllHoldings />
-          <StatsGrid />
-          <RecentTransactionsTable />
-        </div>
+        
       </div>
-    </div>
-  );
+    </div>;
 }
