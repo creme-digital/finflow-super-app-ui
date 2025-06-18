@@ -13,12 +13,17 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart as RechartsPieChar
 import { ModernBarChart } from '@/components/charts/ModernBarChart';
 import { ModernPieChart } from '@/components/charts/ModernPieChart';
 import { CHART_COLORS } from '@/lib/chart-config';
+import { TaxSubmissionDialog } from '@/components/tax/TaxSubmissionDialog';
+
 const Tax = () => {
   const [filters, setFilters] = useState({
     form: [] as string[],
     status: [] as string[],
     year: [] as string[]
   });
+
+  const [taxSubmissionDialogOpen, setTaxSubmissionDialogOpen] = useState(false);
+
   const taxRecords = [{
     id: 'TAX-001',
     date: '23/05/2025',
@@ -156,7 +161,11 @@ const Tax = () => {
     name: 'Actual',
     color: CHART_COLORS.secondary
   }];
-  return <Layout title="Tax" mainContent={<div className="space-y-6">
+  return (
+    <Layout 
+      title="Tax" 
+      mainContent={
+        <div className="space-y-6">
           {/* Header with Cards page styling */}
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-semibold text-foreground">Tax</h1>
@@ -165,7 +174,7 @@ const Tax = () => {
                 <Download className="w-4 h-4" />
                 Export All
               </Button>
-              <Button>
+              <Button onClick={() => setTaxSubmissionDialogOpen(true)}>
                 <Plus className="w-4 h-4 mr-2" />
                 Tax Submission form
               </Button>
@@ -430,6 +439,16 @@ const Tax = () => {
               </div>
             </TabsContent>
           </Tabs>
-        </div>} />;
+
+          {/* Tax Submission Dialog */}
+          <TaxSubmissionDialog 
+            open={taxSubmissionDialogOpen} 
+            onOpenChange={setTaxSubmissionDialogOpen} 
+          />
+        </div>
+      } 
+    />
+  );
 };
+
 export default Tax;
