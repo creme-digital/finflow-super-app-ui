@@ -6,9 +6,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Filter, Download, MoreHorizontal, Plus } from 'lucide-react';
+import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Receipt, CalendarCheck, FileText } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
-import { TaxDashboard } from '@/components/tax/TaxDashboard';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 const Tax = () => {
   const [filters, setFilters] = useState({
@@ -130,6 +131,31 @@ const Tax = () => {
   };
 
   const activeFiltersCount = getActiveFiltersCount();
+
+  // Tax estimation data
+  const quarterlyData = [
+    { quarter: 'Q1', estimated: 12000, actual: 11500 },
+    { quarter: 'Q2', estimated: 13500, actual: 13200 },
+    { quarter: 'Q3', estimated: 11800, actual: 0 },
+    { quarter: 'Q4', estimated: 14200, actual: 0 }
+  ];
+
+  const taxBreakdownData = [
+    { category: 'Federal Income', value: 8500, color: '#292EE9' },
+    { category: 'State Income', value: 2200, color: '#6366F1' },
+    { category: 'Self Employment', value: 1750, color: '#8B5CF6' }
+  ];
+
+  const chartConfig = {
+    estimated: {
+      label: "Estimated",
+      color: "#292EE9",
+    },
+    actual: {
+      label: "Actual", 
+      color: "#10B981",
+    },
+  };
 
   return (
     <Layout
@@ -348,8 +374,120 @@ const Tax = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="estimation">
-              <TaxDashboard />
+            <TabsContent value="estimation" className="space-y-6">
+              {/* 3 Numbers at Top */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <Receipt className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
+                    <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Estimated Tax</span>
+                  </div>
+                  <div style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 32, fontWeight: 400, letterSpacing: '-0.64px' }}>$12,450</div>
+                </div>
+
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <CalendarCheck className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
+                    <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Next Deadline</span>
+                  </div>
+                  <div style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 32, fontWeight: 400, letterSpacing: '-0.64px' }}>Jun 15, 2025</div>
+                </div>
+
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileText className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
+                    <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>YTD Payments</span>
+                  </div>
+                  <div style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 32, fontWeight: 400, letterSpacing: '-0.64px' }}>$3,125</div>
+                </div>
+              </div>
+
+              {/* 2 Charts in a Row */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Quarterly Tax Estimates Bar Chart */}
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <h3 className="text-lg font-semibold mb-4">Quarterly Tax Estimates</h3>
+                  <ChartContainer config={chartConfig} className="h-[300px] w-full">
+                    <BarChart data={quarterlyData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="quarter" />
+                      <YAxis />
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <Bar dataKey="estimated" fill="var(--color-estimated)" name="Estimated" />
+                      <Bar dataKey="actual" fill="var(--color-actual)" name="Actual" />
+                    </BarChart>
+                  </ChartContainer>
+                </div>
+
+                {/* Tax Breakdown Pie Chart */}
+                <div
+                  className="p-6 rounded-[16px]"
+                  style={{
+                    border: '1px solid #FFFFFF',
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <h3 className="text-lg font-semibold mb-4">Tax Breakdown</h3>
+                  <ChartContainer config={{}} className="h-[300px] w-full">
+                    <PieChart>
+                      <Pie
+                        data={taxBreakdownData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="value"
+                        label={({ category, percent }) => `${category} ${(percent * 100).toFixed(0)}%`}
+                      >
+                        {taxBreakdownData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                    </PieChart>
+                  </ChartContainer>
+                </div>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
