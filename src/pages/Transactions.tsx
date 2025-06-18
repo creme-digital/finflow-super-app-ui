@@ -274,7 +274,7 @@ const Transactions = () => {
               </div>
 
               {/* Line Chart */}
-              <div className="h-20">
+              <div className="h-32">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={lineChartData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.4} />
@@ -282,9 +282,14 @@ const Transactions = () => {
                       dataKey="day" 
                       axisLine={false}
                       tickLine={false}
-                      tick={false}
+                      tick={{ fontSize: 12, fill: '#6b7280' }}
                     />
-                    <YAxis hide />
+                    <YAxis 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fontSize: 12, fill: '#6b7280' }}
+                      width={40}
+                    />
                     <Line 
                       type="monotone" 
                       dataKey="value" 
