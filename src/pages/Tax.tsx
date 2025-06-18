@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
@@ -436,44 +435,34 @@ const Tax = () => {
                 </div>
               </div>
 
-              {/* Charts Row - Using reusable components */}
+              {/* Charts Row - Using Card components for proper white background styling */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Quarterly Tax Estimates Bar Chart */}
-                <div
-                  className="p-6 rounded-[16px]"
-                  style={{
-                    border: '1px solid #FFFFFF',
-                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                    background: 'rgba(255, 255, 255, 0.4)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)'
-                  }}
-                >
-                  <h3 className="text-lg font-semibold mb-4">Quarterly Tax Estimates</h3>
-                  <ModernBarChart
-                    data={quarterlyData}
-                    dataKeys={barChartDataKeys}
-                    height={300}
-                  />
-                </div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Quarterly Tax Estimates</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ModernBarChart
+                      data={quarterlyData}
+                      dataKeys={barChartDataKeys}
+                      height={300}
+                    />
+                  </CardContent>
+                </Card>
 
                 {/* Tax Breakdown Pie Chart */}
-                <div
-                  className="p-6 rounded-[16px]"
-                  style={{
-                    border: '1px solid #FFFFFF',
-                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                    background: 'rgba(255, 255, 255, 0.4)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)'
-                  }}
-                >
-                  <h3 className="text-lg font-semibold mb-4">Tax Breakdown</h3>
-                  <ModernPieChart
-                    data={taxBreakdownData}
-                    height={300}
-                  />
-                </div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Tax Breakdown</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ModernPieChart
+                      data={taxBreakdownData}
+                      height={300}
+                    />
+                  </CardContent>
+                </Card>
               </div>
             </TabsContent>
           </Tabs>
