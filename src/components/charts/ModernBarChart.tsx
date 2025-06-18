@@ -3,7 +3,6 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { modernChartConfig, modernChartStyles, formatYAxisValue, modernLegendStyles } from '@/lib/chart-config';
-import { ChartGradientDefs } from './ChartGradients';
 
 interface ModernBarChartProps {
   data: Array<Record<string, any>>;
@@ -28,7 +27,14 @@ export const ModernBarChart: React.FC<ModernBarChartProps> = ({
           margin={modernChartStyles.barChart.margin}
           barCategoryGap={modernChartStyles.barChart.barCategoryGap}
         >
-          <ChartGradientDefs />
+          <defs>
+            {dataKeys.map((dataKey) => (
+              <linearGradient key={`${dataKey.key}Gradient`} id={`${dataKey.key}Gradient`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={dataKey.color} stopOpacity={0.8} />
+                <stop offset="100%" stopColor={dataKey.color} stopOpacity={0.3} />
+              </linearGradient>
+            ))}
+          </defs>
           <CartesianGrid {...modernChartStyles.cartesianGrid} />
           <XAxis 
             dataKey="quarter" 

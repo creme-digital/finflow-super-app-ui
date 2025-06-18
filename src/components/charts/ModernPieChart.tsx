@@ -3,7 +3,6 @@ import React from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import { ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import { modernChartStyles, modernLegendStyles } from '@/lib/chart-config';
-import { createPieGradients } from './ChartGradients';
 
 interface PieChartData {
   category: string;
@@ -27,14 +26,14 @@ export const ModernPieChart: React.FC<ModernPieChartProps> = ({
   const defaultTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
-      const total = payload[0].payload.value; // This should be calculated properly in real implementation
+      const total = 12450; // Total for percentage calculation
       return (
         <div className="bg-white rounded-xl shadow-lg px-4 py-3 border border-gray-100">
           <p className="font-semibold text-sm mb-1">{data.category}</p>
           <p className="text-sm">
             <span className="font-medium">${data.value.toLocaleString()}</span>
             <span className="text-muted-foreground ml-2">
-              ({((data.value / 12450) * 100).toFixed(1)}%)
+              ({((data.value / total) * 100).toFixed(1)}%)
             </span>
           </p>
         </div>
@@ -47,7 +46,14 @@ export const ModernPieChart: React.FC<ModernPieChartProps> = ({
     <div style={{ height: `${height}px` }}>
       <ChartContainer config={{}} className="w-full h-full">
         <PieChart margin={modernChartStyles.pieChart.margin}>
-          {createPieGradients(data)}
+          <defs>
+            {data.map((entry, index) => (
+              <linearGradient key={`gradient-${index}`} id={`gradient-${index}`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor={entry.color} stopOpacity={0.8} />
+                <stop offset="100%" stopColor={entry.color} stopOpacity={0.6} />
+              </linearGradient>
+            ))}
+          </defs>
           <Pie
             data={data}
             cx="50%"
