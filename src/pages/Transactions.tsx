@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -132,11 +131,21 @@ const Transactions = () => {
 
   const activeFiltersCount = getActiveFiltersCount();
 
-  // Generate line chart data for visualization
-  const lineChartData = Array.from({ length: 15 }, (_, i) => ({
-    day: i + 1,
-    value: Math.random() * 60 + 20,
-  }));
+  // Generate net cash data per month
+  const netCashData = [
+    { month: 'Jan', netCash: 15420 },
+    { month: 'Feb', netCash: -8750 },
+    { month: 'Mar', netCash: 22100 },
+    { month: 'Apr', netCash: -12300 },
+    { month: 'May', netCash: 18900 },
+    { month: 'Jun', netCash: -15600 },
+    { month: 'Jul', netCash: 28500 },
+    { month: 'Aug', netCash: -9200 },
+    { month: 'Sep', netCash: 31200 },
+    { month: 'Oct', netCash: -18900 },
+    { month: 'Nov', netCash: 24600 },
+    { month: 'Dec', netCash: -7800 }
+  ];
 
   return (
     <Layout
@@ -273,13 +282,13 @@ const Transactions = () => {
                 </div>
               </div>
 
-              {/* Line Chart */}
+              {/* Net Cash Per Month Line Chart */}
               <div className="h-32">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={lineChartData}>
+                  <LineChart data={netCashData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.4} />
                     <XAxis 
-                      dataKey="day" 
+                      dataKey="month" 
                       axisLine={false}
                       tickLine={false}
                       tick={{ fontSize: 12, fill: '#6b7280' }}
@@ -289,10 +298,11 @@ const Transactions = () => {
                       tickLine={false}
                       tick={{ fontSize: 12, fill: '#6b7280' }}
                       width={40}
+                      tickFormatter={(value) => `$${value >= 0 ? '' : '-'}${Math.abs(value / 1000)}k`}
                     />
                     <Line 
                       type="monotone" 
-                      dataKey="value" 
+                      dataKey="netCash" 
                       stroke="#3b82f6" 
                       strokeWidth={2}
                       dot={false}
