@@ -7,9 +7,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Filter, Download, MoreHorizontal, Plus } from 'lucide-react';
+import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Eye } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 import { AddTransactionDialog } from '@/components/transactions/AddTransactionDialog';
+import { TransactionDrawer } from '@/components/transactions/TransactionDrawer';
 
 const Transactions = () => {
   const [filters, setFilters] = useState({
@@ -17,6 +18,8 @@ const Transactions = () => {
     method: [] as string[]
   });
   const [isAddTransactionOpen, setIsAddTransactionOpen] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<typeof transactions[0] | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const transactions = [
     {
@@ -332,8 +335,13 @@ const Transactions = () => {
                       {transaction.method}
                     </TableCell>
                     <TableCell className="py-4">
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="w-4 h-4" />
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8"
+                        onClick={() => handleViewTransaction(transaction)}
+                      >
+                        <Eye className="w-4 h-4" />
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -345,6 +353,12 @@ const Transactions = () => {
           <AddTransactionDialog 
             open={isAddTransactionOpen} 
             onOpenChange={setIsAddTransactionOpen} 
+          />
+
+          <TransactionDrawer
+            open={drawerOpen}
+            onOpenChange={setDrawerOpen}
+            transaction={selectedTransaction}
           />
         </div>
       }
