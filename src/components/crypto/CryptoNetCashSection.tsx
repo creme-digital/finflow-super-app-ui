@@ -2,6 +2,7 @@
 import React from 'react';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { CryptoTransactionsTable } from './CryptoTransactionsTable';
 
 const portfolioData = [
   { month: 'Jan', value: 65000 },
@@ -96,6 +97,12 @@ export function CryptoNetCashSection() {
             />
           </LineChart>
         </ChartContainer>
+      </div>
+
+      {/* Crypto Transactions Table */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium">Recent Transactions</h3>
+        <CryptoTransactionsTable />
       </div>
     </div>
   );
