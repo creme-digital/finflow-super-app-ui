@@ -10,6 +10,8 @@ import { useCurrency } from '@/contexts/CurrencyContext';
 import { TradingViewChart } from '@/components/crypto/TradingViewChart';
 import { CryptoRightPanel } from '@/components/crypto/CryptoRightPanel';
 import { CryptoPortfolio } from '@/components/crypto/CryptoPortfolio';
+import { CryptoWatchlistCards } from '@/components/crypto/CryptoWatchlistCards';
+
 export default function Crypto() {
   const {
     formatAmount
@@ -345,10 +347,7 @@ export default function Crypto() {
                 </TabsContent>
 
                 <TabsContent value="watchlist" className="mt-6">
-                  <div className="text-center py-20">
-                    <h3 className="text-lg font-medium mb-2">Watchlist</h3>
-                    <p className="text-muted-foreground">Your crypto watchlist will appear here.</p>
-                  </div>
+                  <CryptoWatchlistCards />
                 </TabsContent>
 
                 <TabsContent value="coins" className="mt-6">
