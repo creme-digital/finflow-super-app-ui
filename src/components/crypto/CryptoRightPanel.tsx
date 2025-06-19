@@ -1,12 +1,14 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowUpRight, ArrowDownLeft, ArrowLeftRight, Plus, Wallet } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
+import { BuyCryptoModal } from './BuyCryptoModal';
 
 export function CryptoRightPanel() {
   const { formatAmount } = useCurrency();
+  const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
 
   // Sample crypto portfolio value
   const totalCryptoValue = 12847.92;
@@ -118,6 +120,7 @@ export function CryptoRightPanel() {
             variant="ghost" 
             className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
             style={buttonStyle}
+            onClick={() => setIsBuyModalOpen(true)}
           >
             <Plus className="w-5 h-5" />
             <span className="text-xs">Buy</span>
@@ -197,6 +200,12 @@ export function CryptoRightPanel() {
           </div>
         ))}
       </div>
+
+      {/* Buy Crypto Modal */}
+      <BuyCryptoModal 
+        open={isBuyModalOpen}
+        onOpenChange={setIsBuyModalOpen}
+      />
     </div>
   );
 }
