@@ -11,6 +11,7 @@ import { TradingViewChart } from '@/components/crypto/TradingViewChart';
 import { CryptoRightPanel } from '@/components/crypto/CryptoRightPanel';
 import { CryptoPortfolio } from '@/components/crypto/CryptoPortfolio';
 import { CryptoWatchlistCards } from '@/components/crypto/CryptoWatchlistCards';
+import { CryptoCoins } from '@/components/crypto/CryptoCoins';
 
 export default function Crypto() {
   const {
@@ -351,10 +352,7 @@ export default function Crypto() {
                 </TabsContent>
 
                 <TabsContent value="coins" className="mt-6">
-                  <div className="text-center py-20">
-                    <h3 className="text-lg font-medium mb-2">Coins</h3>
-                    <p className="text-muted-foreground">Crypto market data will appear here.</p>
-                  </div>
+                  <CryptoCoins />
                 </TabsContent>
               </Tabs>
             </div>
