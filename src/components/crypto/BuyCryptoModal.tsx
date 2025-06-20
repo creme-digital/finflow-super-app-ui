@@ -72,8 +72,19 @@ export function BuyCryptoModal({ open, onOpenChange }: BuyCryptoModalProps) {
               {/* Amount Input Section */}
               <div className="text-center space-y-4">
                 <div className="relative">
-                  <div className="text-6xl font-light text-gray-400 mb-2">
-                    {selectedCurrencyData?.symbol}{amount || '0'}
+                  {/* Editable amount display */}
+                  <div className="flex items-center justify-center mb-2">
+                    <span className="text-6xl font-light text-gray-400">
+                      {selectedCurrencyData?.symbol}
+                    </span>
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder="0"
+                      className="text-6xl font-light text-gray-400 bg-transparent border-none outline-none text-center min-w-0 flex-1 max-w-xs"
+                      style={{ appearance: 'textfield' }}
+                    />
                   </div>
                   
                   {/* Currency Selector */}
@@ -92,15 +103,6 @@ export function BuyCryptoModal({ open, onOpenChange }: BuyCryptoModalProps) {
                 <div className="text-sm text-muted-foreground">
                   You can buy up to ${maxAmount.toLocaleString()}
                 </div>
-
-                {/* Visible amount input for functionality */}
-                <Input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="Enter amount"
-                  className="text-center text-lg font-medium"
-                />
               </div>
 
               {/* Crypto Selection */}
