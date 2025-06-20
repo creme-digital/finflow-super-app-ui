@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -9,6 +8,7 @@ import { BuyCryptoModal } from './BuyCryptoModal';
 export function CryptoRightPanel() {
   const { formatAmount } = useCurrency();
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
+  const [isSwapModalOpen, setIsSwapModalOpen] = useState(false);
 
   // Sample crypto portfolio value
   const totalCryptoValue = 12847.92;
@@ -129,6 +129,7 @@ export function CryptoRightPanel() {
             variant="ghost" 
             className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
             style={buttonStyle}
+            onClick={() => setIsSwapModalOpen(true)}
           >
             <ArrowLeftRight className="w-5 h-5" />
             <span className="text-xs">Swap</span>
@@ -205,6 +206,14 @@ export function CryptoRightPanel() {
       <BuyCryptoModal 
         open={isBuyModalOpen}
         onOpenChange={setIsBuyModalOpen}
+        initialTab="buy"
+      />
+
+      {/* Swap Modal - same modal but with convert tab */}
+      <BuyCryptoModal 
+        open={isSwapModalOpen}
+        onOpenChange={setIsSwapModalOpen}
+        initialTab="convert"
       />
     </div>
   );

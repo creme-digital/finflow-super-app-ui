@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +9,7 @@ import { ArrowUpDown, ChevronRight, X } from 'lucide-react';
 interface BuyCryptoModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialTab?: 'buy' | 'sell' | 'convert';
 }
 
 const cryptocurrencies = [
@@ -33,12 +33,19 @@ const currencies = [
   { code: 'GBP', symbol: '£', name: 'British Pound' }
 ];
 
-export function BuyCryptoModal({ open, onOpenChange }: BuyCryptoModalProps) {
+export function BuyCryptoModal({ open, onOpenChange, initialTab = 'buy' }: BuyCryptoModalProps) {
   const [amount, setAmount] = useState('0');
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [selectedCrypto, setSelectedCrypto] = useState('ITC');
   const [selectedPayment, setSelectedPayment] = useState('paypal');
-  const [activeTab, setActiveTab] = useState('buy');
+  const [activeTab, setActiveTab] = useState(initialTab);
+
+  // Reset to initial tab when modal opens
+  useEffect(() => {
+    if (open) {
+      setActiveTab(initialTab);
+    }
+  }, [open, initialTab]);
 
   const selectedCurrencyData = currencies.find(c => c.code === selectedCurrency);
   const selectedCryptoData = cryptocurrencies.find(c => c.symbol === selectedCrypto);
