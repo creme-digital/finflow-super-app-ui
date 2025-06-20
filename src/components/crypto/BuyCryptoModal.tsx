@@ -169,12 +169,7 @@ export function BuyCryptoModal({ open, onOpenChange }: BuyCryptoModalProps) {
               {/* Buy Button */}
               <Button 
                 onClick={handleBuy}
-                className="w-full h-14 text-lg font-medium rounded-full"
-                style={{
-                  background: 'linear-gradient(135deg, #8B7CF6 0%, #6366F1 100%)',
-                  border: 'none',
-                  boxShadow: '0px 4px 12px rgba(139, 124, 246, 0.4)'
-                }}
+                className="w-full h-14 text-lg font-medium rounded-full bg-[#292EE9] hover:bg-[#1f24d1] text-white"
               >
                 Buy
               </Button>
