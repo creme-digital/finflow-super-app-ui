@@ -93,13 +93,13 @@ export function BuyCryptoModal({ open, onOpenChange }: BuyCryptoModalProps) {
                   You can buy up to ${maxAmount.toLocaleString()}
                 </div>
 
-                {/* Hidden amount input for functionality */}
+                {/* Visible amount input for functionality */}
                 <Input
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="Enter amount"
-                  className="sr-only"
+                  className="text-center text-lg font-medium"
                 />
               </div>
 
@@ -146,8 +146,8 @@ export function BuyCryptoModal({ open, onOpenChange }: BuyCryptoModalProps) {
               {/* Buy Button */}
               <Button 
                 onClick={handleBuy}
-                className="w-full h-14 text-lg font-medium rounded-2xl"
-                style={{ background: 'linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%)' }}
+                className="w-full h-14 text-lg font-medium"
+                size="lg"
               >
                 Buy
               </Button>
