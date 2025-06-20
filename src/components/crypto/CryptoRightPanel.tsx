@@ -130,6 +130,14 @@ export function CryptoRightPanel() {
             className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
             style={buttonStyle}
           >
+            <ArrowLeftRight className="w-5 h-5" />
+            <span className="text-xs">Swap</span>
+          </Button>
+          <Button 
+            variant="ghost" 
+            className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
+            style={buttonStyle}
+          >
             <ArrowUpRight className="w-5 h-5" />
             <span className="text-xs">Send</span>
           </Button>
@@ -140,14 +148,6 @@ export function CryptoRightPanel() {
           >
             <ArrowDownLeft className="w-5 h-5" />
             <span className="text-xs">Receive</span>
-          </Button>
-          <Button 
-            variant="ghost" 
-            className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
-            style={buttonStyle}
-          >
-            <ArrowLeftRight className="w-5 h-5" />
-            <span className="text-xs">Transfer</span>
           </Button>
         </div>
       </div>
