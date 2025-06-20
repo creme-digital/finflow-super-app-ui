@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -38,7 +39,7 @@ export function BuyCryptoModal({ open, onOpenChange, initialTab = 'buy' }: BuyCr
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [selectedCrypto, setSelectedCrypto] = useState('ITC');
   const [selectedPayment, setSelectedPayment] = useState('paypal');
-  const [activeTab, setActiveTab] = useState(initialTab);
+  const [activeTab, setActiveTab] = useState<'buy' | 'sell' | 'convert'>(initialTab);
 
   // Reset to initial tab when modal opens
   useEffect(() => {
@@ -56,6 +57,12 @@ export function BuyCryptoModal({ open, onOpenChange, initialTab = 'buy' }: BuyCr
   const handleBuy = () => {
     console.log('Buy crypto:', { amount, selectedCurrency, selectedCrypto, selectedPayment });
     // Implementation for buying crypto
+    onOpenChange(false);
+  };
+
+  const handleSell = () => {
+    console.log('Sell crypto:', { amount, selectedCurrency, selectedCrypto, selectedPayment });
+    // Implementation for selling crypto
     onOpenChange(false);
   };
 
@@ -89,7 +96,7 @@ export function BuyCryptoModal({ open, onOpenChange, initialTab = 'buy' }: BuyCr
         
         <div className="px-6 pb-6">
           {/* Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mb-8">
+          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'buy' | 'sell' | 'convert')} className="w-full mb-8">
             <TabsList className="grid w-full grid-cols-3 mb-0">
               <TabsTrigger value="buy" className="text-[#292EE9] font-medium">Buy</TabsTrigger>
               <TabsTrigger value="sell" className="text-muted-foreground font-medium">Sell</TabsTrigger>
@@ -182,10 +189,90 @@ export function BuyCryptoModal({ open, onOpenChange, initialTab = 'buy' }: BuyCr
               </Button>
             </TabsContent>
 
-            <TabsContent value="sell" className="mt-8">
-              <div className="text-center py-12 text-muted-foreground">
-                Sell functionality coming soon
+            <TabsContent value="sell" className="mt-8 space-y-8">
+              {/* Amount Input Section */}
+              <div className="text-center space-y-6">
+                <div className="relative">
+                  {/* Large amount display */}
+                  <div className="flex items-center justify-center mb-4">
+                    <span className="text-6xl font-light text-gray-400">
+                      {selectedCurrencyData?.symbol}
+                    </span>
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder="0"
+                      className="text-6xl font-light text-gray-400 bg-transparent border-none outline-none text-center min-w-0 flex-1 max-w-xs"
+                      style={{ appearance: 'textfield' }}
+                    />
+                  </div>
+                  
+                  {/* Currency Selector */}
+                  <div className="flex justify-center mb-6">
+                    <Button
+                      variant="outline"
+                      className="rounded-full border-gray-300 bg-white hover:bg-gray-50 px-4 py-2"
+                      onClick={() => {}}
+                    >
+                      <ArrowUpDown className="w-4 h-4 mr-2" />
+                      <span className="text-gray-600">{selectedCurrency}</span>
+                    </Button>
+                  </div>
+
+                  <div className="text-sm text-muted-foreground">
+                    You can sell up to ${maxAmount.toLocaleString()}
+                  </div>
+                </div>
               </div>
+
+              {/* Crypto Selection */}
+              <div 
+                className="flex items-center justify-between p-4 rounded-2xl bg-white border border-gray-100 hover:bg-gray-50 cursor-pointer"
+                onClick={() => {}}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-muted-foreground">Sell</span>
+                  <div className="flex items-center gap-2">
+                    <div 
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                      style={{ background: selectedCryptoData?.color }}
+                    >
+                      {selectedCryptoData?.icon}
+                    </div>
+                    <span className="font-medium text-foreground">{selectedCrypto}</span>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              {/* Payment Method Selection */}
+              <div 
+                className="flex items-center justify-between p-4 rounded-2xl bg-white border border-gray-100 hover:bg-gray-50 cursor-pointer"
+                onClick={() => {}}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-muted-foreground">Send to</span>
+                  <div className="flex items-center gap-2">
+                    <div 
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                      style={{ background: selectedPaymentData?.color }}
+                    >
+                      {selectedPaymentData?.icon}
+                    </div>
+                    <span className="font-medium text-foreground">{selectedPaymentData?.name}</span>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              {/* Sell Button */}
+              <Button 
+                onClick={handleSell}
+                className="w-full h-14 text-lg font-medium rounded-full bg-[#292EE9] hover:bg-[#1f24d1] text-white"
+              >
+                Sell
+              </Button>
             </TabsContent>
 
             <TabsContent value="convert" className="mt-8">
