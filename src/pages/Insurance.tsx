@@ -6,10 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, Download, MoreHorizontal } from 'lucide-react';
 
 const InsuranceMainContent = () => {
   const [activeTab, setActiveTab] = useState('applied');
+  const [filters, setFilters] = useState({
+    status: [] as string[],
+    form: [] as string[]
+  });
 
   const insuranceData = [
     {
@@ -84,13 +89,35 @@ const InsuranceMainContent = () => {
     }
   ];
 
+  const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: checked 
+        ? [...prev[filterType], value]
+        : prev[filterType].filter(item => item !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      status: [],
+      form: []
+    });
+  };
+
+  const getActiveFiltersCount = () => {
+    return filters.status.length + filters.form.length;
+  };
+
+  const activeFiltersCount = getActiveFiltersCount();
+
   return (
     <div className="space-y-6">
       {/* Header with Cards page styling */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-foreground">Insurance</h1>
         <div className="flex gap-3">
-          <Button variant="secondary" className="gap-2 bg-emerald-500 hover:bg-emerald-600 text-white">
+          <Button variant="secondary" className="gap-2">
             <Plus className="w-4 h-4" />
             Claim Insurance
           </Button>
@@ -113,13 +140,68 @@ const InsuranceMainContent = () => {
         </TabsList>
 
         <TabsContent value="applied" className="space-y-4">
-          {/* Filters and Export */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <Button variant="outline" className="gap-2">
-              <Filter className="w-4 h-4" />
-              Filters
-            </Button>
-            <Button variant="outline" className="gap-2">
+          {/* Filters and Export - matching Payroll page styling */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="rounded-full relative gap-2">
+                    <Filter className="w-4 h-4" />
+                    Filters
+                    {activeFiltersCount > 0 && (
+                      <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                        {activeFiltersCount}
+                      </Badge>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56 bg-white">
+                  <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.status.includes('Submitted')}
+                    onCheckedChange={(checked) => handleFilterChange('status', 'Submitted', checked)}
+                  >
+                    Submitted
+                  </DropdownMenuCheckboxItem>
+                  
+                  <DropdownMenuSeparator />
+                  
+                  <DropdownMenuLabel>Filter by Form</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.form.includes('1092-NEC')}
+                    onCheckedChange={(checked) => handleFilterChange('form', '1092-NEC', checked)}
+                  >
+                    1092-NEC
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.form.includes('1029-MISC')}
+                    onCheckedChange={(checked) => handleFilterChange('form', '1029-MISC', checked)}
+                  >
+                    1029-MISC
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={filters.form.includes('1077-K')}
+                    onCheckedChange={(checked) => handleFilterChange('form', '1077-K', checked)}
+                  >
+                    1077-K
+                  </DropdownMenuCheckboxItem>
+                  
+                  {activeFiltersCount > 0 && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
+                        Clear all filters
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <span className="text-sm text-muted-foreground">
+                {activeFiltersCount > 0 ? `${activeFiltersCount} filter${activeFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+              </span>
+            </div>
+            <Button variant="outline" size="sm" className="gap-2 rounded-full">
               <Download className="w-4 h-4" />
               Export All
             </Button>
