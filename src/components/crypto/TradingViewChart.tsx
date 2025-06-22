@@ -14,119 +14,124 @@ export function TradingViewChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const widgetRef = useRef<any>(null);
+  const scriptLoadedRef = useRef(false);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    const containerId = `tradingview-chart-${Date.now()}`;
     
-    const initializeChart = () => {
-      if (containerRef.current && window.TradingView) {
-        try {
-          // Clear any existing content
-          containerRef.current.innerHTML = '';
-          
-          console.log('Initializing TradingView widget...');
-          
-          widgetRef.current = new window.TradingView.widget({
-            autosize: true,
-            symbol: "BINANCE:BTCUSDT",
-            interval: "1H",
-            timezone: "Etc/UTC",
-            theme: "light",
-            style: "1",
-            locale: "en",
-            toolbar_bg: "#f8f9fa",
-            enable_publishing: false,
-            allow_symbol_change: false,
-            container_id: containerRef.current.id || 'tradingview-chart',
-            height: 350,
-            width: "100%",
-            hide_top_toolbar: false,
-            hide_legend: false,
-            save_image: false,
-            studies: [],
-            overrides: {
-              "paneProperties.background": "#ffffff",
-              "paneProperties.backgroundType": "solid",
-              "mainSeriesProperties.candleStyle.upColor": "#22c55e",
-              "mainSeriesProperties.candleStyle.downColor": "#ef4444",
-              "mainSeriesProperties.candleStyle.borderUpColor": "#22c55e",
-              "mainSeriesProperties.candleStyle.borderDownColor": "#ef4444",
-              "mainSeriesProperties.candleStyle.wickUpColor": "#22c55e",
-              "mainSeriesProperties.candleStyle.wickDownColor": "#ef4444"
-            },
-            onChartReady: () => {
-              console.log('TradingView chart ready');
-              setIsLoading(false);
-              setError(false);
-              if (timeoutId) clearTimeout(timeoutId);
-            }
-          });
-        } catch (err) {
-          console.error('TradingView widget creation failed:', err);
-          setError(true);
-          setIsLoading(false);
-        }
+    if (containerRef.current) {
+      containerRef.current.id = containerId;
+    }
+
+    const createWidget = () => {
+      if (!containerRef.current || !window.TradingView) {
+        return;
+      }
+
+      try {
+        console.log('Creating TradingView widget...');
+        
+        // Clear container
+        containerRef.current.innerHTML = '';
+        
+        widgetRef.current = new window.TradingView.widget({
+          autosize: true,
+          symbol: "BINANCE:BTCUSDT",
+          interval: "1H",
+          timezone: "Etc/UTC",
+          theme: "light",
+          style: "1",
+          locale: "en",
+          toolbar_bg: "#f8f9fa",
+          enable_publishing: false,
+          allow_symbol_change: false,
+          container_id: containerId,
+          height: 350,
+          width: "100%",
+          hide_top_toolbar: false,
+          hide_legend: false,
+          save_image: false,
+          studies: [],
+          overrides: {
+            "paneProperties.background": "#ffffff",
+            "paneProperties.backgroundType": "solid",
+            "mainSeriesProperties.candleStyle.upColor": "#22c55e",
+            "mainSeriesProperties.candleStyle.downColor": "#ef4444",
+            "mainSeriesProperties.candleStyle.borderUpColor": "#22c55e",
+            "mainSeriesProperties.candleStyle.borderDownColor": "#ef4444",
+            "mainSeriesProperties.candleStyle.wickUpColor": "#22c55e",
+            "mainSeriesProperties.candleStyle.wickDownColor": "#ef4444"
+          },
+          onChartReady: () => {
+            console.log('TradingView chart ready');
+            setIsLoading(false);
+            setError(false);
+          }
+        });
+      } catch (err) {
+        console.error('TradingView widget creation failed:', err);
+        setError(true);
+        setIsLoading(false);
       }
     };
 
-    const loadScript = () => {
-      // Check if script already exists
-      const existingScript = document.querySelector('script[src*="tradingview.com/tv.js"]');
-      if (existingScript) {
-        existingScript.remove();
+    const loadTradingViewScript = () => {
+      // Check if TradingView is already available
+      if (window.TradingView && !scriptLoadedRef.current) {
+        scriptLoadedRef.current = true;
+        setTimeout(createWidget, 1000);
+        return;
       }
 
+      // Check if script is already loading/loaded
+      if (scriptLoadedRef.current) {
+        return;
+      }
+
+      const existingScript = document.querySelector('script[src*="tradingview.com/tv.js"]');
+      if (existingScript) {
+        return;
+      }
+
+      scriptLoadedRef.current = true;
       const script = document.createElement('script');
       script.src = 'https://s3.tradingview.com/tv.js';
       script.async = true;
       script.type = 'text/javascript';
       
       script.onload = () => {
-        console.log('TradingView script loaded successfully');
-        // Small delay to ensure TradingView is fully initialized
-        setTimeout(initializeChart, 100);
+        console.log('TradingView script loaded');
+        // Wait a bit longer for TradingView to be fully initialized
+        setTimeout(() => {
+          if (window.TradingView) {
+            createWidget();
+          } else {
+            console.error('TradingView not available after script load');
+            setError(true);
+            setIsLoading(false);
+          }
+        }, 2000);
       };
       
-      script.onerror = (err) => {
-        console.error('Failed to load TradingView script:', err);
+      script.onerror = () => {
+        console.error('Failed to load TradingView script');
         setError(true);
         setIsLoading(false);
+        scriptLoadedRef.current = false;
       };
       
       document.head.appendChild(script);
-
-      // Set timeout for chart initialization
-      timeoutId = setTimeout(() => {
-        if (isLoading) {
-          console.log('TradingView chart loading timeout - falling back to retry');
-          setError(true);
-          setIsLoading(false);
-        }
-      }, 15000); // Increased timeout to 15 seconds
     };
 
-    // Ensure container has an ID
-    if (containerRef.current && !containerRef.current.id) {
-      containerRef.current.id = `tradingview-chart-${Date.now()}`;
-    }
-
-    loadScript();
+    loadTradingViewScript();
 
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      if (widgetRef.current) {
+      if (widgetRef.current && widgetRef.current.remove) {
         try {
           widgetRef.current.remove();
         } catch (e) {
           console.log('Error removing widget:', e);
         }
-      }
-      // Clean up script
-      const script = document.querySelector('script[src*="tradingview.com/tv.js"]');
-      if (script && document.head.contains(script)) {
-        document.head.removeChild(script);
       }
     };
   }, []);
@@ -134,8 +139,23 @@ export function TradingViewChart() {
   const handleRetry = () => {
     setError(false);
     setIsLoading(true);
-    // Trigger re-initialization
-    window.location.reload();
+    scriptLoadedRef.current = false;
+    
+    // Remove existing script
+    const existingScript = document.querySelector('script[src*="tradingview.com/tv.js"]');
+    if (existingScript) {
+      existingScript.remove();
+    }
+    
+    // Clear TradingView from window
+    if (window.TradingView) {
+      delete window.TradingView;
+    }
+    
+    // Reload the component by forcing a re-render
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   if (error) {
