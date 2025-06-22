@@ -117,7 +117,7 @@ const InsuranceMainContent = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-foreground">Insurance</h1>
         <div className="flex gap-3">
-          <Button variant="outline" className="gap-2">
+          <Button variant="outline" className="gap-2 rounded-full">
             <Plus className="w-4 h-4" />
             Claim Insurance
           </Button>
