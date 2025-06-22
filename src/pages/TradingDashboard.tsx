@@ -7,9 +7,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { TrendingUp, TrendingDown, ArrowUpDown, Plus } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, Legend } from 'recharts';
+import type { TooltipProps } from 'recharts';
 
 const TradingMainContent = () => {
+  // Custom Tooltip matching Tax Estimation styling
+  function CustomTooltip({ active, payload, label }: TooltipProps<any, any>) {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white rounded-lg shadow-lg px-3 py-2 border border-[#EDEDF1]">
+          <p className="text-sm font-medium mb-1" style={{ color: '#6D6D74' }}>{label}</p>
+          {payload.map((entry, idx) => (
+            <div key={idx} className="flex items-center gap-2 text-sm">
+              <span className="inline-block w-2 h-2 rounded-full" style={{ background: entry.color }}></span>
+              <span style={{ color: '#6D6D74' }}>{entry.name}:</span>
+              <span className="font-mono" style={{ color: '#000' }}>{typeof entry.value === 'number' ? `$${entry.value.toLocaleString()}` : entry.value}</span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  }
+
   // Mock data for stock tickers
   const stockTickers = [
     {
@@ -198,22 +218,14 @@ const TradingMainContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column - 2/3 width */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Portfolio Value Chart - Single Card */}
-              <div
-                className="overflow-hidden"
-                style={{
-                  border: '1px solid #FFFFFF',
-                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                  borderRadius: '16px',
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)'
-                }}
-              >
+              {/* Portfolio Value Chart - Single Card with Tax Estimation styling */}
+              <Card className="border border-[#E3E3EA] shadow-none">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
-                      <CardTitle>Portfolio Value</CardTitle>
+                      <div className="flex items-center gap-2 mb-4">
+                        <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Portfolio Value</span>
+                      </div>
                       <div className="text-sm text-muted-foreground">Monthly performance</div>
                       <div className="text-lg font-bold mt-2">Current Balance</div>
                       <div className="text-2xl font-bold">$112,893.00</div>
@@ -232,55 +244,49 @@ const TradingMainContent = () => {
                 <CardContent>
                   <div className="h-[300px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={portfolioData}>
-                        <defs>
-                          <linearGradient id="portfolioGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
-                            <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.05} />
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
+                      <LineChart data={portfolioData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#EDEDF1" vertical={false} />
                         <XAxis 
                           dataKey="month" 
+                          tick={{ fontSize: 13, fill: '#6D6D74' }} 
                           axisLine={false} 
                           tickLine={false} 
-                          tick={{
-                            fontSize: 12,
-                            fill: '#64748b'
-                          }} 
                         />
                         <YAxis 
+                          tick={{ fontSize: 13, fill: '#6D6D74' }} 
                           axisLine={false} 
-                          tickLine={false} 
-                          tick={{
-                            fontSize: 12,
-                            fill: '#64748b'
-                          }}
+                          tickLine={false}
                           tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                        />
+                        <Tooltip content={(props) => <CustomTooltip {...props} />} cursor={{ fill: '#F8F8FA' }} />
+                        <Legend 
+                          iconType="circle" 
+                          wrapperStyle={{ fontSize: 13, color: '#6D6D74' }}
+                          formatter={(value) => <span style={{ color: '#6D6D74' }}>{value}</span>}
                         />
                         <Line 
                           type="monotone" 
                           dataKey="value" 
-                          stroke="#3b82f6" 
+                          name="Portfolio Value"
+                          stroke="#0EA5E9" 
                           strokeWidth={3} 
                           dot={{ 
-                            fill: "#3b82f6", 
+                            fill: "#0EA5E9", 
                             strokeWidth: 2, 
                             r: 4 
                           }} 
                           activeDot={{
                             r: 6,
-                            fill: "#3b82f6",
+                            fill: "#0EA5E9",
                             stroke: '#fff',
                             strokeWidth: 2
                           }}
-                          fill="url(#portfolioGradient)"
                         />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
                 </CardContent>
-              </div>
+              </Card>
 
               {/* Trades Overview Chart with Glass Effect */}
               <div
@@ -483,7 +489,7 @@ const TradingMainContent = () => {
           </div>
         </TabsContent>
 
-        {/* Other tab contents */}
+        {/* Other tab contents remain the same */}
         <TabsContent value="portfolio">
           <div
             className="overflow-hidden"
