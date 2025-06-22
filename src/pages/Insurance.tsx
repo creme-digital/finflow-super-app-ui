@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, Download, MoreHorizontal } from 'lucide-react';
+import { InsuranceDrawer } from '@/components/insurance/InsuranceDrawer';
 
 const InsuranceMainContent = () => {
   const [activeTab, setActiveTab] = useState('applied');
@@ -19,6 +19,8 @@ const InsuranceMainContent = () => {
     status: [] as string[],
     type: [] as string[]
   });
+  const [selectedInsurance, setSelectedInsurance] = useState<any>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const insuranceData = [
     {
@@ -210,6 +212,11 @@ const InsuranceMainContent = () => {
     }
   };
 
+  const handleInsuranceClick = (insurance: any) => {
+    setSelectedInsurance(insurance);
+    setDrawerOpen(true);
+  };
+
   return (
     <div className="space-y-6">
       {/* Header with Cards page styling */}
@@ -331,7 +338,11 @@ const InsuranceMainContent = () => {
               </TableHeader>
               <TableBody>
                 {insuranceData.map((item, index) => (
-                  <TableRow key={index} className="border-b last:border-b-0">
+                  <TableRow 
+                    key={index} 
+                    className="border-b last:border-b-0 cursor-pointer hover:bg-muted/50" 
+                    onClick={() => handleInsuranceClick(item)}
+                  >
                     <TableCell className="font-medium">{item.date}</TableCell>
                     <TableCell>{item.issuer}</TableCell>
                     <TableCell>{item.form}</TableCell>
@@ -470,7 +481,11 @@ const InsuranceMainContent = () => {
               </TableHeader>
               <TableBody>
                 {claimData.map((item, index) => (
-                  <TableRow key={index} className="border-b last:border-b-0">
+                  <TableRow 
+                    key={index} 
+                    className="border-b last:border-b-0 cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleInsuranceClick(item)}
+                  >
                     <TableCell className="font-medium">{item.date}</TableCell>
                     <TableCell>{item.claimant}</TableCell>
                     <TableCell>{item.type}</TableCell>
@@ -492,6 +507,13 @@ const InsuranceMainContent = () => {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Insurance Drawer */}
+      <InsuranceDrawer 
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        insurance={selectedInsurance}
+      />
     </div>
   );
 };
