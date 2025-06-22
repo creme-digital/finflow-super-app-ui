@@ -136,6 +136,16 @@ const TradingMainContent = () => {
     }
   ];
 
+  // Glass card style
+  const glassCardStyle = {
+    border: '1px solid #FFFFFF',
+    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+    borderRadius: '16px',
+    background: 'rgba(255, 255, 255, 0.4)',
+    backdropFilter: 'blur(10px)',
+    WebkitBackdropFilter: 'blur(10px)'
+  };
+
   return (
     <div className="space-y-6">
       {/* Header with consistent styling */}
@@ -174,14 +184,7 @@ const TradingMainContent = () => {
                 <div
                   key={index}
                   className="overflow-hidden h-[120px] w-[280px] md:w-[300px] flex-shrink-0"
-                  style={{
-                    border: '1px solid #FFFFFF',
-                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                    borderRadius: '16px',
-                    background: 'rgba(255, 255, 255, 0.4)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)'
-                  }}
+                  style={glassCardStyle}
                 >
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3 mb-3">
@@ -223,11 +226,9 @@ const TradingMainContent = () => {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="flex items-center gap-2 mb-4">
+                      <div className="flex items-center gap-2 mb-2">
                         <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Portfolio Value</span>
                       </div>
-                      <div className="text-sm text-muted-foreground">Monthly performance</div>
-                      <div className="text-lg font-bold mt-2">Current Balance</div>
                       <div className="text-2xl font-bold">$112,893.00</div>
                     </div>
                     <Select defaultValue="thisyear">
@@ -288,36 +289,13 @@ const TradingMainContent = () => {
                 </CardContent>
               </Card>
 
-              {/* Trades Overview Chart with Glass Effect */}
-              <div
-                className="overflow-hidden"
-                style={{
-                  border: '1px solid #FFFFFF',
-                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                  borderRadius: '16px',
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)'
-                }}
-              >
+              {/* Simplified Trades Overview Chart */}
+              <div className="overflow-hidden" style={glassCardStyle}>
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
-                      <CardTitle>Trades Overview</CardTitle>
-                      <div className="text-sm text-muted-foreground">net profile per month</div>
-                      <div className="text-lg font-bold mt-2">Account Balance (CNY)</div>
-                      <div className="text-2xl font-bold">112,893.00</div>
-                      
-                      <div className="flex gap-4 mt-4">
-                        <label className="flex items-center gap-2">
-                          <input type="radio" name="period" defaultChecked className="text-blue-600" />
-                          <span className="text-sm">This month</span>
-                        </label>
-                        <label className="flex items-center gap-2">
-                          <input type="radio" name="period" className="text-yellow-500" />
-                          <span className="text-sm">Last month</span>
-                        </label>
-                      </div>
+                      <CardTitle className="text-lg font-semibold">Monthly Trades</CardTitle>
+                      <div className="text-2xl font-bold mt-2">$52,893</div>
                     </div>
                     <Select defaultValue="thisyear">
                       <SelectTrigger className="w-32">
@@ -331,7 +309,7 @@ const TradingMainContent = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-[300px] w-full">
+                  <div className="h-[200px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={tradesData}>
                         <XAxis dataKey="month" axisLine={false} tickLine={false} />
@@ -343,43 +321,19 @@ const TradingMainContent = () => {
                 </CardContent>
               </div>
 
-              {/* Stock Holdings with Glass Effect */}
-              <div
-                className="overflow-hidden"
-                style={{
-                  border: '1px solid #FFFFFF',
-                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                  borderRadius: '16px',
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)'
-                }}
-              >
+              {/* Stock Holdings - Cleaner Design */}
+              <div className="overflow-hidden" style={glassCardStyle}>
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle>Trades Overview</CardTitle>
-                    <Select defaultValue="thisyear">
-                      <SelectTrigger className="w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="thisyear">This Year</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="text-sm text-muted-foreground">net profile per month</div>
+                  <CardTitle className="text-lg font-semibold">Holdings</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {stockHoldings.map((stock, index) => (
-                    <div key={index} className="flex items-center justify-between">
+                    <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-white/20">
                       <div className="flex items-center gap-3">
                         <div className={`w-8 h-8 ${stock.color} rounded flex items-center justify-center text-white`}>
                           {stock.logo}
                         </div>
-                        <div>
-                          <div className="font-medium">{stock.symbol}</div>
-                          <div className="text-sm text-muted-foreground">{stock.company}</div>
-                        </div>
+                        <div className="font-medium">{stock.symbol}</div>
                       </div>
                       <div className="text-right">
                         <div className="font-medium">$ {stock.price}</div>
@@ -393,89 +347,54 @@ const TradingMainContent = () => {
 
             {/* Right Column - 1/3 width */}
             <div className="space-y-6">
-              {/* Earning Report with Glass Effect */}
-              <div
-                className="overflow-hidden"
-                style={{
-                  border: '1px solid #FFFFFF',
-                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                  borderRadius: '16px',
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)'
-                }}
-              >
+              {/* Simplified Earning Report */}
+              <div className="overflow-hidden" style={glassCardStyle}>
                 <CardHeader>
-                  <CardTitle>Earning Report</CardTitle>
-                  <Tabs defaultValue="week" className="w-fit">
-                    <TabsList className="grid w-fit grid-cols-3">
-                      <TabsTrigger value="week">Week</TabsTrigger>
-                      <TabsTrigger value="month">Month</TabsTrigger>
-                      <TabsTrigger value="year">Year</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg font-semibold">Balance</CardTitle>
+                    <Tabs defaultValue="week" className="w-fit">
+                      <TabsList className="grid w-fit grid-cols-3">
+                        <TabsTrigger value="week">Week</TabsTrigger>
+                        <TabsTrigger value="month">Month</TabsTrigger>
+                        <TabsTrigger value="year">Year</TabsTrigger>
+                      </TabsList>
+                    </Tabs>
+                  </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-sm text-muted-foreground mb-2">Account Balance (CNY)</div>
-                  <div className="text-3xl font-bold mb-4">112,893.00</div>
-                  <div className="flex justify-between text-sm">
-                    <span>1k+</span>
-                    <span>$510</span>
+                  <div className="text-3xl font-bold mb-4">$112,893</div>
+                  <div className="flex justify-between text-sm text-muted-foreground">
+                    <span>Growth</span>
+                    <span className="text-green-600">+$510</span>
                   </div>
                 </CardContent>
               </div>
 
-              {/* Trades Table with Glass Effect */}
-              <div
-                className="overflow-hidden"
-                style={{
-                  border: '1px solid #FFFFFF',
-                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                  borderRadius: '16px',
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)'
-                }}
-              >
+              {/* Simplified Trades Table */}
+              <div className="overflow-hidden" style={glassCardStyle}>
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1">
-                        <span className="font-medium text-sm">Price</span>
-                        <ArrowUpDown className="w-3 h-3" />
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span className="font-medium text-sm">Amount</span>
-                        <ArrowUpDown className="w-3 h-3" />
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span className="font-medium text-sm">Time</span>
-                        <ArrowUpDown className="w-3 h-3" />
-                      </div>
-                    </div>
-                    <Select defaultValue="alltime">
-                      <SelectTrigger className="w-24">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="alltime">All Time</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <CardTitle className="text-lg font-semibold">Recent Trades</CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="max-h-[500px] overflow-y-auto">
+                  <div className="max-h-[400px] overflow-y-auto">
                     <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="text-xs">Price</TableHead>
+                          <TableHead className="text-xs">Amount</TableHead>
+                          <TableHead className="text-xs">Time</TableHead>
+                        </TableRow>
+                      </TableHeader>
                       <TableBody>
-                        {tradesTableData.map((trade, index) => (
+                        {tradesTableData.slice(0, 10).map((trade, index) => (
                           <TableRow key={index} className="border-none">
-                            <TableCell className="text-muted-foreground font-mono text-xs px-2 py-1">
+                            <TableCell className="text-xs px-2 py-1">
                               {trade.price}
                             </TableCell>
-                            <TableCell className="font-mono text-xs px-2 py-1">
+                            <TableCell className="text-xs px-2 py-1">
                               {trade.amount}
                             </TableCell>
-                            <TableCell className="text-red-600 font-mono text-xs px-2 py-1">
+                            <TableCell className="text-xs px-2 py-1">
                               {trade.time}
                             </TableCell>
                           </TableRow>
@@ -489,19 +408,9 @@ const TradingMainContent = () => {
           </div>
         </TabsContent>
 
-        {/* Other tab contents remain the same */}
+        {/* Other tab contents with glass styling */}
         <TabsContent value="portfolio">
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={glassCardStyle}>
             <CardContent className="p-8 text-center">
               <p className="text-muted-foreground">Portfolio view will be implemented here</p>
             </CardContent>
@@ -509,17 +418,7 @@ const TradingMainContent = () => {
         </TabsContent>
 
         <TabsContent value="stock">
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={glassCardStyle}>
             <CardContent className="p-8 text-center">
               <p className="text-muted-foreground">Stock view will be implemented here</p>
             </CardContent>
@@ -527,17 +426,7 @@ const TradingMainContent = () => {
         </TabsContent>
 
         <TabsContent value="watchlist">
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={glassCardStyle}>
             <CardContent className="p-8 text-center">
               <p className="text-muted-foreground">Watchlist view will be implemented here</p>
             </CardContent>
@@ -545,17 +434,7 @@ const TradingMainContent = () => {
         </TabsContent>
 
         <TabsContent value="wallet">
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={glassCardStyle}>
             <CardContent className="p-8 text-center">
               <p className="text-muted-foreground">Wallet view will be implemented here</p>
             </CardContent>
