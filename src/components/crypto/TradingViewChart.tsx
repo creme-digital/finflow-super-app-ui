@@ -13,23 +13,20 @@ export function TradingViewChart() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const widgetRef = useRef<any>(null);
 
   useEffect(() => {
-    // Clear any existing chart
-    if (containerRef.current) {
-      containerRef.current.innerHTML = '';
-    }
-
-    const script = document.createElement('script');
-    script.src = 'https://s3.tradingview.com/tv.js';
-    script.async = true;
+    let timeoutId: NodeJS.Timeout;
     
-    script.onload = () => {
-      console.log('TradingView script loaded');
-      
-      if (window.TradingView && containerRef.current) {
+    const initializeChart = () => {
+      if (containerRef.current && window.TradingView) {
         try {
-          new window.TradingView.widget({
+          // Clear any existing content
+          containerRef.current.innerHTML = '';
+          
+          console.log('Initializing TradingView widget...');
+          
+          widgetRef.current = new window.TradingView.widget({
             autosize: true,
             symbol: "BINANCE:BTCUSDT",
             interval: "1H",
@@ -40,17 +37,12 @@ export function TradingViewChart() {
             toolbar_bg: "#f8f9fa",
             enable_publishing: false,
             allow_symbol_change: false,
-            container_id: containerRef.current.id,
+            container_id: containerRef.current.id || 'tradingview-chart',
             height: 350,
             width: "100%",
             hide_top_toolbar: false,
             hide_legend: false,
             save_image: false,
-            onChartReady: () => {
-              console.log('TradingView chart ready');
-              setIsLoading(false);
-              setError(false);
-            },
             studies: [],
             overrides: {
               "paneProperties.background": "#ffffff",
@@ -61,6 +53,12 @@ export function TradingViewChart() {
               "mainSeriesProperties.candleStyle.borderDownColor": "#ef4444",
               "mainSeriesProperties.candleStyle.wickUpColor": "#22c55e",
               "mainSeriesProperties.candleStyle.wickDownColor": "#ef4444"
+            },
+            onChartReady: () => {
+              console.log('TradingView chart ready');
+              setIsLoading(false);
+              setError(false);
+              if (timeoutId) clearTimeout(timeoutId);
             }
           });
         } catch (err) {
@@ -70,31 +68,75 @@ export function TradingViewChart() {
         }
       }
     };
-    
-    script.onerror = (err) => {
-      console.error('Failed to load TradingView script:', err);
-      setError(true);
-      setIsLoading(false);
-    };
-    
-    document.head.appendChild(script);
 
-    // Fallback timeout
-    const timeout = setTimeout(() => {
-      if (isLoading) {
-        console.log('TradingView chart loading timeout');
+    const loadScript = () => {
+      // Check if script already exists
+      const existingScript = document.querySelector('script[src*="tradingview.com/tv.js"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://s3.tradingview.com/tv.js';
+      script.async = true;
+      script.type = 'text/javascript';
+      
+      script.onload = () => {
+        console.log('TradingView script loaded successfully');
+        // Small delay to ensure TradingView is fully initialized
+        setTimeout(initializeChart, 100);
+      };
+      
+      script.onerror = (err) => {
+        console.error('Failed to load TradingView script:', err);
         setError(true);
         setIsLoading(false);
-      }
-    }, 10000);
+      };
+      
+      document.head.appendChild(script);
+
+      // Set timeout for chart initialization
+      timeoutId = setTimeout(() => {
+        if (isLoading) {
+          console.log('TradingView chart loading timeout - falling back to retry');
+          setError(true);
+          setIsLoading(false);
+        }
+      }, 15000); // Increased timeout to 15 seconds
+    };
+
+    // Ensure container has an ID
+    if (containerRef.current && !containerRef.current.id) {
+      containerRef.current.id = `tradingview-chart-${Date.now()}`;
+    }
+
+    loadScript();
 
     return () => {
-      if (document.head.contains(script)) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      if (widgetRef.current) {
+        try {
+          widgetRef.current.remove();
+        } catch (e) {
+          console.log('Error removing widget:', e);
+        }
+      }
+      // Clean up script
+      const script = document.querySelector('script[src*="tradingview.com/tv.js"]');
+      if (script && document.head.contains(script)) {
         document.head.removeChild(script);
       }
-      clearTimeout(timeout);
     };
   }, []);
+
+  const handleRetry = () => {
+    setError(false);
+    setIsLoading(true);
+    // Trigger re-initialization
+    window.location.reload();
+  };
 
   if (error) {
     return (
@@ -108,14 +150,11 @@ export function TradingViewChart() {
       }}>
         <div className="flex items-center justify-center h-full">
           <div className="text-center">
-            <p className="text-lg font-medium text-gray-900 mb-2">Chart Unavailable</p>
-            <p className="text-sm text-gray-600">Unable to load TradingView chart</p>
-            <Button 
-              onClick={() => window.location.reload()} 
-              className="mt-4"
-              variant="outline"
-            >
-              Reload Page
+            <BarChart3 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <p className="text-lg font-medium text-gray-900 mb-2">Chart Temporarily Unavailable</p>
+            <p className="text-sm text-gray-600 mb-4">The TradingView chart failed to load. This can happen due to network issues.</p>
+            <Button onClick={handleRetry} variant="outline">
+              Try Again
             </Button>
           </div>
         </div>
@@ -135,7 +174,6 @@ export function TradingViewChart() {
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/20">
         <div className="flex items-center gap-4">
-          {/* Left toolbar icons */}
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="sm" className="w-8 h-8 p-0">
               <BarChart3 className="w-4 h-4" />
@@ -147,15 +185,11 @@ export function TradingViewChart() {
               <TrendingUp className="w-4 h-4" />
             </Button>
           </div>
-          
           <div className="text-sm text-muted-foreground">Indicators</div>
         </div>
         
-        {/* Right toolbar icons */}
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="text-xs">
-            Save
-          </Button>
+          <Button variant="ghost" size="sm" className="text-xs">Save</Button>
           <Button variant="ghost" size="sm" className="w-8 h-8 p-0">
             <Settings className="w-4 h-4" />
           </Button>
@@ -199,7 +233,6 @@ export function TradingViewChart() {
       <div className="relative bg-white" style={{ height: '380px' }}>
         <div 
           ref={containerRef}
-          id="tradingview-chart"
           className="w-full h-full"
         />
         
@@ -207,7 +240,7 @@ export function TradingViewChart() {
           <div className="absolute inset-0 flex items-center justify-center bg-white/90">
             <div className="text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
-              <p className="text-sm text-muted-foreground">Loading chart...</p>
+              <p className="text-sm text-muted-foreground">Loading TradingView chart...</p>
             </div>
           </div>
         )}
