@@ -142,10 +142,7 @@ const IntegrationsMainContent = () => {
     </div>;
   return <div className="space-y-8">
       {/* Header with Cards page styling */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-foreground">Integration</h1>
-        
-      </div>
+      
 
       <CategorySection title="Discovery" integrations={discoveryIntegrations} />
       <CategorySection title="HRIS" integrations={hrisIntegrations} />
