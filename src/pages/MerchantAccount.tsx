@@ -120,53 +120,65 @@ const MerchantAccountMainContent = () => {
         </button>
       </div>
 
-      {/* Account Cards with new design matching the reference image */}
+      {/* Account Cards with consistent glass styling matching /accounting */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {accounts.map((account, index) => (
           <div
             key={index}
-            className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
+            className="overflow-hidden"
+            style={{
+              border: '1px solid #FFFFFF',
+              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+              borderRadius: '16px',
+              background: 'rgba(255, 255, 255, 0.4)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
           >
-            {/* Header section with icon and account info */}
-            <div className="flex items-start gap-4 mb-8">
-              <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center">
-                <Wallet className="w-8 h-8 text-teal-600" strokeWidth={1.5} />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold text-gray-900 mb-1">{account.name}</h3>
-                <p className="text-gray-500 text-base">{account.type}</p>
-              </div>
-            </div>
-
-            {/* Balance section */}
-            <div className="mb-8">
-              <div className="text-4xl font-bold text-gray-900 mb-2">{account.balance}</div>
-              <p className="text-gray-500 text-base">Current Balance</p>
-            </div>
-
-            {/* Account Details section */}
-            <div className="mb-8">
-              <h4 className="text-xl font-bold text-gray-900 mb-6">Account Details</h4>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-900 text-base font-medium">Account Number</span>
-                  <span className="text-gray-900 text-base font-medium">{account.accountNumber}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-900 text-base font-medium">Routing Number</span>
-                  <span className="text-gray-900 text-base font-medium">{account.routingNumber}</span>
+            <CardContent className="p-6">
+              {/* Header section with icon and account info */}
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-teal-50 rounded-lg flex items-center justify-center">
+                    <Wallet className="w-4 h-4 text-teal-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground">{account.name}</h3>
+                    <p className="text-sm text-muted-foreground">{account.type}</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* View Details button */}
-            <Button 
-              variant="outline" 
-              className="w-full h-14 text-base font-medium border-2 border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50 text-gray-900 rounded-full flex items-center justify-center gap-3"
-            >
-              View Details
-              <ArrowRight className="w-5 h-5" />
-            </Button>
+              {/* Balance section */}
+              <div className="mb-4">
+                <div className="text-3xl font-bold text-foreground mb-1">{account.balance}</div>
+                <div className="text-sm text-muted-foreground">Current Balance</div>
+              </div>
+
+              {/* Account Details section */}
+              <div className="mb-4">
+                <h4 className="text-sm font-medium text-muted-foreground mb-3">Account Details</h4>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Account Number</span>
+                    <span className="text-sm font-medium text-foreground">{account.accountNumber}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Routing Number</span>
+                    <span className="text-sm font-medium text-foreground">{account.routingNumber}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* View Details button */}
+              <Button 
+                variant="outline" 
+                className="w-full justify-between text-sm font-medium"
+              >
+                View Details
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </CardContent>
           </div>
         ))}
       </div>
