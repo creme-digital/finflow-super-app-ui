@@ -15,6 +15,10 @@ const InsuranceMainContent = () => {
     status: [] as string[],
     form: [] as string[]
   });
+  const [claimFilters, setClaimFilters] = useState({
+    status: [] as string[],
+    type: [] as string[]
+  });
 
   const insuranceData = [
     {
@@ -89,8 +93,76 @@ const InsuranceMainContent = () => {
     }
   ];
 
+  const claimData = [
+    {
+      date: '15/06/2025',
+      claimant: 'Sarah Johnson',
+      type: 'Health',
+      amount: '$2,450.00',
+      status: 'Processing'
+    },
+    {
+      date: '12/06/2025',
+      claimant: 'Michael Brown',
+      type: 'Auto',
+      amount: '$8,750.50',
+      status: 'Approved'
+    },
+    {
+      date: '08/06/2025',
+      claimant: 'Emma Wilson',
+      type: 'Property',
+      amount: '$15,200.00',
+      status: 'Under Review'
+    },
+    {
+      date: '05/06/2025',
+      claimant: 'David Miller',
+      type: 'Life',
+      amount: '$50,000.00',
+      status: 'Approved'
+    },
+    {
+      date: '02/06/2025',
+      claimant: 'Lisa Garcia',
+      type: 'Health',
+      amount: '$1,890.75',
+      status: 'Processing'
+    },
+    {
+      date: '28/05/2025',
+      claimant: 'Robert Davis',
+      type: 'Auto',
+      amount: '$6,320.25',
+      status: 'Rejected'
+    },
+    {
+      date: '25/05/2025',
+      claimant: 'Jennifer Lee',
+      type: 'Property',
+      amount: '$12,500.00',
+      status: 'Approved'
+    },
+    {
+      date: '22/05/2025',
+      claimant: 'Christopher Taylor',
+      type: 'Health',
+      amount: '$3,750.50',
+      status: 'Under Review'
+    }
+  ];
+
   const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
     setFilters(prev => ({
+      ...prev,
+      [filterType]: checked 
+        ? [...prev[filterType], value]
+        : prev[filterType].filter(item => item !== value)
+    }));
+  };
+
+  const handleClaimFilterChange = (filterType: keyof typeof claimFilters, value: string, checked: boolean) => {
+    setClaimFilters(prev => ({
       ...prev,
       [filterType]: checked 
         ? [...prev[filterType], value]
@@ -105,11 +177,38 @@ const InsuranceMainContent = () => {
     });
   };
 
+  const clearAllClaimFilters = () => {
+    setClaimFilters({
+      status: [],
+      type: []
+    });
+  };
+
   const getActiveFiltersCount = () => {
     return filters.status.length + filters.form.length;
   };
 
+  const getActiveClaimFiltersCount = () => {
+    return claimFilters.status.length + claimFilters.type.length;
+  };
+
   const activeFiltersCount = getActiveFiltersCount();
+  const activeClaimFiltersCount = getActiveClaimFiltersCount();
+
+  const getStatusBadgeStyles = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'submitted':
+      case 'approved':
+        return 'bg-green-100 text-green-700 hover:bg-green-100';
+      case 'processing':
+      case 'under review':
+        return 'bg-yellow-100 text-yellow-700 hover:bg-yellow-100';
+      case 'rejected':
+        return 'bg-red-100 text-red-700 hover:bg-red-100';
+      default:
+        return 'bg-gray-100 text-gray-700 hover:bg-gray-100';
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -238,7 +337,7 @@ const InsuranceMainContent = () => {
                     <TableCell>{item.form}</TableCell>
                     <TableCell className="font-medium">{item.amount}</TableCell>
                     <TableCell>
-                      <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-100">
+                      <Badge variant="secondary" className={getStatusBadgeStyles(item.status)}>
                         {item.status}
                       </Badge>
                     </TableCell>
@@ -255,6 +354,98 @@ const InsuranceMainContent = () => {
         </TabsContent>
 
         <TabsContent value="claim" className="space-y-4">
+          {/* Filters and Export - matching Applied Insurance tab */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="rounded-full relative gap-2">
+                    <Filter className="w-4 h-4" />
+                    Filters
+                    {activeClaimFiltersCount > 0 && (
+                      <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                        {activeClaimFiltersCount}
+                      </Badge>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56 bg-white">
+                  <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    checked={claimFilters.status.includes('Processing')}
+                    onCheckedChange={(checked) => handleClaimFilterChange('status', 'Processing', checked)}
+                  >
+                    Processing
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={claimFilters.status.includes('Approved')}
+                    onCheckedChange={(checked) => handleClaimFilterChange('status', 'Approved', checked)}
+                  >
+                    Approved
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={claimFilters.status.includes('Under Review')}
+                    onCheckedChange={(checked) => handleClaimFilterChange('status', 'Under Review', checked)}
+                  >
+                    Under Review
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={claimFilters.status.includes('Rejected')}
+                    onCheckedChange={(checked) => handleClaimFilterChange('status', 'Rejected', checked)}
+                  >
+                    Rejected
+                  </DropdownMenuCheckboxItem>
+                  
+                  <DropdownMenuSeparator />
+                  
+                  <DropdownMenuLabel>Filter by Type</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem
+                    checked={claimFilters.type.includes('Health')}
+                    onCheckedChange={(checked) => handleClaimFilterChange('type', 'Health', checked)}
+                  >
+                    Health
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={claimFilters.type.includes('Auto')}
+                    onCheckedChange={(checked) => handleClaimFilterChange('type', 'Auto', checked)}
+                  >
+                    Auto
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={claimFilters.type.includes('Property')}
+                    onCheckedChange={(checked) => handleClaimFilterChange('type', 'Property', checked)}
+                  >
+                    Property
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={claimFilters.type.includes('Life')}
+                    onCheckedChange={(checked) => handleClaimFilterChange('type', 'Life', checked)}
+                  >
+                    Life
+                  </DropdownMenuCheckboxItem>
+                  
+                  {activeClaimFiltersCount > 0 && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={clearAllClaimFilters} className="text-red-600">
+                        Clear all filters
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <span className="text-sm text-muted-foreground">
+                {activeClaimFiltersCount > 0 ? `${activeClaimFiltersCount} filter${activeClaimFiltersCount > 1 ? 's' : ''} applied` : 'No filters applied'}
+              </span>
+            </div>
+            <Button variant="outline" size="sm" className="gap-2 rounded-full">
+              <Download className="w-4 h-4" />
+              Export All
+            </Button>
+          </div>
+
+          {/* Table with same styling as Applied Insurance tab */}
           <div
             className="overflow-hidden"
             style={{
@@ -266,11 +457,38 @@ const InsuranceMainContent = () => {
               WebkitBackdropFilter: 'blur(10px)'
             }}
           >
-            <CardContent className="p-8 text-center">
-              <div className="text-muted-foreground">
-                <p>No claim insurance data available</p>
-              </div>
-            </CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow className="border-b">
+                  <TableHead className="text-left font-medium">Date</TableHead>
+                  <TableHead className="text-left font-medium">Claimant</TableHead>
+                  <TableHead className="text-left font-medium">Type</TableHead>
+                  <TableHead className="text-left font-medium">Amount</TableHead>
+                  <TableHead className="text-left font-medium">Status</TableHead>
+                  <TableHead className="text-left font-medium">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {claimData.map((item, index) => (
+                  <TableRow key={index} className="border-b last:border-b-0">
+                    <TableCell className="font-medium">{item.date}</TableCell>
+                    <TableCell>{item.claimant}</TableCell>
+                    <TableCell>{item.type}</TableCell>
+                    <TableCell className="font-medium">{item.amount}</TableCell>
+                    <TableCell>
+                      <Badge variant="secondary" className={getStatusBadgeStyles(item.status)}>
+                        {item.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </TabsContent>
       </Tabs>
