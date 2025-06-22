@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { TrendingUp, TrendingDown, ArrowUpDown, Plus } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid } from 'recharts';
 
 const TradingMainContent = () => {
   // Mock data for stock tickers
@@ -76,6 +76,17 @@ const TradingMainContent = () => {
     { month: 'May', value: 50 },
     { month: 'Jun', value: 55 },
     { month: 'Jul', value: 40 }
+  ];
+
+  // Portfolio value data for the new chart
+  const portfolioData = [
+    { month: 'Jan', value: 85000 },
+    { month: 'Feb', value: 92000 },
+    { month: 'Mar', value: 88000 },
+    { month: 'Apr', value: 95000 },
+    { month: 'May', value: 102000 },
+    { month: 'Jun', value: 98000 },
+    { month: 'Jul', value: 112893 }
   ];
 
   const tradesTableData = Array.from({ length: 20 }, (_, i) => ({
@@ -187,64 +198,88 @@ const TradingMainContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column - 2/3 width */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Account Info and Get Started Cards with Glass Effect */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div
-                  className="overflow-hidden"
-                  style={{
-                    border: '1px solid #FFFFFF',
-                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                    borderRadius: '16px',
-                    background: 'rgba(255, 255, 255, 0.4)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)'
-                  }}
-                >
-                  <CardContent className="p-6">
-                    <div className="text-sm text-muted-foreground mb-1">Sell</div>
-                    <div className="text-sm text-muted-foreground mb-4">Account Balance (CNY)</div>
-                    <div className="text-3xl font-bold mb-6">112,893.00</div>
-                    
-                    <div className="mb-6">
-                      <div className="text-sm font-medium mb-4">Stock</div>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-                        <span>Coin</span>
-                        <span>$2.00</span>
-                      </div>
-                      <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white mb-4">
-                        🅰️
-                      </div>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-                        <span>Coin</span>
-                        <span>$2.00</span>
-                      </div>
-                      <div className="text-sm text-muted-foreground mb-4">No extra fees</div>
+              {/* Portfolio Value Chart - Single Card */}
+              <div
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle>Portfolio Value</CardTitle>
+                      <div className="text-sm text-muted-foreground">Monthly performance</div>
+                      <div className="text-lg font-bold mt-2">Current Balance</div>
+                      <div className="text-2xl font-bold">$112,893.00</div>
                     </div>
-                    
-                    <div className="grid grid-cols-2 gap-2">
-                      <Button className="bg-blue-600 hover:bg-blue-700">Deposit</Button>
-                      <Button variant="outline" className="text-blue-600">Withdraw</Button>
-                    </div>
-                  </CardContent>
-                </div>
-
-                <div
-                  className="overflow-hidden"
-                  style={{
-                    border: '1px solid #FFFFFF',
-                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-                    borderRadius: '16px',
-                    background: 'rgba(255, 255, 255, 0.4)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)'
-                  }}
-                >
-                  <CardContent className="p-6">
-                    <div className="text-sm text-muted-foreground mb-1">Get Started</div>
-                    <div className="text-sm mb-4">January 7, 2024</div>
-                    <div className="text-6xl font-bold mb-4">$</div>
-                  </CardContent>
-                </div>
+                    <Select defaultValue="thisyear">
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="thisyear">This Year</SelectItem>
+                        <SelectItem value="lastmonth">Last Month</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-[300px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={portfolioData}>
+                        <defs>
+                          <linearGradient id="portfolioGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
+                            <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.05} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
+                        <XAxis 
+                          dataKey="month" 
+                          axisLine={false} 
+                          tickLine={false} 
+                          tick={{
+                            fontSize: 12,
+                            fill: '#64748b'
+                          }} 
+                        />
+                        <YAxis 
+                          axisLine={false} 
+                          tickLine={false} 
+                          tick={{
+                            fontSize: 12,
+                            fill: '#64748b'
+                          }}
+                          tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="value" 
+                          stroke="#3b82f6" 
+                          strokeWidth={3} 
+                          dot={{ 
+                            fill: "#3b82f6", 
+                            strokeWidth: 2, 
+                            r: 4 
+                          }} 
+                          activeDot={{
+                            r: 6,
+                            fill: "#3b82f6",
+                            stroke: '#fff',
+                            strokeWidth: 2
+                          }}
+                          fill="url(#portfolioGradient)"
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
               </div>
 
               {/* Trades Overview Chart with Glass Effect */}
