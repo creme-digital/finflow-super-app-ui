@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -9,6 +10,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { TrendingUp, TrendingDown, ArrowUpDown, Plus } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, Legend } from 'recharts';
 import type { TooltipProps } from 'recharts';
+import { PortfolioOverviewCards } from '@/components/trading/PortfolioOverviewCards';
+import { StockDetailChart } from '@/components/trading/StockDetailChart';
+import { MyFavoritesSection } from '@/components/trading/MyFavoritesSection';
+
 const TradingMainContent = () => {
   // Custom Tooltip matching Tax Estimation styling
   function CustomTooltip({
@@ -413,6 +418,24 @@ const TradingMainContent = () => {
           </div>
         </TabsContent>
 
+        {/* My Portfolio tab content */}
+        <TabsContent value="portfolio" className="space-y-6">
+          {/* Portfolio Overview Cards */}
+          <PortfolioOverviewCards />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Column - Stock Detail Chart */}
+            <div className="lg:col-span-2">
+              <StockDetailChart />
+            </div>
+            
+            {/* Right Column - My Favorites */}
+            <div>
+              <MyFavoritesSection />
+            </div>
+          </div>
+        </TabsContent>
+
         {/* Other tab contents with glass styling */}
         <TabsContent value="portfolio">
           <div className="overflow-hidden" style={glassCardStyle}>
@@ -448,6 +471,7 @@ const TradingMainContent = () => {
       </Tabs>
     </div>;
 };
+
 const TradingDashboard = () => {
   return <Layout title="Trading Dashboard" showRightSidebar={false} mainContent={<TradingMainContent />} />;
 };
