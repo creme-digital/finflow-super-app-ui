@@ -4,11 +4,13 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowUpRight, ArrowDownLeft, ArrowLeftRight, Plus, Wallet } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { BuyCryptoModal } from './BuyCryptoModal';
+import { SendCryptoModal } from './SendCryptoModal';
 
 export function CryptoRightPanel() {
   const { formatAmount } = useCurrency();
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
   const [isSwapModalOpen, setIsSwapModalOpen] = useState(false);
+  const [isSendModalOpen, setIsSendModalOpen] = useState(false);
 
   // Sample crypto portfolio value
   const totalCryptoValue = 12847.92;
@@ -138,6 +140,7 @@ export function CryptoRightPanel() {
             variant="ghost" 
             className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
             style={buttonStyle}
+            onClick={() => setIsSendModalOpen(true)}
           >
             <ArrowUpRight className="w-5 h-5" />
             <span className="text-xs">Send</span>
@@ -214,6 +217,12 @@ export function CryptoRightPanel() {
         open={isSwapModalOpen}
         onOpenChange={setIsSwapModalOpen}
         initialTab="convert"
+      />
+
+      {/* Send Crypto Modal */}
+      <SendCryptoModal 
+        open={isSendModalOpen}
+        onOpenChange={setIsSendModalOpen}
       />
     </div>
   );
