@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ArrowUpDown, ChevronRight, X } from 'lucide-react';
+import { ArrowUpDown, ChevronRight, X, ArrowUpDown as SwapIcon } from 'lucide-react';
 
 interface BuyCryptoModalProps {
   open: boolean;
@@ -40,6 +40,11 @@ export function BuyCryptoModal({ open, onOpenChange, initialTab = 'buy' }: BuyCr
   const [selectedCrypto, setSelectedCrypto] = useState('ITC');
   const [selectedPayment, setSelectedPayment] = useState('paypal');
   const [activeTab, setActiveTab] = useState<'buy' | 'sell' | 'convert'>(initialTab);
+  
+  // Convert tab specific state
+  const [fromCrypto, setFromCrypto] = useState('BTC');
+  const [toCrypto, setToCrypto] = useState('ETH');
+  const [convertAmount, setConvertAmount] = useState('0');
 
   // Reset to initial tab when modal opens
   useEffect(() => {
@@ -51,6 +56,10 @@ export function BuyCryptoModal({ open, onOpenChange, initialTab = 'buy' }: BuyCr
   const selectedCurrencyData = currencies.find(c => c.code === selectedCurrency);
   const selectedCryptoData = cryptocurrencies.find(c => c.symbol === selectedCrypto);
   const selectedPaymentData = paymentMethods.find(p => p.id === selectedPayment);
+  
+  // Convert tab data
+  const fromCryptoData = cryptocurrencies.find(c => c.symbol === fromCrypto);
+  const toCryptoData = cryptocurrencies.find(c => c.symbol === toCrypto);
 
   const maxAmount = 25000;
 
@@ -64,6 +73,18 @@ export function BuyCryptoModal({ open, onOpenChange, initialTab = 'buy' }: BuyCr
     console.log('Sell crypto:', { amount, selectedCurrency, selectedCrypto, selectedPayment });
     // Implementation for selling crypto
     onOpenChange(false);
+  };
+
+  const handleConvert = () => {
+    console.log('Convert crypto:', { convertAmount, fromCrypto, toCrypto });
+    // Implementation for converting crypto
+    onOpenChange(false);
+  };
+
+  const handleSwapCrypto = () => {
+    const temp = fromCrypto;
+    setFromCrypto(toCrypto);
+    setToCrypto(temp);
   };
 
   return (
@@ -275,10 +296,97 @@ export function BuyCryptoModal({ open, onOpenChange, initialTab = 'buy' }: BuyCr
               </Button>
             </TabsContent>
 
-            <TabsContent value="convert" className="mt-8">
-              <div className="text-center py-12 text-muted-foreground">
-                Convert functionality coming soon
+            <TabsContent value="convert" className="mt-8 space-y-8">
+              {/* Amount Input Section */}
+              <div className="text-center space-y-6">
+                <div className="relative">
+                  {/* Large amount display */}
+                  <div className="flex items-center justify-center mb-4">
+                    <span className="text-6xl font-light text-gray-400">
+                      {fromCryptoData?.icon}
+                    </span>
+                    <input
+                      type="number"
+                      value={convertAmount}
+                      onChange={(e) => setConvertAmount(e.target.value)}
+                      placeholder="0"
+                      className="text-6xl font-light text-gray-400 bg-transparent border-none outline-none text-center min-w-0 flex-1 max-w-xs"
+                      style={{ appearance: 'textfield' }}
+                    />
+                  </div>
+                  
+                  <div className="text-sm text-muted-foreground">
+                    Enter amount to convert
+                  </div>
+                </div>
               </div>
+
+              {/* From Crypto Selection */}
+              <div 
+                className="flex items-center justify-between p-4 rounded-2xl bg-white border border-gray-100 hover:bg-gray-50 cursor-pointer"
+                onClick={() => {}}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-muted-foreground">From</span>
+                  <div className="flex items-center gap-2">
+                    <div 
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                      style={{ background: fromCryptoData?.color }}
+                    >
+                      {fromCryptoData?.icon}
+                    </div>
+                    <span className="font-medium text-foreground">{fromCrypto}</span>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              {/* Swap Button */}
+              <div className="flex justify-center">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={handleSwapCrypto}
+                  className="rounded-full h-12 w-12 border-gray-300 bg-white hover:bg-gray-50"
+                >
+                  <SwapIcon className="w-5 h-5 text-gray-600" />
+                </Button>
+              </div>
+
+              {/* To Crypto Selection */}
+              <div 
+                className="flex items-center justify-between p-4 rounded-2xl bg-white border border-gray-100 hover:bg-gray-50 cursor-pointer"
+                onClick={() => {}}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-muted-foreground">To</span>
+                  <div className="flex items-center gap-2">
+                    <div 
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                      style={{ background: toCryptoData?.color }}
+                    >
+                      {toCryptoData?.icon}
+                    </div>
+                    <span className="font-medium text-foreground">{toCrypto}</span>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </div>
+
+              {/* Conversion Rate Info */}
+              <div className="bg-gray-50 rounded-2xl p-4 text-center">
+                <div className="text-sm text-muted-foreground mb-1">Estimated rate</div>
+                <div className="font-medium">1 {fromCrypto} = 0.065 {toCrypto}</div>
+                <div className="text-xs text-muted-foreground mt-1">Rate updates every 30 seconds</div>
+              </div>
+
+              {/* Convert Button */}
+              <Button 
+                onClick={handleConvert}
+                className="w-full h-14 text-lg font-medium rounded-full bg-[#292EE9] hover:bg-[#1f24d1] text-white"
+              >
+                Convert
+              </Button>
             </TabsContent>
           </Tabs>
         </div>
