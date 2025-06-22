@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Filter, Download, ArrowRight, MoreHorizontal } from 'lucide-react';
+import { Plus, Filter, Download, ArrowRight, MoreHorizontal, Wallet } from 'lucide-react';
 
 const MerchantAccountMainContent = () => {
   const [activeTab, setActiveTab] = useState('payment-history');
@@ -120,53 +120,53 @@ const MerchantAccountMainContent = () => {
         </button>
       </div>
 
-      {/* Account Cards with glass effect */}
+      {/* Account Cards with new design matching the reference image */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {accounts.map((account, index) => (
           <div
             key={index}
-            className="overflow-hidden p-6"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
+            className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
           >
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center text-2xl">
-                {account.icon}
+            {/* Header section with icon and account info */}
+            <div className="flex items-start gap-4 mb-8">
+              <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center">
+                <Wallet className="w-8 h-8 text-teal-600" strokeWidth={1.5} />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-lg">{account.name}</h3>
-                <p className="text-muted-foreground text-sm">{account.type}</p>
-                <p className="text-3xl font-bold mt-2">{account.balance}</p>
-                <p className="text-muted-foreground text-sm">Current Balance</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-1">{account.name}</h3>
+                <p className="text-gray-500 text-base">{account.type}</p>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-sm mb-3">Account Details</h4>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Account Number</span>
-                    <span className="font-medium">{account.accountNumber}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Routing Number</span>
-                    <span className="font-medium">{account.routingNumber}</span>
-                  </div>
+            {/* Balance section */}
+            <div className="mb-8">
+              <div className="text-4xl font-bold text-gray-900 mb-2">{account.balance}</div>
+              <p className="text-gray-500 text-base">Current Balance</p>
+            </div>
+
+            {/* Account Details section */}
+            <div className="mb-8">
+              <h4 className="text-xl font-bold text-gray-900 mb-6">Account Details</h4>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-900 text-base font-medium">Account Number</span>
+                  <span className="text-gray-900 text-base font-medium">{account.accountNumber}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-900 text-base font-medium">Routing Number</span>
+                  <span className="text-gray-900 text-base font-medium">{account.routingNumber}</span>
                 </div>
               </div>
-
-              <Button variant="ghost" className="w-full justify-between p-0 h-auto text-left">
-                <span className="text-sm font-medium">View Details</span>
-                <ArrowRight className="w-4 h-4" />
-              </Button>
             </div>
+
+            {/* View Details button */}
+            <Button 
+              variant="outline" 
+              className="w-full h-14 text-base font-medium border-2 border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50 text-gray-900 rounded-full flex items-center justify-center gap-3"
+            >
+              View Details
+              <ArrowRight className="w-5 h-5" />
+            </Button>
           </div>
         ))}
       </div>
