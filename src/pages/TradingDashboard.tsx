@@ -221,9 +221,9 @@ const TradingMainContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column - 2/3 width */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Portfolio Value Chart - Single Card with Tax Estimation styling */}
-              <Card className="border border-[#E3E3EA] shadow-none">
-                <CardHeader>
+              {/* Portfolio Value Chart - Glass Card styling */}
+              <div className="overflow-hidden" style={glassCardStyle}>
+                <CardHeader style={{ background: 'rgba(255, 255, 255, 0.6)' }}>
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-2">
@@ -242,7 +242,7 @@ const TradingMainContent = () => {
                     </Select>
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent style={{ background: 'rgba(255, 255, 255, 0.4)' }}>
                   <div className="h-[300px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={portfolioData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
@@ -287,7 +287,7 @@ const TradingMainContent = () => {
                     </ResponsiveContainer>
                   </div>
                 </CardContent>
-              </Card>
+              </div>
 
               {/* Simplified Trades Overview Chart */}
               <div className="overflow-hidden" style={glassCardStyle}>
