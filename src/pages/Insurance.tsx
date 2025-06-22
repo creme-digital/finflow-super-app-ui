@@ -8,7 +8,6 @@ import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, Download, MoreHorizontal } from 'lucide-react';
 import { InsuranceDrawer } from '@/components/insurance/InsuranceDrawer';
-
 const InsuranceMainContent = () => {
   const [activeTab, setActiveTab] = useState('applied');
   const [filters, setFilters] = useState({
@@ -21,182 +20,148 @@ const InsuranceMainContent = () => {
   });
   const [selectedInsurance, setSelectedInsurance] = useState<any>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const insuranceData = [
-    {
-      date: '23/05/2025',
-      issuer: 'James Hall',
-      form: '1092-NEC',
-      amount: '$8,657.41',
-      status: 'Submitted'
-    },
-    {
-      date: '23/05/2024',
-      issuer: 'Rhonda Rhodes',
-      form: '1029-MISC',
-      amount: '$342.07',
-      status: 'Submitted'
-    },
-    {
-      date: '23/05/2023',
-      issuer: 'Kathy Pacheco',
-      form: '1077-K',
-      amount: '$1,486.52',
-      status: 'Submitted'
-    },
-    {
-      date: '23/05/2022',
-      issuer: 'Kimberly Mastrangelo',
-      form: '1092-NEC',
-      amount: '$5,653.56',
-      status: 'Submitted'
-    },
-    {
-      date: '23/05/2021',
-      issuer: 'Corina McCoy',
-      form: '1029-MISC',
-      amount: '$1,595.71',
-      status: 'Submitted'
-    },
-    {
-      date: '23/05/2020',
-      issuer: 'Iva Ryan',
-      form: '1077-K',
-      amount: '$7,738.89',
-      status: 'Submitted'
-    },
-    {
-      date: '23/05/2019',
-      issuer: 'Stephanie Nicol',
-      form: '1092-NEC',
-      amount: '$8,650.33',
-      status: 'Submitted'
-    },
-    {
-      date: '23/05/2018',
-      issuer: 'Alex Buckmaster',
-      form: '1029-MISC',
-      amount: '$1,207.52',
-      status: 'Submitted'
-    },
-    {
-      date: '23/05/2017',
-      issuer: 'Patricia Sanders',
-      form: '1077-K',
-      amount: '$376.96',
-      status: 'Submitted'
-    },
-    {
-      date: '23/05/2016',
-      issuer: 'Katie Sims',
-      form: '1077-K',
-      amount: '$7,727.07',
-      status: 'Submitted'
-    }
-  ];
-
-  const claimData = [
-    {
-      date: '15/06/2025',
-      claimant: 'Sarah Johnson',
-      type: 'Health',
-      amount: '$2,450.00',
-      status: 'Processing'
-    },
-    {
-      date: '12/06/2025',
-      claimant: 'Michael Brown',
-      type: 'Auto',
-      amount: '$8,750.50',
-      status: 'Approved'
-    },
-    {
-      date: '08/06/2025',
-      claimant: 'Emma Wilson',
-      type: 'Property',
-      amount: '$15,200.00',
-      status: 'Under Review'
-    },
-    {
-      date: '05/06/2025',
-      claimant: 'David Miller',
-      type: 'Life',
-      amount: '$50,000.00',
-      status: 'Approved'
-    },
-    {
-      date: '02/06/2025',
-      claimant: 'Lisa Garcia',
-      type: 'Health',
-      amount: '$1,890.75',
-      status: 'Processing'
-    },
-    {
-      date: '28/05/2025',
-      claimant: 'Robert Davis',
-      type: 'Auto',
-      amount: '$6,320.25',
-      status: 'Rejected'
-    },
-    {
-      date: '25/05/2025',
-      claimant: 'Jennifer Lee',
-      type: 'Property',
-      amount: '$12,500.00',
-      status: 'Approved'
-    },
-    {
-      date: '22/05/2025',
-      claimant: 'Christopher Taylor',
-      type: 'Health',
-      amount: '$3,750.50',
-      status: 'Under Review'
-    }
-  ];
-
+  const insuranceData = [{
+    date: '23/05/2025',
+    issuer: 'James Hall',
+    form: '1092-NEC',
+    amount: '$8,657.41',
+    status: 'Submitted'
+  }, {
+    date: '23/05/2024',
+    issuer: 'Rhonda Rhodes',
+    form: '1029-MISC',
+    amount: '$342.07',
+    status: 'Submitted'
+  }, {
+    date: '23/05/2023',
+    issuer: 'Kathy Pacheco',
+    form: '1077-K',
+    amount: '$1,486.52',
+    status: 'Submitted'
+  }, {
+    date: '23/05/2022',
+    issuer: 'Kimberly Mastrangelo',
+    form: '1092-NEC',
+    amount: '$5,653.56',
+    status: 'Submitted'
+  }, {
+    date: '23/05/2021',
+    issuer: 'Corina McCoy',
+    form: '1029-MISC',
+    amount: '$1,595.71',
+    status: 'Submitted'
+  }, {
+    date: '23/05/2020',
+    issuer: 'Iva Ryan',
+    form: '1077-K',
+    amount: '$7,738.89',
+    status: 'Submitted'
+  }, {
+    date: '23/05/2019',
+    issuer: 'Stephanie Nicol',
+    form: '1092-NEC',
+    amount: '$8,650.33',
+    status: 'Submitted'
+  }, {
+    date: '23/05/2018',
+    issuer: 'Alex Buckmaster',
+    form: '1029-MISC',
+    amount: '$1,207.52',
+    status: 'Submitted'
+  }, {
+    date: '23/05/2017',
+    issuer: 'Patricia Sanders',
+    form: '1077-K',
+    amount: '$376.96',
+    status: 'Submitted'
+  }, {
+    date: '23/05/2016',
+    issuer: 'Katie Sims',
+    form: '1077-K',
+    amount: '$7,727.07',
+    status: 'Submitted'
+  }];
+  const claimData = [{
+    date: '15/06/2025',
+    claimant: 'Sarah Johnson',
+    type: 'Health',
+    amount: '$2,450.00',
+    status: 'Processing'
+  }, {
+    date: '12/06/2025',
+    claimant: 'Michael Brown',
+    type: 'Auto',
+    amount: '$8,750.50',
+    status: 'Approved'
+  }, {
+    date: '08/06/2025',
+    claimant: 'Emma Wilson',
+    type: 'Property',
+    amount: '$15,200.00',
+    status: 'Under Review'
+  }, {
+    date: '05/06/2025',
+    claimant: 'David Miller',
+    type: 'Life',
+    amount: '$50,000.00',
+    status: 'Approved'
+  }, {
+    date: '02/06/2025',
+    claimant: 'Lisa Garcia',
+    type: 'Health',
+    amount: '$1,890.75',
+    status: 'Processing'
+  }, {
+    date: '28/05/2025',
+    claimant: 'Robert Davis',
+    type: 'Auto',
+    amount: '$6,320.25',
+    status: 'Rejected'
+  }, {
+    date: '25/05/2025',
+    claimant: 'Jennifer Lee',
+    type: 'Property',
+    amount: '$12,500.00',
+    status: 'Approved'
+  }, {
+    date: '22/05/2025',
+    claimant: 'Christopher Taylor',
+    type: 'Health',
+    amount: '$3,750.50',
+    status: 'Under Review'
+  }];
   const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
     setFilters(prev => ({
       ...prev,
-      [filterType]: checked 
-        ? [...prev[filterType], value]
-        : prev[filterType].filter(item => item !== value)
+      [filterType]: checked ? [...prev[filterType], value] : prev[filterType].filter(item => item !== value)
     }));
   };
-
   const handleClaimFilterChange = (filterType: keyof typeof claimFilters, value: string, checked: boolean) => {
     setClaimFilters(prev => ({
       ...prev,
-      [filterType]: checked 
-        ? [...prev[filterType], value]
-        : prev[filterType].filter(item => item !== value)
+      [filterType]: checked ? [...prev[filterType], value] : prev[filterType].filter(item => item !== value)
     }));
   };
-
   const clearAllFilters = () => {
     setFilters({
       status: [],
       form: []
     });
   };
-
   const clearAllClaimFilters = () => {
     setClaimFilters({
       status: [],
       type: []
     });
   };
-
   const getActiveFiltersCount = () => {
     return filters.status.length + filters.form.length;
   };
-
   const getActiveClaimFiltersCount = () => {
     return claimFilters.status.length + claimFilters.type.length;
   };
-
   const activeFiltersCount = getActiveFiltersCount();
   const activeClaimFiltersCount = getActiveClaimFiltersCount();
-
   const getStatusBadgeStyles = (status: string) => {
     switch (status.toLowerCase()) {
       case 'submitted':
@@ -211,28 +176,13 @@ const InsuranceMainContent = () => {
         return 'bg-gray-100 text-gray-700 hover:bg-gray-100';
     }
   };
-
   const handleInsuranceClick = (insurance: any) => {
     setSelectedInsurance(insurance);
     setDrawerOpen(true);
   };
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Header with Cards page styling */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-foreground">Insurance</h1>
-        <div className="flex gap-3">
-          <Button variant="outline" className="gap-2 rounded-full">
-            <Plus className="w-4 h-4" />
-            Claim Insurance
-          </Button>
-          <Button className="gap-2">
-            <Plus className="w-4 h-4" />
-            Apply Insurance
-          </Button>
-        </div>
-      </div>
+      
 
       {/* Tabs with Accounts page styling */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -254,52 +204,36 @@ const InsuranceMainContent = () => {
                   <Button variant="outline" size="sm" className="rounded-full relative gap-2">
                     <Filter className="w-4 h-4" />
                     Filters
-                    {activeFiltersCount > 0 && (
-                      <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                    {activeFiltersCount > 0 && <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
                         {activeFiltersCount}
-                      </Badge>
-                    )}
+                      </Badge>}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-56 bg-white">
                   <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
-                  <DropdownMenuCheckboxItem
-                    checked={filters.status.includes('Submitted')}
-                    onCheckedChange={(checked) => handleFilterChange('status', 'Submitted', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={filters.status.includes('Submitted')} onCheckedChange={checked => handleFilterChange('status', 'Submitted', checked)}>
                     Submitted
                   </DropdownMenuCheckboxItem>
                   
                   <DropdownMenuSeparator />
                   
                   <DropdownMenuLabel>Filter by Form</DropdownMenuLabel>
-                  <DropdownMenuCheckboxItem
-                    checked={filters.form.includes('1092-NEC')}
-                    onCheckedChange={(checked) => handleFilterChange('form', '1092-NEC', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={filters.form.includes('1092-NEC')} onCheckedChange={checked => handleFilterChange('form', '1092-NEC', checked)}>
                     1092-NEC
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem
-                    checked={filters.form.includes('1029-MISC')}
-                    onCheckedChange={(checked) => handleFilterChange('form', '1029-MISC', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={filters.form.includes('1029-MISC')} onCheckedChange={checked => handleFilterChange('form', '1029-MISC', checked)}>
                     1029-MISC
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem
-                    checked={filters.form.includes('1077-K')}
-                    onCheckedChange={(checked) => handleFilterChange('form', '1077-K', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={filters.form.includes('1077-K')} onCheckedChange={checked => handleFilterChange('form', '1077-K', checked)}>
                     1077-K
                   </DropdownMenuCheckboxItem>
                   
-                  {activeFiltersCount > 0 && (
-                    <>
+                  {activeFiltersCount > 0 && <>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={clearAllFilters} className="text-red-600">
                         Clear all filters
                       </DropdownMenuItem>
-                    </>
-                  )}
+                    </>}
                 </DropdownMenuContent>
               </DropdownMenu>
               
@@ -314,17 +248,14 @@ const InsuranceMainContent = () => {
           </div>
 
           {/* Table with Accounts page glass styling */}
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px',
+          background: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}>
             <Table>
               <TableHeader>
                 <TableRow className="border-b">
@@ -337,12 +268,7 @@ const InsuranceMainContent = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {insuranceData.map((item, index) => (
-                  <TableRow 
-                    key={index} 
-                    className="border-b last:border-b-0 cursor-pointer hover:bg-muted/50" 
-                    onClick={() => handleInsuranceClick(item)}
-                  >
+                {insuranceData.map((item, index) => <TableRow key={index} className="border-b last:border-b-0 cursor-pointer hover:bg-muted/50" onClick={() => handleInsuranceClick(item)}>
                     <TableCell className="font-medium">{item.date}</TableCell>
                     <TableCell>{item.issuer}</TableCell>
                     <TableCell>{item.form}</TableCell>
@@ -357,8 +283,7 @@ const InsuranceMainContent = () => {
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </TableCell>
-                  </TableRow>
-                ))}
+                  </TableRow>)}
               </TableBody>
             </Table>
           </div>
@@ -373,76 +298,48 @@ const InsuranceMainContent = () => {
                   <Button variant="outline" size="sm" className="rounded-full relative gap-2">
                     <Filter className="w-4 h-4" />
                     Filters
-                    {activeClaimFiltersCount > 0 && (
-                      <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
+                    {activeClaimFiltersCount > 0 && <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs">
                         {activeClaimFiltersCount}
-                      </Badge>
-                    )}
+                      </Badge>}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-56 bg-white">
                   <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
-                  <DropdownMenuCheckboxItem
-                    checked={claimFilters.status.includes('Processing')}
-                    onCheckedChange={(checked) => handleClaimFilterChange('status', 'Processing', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={claimFilters.status.includes('Processing')} onCheckedChange={checked => handleClaimFilterChange('status', 'Processing', checked)}>
                     Processing
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem
-                    checked={claimFilters.status.includes('Approved')}
-                    onCheckedChange={(checked) => handleClaimFilterChange('status', 'Approved', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={claimFilters.status.includes('Approved')} onCheckedChange={checked => handleClaimFilterChange('status', 'Approved', checked)}>
                     Approved
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem
-                    checked={claimFilters.status.includes('Under Review')}
-                    onCheckedChange={(checked) => handleClaimFilterChange('status', 'Under Review', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={claimFilters.status.includes('Under Review')} onCheckedChange={checked => handleClaimFilterChange('status', 'Under Review', checked)}>
                     Under Review
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem
-                    checked={claimFilters.status.includes('Rejected')}
-                    onCheckedChange={(checked) => handleClaimFilterChange('status', 'Rejected', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={claimFilters.status.includes('Rejected')} onCheckedChange={checked => handleClaimFilterChange('status', 'Rejected', checked)}>
                     Rejected
                   </DropdownMenuCheckboxItem>
                   
                   <DropdownMenuSeparator />
                   
                   <DropdownMenuLabel>Filter by Type</DropdownMenuLabel>
-                  <DropdownMenuCheckboxItem
-                    checked={claimFilters.type.includes('Health')}
-                    onCheckedChange={(checked) => handleClaimFilterChange('type', 'Health', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={claimFilters.type.includes('Health')} onCheckedChange={checked => handleClaimFilterChange('type', 'Health', checked)}>
                     Health
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem
-                    checked={claimFilters.type.includes('Auto')}
-                    onCheckedChange={(checked) => handleClaimFilterChange('type', 'Auto', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={claimFilters.type.includes('Auto')} onCheckedChange={checked => handleClaimFilterChange('type', 'Auto', checked)}>
                     Auto
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem
-                    checked={claimFilters.type.includes('Property')}
-                    onCheckedChange={(checked) => handleClaimFilterChange('type', 'Property', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={claimFilters.type.includes('Property')} onCheckedChange={checked => handleClaimFilterChange('type', 'Property', checked)}>
                     Property
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem
-                    checked={claimFilters.type.includes('Life')}
-                    onCheckedChange={(checked) => handleClaimFilterChange('type', 'Life', checked)}
-                  >
+                  <DropdownMenuCheckboxItem checked={claimFilters.type.includes('Life')} onCheckedChange={checked => handleClaimFilterChange('type', 'Life', checked)}>
                     Life
                   </DropdownMenuCheckboxItem>
                   
-                  {activeClaimFiltersCount > 0 && (
-                    <>
+                  {activeClaimFiltersCount > 0 && <>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={clearAllClaimFilters} className="text-red-600">
                         Clear all filters
                       </DropdownMenuItem>
-                    </>
-                  )}
+                    </>}
                 </DropdownMenuContent>
               </DropdownMenu>
               
@@ -457,17 +354,14 @@ const InsuranceMainContent = () => {
           </div>
 
           {/* Table with same styling as Applied Insurance tab */}
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px',
+          background: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}>
             <Table>
               <TableHeader>
                 <TableRow className="border-b">
@@ -480,12 +374,7 @@ const InsuranceMainContent = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {claimData.map((item, index) => (
-                  <TableRow 
-                    key={index} 
-                    className="border-b last:border-b-0 cursor-pointer hover:bg-muted/50"
-                    onClick={() => handleInsuranceClick(item)}
-                  >
+                {claimData.map((item, index) => <TableRow key={index} className="border-b last:border-b-0 cursor-pointer hover:bg-muted/50" onClick={() => handleInsuranceClick(item)}>
                     <TableCell className="font-medium">{item.date}</TableCell>
                     <TableCell>{item.claimant}</TableCell>
                     <TableCell>{item.type}</TableCell>
@@ -500,8 +389,7 @@ const InsuranceMainContent = () => {
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </TableCell>
-                  </TableRow>
-                ))}
+                  </TableRow>)}
               </TableBody>
             </Table>
           </div>
@@ -509,21 +397,9 @@ const InsuranceMainContent = () => {
       </Tabs>
 
       {/* Insurance Drawer */}
-      <InsuranceDrawer 
-        open={drawerOpen}
-        onOpenChange={setDrawerOpen}
-        insurance={selectedInsurance}
-      />
-    </div>
-  );
+      <InsuranceDrawer open={drawerOpen} onOpenChange={setDrawerOpen} insurance={selectedInsurance} />
+    </div>;
 };
-
 export default function Insurance() {
-  return (
-    <Layout 
-      title="Insurance" 
-      showRightSidebar={false}
-      mainContent={<InsuranceMainContent />}
-    />
-  );
+  return <Layout title="Insurance" showRightSidebar={false} mainContent={<InsuranceMainContent />} />;
 }
