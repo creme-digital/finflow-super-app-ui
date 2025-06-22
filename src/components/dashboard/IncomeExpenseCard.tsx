@@ -120,8 +120,8 @@ export function IncomeExpenseCard() {
               }} />
               <ReferenceLine y={0} stroke="#94a3b8" strokeDasharray="2 2" />
               <ChartTooltip content={<ChartTooltipContent />} />
-              <Bar dataKey="income" fill={chartConfig.income.color} radius={[24, 24, 0, 0]} maxBarSize={32} />
-              <Bar dataKey="expense" fill={chartConfig.expense.color} radius={[24, 24, 0, 0]} maxBarSize={32} />
+              <Bar dataKey="income" fill={chartConfig.income.color} radius={[8, 8, 0, 0]} maxBarSize={32} />
+              <Bar dataKey="expense" fill={chartConfig.expense.color} radius={[0, 0, 8, 8]} maxBarSize={32} />
             </BarChart>
           </ChartContainer>
         </div>
