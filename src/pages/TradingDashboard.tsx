@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -13,6 +12,7 @@ import type { TooltipProps } from 'recharts';
 import { PortfolioOverviewCards } from '@/components/trading/PortfolioOverviewCards';
 import { StockDetailChart } from '@/components/trading/StockDetailChart';
 import { MyFavoritesSection } from '@/components/trading/MyFavoritesSection';
+import { TradingViewChart } from '@/components/crypto/TradingViewChart';
 
 const TradingMainContent = () => {
   // Custom Tooltip matching Tax Estimation styling
@@ -418,14 +418,15 @@ const TradingMainContent = () => {
           </div>
         </TabsContent>
 
-        {/* My Portfolio tab content */}
+        {/* My Portfolio tab content with TradingView chart */}
         <TabsContent value="portfolio" className="space-y-6">
           {/* Portfolio Overview Cards */}
           <PortfolioOverviewCards />
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - Stock Detail Chart */}
-            <div className="lg:col-span-2">
+            {/* Left Column - TradingView Chart */}
+            <div className="lg:col-span-2 space-y-6">
+              <TradingViewChart />
               <StockDetailChart />
             </div>
             
@@ -437,14 +438,6 @@ const TradingMainContent = () => {
         </TabsContent>
 
         {/* Other tab contents with glass styling */}
-        <TabsContent value="portfolio">
-          <div className="overflow-hidden" style={glassCardStyle}>
-            <CardContent className="p-8 text-center">
-              <p className="text-muted-foreground">Portfolio view will be implemented here</p>
-            </CardContent>
-          </div>
-        </TabsContent>
-
         <TabsContent value="stock">
           <div className="overflow-hidden" style={glassCardStyle}>
             <CardContent className="p-8 text-center">
