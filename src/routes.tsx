@@ -1,3 +1,4 @@
+
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
@@ -10,15 +11,15 @@ import Transactions from './pages/Transactions';
 import Transfers from './pages/Transfers';
 import Expenses from './pages/Expenses';
 const Crypto = React.lazy(() => import('./pages/Crypto'));
-const CryptoTrade = React.lazy(() => import('./pages/CryptoTrade'));
-const CryptoDetail = React.lazy(() => import('./pages/CryptoDetail'));
-const CryptoHoldings = React.lazy(() => import('./pages/CryptoHoldings'));
+const CryptoTrade = React.lazy(() => import('./pages/crypto-trade'));
+const CryptoDetail = React.lazy(() => import('./pages/crypto/[symbol]'));
+const CryptoHoldings = React.lazy(() => import('./pages/crypto/holdings'));
 const TradingDashboard = React.lazy(() => import('./pages/TradingDashboard'));
-const Bookkeeping = React.lazy(() => import('./pages/Bookkeeping'));
-const Invoicing = React.lazy(() => import('./pages/Invoicing'));
+const Bookkeeping = React.lazy(() => import('./pages/bookkeeping'));
+const Invoicing = React.lazy(() => import('./pages/invoicing'));
 const InvoiceCreate = React.lazy(() => import('./pages/invoice-create'));
-const Reports = React.lazy(() => import('./pages/Reports'));
-const Customers = React.lazy(() => import('./pages/Customers'));
+const Reports = React.lazy(() => import('./pages/reports'));
+const Customers = React.lazy(() => import('./pages/customers'));
 const Payroll = React.lazy(() => import('./pages/Payroll'));
 const Tax = React.lazy(() => import('./pages/Tax'));
 const Payments = React.lazy(() => import('./pages/Payments'));
