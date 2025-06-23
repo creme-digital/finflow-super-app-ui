@@ -97,7 +97,7 @@ export function TransferDialog({
           {currentPage === 1 ? <>
               {/* Transfer Type Tabs */}
               <Tabs value={transferType} onValueChange={setTransferType} className="w-full">
-                <TabsList className="grid w-full grid-cols-3 bg-white/[0.63]">
+                <TabsList className="grid w-full grid-cols-3 bg-white/[0.36] border-white">
                   <TabsTrigger value="ach">ACH Transfer</TabsTrigger>
                   <TabsTrigger value="wire">Wire Transfer</TabsTrigger>
                   <TabsTrigger value="international">International</TabsTrigger>
