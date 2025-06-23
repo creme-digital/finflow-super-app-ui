@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -132,6 +133,7 @@ const statusStyles = {
 };
 
 const Accounting = () => {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState({
     status: [] as string[],
     customer: [] as string[],
@@ -183,7 +185,7 @@ const Accounting = () => {
                 <Download className="w-4 h-4" />
                 Export All
               </Button>
-              <Button onClick={() => setIsCreateInvoiceOpen(true)}>
+              <Button onClick={() => navigate('/accounting/create-invoice')}>
                 <Plus className="w-4 h-4 mr-2" />
                 Create Invoice
               </Button>
