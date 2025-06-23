@@ -78,7 +78,7 @@ export const AppRoutes = () => {
         <Route path="/trading" element={<TradingDashboard />} />
         <Route path="/accounting" element={<Accounting />} />
         <Route path="/accounting/dashboard" element={<AccountingDashboard />} />
-        <Route path="/accounting/create-invoice" element={<InvoiceBuilder />} />
+        <Route path="/accounting/create-invoice" element={<InvoiceCreate />} />
         <Route path="/bookkeeping" element={<Bookkeeping />} />
         <Route path="/invoicing" element={<Invoicing />} />
         <Route path="/invoice-create" element={<InvoiceCreate />} />
@@ -95,6 +95,7 @@ export const AppRoutes = () => {
         <Route path="/integrations" element={<Integrations />} />
         <Route path="/merchant-account" element={<MerchantAccount />} />
         <Route path="/meelypay" element={<MeelyPay />} />
+        <Route path="/meely-pay" element={<MeelyPay />} />
         <Route path="/meelypay/dashboard" element={<MeelyPayDashboard />} />
         <Route path="/meelypay/transactions" element={<MeelyPayTransactions />} />
         <Route path="/meelypay/payments" element={<MeelyPayPayments />} />
