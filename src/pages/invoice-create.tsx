@@ -1,224 +1,478 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Layout } from '@/components/layout/Layout';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Building2, User, List, Percent, Calendar, CreditCard, Mail, Download, Eye, Check, Trash2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Separator } from '@/components/ui/separator';
+import { ArrowLeft, Plus, Trash2, Send, Eye, Save } from 'lucide-react';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { useToast } from '@/hooks/use-toast';
+
+// Form validation schema
+const invoiceItemSchema = z.object({
+  description: z.string().min(1, 'Description is required'),
+  quantity: z.number().min(1, 'Quantity must be at least 1'),
+  rate: z.number().min(0, 'Rate must be positive'),
+});
+
+const invoiceSchema = z.object({
+  customerName: z.string().min(1, 'Customer name is required'),
+  customerEmail: z.string().email('Valid email is required'),
+  invoiceNumber: z.string().min(1, 'Invoice number is required'),
+  issueDate: z.string().min(1, 'Issue date is required'),
+  dueDate: z.string().min(1, 'Due date is required'),
+  items: z.array(invoiceItemSchema).min(1, 'At least one item is required'),
+  notes: z.string().optional(),
+  terms: z.string().optional(),
+});
+
+type InvoiceFormData = z.infer<typeof invoiceSchema>;
 
 interface InvoiceItem {
-  id: number;
-  title: string;
+  id: string;
+  description: string;
   quantity: number;
-  amount: number;
+  rate: number;
 }
 
 const InvoiceCreate = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [items, setItems] = useState<InvoiceItem[]>([
-    { id: 1, title: '', quantity: 1, amount: 0 },
+    { id: '1', description: '', quantity: 1, rate: 0 }
   ]);
 
-  const handleItemChange = (id: number, field: keyof InvoiceItem, value: string | number) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, [field]: field === 'quantity' || field === 'amount' ? Number(value) : value } : item
-      )
-    );
-  };
+  const form = useForm<InvoiceFormData>({
+    resolver: zodResolver(invoiceSchema),
+    defaultValues: {
+      customerName: '',
+      customerEmail: '',
+      invoiceNumber: `INV-${Date.now().toString().slice(-6)}`,
+      issueDate: new Date().toISOString().split('T')[0],
+      dueDate: '',
+      items: [{ description: '', quantity: 1, rate: 0 }],
+      notes: '',
+      terms: '',
+    },
+  });
 
   const addItem = () => {
-    setItems((prev) => [
-      ...prev,
-      { id: Date.now(), title: '', quantity: 1, amount: 0 },
-    ]);
+    const newItem: InvoiceItem = {
+      id: Date.now().toString(),
+      description: '',
+      quantity: 1,
+      rate: 0,
+    };
+    setItems([...items, newItem]);
   };
 
-  const removeItem = (id: number) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+  const removeItem = (id: string) => {
+    if (items.length > 1) {
+      setItems(items.filter(item => item.id !== id));
+    }
   };
 
-  const total = items.reduce((sum, item) => sum + (item.quantity * item.amount), 0);
+  const updateItem = (id: string, field: keyof Omit<InvoiceItem, 'id'>, value: string | number) => {
+    setItems(items.map(item => 
+      item.id === id 
+        ? { ...item, [field]: value }
+        : item
+    ));
+  };
+
+  const calculateSubtotal = () => {
+    return items.reduce((sum, item) => sum + (item.quantity * item.rate), 0);
+  };
+
+  const calculateTax = (subtotal: number) => {
+    return subtotal * 0.1; // 10% tax
+  };
+
+  const calculateTotal = () => {
+    const subtotal = calculateSubtotal();
+    const tax = calculateTax(subtotal);
+    return subtotal + tax;
+  };
+
+  const onSubmit = (data: InvoiceFormData) => {
+    console.log('Invoice data:', { ...data, items });
+    toast({
+      title: "Invoice Created",
+      description: "Your invoice has been created successfully.",
+    });
+    navigate('/accounting');
+  };
+
+  const handleSaveDraft = () => {
+    toast({
+      title: "Draft Saved",
+      description: "Your invoice draft has been saved.",
+    });
+  };
+
+  const handlePreview = () => {
+    toast({
+      title: "Preview",
+      description: "Invoice preview functionality would open here.",
+    });
+  };
 
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto py-8 space-y-6">
-        {/* Back button and title */}
-        <div className="flex items-center gap-3 mb-2">
-          <Button variant="ghost" size="icon" onClick={() => navigate('/invoicing')}>
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          <h1 className="text-2xl font-semibold tracking-tight" style={{ fontSize: 24 }}>Create Invoice</h1>
+      <div className="max-w-7xl mx-auto py-6 space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/accounting')}>
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div>
+              <h1 className="text-2xl font-semibold">Create Invoice</h1>
+              <p className="text-muted-foreground">Create and send professional invoices</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={handleSaveDraft}>
+              <Save className="w-4 h-4 mr-2" />
+              Save Draft
+            </Button>
+            <Button variant="outline" onClick={handlePreview}>
+              <Eye className="w-4 h-4 mr-2" />
+              Preview
+            </Button>
+          </div>
         </div>
-        {/* Company section */}
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <Building2 className="w-5 h-5 text-[#6D6D74]" />
-              <span className="text-[#6D6D74] font-medium">Company</span>
-              <Button variant="secondary" size="sm" className="ml-auto">Edit</Button>
-            </div>
-            <div className="text-black font-mono">Meely AB<br />123 Main St, Stockholm</div>
-          </CardContent>
-        </Card>
-        {/* Customer section */}
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <User className="w-5 h-5 text-[#6D6D74]" />
-              <span className="text-[#6D6D74] font-medium">Customer</span>
-              <Button variant="secondary" size="sm" className="ml-auto">New Customer</Button>
-            </div>
-            <select className="border rounded px-3 py-2 w-full">
-              <option>Select customer...</option>
-              <option>Acme Corp</option>
-              <option>Globex Inc</option>
-            </select>
-          </CardContent>
-        </Card>
-        {/* Invoice Items section */}
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <List className="w-5 h-5 text-[#6D6D74]" />
-              <span className="text-[#6D6D74] font-medium">Invoice Items</span>
-              <Button variant="secondary" size="sm" className="ml-auto" onClick={addItem}>Add Item</Button>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-sm border rounded">
-                <thead>
-                  <tr className="text-[#6D6D74] text-xs font-medium uppercase">
-                    <th className="py-2 px-3 text-left">Title</th>
-                    <th className="py-2 px-3 text-left">Quantity</th>
-                    <th className="py-2 px-3 text-left">Amount</th>
-                    <th className="py-2 px-3"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.map((item) => (
-                    <tr key={item.id}>
-                      <td className="py-2 px-3">
-                        <input
-                          type="text"
-                          className="border rounded px-2 py-1 w-full"
-                          placeholder="Item title"
-                          value={item.title}
-                          onChange={(e) => handleItemChange(item.id, 'title', e.target.value)}
-                        />
-                      </td>
-                      <td className="py-2 px-3">
-                        <input
-                          type="number"
-                          min={1}
-                          className="border rounded px-2 py-1 w-20"
-                          value={item.quantity}
-                          onChange={(e) => handleItemChange(item.id, 'quantity', e.target.value)}
-                        />
-                      </td>
-                      <td className="py-2 px-3">
-                        <input
-                          type="number"
-                          min={0}
-                          step={0.01}
-                          className="border rounded px-2 py-1 w-28"
-                          value={item.amount}
-                          onChange={(e) => handleItemChange(item.id, 'amount', e.target.value)}
-                        />
-                      </td>
-                      <td className="py-2 px-3 text-right">
-                        <Button variant="ghost" size="icon" onClick={() => removeItem(item.id)}>
-                          <Trash2 className="w-4 h-4 text-[#6D6D74]" />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="flex justify-end mt-4 text-base font-medium">
-              Total: <span className="ml-2">${total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-            </div>
-          </CardContent>
-        </Card>
-        {/* Tax Selector */}
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <Percent className="w-5 h-5 text-[#6D6D74]" />
-              <span className="text-[#6D6D74] font-medium">Tax</span>
-              <Button variant="secondary" size="sm" className="ml-auto">Add Tax</Button>
-            </div>
-            <select className="border rounded px-3 py-2 w-full">
-              <option>0% (No tax)</option>
-              <option>6%</option>
-              <option>12%</option>
-              <option>25%</option>
-            </select>
-          </CardContent>
-        </Card>
-        {/* Terms section */}
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <Calendar className="w-5 h-5 text-[#6D6D74]" />
-              <span className="text-[#6D6D74] font-medium">Terms</span>
-            </div>
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <label className="block text-xs text-muted-foreground mb-1">Send Date</label>
-                <input type="date" className="border rounded px-3 py-2 w-full" />
-              </div>
-              <div className="flex-1">
-                <label className="block text-xs text-muted-foreground mb-1">Expiry Date</label>
-                <input type="date" className="border rounded px-3 py-2 w-full" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        {/* Payment Methods section */}
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <CreditCard className="w-5 h-5 text-[#6D6D74]" />
-              <span className="text-[#6D6D74] font-medium">Payment Methods</span>
-            </div>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="accent-[#6050EA]" /> Bank Transfer
-              </label>
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="accent-[#6050EA]" /> Card
-              </label>
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="accent-[#6050EA]" /> Swish
-              </label>
-            </div>
-          </CardContent>
-        </Card>
-        {/* Delivery Method section */}
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <Mail className="w-5 h-5 text-[#6D6D74]" />
-              <span className="text-[#6D6D74] font-medium">Delivery Method</span>
-            </div>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2">
-                <input type="radio" name="delivery" className="accent-[#6050EA]" /> Email
-              </label>
-              <label className="flex items-center gap-2">
-                <input type="radio" name="delivery" className="accent-[#6050EA]" /> Download
-              </label>
-            </div>
-          </CardContent>
-        </Card>
-        {/* Preview/Create buttons */}
-        <div className="flex justify-end gap-2 pt-2">
-          <Button variant="secondary" className="gap-2"><Eye className="w-4 h-4" /> Preview</Button>
-          <Button variant="default" className="gap-2"><Check className="w-4 h-4" /> Create Invoice</Button>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Side - Invoice Form */}
+          <div className="space-y-6">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                {/* Customer Information */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Customer Information</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="customerName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Customer Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter customer name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="customerEmail"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Customer Email</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="customer@example.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </CardContent>
+                </Card>
+
+                {/* Invoice Details */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Invoice Details</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="invoiceNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Invoice Number</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <div className="grid grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="issueDate"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Issue Date</FormLabel>
+                            <FormControl>
+                              <Input type="date" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="dueDate"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Due Date</FormLabel>
+                            <FormControl>
+                              <Input type="date" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Invoice Items */}
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <CardTitle>Invoice Items</CardTitle>
+                    <Button type="button" variant="outline" size="sm" onClick={addItem}>
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Item
+                    </Button>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {items.map((item, index) => (
+                        <div key={item.id} className="grid grid-cols-12 gap-3 items-end">
+                          <div className="col-span-5">
+                            <Label className="text-sm">Description</Label>
+                            <Input
+                              value={item.description}
+                              onChange={(e) => updateItem(item.id, 'description', e.target.value)}
+                              placeholder="Item description"
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <Label className="text-sm">Qty</Label>
+                            <Input
+                              type="number"
+                              min="1"
+                              value={item.quantity}
+                              onChange={(e) => updateItem(item.id, 'quantity', parseInt(e.target.value) || 1)}
+                            />
+                          </div>
+                          <div className="col-span-3">
+                            <Label className="text-sm">Rate ($)</Label>
+                            <Input
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={item.rate}
+                              onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
+                            />
+                          </div>
+                          <div className="col-span-2 flex items-center justify-between">
+                            <span className="text-sm font-medium">
+                              ${(item.quantity * item.rate).toFixed(2)}
+                            </span>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => removeItem(item.id)}
+                              disabled={items.length === 1}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Additional Information */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Additional Information</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="notes"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Notes</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Add any notes or instructions..."
+                              rows={3}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="terms"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Terms & Conditions</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Payment terms and conditions..."
+                              rows={3}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </CardContent>
+                </Card>
+
+                {/* Submit Button */}
+                <Button type="submit" className="w-full" size="lg">
+                  <Send className="w-4 h-4 mr-2" />
+                  Create & Send Invoice
+                </Button>
+              </form>
+            </Form>
+          </div>
+
+          {/* Right Side - Invoice Preview */}
+          <div className="lg:sticky lg:top-6">
+            <Card className="h-fit">
+              <CardHeader>
+                <CardTitle>Invoice Preview</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-white border rounded-lg p-8 min-h-[700px] space-y-6">
+                  {/* Header */}
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h2 className="text-3xl font-bold text-gray-900">INVOICE</h2>
+                      <p className="text-gray-600 mt-1">#{form.watch('invoiceNumber')}</p>
+                    </div>
+                    <div className="text-right">
+                      <h3 className="font-bold text-gray-900 text-lg">Your Company</h3>
+                      <p className="text-gray-600">123 Business St</p>
+                      <p className="text-gray-600">City, State 12345</p>
+                      <p className="text-gray-600">contact@yourcompany.com</p>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Customer & Invoice Info */}
+                  <div className="grid grid-cols-2 gap-8">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">Bill To:</h4>
+                      <p className="text-gray-800 font-medium">
+                        {form.watch('customerName') || 'Customer Name'}
+                      </p>
+                      <p className="text-gray-600">
+                        {form.watch('customerEmail') || 'customer@email.com'}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <div className="space-y-1">
+                        <p className="text-gray-600">
+                          <span className="font-medium">Issue Date:</span> {form.watch('issueDate')}
+                        </p>
+                        <p className="text-gray-600">
+                          <span className="font-medium">Due Date:</span> {form.watch('dueDate') || 'Not set'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Items Table */}
+                  <div>
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b-2 border-gray-200">
+                          <th className="text-left py-3 text-gray-900 font-semibold">Description</th>
+                          <th className="text-right py-3 text-gray-900 font-semibold">Qty</th>
+                          <th className="text-right py-3 text-gray-900 font-semibold">Rate</th>
+                          <th className="text-right py-3 text-gray-900 font-semibold">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {items.map((item) => (
+                          <tr key={item.id} className="border-b border-gray-100">
+                            <td className="py-3 text-gray-700">
+                              {item.description || 'Item description'}
+                            </td>
+                            <td className="py-3 text-right text-gray-700">{item.quantity}</td>
+                            <td className="py-3 text-right text-gray-700">
+                              ${item.rate.toFixed(2)}
+                            </td>
+                            <td className="py-3 text-right text-gray-700">
+                              ${(item.quantity * item.rate).toFixed(2)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Totals */}
+                  <div className="flex justify-end">
+                    <div className="w-64 space-y-2">
+                      <div className="flex justify-between py-1">
+                        <span className="text-gray-600">Subtotal:</span>
+                        <span className="text-gray-900">${calculateSubtotal().toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between py-1">
+                        <span className="text-gray-600">Tax (10%):</span>
+                        <span className="text-gray-900">${calculateTax(calculateSubtotal()).toFixed(2)}</span>
+                      </div>
+                      <Separator />
+                      <div className="flex justify-between py-2">
+                        <span className="font-semibold text-gray-900 text-lg">Total:</span>
+                        <span className="font-bold text-gray-900 text-lg">
+                          ${calculateTotal().toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Notes & Terms */}
+                  {form.watch('notes') && (
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">Notes:</h4>
+                      <p className="text-gray-700 text-sm">{form.watch('notes')}</p>
+                    </div>
+                  )}
+
+                  {form.watch('terms') && (
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">Terms & Conditions:</h4>
+                      <p className="text-gray-700 text-sm">{form.watch('terms')}</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </Layout>
   );
 };
 
-export default InvoiceCreate; 
+export default InvoiceCreate;
