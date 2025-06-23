@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { X } from 'lucide-react';
+
 interface AddAccountDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -144,7 +145,7 @@ export function AddAccountDialog({
           {/* Type */}
           <div className="space-y-3">
             <Label>Personal or Business</Label>
-            <RadioGroup value={formData.type} onValueChange={value => handleInputChange('type', value)} className="flex gap-0 ">
+            <RadioGroup value={formData.type} onValueChange={value => handleInputChange('type', value)} className="flex gap-4">
               <div className="w-full px-[12px] py-[12px] bg-white rounded-xl border flex items-center space-x-2 ">
                 <RadioGroupItem value="personal" id="personal" />
                 <Label htmlFor="personal" className="font-normal">Personal</Label>
