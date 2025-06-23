@@ -1,4 +1,3 @@
-
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
@@ -76,6 +75,7 @@ export const AppRoutes = () => {
         <Route path="/crypto/:symbol" element={<CryptoDetail />} />
         <Route path="/crypto/holdings" element={<CryptoHoldings />} />
         <Route path="/trading" element={<TradingDashboard />} />
+        <Route path="/trading-dashboard" element={<TradingDashboard />} />
         <Route path="/accounting" element={<Accounting />} />
         <Route path="/accounting/dashboard" element={<AccountingDashboard />} />
         <Route path="/accounting/create-invoice" element={<InvoiceCreate />} />
