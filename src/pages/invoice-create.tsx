@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -15,6 +14,8 @@ import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, Plus, Trash2, Send, Eye, Save } from 'lucide-react';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
+
+console.log('InvoiceCreate component is loading...');
 
 // Form validation schema
 const invoiceItemSchema = z.object({
@@ -44,6 +45,8 @@ interface InvoiceItem {
 }
 
 const InvoiceCreate = () => {
+  console.log('InvoiceCreate component is rendering...');
+  
   const navigate = useNavigate();
   const { toast } = useToast();
   const [items, setItems] = useState<InvoiceItem[]>([
@@ -63,6 +66,8 @@ const InvoiceCreate = () => {
       terms: '',
     },
   });
+
+  console.log('Form initialized with default values');
 
   const addItem = () => {
     const newItem: InvoiceItem = {
@@ -125,9 +130,15 @@ const InvoiceCreate = () => {
     });
   };
 
+  console.log('About to render Layout component...');
+
   return (
     <Layout>
       <div className="max-w-7xl mx-auto py-6 space-y-6">
+        <div style={{ backgroundColor: 'red', padding: '10px', color: 'white' }}>
+          DEBUG: If you can see this red box, the InvoiceCreate component is rendering!
+        </div>
+        
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
