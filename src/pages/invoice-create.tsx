@@ -361,119 +361,112 @@ const InvoiceCreate = () => {
 
         {/* Right Side - Invoice Preview */}
         <div className="lg:sticky lg:top-6">
-          <Card className="h-fit">
-            <CardHeader>
-              <CardTitle>Invoice Preview</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-white border rounded-lg p-8 min-h-[700px] space-y-6">
-                {/* Header */}
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h2 className="text-3xl font-bold text-gray-900">INVOICE</h2>
-                    <p className="text-gray-600 mt-1">#{form.watch('invoiceNumber')}</p>
-                  </div>
-                  <div className="text-right">
-                    <h3 className="font-bold text-gray-900 text-lg">Your Company</h3>
-                    <p className="text-gray-600">123 Business St</p>
-                    <p className="text-gray-600">City, State 12345</p>
-                    <p className="text-gray-600">contact@yourcompany.com</p>
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* Customer & Invoice Info */}
-                <div className="grid grid-cols-2 gap-8">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Bill To:</h4>
-                    <p className="text-gray-800 font-medium">
-                      {form.watch('customerName') || 'Customer Name'}
-                    </p>
-                    <p className="text-gray-600">
-                      {form.watch('customerEmail') || 'customer@email.com'}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="space-y-1">
-                      <p className="text-gray-600">
-                        <span className="font-medium">Issue Date:</span> {form.watch('issueDate')}
-                      </p>
-                      <p className="text-gray-600">
-                        <span className="font-medium">Due Date:</span> {form.watch('dueDate') || 'Not set'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Items Table */}
-                <div>
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b-2 border-gray-200">
-                        <th className="text-left py-3 text-gray-900 font-semibold">Description</th>
-                        <th className="text-right py-3 text-gray-900 font-semibold">Qty</th>
-                        <th className="text-right py-3 text-gray-900 font-semibold">Rate</th>
-                        <th className="text-right py-3 text-gray-900 font-semibold">Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {items.map((item) => (
-                        <tr key={item.id} className="border-b border-gray-100">
-                          <td className="py-3 text-gray-700">
-                            {item.description || 'Item description'}
-                          </td>
-                          <td className="py-3 text-right text-gray-700">{item.quantity}</td>
-                          <td className="py-3 text-right text-gray-700">
-                            ${item.rate.toFixed(2)}
-                          </td>
-                          <td className="py-3 text-right text-gray-700">
-                            ${(item.quantity * item.rate).toFixed(2)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* Totals */}
-                <div className="flex justify-end">
-                  <div className="w-64 space-y-2">
-                    <div className="flex justify-between py-1">
-                      <span className="text-gray-600">Subtotal:</span>
-                      <span className="text-gray-900">${calculateSubtotal().toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between py-1">
-                      <span className="text-gray-600">Tax (10%):</span>
-                      <span className="text-gray-900">${calculateTax(calculateSubtotal()).toFixed(2)}</span>
-                    </div>
-                    <Separator />
-                    <div className="flex justify-between py-2">
-                      <span className="font-semibold text-gray-900 text-lg">Total:</span>
-                      <span className="font-bold text-gray-900 text-lg">
-                        ${calculateTotal().toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Notes & Terms */}
-                {form.watch('notes') && (
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Notes:</h4>
-                    <p className="text-gray-700 text-sm">{form.watch('notes')}</p>
-                  </div>
-                )}
-
-                {form.watch('terms') && (
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Terms & Conditions:</h4>
-                    <p className="text-gray-700 text-sm">{form.watch('terms')}</p>
-                  </div>
-                )}
+          <div className="bg-white border-0 shadow-lg p-8 min-h-[700px] space-y-6">
+            {/* Header */}
+            <div className="flex justify-between items-start">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900">INVOICE</h2>
+                <p className="text-gray-600 mt-1">#{form.watch('invoiceNumber')}</p>
               </div>
-            </CardContent>
-          </Card>
+              <div className="text-right">
+                <h3 className="font-bold text-gray-900 text-lg">Your Company</h3>
+                <p className="text-gray-600">123 Business St</p>
+                <p className="text-gray-600">City, State 12345</p>
+                <p className="text-gray-600">contact@yourcompany.com</p>
+              </div>
+            </div>
+
+            <Separator />
+
+            {/* Customer & Invoice Info */}
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">Bill To:</h4>
+                <p className="text-gray-800 font-medium">
+                  {form.watch('customerName') || 'Customer Name'}
+                </p>
+                <p className="text-gray-600">
+                  {form.watch('customerEmail') || 'customer@email.com'}
+                </p>
+              </div>
+              <div className="text-right">
+                <div className="space-y-1">
+                  <p className="text-gray-600">
+                    <span className="font-medium">Issue Date:</span> {form.watch('issueDate')}
+                  </p>
+                  <p className="text-gray-600">
+                    <span className="font-medium">Due Date:</span> {form.watch('dueDate') || 'Not set'}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Items Table */}
+            <div>
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b-2 border-gray-200">
+                    <th className="text-left py-3 text-gray-900 font-semibold">Description</th>
+                    <th className="text-right py-3 text-gray-900 font-semibold">Qty</th>
+                    <th className="text-right py-3 text-gray-900 font-semibold">Rate</th>
+                    <th className="text-right py-3 text-gray-900 font-semibold">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map((item) => (
+                    <tr key={item.id} className="border-b border-gray-100">
+                      <td className="py-3 text-gray-700">
+                        {item.description || 'Item description'}
+                      </td>
+                      <td className="py-3 text-right text-gray-700">{item.quantity}</td>
+                      <td className="py-3 text-right text-gray-700">
+                        ${item.rate.toFixed(2)}
+                      </td>
+                      <td className="py-3 text-right text-gray-700">
+                        ${(item.quantity * item.rate).toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Totals */}
+            <div className="flex justify-end">
+              <div className="w-64 space-y-2">
+                <div className="flex justify-between py-1">
+                  <span className="text-gray-600">Subtotal:</span>
+                  <span className="text-gray-900">${calculateSubtotal().toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between py-1">
+                  <span className="text-gray-600">Tax (10%):</span>
+                  <span className="text-gray-900">${calculateTax(calculateSubtotal()).toFixed(2)}</span>
+                </div>
+                <Separator />
+                <div className="flex justify-between py-2">
+                  <span className="font-semibold text-gray-900 text-lg">Total:</span>
+                  <span className="font-bold text-gray-900 text-lg">
+                    ${calculateTotal().toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Notes & Terms */}
+            {form.watch('notes') && (
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">Notes:</h4>
+                <p className="text-gray-700 text-sm">{form.watch('notes')}</p>
+              </div>
+            )}
+
+            {form.watch('terms') && (
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">Terms & Conditions:</h4>
+                <p className="text-gray-700 text-sm">{form.watch('terms')}</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
