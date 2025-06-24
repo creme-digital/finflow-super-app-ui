@@ -7,89 +7,72 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Filter, Download, MoreHorizontal } from 'lucide-react';
-
 const SubscriptionsMainContent = () => {
   // Mock subscription data based on the screenshot
-  const subscriptionData = [
-    {
-      date: 'May 2, 2025 9:25 am',
-      account: 'CosMake',
-      productName: 'Gadget',
-      amount: '$8,657.41',
-      status: 'Received'
-    },
-    {
-      date: 'May 5, 2025 2:22 pm',
-      account: 'Tech gadget',
-      productName: 'Gadget',
-      amount: '$342.07',
-      status: 'Received'
-    },
-    {
-      date: 'May 5, 2025 7:00 am',
-      account: 'CosMake',
-      productName: 'Gadget',
-      amount: '$1,486.52',
-      status: 'Received'
-    },
-    {
-      date: 'May 17, 2025 8:13 am',
-      account: 'CosMake',
-      productName: 'Gadget',
-      amount: '$5,653.56',
-      status: 'Received'
-    },
-    {
-      date: 'May 18, 2025 4:23 am',
-      account: 'Tech gadget',
-      productName: 'Gadget',
-      amount: '$1,595.71',
-      status: 'Received'
-    },
-    {
-      date: 'May 15, 2025 11:42 am',
-      account: 'Tech gadget',
-      productName: 'Gadget',
-      amount: '$7,738.89',
-      status: 'Received'
-    },
-    {
-      date: 'May 14, 2025 12:40 pm',
-      account: 'CosMake',
-      productName: 'Gadget',
-      amount: '$8,650.33',
-      status: 'Received'
-    },
-    {
-      date: 'May 28, 2025 8:44 am',
-      account: 'CosMake',
-      productName: 'Gadget',
-      amount: '$1,207.52',
-      status: 'Received'
-    },
-    {
-      date: 'May 6, 2025 11:47 am',
-      account: 'Tech gadget',
-      productName: 'Gadget',
-      amount: '$376.96',
-      status: 'Received'
-    },
-    {
-      date: 'May 14, 2025 7:12 pm',
-      account: 'Tech gadget',
-      productName: 'Gadget',
-      amount: '$7,727.07',
-      status: 'Received'
-    }
-  ];
-
-  return (
-    <div className="space-y-6">
+  const subscriptionData = [{
+    date: 'May 2, 2025 9:25 am',
+    account: 'CosMake',
+    productName: 'Gadget',
+    amount: '$8,657.41',
+    status: 'Received'
+  }, {
+    date: 'May 5, 2025 2:22 pm',
+    account: 'Tech gadget',
+    productName: 'Gadget',
+    amount: '$342.07',
+    status: 'Received'
+  }, {
+    date: 'May 5, 2025 7:00 am',
+    account: 'CosMake',
+    productName: 'Gadget',
+    amount: '$1,486.52',
+    status: 'Received'
+  }, {
+    date: 'May 17, 2025 8:13 am',
+    account: 'CosMake',
+    productName: 'Gadget',
+    amount: '$5,653.56',
+    status: 'Received'
+  }, {
+    date: 'May 18, 2025 4:23 am',
+    account: 'Tech gadget',
+    productName: 'Gadget',
+    amount: '$1,595.71',
+    status: 'Received'
+  }, {
+    date: 'May 15, 2025 11:42 am',
+    account: 'Tech gadget',
+    productName: 'Gadget',
+    amount: '$7,738.89',
+    status: 'Received'
+  }, {
+    date: 'May 14, 2025 12:40 pm',
+    account: 'CosMake',
+    productName: 'Gadget',
+    amount: '$8,650.33',
+    status: 'Received'
+  }, {
+    date: 'May 28, 2025 8:44 am',
+    account: 'CosMake',
+    productName: 'Gadget',
+    amount: '$1,207.52',
+    status: 'Received'
+  }, {
+    date: 'May 6, 2025 11:47 am',
+    account: 'Tech gadget',
+    productName: 'Gadget',
+    amount: '$376.96',
+    status: 'Received'
+  }, {
+    date: 'May 14, 2025 7:12 pm',
+    account: 'Tech gadget',
+    productName: 'Gadget',
+    amount: '$7,727.07',
+    status: 'Received'
+  }];
+  return <div className="space-y-6">
       {/* Header with consistent styling */}
-      <PageHeader 
-        title="Subscription"
-        children={
-          <div className="flex items-center gap-3">
+      <PageHeader title="Subscription" children={<div className="flex items-center gap-3">
             <Button variant="outline" size="sm">
               View All
             </Button>
@@ -97,17 +80,11 @@ const SubscriptionsMainContent = () => {
               <Plus className="w-4 h-4" />
               Create Subscription
             </Button>
-          </div>
-        }
-      />
+          </div>} />
 
       {/* Tabs with Accounts page styling */}
       <Tabs defaultValue="all" className="w-full">
-        <div className="flex items-center justify-between mb-6">
-          <TabsList>
-            <TabsTrigger value="all">All Subscriptions</TabsTrigger>
-          </TabsList>
-        </div>
+        
 
         <TabsContent value="all" className="space-y-6">
           {/* Filters and Export */}
@@ -123,17 +100,14 @@ const SubscriptionsMainContent = () => {
           </div>
 
           {/* Subscription Table with glass effect */}
-          <div
-            className="overflow-hidden"
-            style={{
-              border: '1px solid #FFFFFF',
-              boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-              borderRadius: '16px',
-              background: 'rgba(255, 255, 255, 0.4)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)'
-            }}
-          >
+          <div className="overflow-hidden" style={{
+          border: '1px solid #FFFFFF',
+          boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+          borderRadius: '16px',
+          background: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}>
             <Table>
               <TableHeader>
                 <TableRow className="border-b">
@@ -146,8 +120,7 @@ const SubscriptionsMainContent = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {subscriptionData.map((item, index) => (
-                  <TableRow key={index} className="border-b last:border-b-0">
+                {subscriptionData.map((item, index) => <TableRow key={index} className="border-b last:border-b-0">
                     <TableCell className="font-medium">{item.date}</TableCell>
                     <TableCell>{item.account}</TableCell>
                     <TableCell>{item.productName}</TableCell>
@@ -162,25 +135,15 @@ const SubscriptionsMainContent = () => {
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </TableCell>
-                  </TableRow>
-                ))}
+                  </TableRow>)}
               </TableBody>
             </Table>
           </div>
         </TabsContent>
       </Tabs>
-    </div>
-  );
+    </div>;
 };
-
 const Subscriptions = () => {
-  return (
-    <Layout
-      title="Subscription"
-      showRightSidebar={false}
-      mainContent={<SubscriptionsMainContent />}
-    />
-  );
+  return <Layout title="Subscription" showRightSidebar={false} mainContent={<SubscriptionsMainContent />} />;
 };
-
 export default Subscriptions;
