@@ -94,7 +94,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white rounded-lg shadow-lg px-3 py-2 border border-[#EDEDF1]">
-        <p className="text-sm font-medium mb-1" style={{ color: '#6D6D74' }}>{label}</p>
+        <p className="text-sm font-medium mb-1" style={{ color: '#6D6D74', fontFamily: 'Inter, sans-serif' }}>{label}</p>
         <p style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 14, fontWeight: 400, letterSpacing: '-0.28px' }}>
           ${payload[0].value.toLocaleString()}
         </p>
@@ -153,7 +153,7 @@ export function PortfolioAssetsTable() {
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
               <Activity className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
-              <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Portfolio value this month</span>
+              <span style={{ color: '#6D6D74', fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Portfolio value this month</span>
             </div>
             <div style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 32, fontWeight: 400, letterSpacing: '-0.64px' }}>
               {formatAmount(portfolioValue)}
@@ -171,12 +171,12 @@ export function PortfolioAssetsTable() {
                   dataKey="month" 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#9ca3af' }}
+                  tick={{ fontSize: 12, fill: '#9ca3af', fontFamily: 'Inter, sans-serif' }}
                 />
                 <YAxis 
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#9ca3af' }}
+                  tick={{ fontSize: 12, fill: '#9ca3af', fontFamily: 'Inter, sans-serif' }}
                   tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                 />
                 <Tooltip content={<CustomTooltip />} cursor={false} />
@@ -200,17 +200,17 @@ export function PortfolioAssetsTable() {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
               <Activity className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
-              <span style={{ color: '#6D6D74', fontFamily: 'Inter', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Portfolio Assets</span>
+              <span style={{ color: '#6D6D74', fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Portfolio Assets</span>
             </div>
             <div className="flex gap-2">
               <div className="relative">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search assets..." className="pl-8" />
+                <Input placeholder="Search assets..." className="pl-8" style={{ fontFamily: 'Inter, sans-serif' }} />
               </div>
               <Button variant="outline" size="icon">
                 <Filter className="h-4 w-4" />
               </Button>
-              <Button variant="outline" className="w-auto">
+              <Button variant="outline" className="w-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
                 <Download className="h-4 w-4 mr-2" />
                 Export
               </Button>
@@ -248,14 +248,14 @@ export function PortfolioAssetsTable() {
                           {asset.icon}
                         </div>
                         <div>
-                          <div className="font-medium text-sm">{asset.symbol}</div>
-                          <div className="text-xs text-muted-foreground">{asset.name}</div>
+                          <div className="font-medium text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>{asset.symbol}</div>
+                          <div className="text-xs text-muted-foreground" style={{ fontFamily: 'Inter, sans-serif' }}>{asset.name}</div>
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell className="font-mono">{asset.amount}</TableCell>
-                    <TableCell className="font-mono">{formatAmount(asset.price)}</TableCell>
-                    <TableCell className="font-mono font-medium">{formatAmount(asset.value)}</TableCell>
+                    <TableCell style={{ fontFamily: 'DM Mono, IBM Plex Mono, monospace' }}>{asset.amount}</TableCell>
+                    <TableCell style={{ fontFamily: 'DM Mono, IBM Plex Mono, monospace' }}>{formatAmount(asset.price)}</TableCell>
+                    <TableCell style={{ fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontWeight: 500 }}>{formatAmount(asset.value)}</TableCell>
                     <TableCell>
                       <Badge 
                         variant="outline" 
@@ -264,6 +264,7 @@ export function PortfolioAssetsTable() {
                             ? 'text-green-600 border-green-200 bg-green-50' 
                             : 'text-red-600 border-red-200 bg-red-50'
                         }`}
+                        style={{ fontFamily: 'Inter, sans-serif' }}
                       >
                         {asset.change24h >= 0 ? (
                           <TrendingUp className="w-3 h-3 mr-1" />
@@ -273,7 +274,7 @@ export function PortfolioAssetsTable() {
                         {Math.abs(asset.change24h)}%
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-sm">{asset.allocation}%</TableCell>
+                    <TableCell className="text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>{asset.allocation}%</TableCell>
                     <TableCell>
                       <SimpleSparkline data={asset.sparklineData} isPositive={asset.change24h >= 0} />
                     </TableCell>
