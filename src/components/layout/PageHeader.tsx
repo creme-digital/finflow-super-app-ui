@@ -1,3 +1,4 @@
+
 import React from 'react';
 interface PageHeaderProps {
   title: string;
@@ -11,9 +12,17 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   children,
   className
 }) => {
-  return <>
-      
-      {subtitle && <p className="text-sm text-gray-600 mt-1">{subtitle}</p>}
-      {children}
-    </>;
+  return (
+    <div className={`flex justify-between items-start ${className || ''}`}>
+      <div>
+        <h1 className="text-2xl font-semibold text-foreground">{title}</h1>
+        {subtitle && <p className="text-sm text-gray-600 mt-1">{subtitle}</p>}
+      </div>
+      {children && (
+        <div className="flex items-center gap-2">
+          {children}
+        </div>
+      )}
+    </div>
+  );
 };
