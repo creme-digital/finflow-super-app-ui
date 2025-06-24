@@ -16,7 +16,6 @@ import { MyFavoritesSection } from '@/components/trading/MyFavoritesSection';
 import { TradingViewChart } from '@/components/crypto/TradingViewChart';
 import { StockPage } from '@/components/trading/StockPage';
 import { TradingWatchlistCards } from '@/components/trading/TradingWatchlistCards';
-
 const TradingMainContent = () => {
   // Custom Tooltip matching Tax Estimation styling
   function CustomTooltip({
@@ -177,15 +176,7 @@ const TradingMainContent = () => {
   };
   return <div className="space-y-6">
       {/* Header with consistent styling */}
-      <PageHeader title="Trading Dashboard" children={<div className="flex items-center gap-3">
-            <Button variant="outline" size="sm">
-              View Portfolio
-            </Button>
-            <Button size="sm" className="gap-2">
-              <Plus className="w-4 h-4" />
-              New Trade
-            </Button>
-          </div>} />
+      
 
       {/* Tabs with Accounts page styling */}
       <Tabs defaultValue="overview" className="w-full">
@@ -441,9 +432,7 @@ const TradingMainContent = () => {
       </Tabs>
     </div>;
 };
-
 const TradingDashboard = () => {
   return <Layout title="Trading Dashboard" showRightSidebar={false} mainContent={<TradingMainContent />} />;
 };
-
 export default TradingDashboard;
