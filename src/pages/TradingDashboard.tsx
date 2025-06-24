@@ -195,7 +195,6 @@ const TradingMainContent = () => {
             <TabsTrigger value="portfolio">My Portfolio</TabsTrigger>
             <TabsTrigger value="stock">Stock</TabsTrigger>
             <TabsTrigger value="watchlist">Watchlist</TabsTrigger>
-            <TabsTrigger value="wallet">Wallet</TabsTrigger>
           </TabsList>
         </div>
 
@@ -438,15 +437,6 @@ const TradingMainContent = () => {
         {/* Watchlist tab content with the new TradingWatchlistCards component */}
         <TabsContent value="watchlist">
           <TradingWatchlistCards />
-        </TabsContent>
-
-        {/* Other tab contents with glass styling */}
-        <TabsContent value="wallet">
-          <div className="overflow-hidden" style={glassCardStyle}>
-            <CardContent className="p-8 text-center">
-              <p className="text-muted-foreground">Wallet view will be implemented here</p>
-            </CardContent>
-          </div>
         </TabsContent>
       </Tabs>
     </div>;
