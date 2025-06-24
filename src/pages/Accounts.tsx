@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CurrencyBalanceCards } from '@/components/accounts/CurrencyBalanceCards';
 import { AccountsTransactionTable } from '@/components/accounts/AccountsTransactionTable';
@@ -12,6 +13,8 @@ const AccountsPage = () => {
       showRightSidebar={false}
       mainContent={
         <div className="space-y-6">
+          <PageHeader title="Accounts" />
+          
           <Tabs defaultValue="personal" className="w-full">
             <TabsList className="mb-6">
               <TabsTrigger value="personal">Personal</TabsTrigger>
