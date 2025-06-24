@@ -163,7 +163,13 @@ const InvoiceCreate = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* Customer Information */}
-              <Card>
+              <Card 
+                className="backdrop-blur-sm border-white/20"
+                style={{ 
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                }}
+              >
                 <CardHeader>
                   <CardTitle>Customer Information</CardTitle>
                 </CardHeader>
@@ -198,7 +204,13 @@ const InvoiceCreate = () => {
               </Card>
 
               {/* Invoice Details */}
-              <Card>
+              <Card 
+                className="backdrop-blur-sm border-white/20"
+                style={{ 
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                }}
+              >
                 <CardHeader>
                   <CardTitle>Invoice Details</CardTitle>
                 </CardHeader>
@@ -248,7 +260,13 @@ const InvoiceCreate = () => {
               </Card>
 
               {/* Invoice Items */}
-              <Card>
+              <Card 
+                className="backdrop-blur-sm border-white/20"
+                style={{ 
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                }}
+              >
                 <CardHeader className="flex flex-row items-center justify-between">
                   <CardTitle>Invoice Items</CardTitle>
                   <Button type="button" variant="outline" size="sm" onClick={addItem}>
@@ -308,7 +326,13 @@ const InvoiceCreate = () => {
               </Card>
 
               {/* Additional Information */}
-              <Card>
+              <Card 
+                className="backdrop-blur-sm border-white/20"
+                style={{ 
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                }}
+              >
                 <CardHeader>
                   <CardTitle>Additional Information</CardTitle>
                 </CardHeader>
