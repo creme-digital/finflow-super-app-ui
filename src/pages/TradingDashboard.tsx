@@ -14,6 +14,7 @@ import { StockDetailChart } from '@/components/trading/StockDetailChart';
 import { MyFavoritesSection } from '@/components/trading/MyFavoritesSection';
 import { TradingViewChart } from '@/components/crypto/TradingViewChart';
 import { StockPage } from '@/components/trading/StockPage';
+import { TradingWatchlistCards } from '@/components/trading/TradingWatchlistCards';
 
 const TradingMainContent = () => {
   // Custom Tooltip matching Tax Estimation styling
@@ -443,15 +444,12 @@ const TradingMainContent = () => {
           <StockPage />
         </TabsContent>
 
-        {/* Other tab contents with glass styling */}
+        {/* Watchlist tab content with the new TradingWatchlistCards component */}
         <TabsContent value="watchlist">
-          <div className="overflow-hidden" style={glassCardStyle}>
-            <CardContent className="p-8 text-center">
-              <p className="text-muted-foreground">Watchlist view will be implemented here</p>
-            </CardContent>
-          </div>
+          <TradingWatchlistCards />
         </TabsContent>
 
+        {/* Other tab contents with glass styling */}
         <TabsContent value="wallet">
           <div className="overflow-hidden" style={glassCardStyle}>
             <CardContent className="p-8 text-center">
