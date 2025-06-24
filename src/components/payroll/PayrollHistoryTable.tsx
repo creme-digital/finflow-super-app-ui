@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Table,
@@ -67,62 +68,53 @@ const payrollHistory = [
 
 export const PayrollHistoryTable = () => {
   return (
-    <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
-      <Table className="min-w-full text-sm">
-        <TableHeader>
-          <TableRow style={{ background: '#F8F8FA' }}>
-            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">ID</TableHead>
-            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Pay Period</TableHead>
-            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Processed Date</TableHead>
-            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Employees</TableHead>
-            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Gross Pay</TableHead>
-            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Net Pay</TableHead>
-            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Taxes</TableHead>
-            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Status</TableHead>
-            <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3 w-[100px]">Actions</TableHead>
+    <Table className="min-w-full text-sm">
+      <TableHeader>
+        <TableRow className="border-b border-border">
+          <TableHead className="font-medium text-muted-foreground py-4">ID</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Pay Period ↕</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Processed Date ↕</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Employees</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Gross Pay ↕</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Net Pay ↕</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Taxes ↕</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Status ↕</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {payrollHistory.map((payroll) => (
+          <TableRow key={payroll.id} className="border-b border-border last:border-0">
+            <TableCell className="font-medium text-foreground py-4">{payroll.id}</TableCell>
+            <TableCell className="text-sm text-muted-foreground py-4">{payroll.period}</TableCell>
+            <TableCell className="text-sm text-muted-foreground py-4">{payroll.processedDate}</TableCell>
+            <TableCell className="text-sm text-muted-foreground py-4">{payroll.employees} employees</TableCell>
+            <TableCell className="font-medium text-foreground py-4">{payroll.grossPay}</TableCell>
+            <TableCell className="font-medium text-foreground py-4">{payroll.netPay}</TableCell>
+            <TableCell className="font-medium text-foreground py-4">{payroll.taxes}</TableCell>
+            <TableCell className="py-4">
+              <Badge 
+                variant="secondary" 
+                className="bg-green-100 text-green-800 hover:bg-green-100"
+              >
+                {payroll.status}
+              </Badge>
+            </TableCell>
+            <TableCell className="py-4">
+              <div className="flex space-x-2">
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <FileText className="h-4 w-4" />
+                  <span className="sr-only">View</span>
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Download className="h-4 w-4" />
+                  <span className="sr-only">Download</span>
+                </Button>
+              </div>
+            </TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {payrollHistory.map((payroll) => (
-            <TableRow key={payroll.id}>
-              <TableCell className="font-medium">{payroll.id}</TableCell>
-              <TableCell>{payroll.period}</TableCell>
-              <TableCell>{payroll.processedDate}</TableCell>
-              <TableCell>{payroll.employees}</TableCell>
-              <TableCell>{payroll.grossPay}</TableCell>
-              <TableCell>{payroll.netPay}</TableCell>
-              <TableCell>{payroll.taxes}</TableCell>
-              <TableCell>
-                <span
-                  style={{
-                    borderRadius: 6,
-                    fontWeight: 500,
-                    fontSize: 13,
-                    padding: '2px 12px',
-                    display: 'inline-block',
-                    background: '#C9EBCC',
-                    color: '#021B0D',
-                  }}
-                >
-                  {payroll.status}
-                </span>
-              </TableCell>
-              <TableCell>
-                <div className="flex space-x-2">
-                  <Button size="icon" variant="ghost">
-                    <FileText className="h-4 w-4" />
-                    <span className="sr-only">View</span>
-                  </Button>
-                  <Button size="icon" variant="ghost">
-                    <Download className="h-4 w-4" />
-                    <span className="sr-only">Download</span>
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
