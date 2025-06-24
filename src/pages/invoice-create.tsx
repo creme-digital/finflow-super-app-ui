@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -135,10 +134,6 @@ const InvoiceCreate = () => {
 
   const mainContent = (
     <div className="space-y-6">
-      <div style={{ backgroundColor: 'red', padding: '10px', color: 'white' }}>
-        DEBUG: If you can see this red box, the InvoiceCreate component is rendering!
-      </div>
-      
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
