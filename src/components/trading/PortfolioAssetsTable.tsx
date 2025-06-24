@@ -95,7 +95,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     return (
       <div className="bg-white rounded-lg shadow-lg px-3 py-2 border border-[#EDEDF1]">
         <p className="text-sm font-medium mb-1" style={{ color: '#6D6D74', fontFamily: 'Inter, sans-serif' }}>{label}</p>
-        <p style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 14, fontWeight: 400, letterSpacing: '-0.28px' }}>
+        <p style={{ color: '#000', fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 500, letterSpacing: '-0.28px' }}>
           ${payload[0].value.toLocaleString()}
         </p>
       </div>
@@ -155,7 +155,7 @@ export function PortfolioAssetsTable() {
               <Activity className="w-[18px] h-[18px]" style={{ color: '#6D6D74' }} />
               <span style={{ color: '#6D6D74', fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 500, letterSpacing: '-0.02em' }}>Portfolio value this month</span>
             </div>
-            <div style={{ color: '#000', fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontSize: 32, fontWeight: 400, letterSpacing: '-0.64px' }}>
+            <div style={{ color: '#000', fontFamily: 'Inter, sans-serif', fontSize: 32, fontWeight: 600, letterSpacing: '-0.64px' }}>
               {formatAmount(portfolioValue)}
             </div>
           </div>
@@ -253,9 +253,9 @@ export function PortfolioAssetsTable() {
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell style={{ fontFamily: 'DM Mono, IBM Plex Mono, monospace' }}>{asset.amount}</TableCell>
-                    <TableCell style={{ fontFamily: 'DM Mono, IBM Plex Mono, monospace' }}>{formatAmount(asset.price)}</TableCell>
-                    <TableCell style={{ fontFamily: 'DM Mono, IBM Plex Mono, monospace', fontWeight: 500 }}>{formatAmount(asset.value)}</TableCell>
+                    <TableCell style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}>{asset.amount}</TableCell>
+                    <TableCell style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}>{formatAmount(asset.price)}</TableCell>
+                    <TableCell style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>{formatAmount(asset.value)}</TableCell>
                     <TableCell>
                       <Badge 
                         variant="outline" 
