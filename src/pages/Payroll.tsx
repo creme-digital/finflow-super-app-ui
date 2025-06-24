@@ -13,6 +13,7 @@ import { EditPayrollDialog } from '@/components/payroll/EditPayrollDialog';
 import { CreatePayrollDialog } from '@/components/payroll/CreatePayrollDialog';
 import { RunPayrollDialog } from '@/components/payroll/RunPayrollDialog';
 import { PayScheduleTable } from '@/components/payroll/PayScheduleTable';
+import { PayrollHistoryTable } from '@/components/payroll/PayrollHistoryTable';
 
 const Payroll = () => {
   const [filters, setFilters] = useState({
@@ -453,9 +454,34 @@ const Payroll = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="history">
-              <div className="text-center py-8 text-muted-foreground">
-                Payroll History content coming soon
+            <TabsContent value="history" className="space-y-6">
+              {/* Payroll History Header */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold text-foreground">Payroll History</h2>
+                  <p className="text-sm text-muted-foreground">View and manage all payroll history</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <Download className="w-4 h-4" />
+                    Export History
+                  </Button>
+                </div>
+              </div>
+
+              {/* Payroll History Table with Glass Effect */}
+              <div
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
+                <PayrollHistoryTable />
               </div>
             </TabsContent>
           </Tabs>
