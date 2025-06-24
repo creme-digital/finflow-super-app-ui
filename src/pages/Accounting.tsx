@@ -9,6 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Plus, Filter, ChevronDown, Download, MoreHorizontal, Info } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 import { AddInvoiceDialog } from '@/components/accounting/AddInvoiceDialog';
+import { InvoiceDetailsDrawer } from '@/components/accounting/InvoiceDetailsDrawer';
 
 const summaryData = [
   {
@@ -140,6 +141,8 @@ const Accounting = () => {
     recurring: [] as string[]
   });
   const [isCreateInvoiceOpen, setIsCreateInvoiceOpen] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // Filter invoices based on applied filters
   const filteredInvoices = invoicesData.filter(invoice => {
@@ -171,6 +174,11 @@ const Accounting = () => {
   };
 
   const activeFiltersCount = getActiveFiltersCount();
+
+  const handleRowClick = (invoice) => {
+    setSelectedInvoice(invoice);
+    setIsDrawerOpen(true);
+  };
 
   return (
     <Layout
@@ -367,7 +375,11 @@ const Accounting = () => {
               </TableHeader>
               <TableBody>
                 {filteredInvoices.map((invoice, i) => (
-                  <TableRow key={i} className="border-b border-border last:border-0">
+                  <TableRow 
+                    key={i} 
+                    className="border-b border-border last:border-0 hover:bg-muted/50 cursor-pointer transition-colors"
+                    onClick={() => handleRowClick(invoice)}
+                  >
                     <TableCell className="font-medium text-foreground">
                       {invoice.date}
                     </TableCell>
@@ -402,7 +414,15 @@ const Accounting = () => {
                       {invoice.recurring}
                     </TableCell>
                     <TableCell>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // Handle action button click without opening drawer
+                        }}
+                      >
                         <MoreHorizontal className="w-4 h-4" />
                       </Button>
                     </TableCell>
@@ -415,6 +435,12 @@ const Accounting = () => {
           <AddInvoiceDialog 
             open={isCreateInvoiceOpen} 
             onOpenChange={setIsCreateInvoiceOpen} 
+          />
+
+          <InvoiceDetailsDrawer
+            open={isDrawerOpen}
+            onOpenChange={setIsDrawerOpen}
+            invoice={selectedInvoice}
           />
         </div>
       }
