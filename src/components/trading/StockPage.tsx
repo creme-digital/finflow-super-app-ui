@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -224,97 +223,105 @@ export function StockPage() {
       </div>
 
       {/* All Stocks Section */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>All Stocks</CardTitle>
-            <div className="flex gap-2">
-              <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search stocks..."
-                  className="pl-8"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </div>
-              <Button variant="outline" size="icon">
-                <Filter className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" className="w-auto">
-                <Download className="h-4 w-4 mr-2" />
-                Export
-              </Button>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold">All Stocks</h2>
+          <div className="flex gap-2">
+            <div className="relative">
+              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search stocks..."
+                className="pl-8"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
             </div>
+            <Button variant="outline" size="icon">
+              <Filter className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" className="w-auto">
+              <Download className="h-4 w-4 mr-2" />
+              Export
+            </Button>
           </div>
-        </CardHeader>
-        <CardContent>
-          <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow style={{ background: '#F8F8FA' }}>
-                  <TableHead className="py-3">Symbol</TableHead>
-                  <TableHead className="py-3">Name</TableHead>
-                  <TableHead className="py-3">Price</TableHead>
-                  <TableHead className="py-3">Change</TableHead>
-                  <TableHead className="py-3">Volume</TableHead>
-                  <TableHead className="py-3">Market Cap</TableHead>
-                  <TableHead className="py-3">P/E Ratio</TableHead>
-                  <TableHead className="py-3">Dividend</TableHead>
-                  <TableHead className="py-3">Beta</TableHead>
-                  <TableHead className="py-3">Sector</TableHead>
-                  <TableHead className="py-3 text-center">Action</TableHead>
+        </div>
+
+        {/* Table with matching Cards/Transfers styling */}
+        <div 
+          className="overflow-hidden"
+          style={{
+            border: '1px solid #FFFFFF',
+            boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+            borderRadius: '16px',
+            background: 'rgba(255, 255, 255, 0.4)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
+          }}
+        >
+          <Table>
+            <TableHeader>
+              <TableRow className="border-b border-border">
+                <TableHead className="text-muted-foreground font-medium py-3">Symbol</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3">Name</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3">Price</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3">Change</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3">Volume</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3">Market Cap</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3">P/E Ratio</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3">Dividend</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3">Beta</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3">Sector</TableHead>
+                <TableHead className="text-muted-foreground font-medium py-3 text-center">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredStocks.map((stock) => (
+                <TableRow key={stock.symbol} className="border-b border-border/50 hover:bg-muted/50">
+                  <TableCell className="font-medium text-foreground">{stock.symbol}</TableCell>
+                  <TableCell className="text-foreground">{stock.name}</TableCell>
+                  <TableCell className="font-mono text-foreground">${stock.price.toLocaleString()}</TableCell>
+                  <TableCell>
+                    <div className={`flex items-center gap-1 ${
+                      stock.change >= 0 ? 'text-green-500' : 'text-red-500'
+                    }`}>
+                      {stock.change >= 0 ? (
+                        <TrendingUp className="w-4 h-4" />
+                      ) : (
+                        <TrendingDown className="w-4 h-4" />
+                      )}
+                      {stock.change >= 0 ? '+' : ''}{stock.change} ({stock.changePercentage}%)
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-foreground">{stock.volume}</TableCell>
+                  <TableCell className="text-foreground">{stock.marketCap}</TableCell>
+                  <TableCell className="text-foreground">{stock.peRatio}</TableCell>
+                  <TableCell className="text-foreground">{stock.dividend > 0 ? `${stock.dividend}%` : 'N/A'}</TableCell>
+                  <TableCell className="text-foreground">{stock.beta}</TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="text-xs">
+                      {stock.sector}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => toggleWatchlist(stock.symbol)}
+                      className={watchlist.includes(stock.symbol) ? 'text-yellow-500' : ''}
+                    >
+                      <Star 
+                        className={`h-4 w-4 ${
+                          watchlist.includes(stock.symbol) ? 'fill-current' : ''
+                        }`} 
+                      />
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredStocks.map((stock) => (
-                  <TableRow key={stock.symbol}>
-                    <TableCell className="font-medium">{stock.symbol}</TableCell>
-                    <TableCell>{stock.name}</TableCell>
-                    <TableCell className="font-mono">${stock.price.toLocaleString()}</TableCell>
-                    <TableCell>
-                      <div className={`flex items-center gap-1 ${
-                        stock.change >= 0 ? 'text-green-500' : 'text-red-500'
-                      }`}>
-                        {stock.change >= 0 ? (
-                          <TrendingUp className="w-4 h-4" />
-                        ) : (
-                          <TrendingDown className="w-4 h-4" />
-                        )}
-                        {stock.change >= 0 ? '+' : ''}{stock.change} ({stock.changePercentage}%)
-                      </div>
-                    </TableCell>
-                    <TableCell>{stock.volume}</TableCell>
-                    <TableCell>{stock.marketCap}</TableCell>
-                    <TableCell>{stock.peRatio}</TableCell>
-                    <TableCell>{stock.dividend > 0 ? `${stock.dividend}%` : 'N/A'}</TableCell>
-                    <TableCell>{stock.beta}</TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className="text-xs">
-                        {stock.sector}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        onClick={() => toggleWatchlist(stock.symbol)}
-                        className={watchlist.includes(stock.symbol) ? 'text-yellow-500' : ''}
-                      >
-                        <Star 
-                          className={`h-4 w-4 ${
-                            watchlist.includes(stock.symbol) ? 'fill-current' : ''
-                          }`} 
-                        />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
     </div>
   );
 }
