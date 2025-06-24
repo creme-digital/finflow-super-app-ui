@@ -10,6 +10,7 @@ import { TrendingUp, TrendingDown, ArrowUpDown, Plus } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, Legend } from 'recharts';
 import type { TooltipProps } from 'recharts';
 import { PortfolioOverviewCards } from '@/components/trading/PortfolioOverviewCards';
+import { PortfolioAssetsTable } from '@/components/trading/PortfolioAssetsTable';
 import { StockDetailChart } from '@/components/trading/StockDetailChart';
 import { MyFavoritesSection } from '@/components/trading/MyFavoritesSection';
 import { TradingViewChart } from '@/components/crypto/TradingViewChart';
@@ -420,23 +421,13 @@ const TradingMainContent = () => {
           </div>
         </TabsContent>
 
-        {/* My Portfolio tab content with TradingView chart */}
+        {/* My Portfolio tab content with new design matching crypto assets */}
         <TabsContent value="portfolio" className="space-y-6">
           {/* Portfolio Overview Cards */}
           <PortfolioOverviewCards />
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - TradingView Chart */}
-            <div className="lg:col-span-2 space-y-6">
-              <TradingViewChart />
-              <StockDetailChart />
-            </div>
-            
-            {/* Right Column - My Favorites */}
-            <div>
-              <MyFavoritesSection />
-            </div>
-          </div>
+          {/* Portfolio Assets Table matching crypto design */}
+          <PortfolioAssetsTable />
         </TabsContent>
 
         {/* Stock tab content with the new StockPage component */}
@@ -464,4 +455,5 @@ const TradingMainContent = () => {
 const TradingDashboard = () => {
   return <Layout title="Trading Dashboard" showRightSidebar={false} mainContent={<TradingMainContent />} />;
 };
+
 export default TradingDashboard;
