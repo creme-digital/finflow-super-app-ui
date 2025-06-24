@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Table,
@@ -62,54 +63,47 @@ const paySchedules = [
 
 export const PayScheduleTable = () => {
   return (
-    <div className="space-y-4">
-      <div className="rounded-[8px] border border-[#E3E3EA] overflow-hidden">
-        <Table className="min-w-full text-sm">
-          <TableHeader>
-            <TableRow style={{ background: '#F8F8FA' }}>
-              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Name</TableHead>
-              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Frequency</TableHead>
-              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Next Pay Date</TableHead>
-              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Employees</TableHead>
-              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Total Amount</TableHead>
-              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3">Status</TableHead>
-              <TableHead style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#9898A5', fontWeight: 500 }} className="py-3 w-[80px]">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {paySchedules.map((schedule) => (
-              <TableRow key={schedule.id}>
-                <TableCell className="font-medium">{schedule.name}</TableCell>
-                <TableCell>{schedule.frequency}</TableCell>
-                <TableCell>{schedule.nextDate}</TableCell>
-                <TableCell>{schedule.employeeCount}</TableCell>
-                <TableCell>{schedule.totalAmount}</TableCell>
-                <TableCell>
-                  <span
-                    style={{
-                      borderRadius: 6,
-                      fontWeight: 500,
-                      fontSize: 13,
-                      padding: '2px 12px',
-                      display: 'inline-block',
-                      background: schedule.status === 'Upcoming' ? '#C9EBCC' : '#EBC9C9',
-                      color: schedule.status === 'Upcoming' ? '#021B0D' : '#1D0202',
-                    }}
-                  >
-                    {schedule.status}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <Button size="icon" variant="ghost">
-                    <Pencil className="h-4 w-4" />
-                    <span className="sr-only">Edit</span>
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
+    <Table className="min-w-full text-sm">
+      <TableHeader>
+        <TableRow className="border-b border-border">
+          <TableHead className="font-medium text-muted-foreground py-4">Name</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Frequency</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Next Pay Date ↕</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Employees</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Total Amount ↕</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Status ↕</TableHead>
+          <TableHead className="font-medium text-muted-foreground py-4">Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {paySchedules.map((schedule) => (
+          <TableRow key={schedule.id} className="border-b border-border last:border-0">
+            <TableCell className="font-medium text-foreground py-4">{schedule.name}</TableCell>
+            <TableCell className="text-sm text-muted-foreground py-4">{schedule.frequency}</TableCell>
+            <TableCell className="text-sm text-muted-foreground py-4">{schedule.nextDate}</TableCell>
+            <TableCell className="text-sm text-muted-foreground py-4">{schedule.employeeCount} employees</TableCell>
+            <TableCell className="font-medium text-foreground py-4">{schedule.totalAmount}</TableCell>
+            <TableCell className="py-4">
+              <Badge 
+                variant="secondary" 
+                className={
+                  schedule.status === 'Upcoming' 
+                    ? "bg-blue-100 text-blue-800 hover:bg-blue-100" 
+                    : "bg-orange-100 text-orange-800 hover:bg-orange-100"
+                }
+              >
+                {schedule.status}
+              </Badge>
+            </TableCell>
+            <TableCell className="py-4">
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Pencil className="h-4 w-4" />
+                <span className="sr-only">Edit</span>
+              </Button>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 };

@@ -7,11 +7,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Edit2, Trash2 } from 'lucide-react';
+import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Edit2, Trash2, CalendarCheck } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 import { EditPayrollDialog } from '@/components/payroll/EditPayrollDialog';
 import { CreatePayrollDialog } from '@/components/payroll/CreatePayrollDialog';
 import { RunPayrollDialog } from '@/components/payroll/RunPayrollDialog';
+import { PayScheduleTable } from '@/components/payroll/PayScheduleTable';
 
 const Payroll = () => {
   const [filters, setFilters] = useState({
@@ -417,9 +418,38 @@ const Payroll = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="schedules">
-              <div className="text-center py-8 text-muted-foreground">
-                Pay Schedules content coming soon
+            <TabsContent value="schedules" className="space-y-6">
+              {/* Pay Schedules Header */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold text-foreground">Pay Schedules</h2>
+                  <p className="text-sm text-muted-foreground">Manage and view all pay schedules</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <Download className="w-4 h-4" />
+                    Export
+                  </Button>
+                  <Button variant="default" size="sm" className="gap-2">
+                    <CalendarCheck className="w-4 h-4" />
+                    Create Schedule
+                  </Button>
+                </div>
+              </div>
+
+              {/* Pay Schedules Table with Glass Effect */}
+              <div
+                className="overflow-hidden"
+                style={{
+                  border: '1px solid #FFFFFF',
+                  boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
+                  borderRadius: '16px',
+                  background: 'rgba(255, 255, 255, 0.4)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)'
+                }}
+              >
+                <PayScheduleTable />
               </div>
             </TabsContent>
             
