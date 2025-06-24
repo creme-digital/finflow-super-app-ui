@@ -125,16 +125,7 @@ const MerchantAccountMainContent = () => {
       </div>
 
       {/* Tab Navigation with glass effect */}
-      <div className="inline-flex h-10 items-center justify-center rounded-full p-1" style={{
-      border: '1px solid #FFFFFF',
-      boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
-      backdropFilter: 'blur(10px)',
-      WebkitBackdropFilter: 'blur(10px)'
-    }}>
-        <button onClick={() => setActiveTab('payment-history')} className="inline-flex items-center justify-center whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium transition-all bg-white text-[#292EE9] shadow-sm">
-          Payment History
-        </button>
-      </div>
+      
 
       {/* Account Cards with consistent glass styling matching /accounting */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
