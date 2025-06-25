@@ -11,6 +11,7 @@ import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Edit2, Trash2, Cal
 import { formatCurrency } from '@/lib/formatters';
 import { EditPayrollDialog } from '@/components/payroll/EditPayrollDialog';
 import { CreatePayrollDialog } from '@/components/payroll/CreatePayrollDialog';
+import { CreateScheduleDialog } from '@/components/payroll/CreateScheduleDialog';
 import { RunPayrollDialog } from '@/components/payroll/RunPayrollDialog';
 import { PayScheduleTable } from '@/components/payroll/PayScheduleTable';
 import { PayrollHistoryTable } from '@/components/payroll/PayrollHistoryTable';
@@ -24,6 +25,7 @@ const Payroll = () => {
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [createScheduleDialogOpen, setCreateScheduleDialogOpen] = useState(false);
   const [runPayrollDialogOpen, setRunPayrollDialogOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
 
@@ -431,7 +433,12 @@ const Payroll = () => {
                     <Download className="w-4 h-4" />
                     Export
                   </Button>
-                  <Button variant="default" size="sm" className="gap-2">
+                  <Button 
+                    variant="default" 
+                    size="sm" 
+                    className="gap-2"
+                    onClick={() => setCreateScheduleDialogOpen(true)}
+                  >
                     <CalendarCheck className="w-4 h-4" />
                     Create Schedule
                   </Button>
@@ -497,6 +504,12 @@ const Payroll = () => {
           <CreatePayrollDialog
             open={createDialogOpen}
             onOpenChange={setCreateDialogOpen}
+          />
+
+          {/* Create Schedule Dialog */}
+          <CreateScheduleDialog
+            open={createScheduleDialogOpen}
+            onOpenChange={setCreateScheduleDialogOpen}
           />
 
           {/* Run Payroll Dialog */}
