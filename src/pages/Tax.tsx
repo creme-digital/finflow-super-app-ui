@@ -14,6 +14,7 @@ import { ModernBarChart } from '@/components/charts/ModernBarChart';
 import { ModernPieChart } from '@/components/charts/ModernPieChart';
 import { CHART_COLORS } from '@/lib/chart-config';
 import { TaxSubmissionDialog } from '@/components/tax/TaxSubmissionDialog';
+import { TaxRecordDrawer } from '@/components/tax/TaxRecordDrawer';
 
 const Tax = () => {
   const [filters, setFilters] = useState({
@@ -23,6 +24,8 @@ const Tax = () => {
   });
 
   const [taxSubmissionDialogOpen, setTaxSubmissionDialogOpen] = useState(false);
+  const [taxRecordDrawerOpen, setTaxRecordDrawerOpen] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState<any>(null);
 
   const taxRecords = [
     {
@@ -138,7 +141,11 @@ const Tax = () => {
 
   const handleViewRecord = (recordId: string) => {
     console.log('View record:', recordId);
-    // TODO: Implement view record functionality
+    const record = taxRecords.find(r => r.id === recordId);
+    if (record) {
+      setSelectedRecord(record);
+      setTaxRecordDrawerOpen(true);
+    }
   };
 
   const handleEditRecord = (recordId: string) => {
@@ -516,6 +523,13 @@ const Tax = () => {
           <TaxSubmissionDialog 
             open={taxSubmissionDialogOpen} 
             onOpenChange={setTaxSubmissionDialogOpen} 
+          />
+
+          {/* Tax Record Drawer */}
+          <TaxRecordDrawer
+            open={taxRecordDrawerOpen}
+            onOpenChange={setTaxRecordDrawerOpen}
+            record={selectedRecord}
           />
         </div>
       } 
