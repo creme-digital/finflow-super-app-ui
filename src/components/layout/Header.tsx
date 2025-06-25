@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Bell, Settings, ChevronDown } from 'lucide-react';
+import { Settings, ChevronDown } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { NotificationsDropdown } from './NotificationsDropdown';
 
 interface HeaderProps {
   title: string;
@@ -16,15 +17,7 @@ export function Header({ title }: HeaderProps) {
       
       <div className="flex items-center gap-2">
         {/* Notifications */}
-        <div 
-          className="flex items-center justify-center w-10 h-10 rounded-full transition-colors cursor-pointer"
-          style={{ 
-            background: 'rgba(255, 255, 255, 0.8)',
-            border: '1px solid rgba(255, 255, 255, 0.8)'
-          }}
-        >
-          <Bell className="h-5 w-5 text-foreground" />
-        </div>
+        <NotificationsDropdown />
         
         {/* Settings */}
         <div 
