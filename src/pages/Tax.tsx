@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Receipt, CalendarCheck, FileText, Info, BarChart3, PieChart } from 'lucide-react';
+import { ChevronDown, Filter, Download, MoreHorizontal, Plus, Receipt, CalendarCheck, FileText, Info, BarChart3, PieChart, Eye, Edit2, Trash2 } from 'lucide-react';
 import { formatCurrency } from '@/lib/formatters';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
@@ -24,77 +24,88 @@ const Tax = () => {
 
   const [taxSubmissionDialogOpen, setTaxSubmissionDialogOpen] = useState(false);
 
-  const taxRecords = [{
-    id: 'TAX-001',
-    date: '23/05/2025',
-    issuer: 'James Hall',
-    form: '1092-NEC',
-    amount: 8657.41,
-    status: 'Submitted'
-  }, {
-    id: 'TAX-002',
-    date: '23/05/2024',
-    issuer: 'Rhonda Rhodes',
-    form: '1029-MISC',
-    amount: 342.07,
-    status: 'Submitted'
-  }, {
-    id: 'TAX-003',
-    date: '23/05/2023',
-    issuer: 'Kathy Pacheco',
-    form: '1077-K',
-    amount: 1486.52,
-    status: 'Submitted'
-  }, {
-    id: 'TAX-004',
-    date: '23/05/2022',
-    issuer: 'Kimberly Mastrangelo',
-    form: '1092-NEC',
-    amount: 5653.56,
-    status: 'Submitted'
-  }, {
-    id: 'TAX-005',
-    date: '23/05/2021',
-    issuer: 'Corina McCoy',
-    form: '1029-MISC',
-    amount: 1595.71,
-    status: 'Submitted'
-  }, {
-    id: 'TAX-006',
-    date: '23/05/2020',
-    issuer: 'Iva Ryan',
-    form: '1077-K',
-    amount: 7738.89,
-    status: 'Submitted'
-  }, {
-    id: 'TAX-007',
-    date: '23/05/2019',
-    issuer: 'Stephanie Nicol',
-    form: '1092-NEC',
-    amount: 8650.33,
-    status: 'Submitted'
-  }, {
-    id: 'TAX-008',
-    date: '23/05/2018',
-    issuer: 'Alex Buckmaster',
-    form: '1029-MISC',
-    amount: 1207.52,
-    status: 'Submitted'
-  }, {
-    id: 'TAX-009',
-    date: '23/05/2017',
-    issuer: 'Patricia Sanders',
-    form: '1077-K',
-    amount: 376.96,
-    status: 'Submitted'
-  }, {
-    id: 'TAX-010',
-    date: '23/05/2016',
-    issuer: 'Katie Sims',
-    form: '1077-K',
-    amount: 7727.07,
-    status: 'Submitted'
-  }];
+  const taxRecords = [
+    {
+      id: 'TAX-001',
+      date: '23/05/2025',
+      issuer: 'James Hall',
+      form: '1092-NEC',
+      amount: 8657.41,
+      status: 'Submitted'
+    },
+    {
+      id: 'TAX-002',
+      date: '23/05/2024',
+      issuer: 'Rhonda Rhodes',
+      form: '1029-MISC',
+      amount: 342.07,
+      status: 'Submitted'
+    },
+    {
+      id: 'TAX-003',
+      date: '23/05/2023',
+      issuer: 'Kathy Pacheco',
+      form: '1077-K',
+      amount: 1486.52,
+      status: 'Submitted'
+    },
+    {
+      id: 'TAX-004',
+      date: '23/05/2022',
+      issuer: 'Kimberly Mastrangelo',
+      form: '1092-NEC',
+      amount: 5653.56,
+      status: 'Submitted'
+    },
+    {
+      id: 'TAX-005',
+      date: '23/05/2021',
+      issuer: 'Corina McCoy',
+      form: '1029-MISC',
+      amount: 1595.71,
+      status: 'Submitted'
+    },
+    {
+      id: 'TAX-006',
+      date: '23/05/2020',
+      issuer: 'Iva Ryan',
+      form: '1077-K',
+      amount: 7738.89,
+      status: 'Submitted'
+    },
+    {
+      id: 'TAX-007',
+      date: '23/05/2019',
+      issuer: 'Stephanie Nicol',
+      form: '1092-NEC',
+      amount: 8650.33,
+      status: 'Submitted'
+    },
+    {
+      id: 'TAX-008',
+      date: '23/05/2018',
+      issuer: 'Alex Buckmaster',
+      form: '1029-MISC',
+      amount: 1207.52,
+      status: 'Submitted'
+    },
+    {
+      id: 'TAX-009',
+      date: '23/05/2017',
+      issuer: 'Patricia Sanders',
+      form: '1077-K',
+      amount: 376.96,
+      status: 'Submitted'
+    },
+    {
+      id: 'TAX-010',
+      date: '23/05/2016',
+      issuer: 'Katie Sims',
+      form: '1077-K',
+      amount: 7727.07,
+      status: 'Submitted'
+    }
+  ];
 
   // Filter tax records based on applied filters
   const filteredTaxRecords = taxRecords.filter(record => {
@@ -103,12 +114,14 @@ const Tax = () => {
     const yearMatch = filters.year.length === 0 || filters.year.includes(record.date.split('/')[2]);
     return formMatch && statusMatch && yearMatch;
   });
+
   const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
     setFilters(prev => ({
       ...prev,
       [filterType]: checked ? [...prev[filterType], value] : prev[filterType].filter(item => item !== value)
     }));
   };
+
   const clearAllFilters = () => {
     setFilters({
       form: [],
@@ -116,10 +129,32 @@ const Tax = () => {
       year: []
     });
   };
+
   const getActiveFiltersCount = () => {
     return filters.form.length + filters.status.length + filters.year.length;
   };
+
   const activeFiltersCount = getActiveFiltersCount();
+
+  const handleViewRecord = (recordId: string) => {
+    console.log('View record:', recordId);
+    // TODO: Implement view record functionality
+  };
+
+  const handleEditRecord = (recordId: string) => {
+    console.log('Edit record:', recordId);
+    // TODO: Implement edit record functionality
+  };
+
+  const handleDownloadRecord = (recordId: string) => {
+    console.log('Download record:', recordId);
+    // TODO: Implement download record functionality
+  };
+
+  const handleDeleteRecord = (recordId: string) => {
+    console.log('Delete record:', recordId);
+    // TODO: Implement delete record functionality
+  };
 
   // Tax estimation data - updated for reusable components
   const quarterlyData = [{
@@ -314,9 +349,46 @@ const Tax = () => {
                           </Badge>
                         </TableCell>
                         <TableCell className="py-4">
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <MoreHorizontal className="w-4 h-4" />
-                          </Button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <MoreHorizontal className="w-4 h-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48 bg-white border border-gray-200 shadow-lg z-50">
+                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem 
+                                onClick={() => handleViewRecord(record.id)}
+                                className="cursor-pointer"
+                              >
+                                <Eye className="mr-2 h-4 w-4" />
+                                View Details
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => handleDownloadRecord(record.id)}
+                                className="cursor-pointer"
+                              >
+                                <Download className="mr-2 h-4 w-4" />
+                                Download Form
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => handleEditRecord(record.id)}
+                                className="cursor-pointer"
+                              >
+                                <Edit2 className="mr-2 h-4 w-4" />
+                                Edit Record
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem 
+                                onClick={() => handleDeleteRecord(record.id)}
+                                className="cursor-pointer text-red-600 focus:text-red-600"
+                              >
+                                <Trash2 className="mr-2 h-4 w-4" />
+                                Delete Record
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </TableCell>
                       </TableRow>)}
                   </TableBody>
