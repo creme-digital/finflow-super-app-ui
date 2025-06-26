@@ -11,9 +11,11 @@ import { Download, Filter, Plus, Search, TrendingUp, TrendingDown, DollarSign, A
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { ComposableMap, Geographies, Geography, ZoomableGroup, Marker } from 'react-simple-maps';
 import ReactCountryFlag from 'react-country-flag';
+import { useNavigate } from 'react-router-dom';
 
 export default function MeelyTradeStocks() {
   const { formatAmount } = useCurrency();
+  const navigate = useNavigate();
 
   const marketStats = {
     sAndP500: 5123.45,
@@ -137,6 +139,11 @@ export default function MeelyTradeStocks() {
       volume: '25.6M'
     }
   ];
+
+  // Function to handle stock row click
+  const handleStockClick = (symbol: string) => {
+    navigate(`/meelytrade/stocks/${symbol.toLowerCase()}`);
+  };
 
   // Add coordinates for each market overlay
   const marketOverlays = [
@@ -470,7 +477,11 @@ export default function MeelyTradeStocks() {
                 </TableHeader>
                 <TableBody>
                   {stocks.map((stock) => (
-                    <TableRow key={stock.symbol}>
+                    <TableRow 
+                      key={stock.symbol} 
+                      className="cursor-pointer hover:bg-gray-50 transition-colors"
+                      onClick={() => handleStockClick(stock.symbol)}
+                    >
                       <TableCell className="font-medium">{stock.symbol}</TableCell>
                       <TableCell>{stock.name}</TableCell>
                       <TableCell className="font-mono">{formatAmount(stock.price)}</TableCell>
@@ -493,7 +504,7 @@ export default function MeelyTradeStocks() {
                           {stock.sector}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-center">
+                      <TableCell className="text-center" onClick={(e) => e.stopPropagation()}>
                         <Button size="icon" variant="ghost" aria-label="Add to Watchlist">
                           <Bookmark className="h-4 w-4" />
                         </Button>
@@ -508,4 +519,4 @@ export default function MeelyTradeStocks() {
       </div>
     </Layout>
   );
-} 
+}
