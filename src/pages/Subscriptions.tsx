@@ -8,6 +8,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, Download, MoreHorizontal } from 'lucide-react';
+import { CreateSubscriptionDialog } from '@/components/subscriptions/CreateSubscriptionDialog';
+
 const SubscriptionsMainContent = () => {
   const [filters, setFilters] = useState({
     status: [] as string[],
@@ -114,15 +116,17 @@ const SubscriptionsMainContent = () => {
   const activeFiltersCount = getActiveFiltersCount();
   return <div className="space-y-6">
       {/* Header with consistent styling */}
-      <PageHeader title="Subscription" children={<div className="flex items-center gap-3">
+      <PageHeader 
+        title="Subscription" 
+        children={
+          <div className="flex items-center gap-3">
             <Button variant="outline" size="sm">
               View All
             </Button>
-            <Button size="sm" className="gap-2">
-              <Plus className="w-4 h-4" />
-              Create Subscription
-            </Button>
-          </div>} />
+            <CreateSubscriptionDialog />
+          </div>
+        } 
+      />
 
       {/* Tabs with Accounts page styling */}
       <Tabs defaultValue="all" className="w-full">
@@ -237,7 +241,9 @@ const SubscriptionsMainContent = () => {
       </Tabs>
     </div>;
 };
+
 const Subscriptions = () => {
   return <Layout title="Subscription" showRightSidebar={false} mainContent={<SubscriptionsMainContent />} />;
 };
+
 export default Subscriptions;
