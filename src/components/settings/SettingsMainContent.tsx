@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { SettingsNavigation } from './SettingsNavigation';
+import { NotificationSettings } from './NotificationSettings';
 
 export function SettingsMainContent() {
   const [searchParams] = useSearchParams();
@@ -121,7 +122,7 @@ export function SettingsMainContent() {
           Manage your notification preferences
         </p>
       </div>
-      <p className="text-gray-500">Notification settings coming soon...</p>
+      <NotificationSettings />
     </div>
   );
 
