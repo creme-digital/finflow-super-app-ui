@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -154,14 +155,19 @@ const SimpleSparkline = ({ data, isPositive }: { data: number[]; isPositive: boo
 };
 
 export function CryptoCoins() {
+  const navigate = useNavigate();
+
   const handleViewAsset = (assetId: string) => {
-    console.log('Viewing asset:', assetId);
-    // Implementation for viewing asset details
+    navigate(`/crypto/${assetId}`);
   };
 
   const handleAddToWatchlist = (assetId: string) => {
     console.log('Adding to watchlist:', assetId);
     // Implementation for adding asset to watchlist
+  };
+
+  const handleCoinClick = (assetId: string) => {
+    navigate(`/crypto/${assetId}`);
   };
 
   return (
@@ -173,7 +179,7 @@ export function CryptoCoins() {
           {trendingCoins.map((asset) => (
             <div
               key={asset.id}
-              className="overflow-hidden p-4"
+              className="overflow-hidden p-4 cursor-pointer hover:scale-105 transition-transform"
               style={{
                 border: '1px solid #FFFFFF',
                 boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
@@ -182,6 +188,7 @@ export function CryptoCoins() {
                 backdropFilter: 'blur(10px)',
                 WebkitBackdropFilter: 'blur(10px)'
               }}
+              onClick={() => handleCoinClick(asset.id)}
             >
               {/* Header with asset info and actions */}
               <div className="flex items-start justify-between mb-3">
@@ -202,7 +209,10 @@ export function CryptoCoins() {
                     variant="ghost"
                     size="sm"
                     className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
-                    onClick={() => handleViewAsset(asset.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleViewAsset(asset.id);
+                    }}
                   >
                     <Eye className="h-3 w-3" />
                   </Button>
@@ -210,7 +220,10 @@ export function CryptoCoins() {
                     variant="ghost"
                     size="sm"
                     className="h-6 w-6 p-0 text-muted-foreground hover:text-blue-500"
-                    onClick={() => handleAddToWatchlist(asset.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToWatchlist(asset.id);
+                    }}
                   >
                     <Plus className="h-3 w-3" />
                   </Button>
@@ -289,7 +302,11 @@ export function CryptoCoins() {
             </TableHeader>
             <TableBody>
               {allCoins.sort((a, b) => a.rank - b.rank).map((asset) => (
-                <TableRow key={asset.id}>
+                <TableRow 
+                  key={asset.id} 
+                  className="cursor-pointer hover:bg-muted/50"
+                  onClick={() => handleCoinClick(asset.id)}
+                >
                   <TableCell className="font-medium">{asset.rank}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-3">
@@ -334,7 +351,10 @@ export function CryptoCoins() {
                         variant="ghost"
                         size="sm"
                         className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
-                        onClick={() => handleViewAsset(asset.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleViewAsset(asset.id);
+                        }}
                       >
                         <Eye className="h-4 w-4" />
                       </Button>
@@ -342,7 +362,10 @@ export function CryptoCoins() {
                         variant="ghost"
                         size="sm"
                         className="h-8 w-8 p-0 text-muted-foreground hover:text-blue-500"
-                        onClick={() => handleAddToWatchlist(asset.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToWatchlist(asset.id);
+                        }}
                       >
                         <Plus className="h-4 w-4" />
                       </Button>
