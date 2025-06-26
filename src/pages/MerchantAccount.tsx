@@ -6,6 +6,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, Download, ArrowRight, MoreHorizontal, Wallet } from 'lucide-react';
+import { CreateMerchantAccountDialog } from '@/components/merchant/CreateMerchantAccountDialog';
+
 const MerchantAccountMainContent = () => {
   const [activeTab, setActiveTab] = useState('payment-history');
   const [filters, setFilters] = useState({
@@ -118,10 +120,7 @@ const MerchantAccountMainContent = () => {
       {/* Header with Tab and Action Button */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-foreground">Merchant Account</h1>
-        <Button>
-          <Plus className="w-4 h-4 mr-2" />
-          Create Merchant Account
-        </Button>
+        <CreateMerchantAccountDialog />
       </div>
 
       {/* Tab Navigation with glass effect */}
@@ -292,7 +291,9 @@ const MerchantAccountMainContent = () => {
       </div>
     </div>;
 };
+
 const MerchantAccount = () => {
   return <Layout title="Merchant Account" showRightSidebar={false} mainContent={<MerchantAccountMainContent />} />;
 };
+
 export default MerchantAccount;
