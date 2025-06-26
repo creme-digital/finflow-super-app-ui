@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -23,9 +22,64 @@ import {
   BarChart3,
   Users,
   Building,
-  Bookmark
+  Bookmark,
+  AlertTriangle,
+  Target,
+  Shield
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+
+// TradingView Widget Component
+const TradingViewWidget = ({ symbol }: { symbol: string }) => {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    script.type = 'text/javascript';
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      autosize: true,
+      symbol: `NASDAQ:${symbol}`,
+      timezone: "Etc/UTC",
+      theme: "light",
+      style: "1",
+      locale: "en",
+      enable_publishing: false,
+      allow_symbol_change: true,
+      calendar: false,
+      hide_legend: true,
+      hide_side_toolbar: false,
+      details: true,
+      hotlist: true,
+      calendar: true,
+      studies: [
+        "Volume@tv-basicstudies"
+      ],
+      show_popup_button: true,
+      popup_width: "1000",
+      popup_height: "650",
+      container_id: "tradingview_chart"
+    });
+
+    const container = document.getElementById('tradingview_chart');
+    if (container) {
+      container.innerHTML = '';
+      container.appendChild(script);
+    }
+
+    return () => {
+      if (container) {
+        container.innerHTML = '';
+      }
+    };
+  }, [symbol]);
+
+  return (
+    <div 
+      id="tradingview_chart" 
+      className="h-[600px] w-full"
+      style={{ minHeight: '600px' }}
+    />
+  );
+};
 
 export default function TradingStockDetail() {
   const { symbol } = useParams();
@@ -47,7 +101,14 @@ export default function TradingStockDetail() {
     website: 'https://www.microsoft.com',
     founded: '1975',
     employees: '221,000',
-    headquarters: 'Redmond, WA'
+    headquarters: 'Redmond, WA',
+    high52Week: 468.35,
+    low52Week: 309.45,
+    avgVolume: '32.8M',
+    beta: 0.89,
+    eps: 9.65,
+    revenue: '$211.9B',
+    netIncome: '$72.4B'
   };
 
   // Chart data
@@ -94,6 +155,20 @@ export default function TradingStockDetail() {
     { time: '14:35:28', price: 415.33, volume: 1750, type: 'buy' }
   ];
 
+  // Enhanced data for more detailed view
+  const analystRatings = [
+    { firm: 'Goldman Sachs', rating: 'Buy', target: 450, date: '2024-01-15' },
+    { firm: 'Morgan Stanley', rating: 'Overweight', target: 435, date: '2024-01-12' },
+    { firm: 'JPMorgan', rating: 'Neutral', target: 420, date: '2024-01-10' },
+    { firm: 'Bank of America', rating: 'Buy', target: 460, date: '2024-01-08' }
+  ];
+
+  const keyEvents = [
+    { date: '2024-01-20', event: 'Quarterly Earnings Release', impact: 'high' },
+    { date: '2024-02-15', event: 'Ex-Dividend Date', impact: 'medium' },
+    { date: '2024-03-10', event: 'Annual Shareholder Meeting', impact: 'low' }
+  ];
+
   const glassCardStyle = {
     border: '1px solid #FFFFFF',
     boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
@@ -101,6 +176,24 @@ export default function TradingStockDetail() {
     background: 'rgba(255, 255, 255, 0.4)',
     backdropFilter: 'blur(10px)',
     WebkitBackdropFilter: 'blur(10px)'
+  };
+
+  const getRatingColor = (rating: string) => {
+    switch (rating.toLowerCase()) {
+      case 'buy':
+      case 'strong buy':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'overweight':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'neutral':
+      case 'hold':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'underweight':
+      case 'sell':
+        return 'bg-red-100 text-red-800 border-red-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
   };
 
   return (
@@ -130,7 +223,7 @@ export default function TradingStockDetail() {
           </div>
         </div>
 
-        {/* Price Overview */}
+        {/* Enhanced Price Overview */}
         <Card style={glassCardStyle}>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
@@ -141,10 +234,14 @@ export default function TradingStockDetail() {
                   {stockData.change >= 0 ? '+' : ''}{stockData.change} ({stockData.changePercentage}%)
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-8 text-sm">
+              <div className="grid grid-cols-3 gap-8 text-sm">
                 <div>
                   <div className="text-muted-foreground">Volume</div>
                   <div className="font-semibold">{stockData.volume}</div>
+                </div>
+                <div>
+                  <div className="text-muted-foreground">Avg Volume</div>
+                  <div className="font-semibold">{stockData.avgVolume}</div>
                 </div>
                 <div>
                   <div className="text-muted-foreground">Market Cap</div>
@@ -153,6 +250,22 @@ export default function TradingStockDetail() {
                 <div>
                   <div className="text-muted-foreground">P/E Ratio</div>
                   <div className="font-semibold">{stockData.peRatio}</div>
+                </div>
+                <div>
+                  <div className="text-muted-foreground">52W High</div>
+                  <div className="font-semibold">${stockData.high52Week}</div>
+                </div>
+                <div>
+                  <div className="text-muted-foreground">52W Low</div>
+                  <div className="font-semibold">${stockData.low52Week}</div>
+                </div>
+                <div>
+                  <div className="text-muted-foreground">Beta</div>
+                  <div className="font-semibold">{stockData.beta}</div>
+                </div>
+                <div>
+                  <div className="text-muted-foreground">EPS</div>
+                  <div className="font-semibold">${stockData.eps}</div>
                 </div>
                 <div>
                   <div className="text-muted-foreground">Dividend</div>
@@ -165,87 +278,70 @@ export default function TradingStockDetail() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="chart" className="w-full">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="chart">Chart</TabsTrigger>
             <TabsTrigger value="trade">Trade</TabsTrigger>
+            <TabsTrigger value="analysis">Analysis</TabsTrigger>
             <TabsTrigger value="financials">Financials</TabsTrigger>
             <TabsTrigger value="news">News</TabsTrigger>
             <TabsTrigger value="documents">Documents</TabsTrigger>
             <TabsTrigger value="company">Company</TabsTrigger>
           </TabsList>
 
-          {/* Chart Tab */}
+          {/* Enhanced Chart Tab with TradingView */}
           <TabsContent value="chart" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Price Chart */}
-              <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              {/* TradingView Chart */}
+              <div className="lg:col-span-3">
                 <Card style={glassCardStyle}>
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle>Price Chart</CardTitle>
-                      <Select defaultValue="1d">
-                        <SelectTrigger className="w-24">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1d">1D</SelectItem>
-                          <SelectItem value="5d">5D</SelectItem>
-                          <SelectItem value="1m">1M</SelectItem>
-                          <SelectItem value="3m">3M</SelectItem>
-                          <SelectItem value="1y">1Y</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <CardTitle>Advanced Chart - TradingView</CardTitle>
+                      <Badge variant="outline" className="bg-green-50 text-green-700">
+                        Live Data
+                      </Badge>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="h-[400px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={priceData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#E3E3EA" />
-                          <XAxis dataKey="time" />
-                          <YAxis domain={['dataMin - 1', 'dataMax + 1']} />
-                          <Tooltip />
-                          <Line 
-                            type="monotone" 
-                            dataKey="price" 
-                            stroke="#3b82f6" 
-                            strokeWidth={2}
-                            dot={false}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
+                    <TradingViewWidget symbol={stockData.symbol} />
                   </CardContent>
                 </Card>
               </div>
 
-              {/* Volume Chart */}
-              <div>
+              {/* Right Panel with Key Stats and Recent Trades */}
+              <div className="space-y-6">
+                {/* Key Statistics */}
                 <Card style={glassCardStyle}>
                   <CardHeader>
-                    <CardTitle>Volume</CardTitle>
+                    <CardTitle>Key Statistics</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className="h-[200px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={volumeData}>
-                          <XAxis dataKey="time" />
-                          <YAxis />
-                          <Tooltip />
-                          <Bar dataKey="volume" fill="#8b5cf6" />
-                        </BarChart>
-                      </ResponsiveContainer>
+                  <CardContent className="space-y-4">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Open</span>
+                      <span className="font-semibold">$412.50</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">High</span>
+                      <span className="font-semibold">$418.90</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Low</span>
+                      <span className="font-semibold">$409.20</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Prev Close</span>
+                      <span className="font-semibold">$406.87</span>
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* Recent Trades */}
-                <Card style={glassCardStyle} className="mt-6">
+                <Card style={glassCardStyle}>
                   <CardHeader>
                     <CardTitle>Recent Trades</CardTitle>
                   </CardHeader>
                   <CardContent className="p-0">
-                    <div className="max-h-[200px] overflow-y-auto">
+                    <div className="max-h-[300px] overflow-y-auto">
                       <Table>
                         <TableHeader>
                           <TableRow>
@@ -349,6 +445,80 @@ export default function TradingStockDetail() {
                     <DollarSign className="h-4 w-4 mr-2" />
                     Place Sell Order
                   </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* New Analysis Tab */}
+          <TabsContent value="analysis" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Analyst Ratings */}
+              <Card style={glassCardStyle}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Target className="h-5 w-5" />
+                    Analyst Ratings
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {analystRatings.map((rating, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex-1">
+                          <div className="font-semibold">{rating.firm}</div>
+                          <div className="text-sm text-muted-foreground">{rating.date}</div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Badge className={getRatingColor(rating.rating)}>
+                            {rating.rating}
+                          </Badge>
+                          <div className="text-right">
+                            <div className="text-sm font-semibold">${rating.target}</div>
+                            <div className="text-xs text-muted-foreground">Target</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Key Events */}
+              <Card style={glassCardStyle}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Calendar className="h-5 w-5" />
+                    Upcoming Events
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {keyEvents.map((event, index) => (
+                      <div key={index} className="flex items-center gap-3 p-3 border rounded-lg">
+                        <div className={`p-2 rounded-full ${
+                          event.impact === 'high' ? 'bg-red-100 text-red-600' :
+                          event.impact === 'medium' ? 'bg-yellow-100 text-yellow-600' :
+                          'bg-green-100 text-green-600'
+                        }`}>
+                          {event.impact === 'high' ? <AlertTriangle className="h-4 w-4" /> :
+                           event.impact === 'medium' ? <Activity className="h-4 w-4" /> :
+                           <Shield className="h-4 w-4" />}
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold">{event.event}</div>
+                          <div className="text-sm text-muted-foreground">{event.date}</div>
+                        </div>
+                        <Badge variant="outline" className={
+                          event.impact === 'high' ? 'border-red-200 text-red-700' :
+                          event.impact === 'medium' ? 'border-yellow-200 text-yellow-700' :
+                          'border-green-200 text-green-700'
+                        }>
+                          {event.impact}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             </div>
