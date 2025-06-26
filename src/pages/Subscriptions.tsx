@@ -9,6 +9,16 @@ import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, Download, MoreHorizontal } from 'lucide-react';
 import { CreateSubscriptionDialog } from '@/components/subscriptions/CreateSubscriptionDialog';
+import { SubscriptionDetailsDrawer } from '@/components/subscriptions/SubscriptionDetailsDrawer';
+
+interface SubscriptionItem {
+  date: string;
+  account: string;
+  productName: string;
+  amount: string;
+  status: string;
+  method: string;
+}
 
 const SubscriptionsMainContent = () => {
   const [filters, setFilters] = useState({
@@ -17,8 +27,11 @@ const SubscriptionsMainContent = () => {
     method: [] as string[]
   });
 
+  const [selectedSubscription, setSelectedSubscription] = useState<SubscriptionItem | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   // Mock subscription data based on the screenshot
-  const subscriptionData = [{
+  const subscriptionData: SubscriptionItem[] = [{
     date: 'May 2, 2025 9:25 am',
     account: 'CosMake',
     productName: 'Gadget',
@@ -97,12 +110,14 @@ const SubscriptionsMainContent = () => {
     const methodMatch = filters.method.length === 0 || filters.method.includes(subscription.method);
     return statusMatch && accountMatch && methodMatch;
   });
+
   const handleFilterChange = (filterType: keyof typeof filters, value: string, checked: boolean) => {
     setFilters(prev => ({
       ...prev,
       [filterType]: checked ? [...prev[filterType], value] : prev[filterType].filter(item => item !== value)
     }));
   };
+
   const clearAllFilters = () => {
     setFilters({
       status: [],
@@ -110,10 +125,18 @@ const SubscriptionsMainContent = () => {
       method: []
     });
   };
+
   const getActiveFiltersCount = () => {
     return filters.status.length + filters.account.length + filters.method.length;
   };
+
   const activeFiltersCount = getActiveFiltersCount();
+
+  const handleRowClick = (subscription: SubscriptionItem) => {
+    setSelectedSubscription(subscription);
+    setDrawerOpen(true);
+  };
+
   return <div className="space-y-6">
       {/* Header with consistent styling */}
       <PageHeader 
@@ -192,9 +215,6 @@ const SubscriptionsMainContent = () => {
             </span>
           </div>
 
-          {/* Export Button */}
-          
-
           {/* Subscription Table with glass effect */}
           <div className="overflow-hidden" style={{
           border: '1px solid #FFFFFF',
@@ -217,7 +237,11 @@ const SubscriptionsMainContent = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredSubscriptionData.map((item, index) => <TableRow key={index} className="border-b last:border-b-0">
+                {filteredSubscriptionData.map((item, index) => <TableRow 
+                    key={index} 
+                    className="border-b last:border-b-0 cursor-pointer hover:bg-muted/50" 
+                    onClick={() => handleRowClick(item)}
+                  >
                     <TableCell className="font-medium">{item.date}</TableCell>
                     <TableCell>{item.account}</TableCell>
                     <TableCell>{item.productName}</TableCell>
@@ -229,7 +253,15 @@ const SubscriptionsMainContent = () => {
                     </TableCell>
                     <TableCell>{item.method}</TableCell>
                     <TableCell>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // Handle action menu click
+                        }}
+                      >
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </TableCell>
@@ -239,6 +271,13 @@ const SubscriptionsMainContent = () => {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Subscription Details Drawer */}
+      <SubscriptionDetailsDrawer
+        subscription={selectedSubscription}
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+      />
     </div>;
 };
 
