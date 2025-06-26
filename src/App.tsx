@@ -1,28 +1,28 @@
-
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from '@/components/ui/ThemeProvider';
-import { CurrencyProvider } from '@/contexts/CurrencyContext';
-import { Toaster } from '@/components/ui/sonner';
-import { AppRoutes } from '@/routes';
-import './App.css';
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter as Router } from "react-router-dom";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { CurrencyProvider } from './contexts/CurrencyContext';
+import { AppRoutes } from './routes';
 
 const queryClient = new QueryClient();
 
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <CurrencyProvider>
-          <BrowserRouter>
-            <AppRoutes />
+const App = () => (
+  <Router>
+    <ThemeProvider>
+      <CurrencyProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
             <Toaster />
-          </BrowserRouter>
-        </CurrencyProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
-  );
-}
+            <Sonner />
+            <AppRoutes />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </CurrencyProvider>
+    </ThemeProvider>
+  </Router>
+);
 
 export default App;
