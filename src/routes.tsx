@@ -23,6 +23,7 @@ const CryptoTrade = React.lazy(() => import('./pages/crypto-trade'));
 const CryptoDetail = React.lazy(() => import('./pages/crypto/[symbol]'));
 const CryptoHoldings = React.lazy(() => import('./pages/crypto/holdings'));
 const TradingDashboard = React.lazy(() => import('./pages/TradingDashboard'));
+const TradingStockDetail = React.lazy(() => import('./pages/TradingStockDetail'));
 const Bookkeeping = React.lazy(() => import('./pages/bookkeeping'));
 const Invoicing = React.lazy(() => import('./pages/invoicing'));
 const InvoiceCreate = React.lazy(() => import('./pages/invoice-create'));
@@ -59,7 +60,6 @@ const MeelyTradeWatchlists = React.lazy(() => import('./pages/meelytrade/Watchli
 const MeelyTradeHoldings = React.lazy(() => import('./pages/meelytrade/Holdings'));
 const MeelyTradeNews = React.lazy(() => import('./pages/meelytrade/News'));
 const MeelyTradeStockDetail = React.lazy(() => import('./pages/meelytrade/StockDetail'));
-const TradingStockDetail = React.lazy(() => import('./pages/meelytrade/StockDetail'));
 const ComponentShowcase = React.lazy(() => import('./pages/ComponentShowcase'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
