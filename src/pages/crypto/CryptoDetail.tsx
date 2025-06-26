@@ -135,9 +135,14 @@ export default function CryptoDetail() {
   const { formatAmount } = useCurrency();
   const [activeTab, setActiveTab] = useState('chart');
 
+  console.log('CryptoDetail component loaded, id:', id);
+
   const coin = cryptoData[id as keyof typeof cryptoData];
 
+  console.log('Found coin data:', coin);
+
   if (!coin) {
+    console.log('Coin not found for id:', id);
     return (
       <Layout>
         <div className="flex items-center justify-center h-64">
