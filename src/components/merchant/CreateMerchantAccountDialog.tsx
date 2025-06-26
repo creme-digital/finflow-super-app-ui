@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Building2, Mail, Phone, MapPin, DollarSign } from 'lucide-react';
+import { Plus, Building2, Mail, Phone, MapPin, DollarSign, X } from 'lucide-react';
 
 interface CreateMerchantAccountDialogProps {
   children?: React.ReactNode;
@@ -58,6 +58,10 @@ export function CreateMerchantAccountDialog({ children }: CreateMerchantAccountD
     });
   };
 
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -68,20 +72,42 @@ export function CreateMerchantAccountDialog({ children }: CreateMerchantAccountD
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+      <DialogContent 
+        className="sm:max-w-[600px] p-0 border-0 flex flex-col gap-0"
+        style={{
+          background: 'rgba(255, 255, 255, 0.95)',
+          border: '1px solid rgba(255, 255, 255, 0.9)',
+          borderRadius: '24px',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)'
+        }}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center p-4 border-b border-border">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
             <Building2 className="w-5 h-5" />
             Create Merchant Account
-          </DialogTitle>
-        </DialogHeader>
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
+          </h2>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setOpen(false)}
+            className="h-8 w-8"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Content */}
+        <div 
+          className="flex flex-col gap-4 p-4 overflow-auto"
+          style={{ maxHeight: '600px' }}
+        >
           {/* Business Information */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="text-sm font-medium text-muted-foreground">Business Information</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="businessName">Business Name *</Label>
                 <Input
@@ -117,19 +143,19 @@ export function CreateMerchantAccountDialog({ children }: CreateMerchantAccountD
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
                 placeholder="Describe your business and what you sell"
-                rows={3}
+                rows={2}
               />
             </div>
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Mail className="w-4 h-4" />
               Contact Details
             </h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address *</Label>
                 <Input
@@ -168,7 +194,7 @@ export function CreateMerchantAccountDialog({ children }: CreateMerchantAccountD
           </div>
 
           {/* Address Information */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               Business Address
@@ -185,7 +211,7 @@ export function CreateMerchantAccountDialog({ children }: CreateMerchantAccountD
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="city">City *</Label>
                 <Input
@@ -222,13 +248,13 @@ export function CreateMerchantAccountDialog({ children }: CreateMerchantAccountD
           </div>
 
           {/* Financial Information */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <DollarSign className="w-4 h-4" />
               Financial Details
             </h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="taxId">Tax ID / EIN *</Label>
                 <Input
@@ -257,21 +283,24 @@ export function CreateMerchantAccountDialog({ children }: CreateMerchantAccountD
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Form Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button type="submit">
-              Create Account
-            </Button>
-          </div>
-        </form>
+        {/* Fixed Buttons */}
+        <div className="flex gap-2 p-4 border-t border-border">
+          <Button
+            variant="secondary"
+            onClick={handleCancel}
+            className="flex-1 rounded-full"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            className="flex-1"
+          >
+            Create Account
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );
