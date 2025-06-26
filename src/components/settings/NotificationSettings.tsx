@@ -3,8 +3,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { Bell, Mail, BellOff, CreditCard } from "lucide-react";
+import { Bell, Mail, BellOff, CreditCard, Smartphone, Globe, Shield, TrendingUp } from "lucide-react";
 
 export function NotificationSettings() {
   const { toast } = useToast();
@@ -60,6 +61,26 @@ export function NotificationSettings() {
             
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
+                <Label htmlFor="paymentReminders">Payment Reminders</Label>
+                <p className="text-sm text-muted-foreground">
+                  Get reminders for upcoming payments and due dates.
+                </p>
+              </div>
+              <Switch id="paymentReminders" defaultChecked />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="budgetAlerts">Budget Alerts</Label>
+                <p className="text-sm text-muted-foreground">
+                  Notifications when you're approaching your budget limits.
+                </p>
+              </div>
+              <Switch id="budgetAlerts" />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
                 <Label htmlFor="marketingNotifications">Marketing Notifications</Label>
                 <p className="text-sm text-muted-foreground">
                   Receive promotions, offers, and newsletter updates.
@@ -110,11 +131,117 @@ export function NotificationSettings() {
               </div>
               <Switch id="emailNewsletters" />
             </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="emailReports">Monthly Reports</Label>
+                <p className="text-sm text-muted-foreground">
+                  Get detailed monthly spending and income reports.
+                </p>
+              </div>
+              <Switch id="emailReports" defaultChecked />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="emailPromotions">Promotional Offers</Label>
+                <p className="text-sm text-muted-foreground">
+                  Receive special offers and promotional content.
+                </p>
+              </div>
+              <Switch id="emailPromotions" />
+            </div>
           </div>
         </CardContent>
         <CardFooter>
           <Button onClick={handleSaveChanges}>Save Changes</Button>
         </CardFooter>
+      </Card>
+      
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Smartphone className="h-5 w-5" />
+            SMS Notifications
+          </CardTitle>
+          <CardDescription>Configure SMS and text message notifications.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="smsTransactions">Transaction Alerts</Label>
+                <p className="text-sm text-muted-foreground">
+                  Get SMS alerts for transactions over $500.
+                </p>
+              </div>
+              <Switch id="smsTransactions" />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="smsSecurity">Security Codes</Label>
+                <p className="text-sm text-muted-foreground">
+                  Receive two-factor authentication codes via SMS.
+                </p>
+              </div>
+              <Switch id="smsSecurity" defaultChecked />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="smsPayments">Payment Confirmations</Label>
+                <p className="text-sm text-muted-foreground">
+                  Get SMS confirmations for successful payments.
+                </p>
+              </div>
+              <Switch id="smsPayments" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Globe className="h-5 w-5" />
+            In-App Notifications
+          </CardTitle>
+          <CardDescription>Control notifications within the application.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="inAppAlerts">System Alerts</Label>
+                <p className="text-sm text-muted-foreground">
+                  Show important system messages and updates.
+                </p>
+              </div>
+              <Switch id="inAppAlerts" defaultChecked />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="inAppTips">Tips & Suggestions</Label>
+                <p className="text-sm text-muted-foreground">
+                  Display helpful tips and feature suggestions.
+                </p>
+              </div>
+              <Switch id="inAppTips" defaultChecked />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="inAppUpdates">Feature Updates</Label>
+                <p className="text-sm text-muted-foreground">
+                  Get notified about new features and improvements.
+                </p>
+              </div>
+              <Switch id="inAppUpdates" />
+            </div>
+          </div>
+        </CardContent>
       </Card>
       
       <Card>
@@ -151,6 +278,3 @@ export function NotificationSettings() {
     </>
   );
 }
-
-// We need to add this import at the top
-import { Input } from "@/components/ui/input";
