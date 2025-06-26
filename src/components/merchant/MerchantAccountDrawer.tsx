@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
@@ -41,7 +40,7 @@ export function MerchantAccountDrawer({ account, open, onOpenChange }: MerchantA
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[480px] sm:w-[540px] p-0">
+      <SheetContent className="w-[600px] sm:w-[680px] p-0">
         <div className="flex flex-col h-full">
           {/* Header */}
           <SheetHeader className="p-6 pb-4">
