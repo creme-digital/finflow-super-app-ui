@@ -40,7 +40,7 @@ export function SubscriptionDetailsDrawer({ subscription, open, onOpenChange }: 
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[800px] sm:w-[900px] p-0">
+      <SheetContent className="w-[1000px] sm:w-[1200px] max-w-[90vw] p-0">
         <div className="flex flex-col h-full">
           {/* Header */}
           <SheetHeader className="p-6 pb-4">
