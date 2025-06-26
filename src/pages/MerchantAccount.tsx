@@ -7,9 +7,12 @@ import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Plus, Filter, Download, ArrowRight, MoreHorizontal, Wallet } from 'lucide-react';
 import { CreateMerchantAccountDialog } from '@/components/merchant/CreateMerchantAccountDialog';
+import { MerchantAccountDrawer } from '@/components/merchant/MerchantAccountDrawer';
 
 const MerchantAccountMainContent = () => {
   const [activeTab, setActiveTab] = useState('payment-history');
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [filters, setFilters] = useState({
     status: [] as string[],
     account: [] as string[],
@@ -116,6 +119,10 @@ const MerchantAccountMainContent = () => {
     return filters.status.length + filters.account.length + filters.method.length;
   };
   const activeFiltersCount = getActiveFiltersCount();
+  const handleViewDetails = (account) => {
+    setSelectedAccount(account);
+    setDrawerOpen(true);
+  };
   return <div className="space-y-6">
       {/* Header with Tab and Action Button */}
       <div className="flex justify-between items-center">
@@ -172,7 +179,11 @@ const MerchantAccountMainContent = () => {
               </div>
 
               {/* View Details button */}
-              <Button variant="outline" className="w-full justify-between text-sm font-medium">
+              <Button 
+                variant="outline" 
+                className="w-full justify-between text-sm font-medium"
+                onClick={() => handleViewDetails(account)}
+              >
                 View Details
                 <ArrowRight className="w-4 h-4" />
               </Button>
@@ -289,6 +300,13 @@ const MerchantAccountMainContent = () => {
           </TableBody>
         </Table>
       </div>
+
+      {/* Merchant Account Drawer */}
+      <MerchantAccountDrawer 
+        account={selectedAccount}
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+      />
     </div>;
 };
 
