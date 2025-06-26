@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
@@ -82,11 +83,12 @@ export default function CryptoTrade() {
                   <TableHead>Change</TableHead>
                   <TableHead>Market Cap</TableHead>
                   <TableHead>Volume</TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredCoins.map((coin) => (
-                  <TableRow key={coin.symbol} className="cursor-pointer" onClick={() => navigate(`/crypto/trade/${coin.symbol}`)}>
+                  <TableRow key={coin.symbol} className="cursor-pointer">
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ background: coin.symbol === 'BTC' ? '#F7931A' : coin.symbol === 'ETH' ? '#627EEA' : coin.symbol === 'SOL' ? '#00FFA3' : '#0033AD' }}>{coin.symbol.charAt(0)}</div>
@@ -100,6 +102,15 @@ export default function CryptoTrade() {
                     <TableCell className={coin.positive ? 'text-fintech-success' : 'text-fintech-error'}>{coin.change}</TableCell>
                     <TableCell className="font-mono">${coin.marketCap}</TableCell>
                     <TableCell className="font-mono">${coin.volume}</TableCell>
+                    <TableCell>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => navigate(`/crypto/detail/${coin.symbol.toLowerCase()}`)}
+                      >
+                        View Details
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

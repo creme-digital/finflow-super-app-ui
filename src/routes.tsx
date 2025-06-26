@@ -21,6 +21,7 @@ import MeelyPay from './pages/MeelyPay';
 // Keep lazy loading for less commonly used pages
 const CryptoTrade = React.lazy(() => import('./pages/crypto-trade'));
 const CryptoDetail = React.lazy(() => import('./pages/crypto/[symbol]'));
+const CryptoDetailNew = React.lazy(() => import('./pages/CryptoDetail'));
 const CryptoHoldings = React.lazy(() => import('./pages/crypto/holdings'));
 const TradingDashboard = React.lazy(() => import('./pages/TradingDashboard'));
 const TradingStockDetail = React.lazy(() => import('./pages/TradingStockDetail'));
@@ -95,6 +96,11 @@ export const AppRoutes = () => {
       <Route path="/crypto/:symbol" element={
         <Suspense fallback={<div>Loading...</div>}>
           <CryptoDetail />
+        </Suspense>
+      } />
+      <Route path="/crypto/detail/:symbol" element={
+        <Suspense fallback={<div>Loading...</div>}>
+          <CryptoDetailNew />
         </Suspense>
       } />
       <Route path="/crypto/holdings" element={
