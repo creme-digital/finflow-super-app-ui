@@ -5,12 +5,14 @@ import { ArrowUpRight, ArrowDownLeft, ArrowLeftRight, Plus, Wallet } from 'lucid
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { BuyCryptoModal } from './BuyCryptoModal';
 import { SendCryptoModal } from './SendCryptoModal';
+import { CryptoReceiveModal } from './CryptoReceiveModal';
 
 export function CryptoRightPanel() {
   const { formatAmount } = useCurrency();
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
   const [isSwapModalOpen, setIsSwapModalOpen] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
+  const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
 
   // Sample crypto portfolio value
   const totalCryptoValue = 12847.92;
@@ -149,6 +151,7 @@ export function CryptoRightPanel() {
             variant="ghost" 
             className="flex flex-col gap-2 h-auto p-3 hover:bg-muted/50"
             style={buttonStyle}
+            onClick={() => setIsReceiveModalOpen(true)}
           >
             <ArrowDownLeft className="w-5 h-5" />
             <span className="text-xs">Receive</span>
@@ -223,6 +226,12 @@ export function CryptoRightPanel() {
       <SendCryptoModal 
         open={isSendModalOpen}
         onOpenChange={setIsSendModalOpen}
+      />
+
+      {/* Receive Crypto Modal */}
+      <CryptoReceiveModal 
+        open={isReceiveModalOpen}
+        onOpenChange={setIsReceiveModalOpen}
       />
     </div>
   );
