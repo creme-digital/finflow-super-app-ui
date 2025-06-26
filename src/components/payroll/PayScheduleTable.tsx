@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CalendarCheck, Pencil } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 
 // Sample pay schedule data
 const paySchedules = [
@@ -61,7 +61,18 @@ const paySchedules = [
   },
 ];
 
-export const PayScheduleTable = () => {
+interface PayScheduleTableProps {
+  onEditSchedule?: (schedule: any) => void;
+}
+
+export const PayScheduleTable = ({ onEditSchedule }: PayScheduleTableProps) => {
+  const handleEditClick = (schedule: any) => {
+    console.log('Edit schedule:', schedule);
+    if (onEditSchedule) {
+      onEditSchedule(schedule);
+    }
+  };
+
   return (
     <Table className="min-w-full text-sm">
       <TableHeader>
@@ -96,7 +107,12 @@ export const PayScheduleTable = () => {
               </Badge>
             </TableCell>
             <TableCell className="py-4">
-              <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8"
+                onClick={() => handleEditClick(schedule)}
+              >
                 <Pencil className="h-4 w-4" />
                 <span className="sr-only">Edit</span>
               </Button>

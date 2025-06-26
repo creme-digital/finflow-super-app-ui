@@ -12,6 +12,7 @@ import { formatCurrency } from '@/lib/formatters';
 import { EditPayrollDialog } from '@/components/payroll/EditPayrollDialog';
 import { CreatePayrollDialog } from '@/components/payroll/CreatePayrollDialog';
 import { CreateScheduleDialog } from '@/components/payroll/CreateScheduleDialog';
+import { EditPayScheduleDialog } from '@/components/payroll/EditPayScheduleDialog';
 import { RunPayrollDialog } from '@/components/payroll/RunPayrollDialog';
 import { PayScheduleTable } from '@/components/payroll/PayScheduleTable';
 import { PayrollHistoryTable } from '@/components/payroll/PayrollHistoryTable';
@@ -26,8 +27,10 @@ const Payroll = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [createScheduleDialogOpen, setCreateScheduleDialogOpen] = useState(false);
+  const [editScheduleDialogOpen, setEditScheduleDialogOpen] = useState(false);
   const [runPayrollDialogOpen, setRunPayrollDialogOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
+  const [selectedSchedule, setSelectedSchedule] = useState<any>(null);
 
   const employees = [
     {
@@ -170,6 +173,12 @@ const Payroll = () => {
   const handleRemovePayroll = (employeeId: string, employeeName: string) => {
     console.log('Remove payroll for:', employeeId, employeeName);
     // TODO: Implement remove payroll functionality
+  };
+
+  const handleEditSchedule = (schedule: any) => {
+    console.log('Edit schedule:', schedule);
+    setSelectedSchedule(schedule);
+    setEditScheduleDialogOpen(true);
   };
 
   const activeFiltersCount = getActiveFiltersCount();
@@ -457,7 +466,7 @@ const Payroll = () => {
                   WebkitBackdropFilter: 'blur(10px)'
                 }}
               >
-                <PayScheduleTable />
+                <PayScheduleTable onEditSchedule={handleEditSchedule} />
               </div>
             </TabsContent>
             
@@ -510,6 +519,13 @@ const Payroll = () => {
           <CreateScheduleDialog
             open={createScheduleDialogOpen}
             onOpenChange={setCreateScheduleDialogOpen}
+          />
+
+          {/* Edit Schedule Dialog */}
+          <EditPayScheduleDialog
+            open={editScheduleDialogOpen}
+            onOpenChange={setEditScheduleDialogOpen}
+            schedule={selectedSchedule}
           />
 
           {/* Run Payroll Dialog */}
