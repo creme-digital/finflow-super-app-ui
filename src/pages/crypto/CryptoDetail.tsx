@@ -135,16 +135,9 @@ export default function CryptoDetail() {
   const { formatAmount } = useCurrency();
   const [activeTab, setActiveTab] = useState('chart');
 
-  console.log('CryptoDetail component mounted, id:', id);
-  console.log('Available crypto data keys:', Object.keys(cryptoData));
-
   const coin = cryptoData[id as keyof typeof cryptoData];
 
-  console.log('Found coin data:', coin);
-  console.log('Component about to render');
-
   if (!coin) {
-    console.log('Coin not found for id:', id);
     return (
       <Layout>
         <div className="flex items-center justify-center h-64">
@@ -173,15 +166,9 @@ export default function CryptoDetail() {
     return colors[symbol as keyof typeof colors] || '#8247e5';
   };
 
-  console.log('About to render main content');
-
   return (
     <Layout>
       <div className="max-w-[1400px] mx-auto py-6 space-y-6">
-        <div className="bg-blue-500 text-white p-4 rounded">
-          DEBUG: CryptoDetail is rendering for {coin.name} ({coin.symbol})
-        </div>
-        
         {/* Header */}
         <div className="flex items-center gap-4">
           <Button
