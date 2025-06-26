@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
@@ -40,7 +39,7 @@ export function SubscriptionDetailsDrawer({ subscription, open, onOpenChange }: 
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[1000px] sm:w-[1200px] max-w-[90vw] p-0">
+      <SheetContent className="w-[1000px] sm:w-[1200px] max-w-[90vw] sm:max-w-[90vw] md:max-w-[1200px] p-0 !max-w-none">
         <div className="flex flex-col h-full">
           {/* Header */}
           <SheetHeader className="p-6 pb-4">
