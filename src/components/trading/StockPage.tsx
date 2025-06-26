@@ -1,4 +1,6 @@
+
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -146,6 +148,7 @@ const getRatingColor = (rating: string) => {
 export function StockPage() {
   const [search, setSearch] = useState('');
   const [watchlist, setWatchlist] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const filteredStocks = allStocks.filter(
     (stock) =>
@@ -161,6 +164,14 @@ export function StockPage() {
     );
   };
 
+  const handleStockClick = (symbol: string) => {
+    navigate(`/trading/stocks/${symbol.toLowerCase()}`);
+  };
+
+  const handleRecommendedStockClick = (symbol: string) => {
+    navigate(`/trading/stocks/${symbol.toLowerCase()}`);
+  };
+
   return (
     <div className="space-y-6">
       {/* Recommended Stocks Section */}
@@ -170,7 +181,7 @@ export function StockPage() {
           {recommendedStocks.map((stock) => (
             <Card
               key={stock.symbol}
-              className="overflow-hidden"
+              className="overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
               style={{
                 border: '1px solid #FFFFFF',
                 boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.04)',
@@ -179,6 +190,7 @@ export function StockPage() {
                 backdropFilter: 'blur(10px)',
                 WebkitBackdropFilter: 'blur(10px)'
               }}
+              onClick={() => handleRecommendedStockClick(stock.symbol)}
             >
               <CardContent className="p-4">
                 <div className="flex items-start justify-between mb-3">
@@ -212,7 +224,7 @@ export function StockPage() {
                   {stock.reason}
                 </div>
 
-                <Button className="w-full" size="sm">
+                <Button className="w-full" size="sm" onClick={(e) => e.stopPropagation()}>
                   <Plus className="w-4 h-4 mr-2" />
                   Add to Portfolio
                 </Button>
@@ -276,7 +288,11 @@ export function StockPage() {
             </TableHeader>
             <TableBody>
               {filteredStocks.map((stock) => (
-                <TableRow key={stock.symbol} className="border-b border-border/50 hover:bg-muted/50">
+                <TableRow 
+                  key={stock.symbol} 
+                  className="border-b border-border/50 hover:bg-muted/50 cursor-pointer"
+                  onClick={() => handleStockClick(stock.symbol)}
+                >
                   <TableCell className="font-medium text-foreground">{stock.symbol}</TableCell>
                   <TableCell className="text-foreground">{stock.name}</TableCell>
                   <TableCell className="font-mono text-foreground">${stock.price.toLocaleString()}</TableCell>
@@ -302,7 +318,7 @@ export function StockPage() {
                       {stock.sector}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center" onClick={(e) => e.stopPropagation()}>
                     <Button
                       size="icon"
                       variant="ghost"

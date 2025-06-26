@@ -1,4 +1,3 @@
-
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
@@ -60,6 +59,7 @@ const MeelyTradeWatchlists = React.lazy(() => import('./pages/meelytrade/Watchli
 const MeelyTradeHoldings = React.lazy(() => import('./pages/meelytrade/Holdings'));
 const MeelyTradeNews = React.lazy(() => import('./pages/meelytrade/News'));
 const MeelyTradeStockDetail = React.lazy(() => import('./pages/meelytrade/StockDetail'));
+const TradingStockDetail = React.lazy(() => import('./pages/meelytrade/StockDetail'));
 const ComponentShowcase = React.lazy(() => import('./pages/ComponentShowcase'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
@@ -110,6 +110,11 @@ export const AppRoutes = () => {
       <Route path="/trading-dashboard" element={
         <Suspense fallback={<div>Loading...</div>}>
           <TradingDashboard />
+        </Suspense>
+      } />
+      <Route path="/trading/stocks/:symbol" element={
+        <Suspense fallback={<div>Loading...</div>}>
+          <TradingStockDetail />
         </Suspense>
       } />
       <Route path="/bookkeeping" element={
