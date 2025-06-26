@@ -40,7 +40,7 @@ export function MerchantAccountDrawer({ account, open, onOpenChange }: MerchantA
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[600px] sm:w-[680px] p-0">
+      <SheetContent className="w-[800px] sm:w-[900px] p-0">
         <div className="flex flex-col h-full">
           {/* Header */}
           <SheetHeader className="p-6 pb-4">
