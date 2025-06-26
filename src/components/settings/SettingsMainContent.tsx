@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +8,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { SettingsNavigation } from './SettingsNavigation';
 import { NotificationSettings } from './NotificationSettings';
+import { ApiKeysSettings } from './ApiKeysSettings';
 
 export function SettingsMainContent() {
   const [searchParams] = useSearchParams();
@@ -134,7 +134,7 @@ export function SettingsMainContent() {
           Manage your API keys and integrations
         </p>
       </div>
-      <p className="text-gray-500">API keys management coming soon...</p>
+      <ApiKeysSettings />
     </div>
   );
 
